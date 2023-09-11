@@ -1,0 +1,32 @@
+<header>
+  <div class="header_wrapper">
+    <div class="logo_section">
+      <mat-icon (click)="isMenuDisply = !isMenuDisply" class="menu_bar_icon">
+        {{ isMenuDisply ? "close" : "menu" }}
+      </mat-icon>
+      <img src="../../../../assets/images/Eminence_logo.png" alt="Eminence_logo" height="60" width="60">
+      <h1>Eminence</h1>
+    </div>
+    <nav class="nav_section">
+      <!-- for big screen -->
+      <ul class="big_screen">
+        <li><a routerLink="home" routerLinkActive="activelink">Home</a></li>
+        <li><a routerLink="enterprise" routerLinkActive="activelink">Enterprise</a></li>
+        <li><a routerLink="about-us" routerLinkActive="activelink">About Us</a></li>
+        <li><a routerLink="">Login</a></li>
+        <li><button class="header_button">LinkedIn</button></li>
+      </ul>
+      <!-- for big screen -->
+
+      <!-- for small screen -->
+      <ul [ngStyle]="{ display: isMenuDisply ? 'block' : 'none' }" class="small_screen">
+        <li><a (click)="isMenuDisply = !isMenuDisply" routerLink="home" routerLinkActive="activelink">Home</a></li>
+        <li><a (click)="isMenuDisply = !isMenuDisply" routerLink="enterprise" routerLinkActive="activelink">Enterprise</a></li>
+        <li><a (click)="isMenuDisply = !isMenuDisply" routerLink="about-us" routerLinkActive="activelink">About Us</a></li>
+        <li><a (click)="isMenuDisply = !isMenuDisply" routerLink="" >Login</a></li>
+        <li><button type="button" (click)="isMenuDisply = !isMenuDisply" class="header_button">LinkedIn</button></li>
+      </ul>
+      <!-- for small screen -->
+    </nav>
+  </div>
+</header>
