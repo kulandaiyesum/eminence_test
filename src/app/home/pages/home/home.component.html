@@ -18,16 +18,85 @@
     <div class="banner_content_2">
       <h4 style="font-weight: bold; text-align: center;">Empowering physicians & medical students worldwide!</h4>
       <div class="scrolling-wrapper">
-        <div class="scrolling-content" #scrollingContent>
-          <div *ngFor="let item of scrollingItems" class="scrolling-item">{{ item }}</div>
+        <div class="scrolling-content">
+          <ng-container *ngFor="let item of scrollingItems; let last = last">
+            <div class="scrolling-item">{{ item }}</div>
+          </ng-container>
+        </div>
+        <div class="scrolling-content">
+          <ng-container *ngFor="let item of scrollingItems; let last = last">
+            <div class="scrolling-item">{{ item }}</div>
+          </ng-container>
         </div>
       </div>
     </div>
   </section>
-  <div class="banner2_section">
-    <section class="infos"></section>
-    <section class="infos"></section>
-    <section class="infos"></section>
-    <section class="infos"></section>
+  <section class="banner2_section">
+    <ng-container *ngFor="let bannerContent of bannerContents">
+      <app-banner [bannerContent]="bannerContent"></app-banner>
+    </ng-container>
+  </section>
+  <section class="faq_section">
+    <div style="margin-bottom: 24px;">
+      <h1><strong>FAQs</strong></h1>
+      <p class="para">You have questions. We have answers.</p>
+    </div>
+    <div class="expan_panel">
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h2 class="faq_panel_header">How do I know the content is accurate?</h2>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p class="faq_panel_content">While AI chatbots such as ChatGPT will fail to produce accurate content or
+            citations, Eminence uses a framework that
+            combines LLMs with external data to ensure high-quality questions and explanations. The external data used
+            in
+            our
+            algorithm consists of verified exam prep content.</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+    <div class="expan_panel">
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h2 class="faq_panel_header">What exams are currently offered?</h2>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p class="faq_panel_content">We currently offer exam prep content for the USMLE Step 1 and 2, as well as board
+            certification exams for
+            residents/physicians. As EminenceAI grows our user base, we will look to expand outside of medicine.</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+    <div class="expan_panel">
+      <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h2 class="faq_panel_header">I am a resident/physician. Can I request content for a board certification
+                exam?</h2>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p class="faq_panel_content">Yes! If you are a resident/physician preparing for a board certification exam
+            that
+            you do not see on our website, we
+            take requests! Send an email to sj@eminenceai.com with the type of exam and we will make it happen.</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </section>
+  <div class="acdamic_section">
+    <div class="acdamic_section_wrap">
+      <div class="acadamic_content">
+        <h2>For academic institutions or premier tutoring centers</h2>
+        <p>Find out more on our Enterprise page!</p>
+        <button class="learn_more_button" routerLink="/enterprise">LEARN MORE</button>
+      </div>
+    </div>
   </div>
 </div>

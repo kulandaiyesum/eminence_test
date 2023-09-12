@@ -11,6 +11,8 @@ import { ContactUsEnterpriseComponent } from './components/contact-us-enterprise
 import { ContactUsAboutUsComponent } from './components/contact-us-about-us/contact-us-about-us.component';
 
 import { MatIconModule } from '@angular/material/icon';
+import { BannerComponent } from './components/banner/banner.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { MatIconModule } from '@angular/material/icon';
     AboutUsComponent,
     ContactUsEnterpriseComponent,
     ContactUsAboutUsComponent,
+    BannerComponent,
   ],
-  imports: [CommonModule, HomeRoutingModule, MatIconModule],
+  imports: [CommonModule, HomeRoutingModule, MatIconModule, MatExpansionModule],
 })
 export class HomeModule {}

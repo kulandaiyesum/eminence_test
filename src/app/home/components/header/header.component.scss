@@ -1,7 +1,7 @@
 header {
   color: #fff;
   width: 100%;
-  // background-color: #1f495f;
+  background: linear-gradient(to bottom, #1f495f 0%, #1f495f 100%);
   .header_wrapper {
     width: 94%;
     margin: 0 auto;
@@ -87,7 +87,7 @@ header {
 }
 @media (max-width: 768px) {
   header {
-    background-color: #fff;
+    background: #fff;
     .header_wrapper {
       flex-wrap: wrap;
       width: 100%;

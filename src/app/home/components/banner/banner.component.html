@@ -1,0 +1,28 @@
+<div class="banner_container" [style.background-color]="bannerContent.backgroundColor">
+  <ng-container *ngIf="!bannerContent.isEven">
+    <div class="banner_row">
+      <div class="img_col">
+        <img [src]="bannerContent.img">
+      </div>
+      <div class="content_col">
+        <div class="content_head"><strong>{{bannerContent.contentHead}}</strong></div>
+        <h2 class="content_subhead"><strong>{{bannerContent.contentSubHead}}</strong></h2>
+        <p>{{bannerContent.contentParagraph}}</p>
+        <p *ngIf="bannerContent?.contentPara2">{{bannerContent.contentPara2}}</p>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="bannerContent.isEven">
+    <div class="banner_row">
+      <div class="content_col">
+        <div class="content_head"><strong>{{bannerContent.contentHead}}</strong></div>
+        <h2 class="content_subhead"><strong>{{bannerContent.contentSubHead}}</strong></h2>
+        <p>{{bannerContent.contentParagraph}}</p>
+        <p *ngIf="bannerContent?.contentPara2">{{bannerContent.contentPara2}}</p>
+      </div>
+      <div class="img_col">
+        <img [src]="bannerContent.img">
+      </div>
+    </div>
+  </ng-container>
+</div>
