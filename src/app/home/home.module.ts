@@ -9,7 +9,7 @@ import { EnterpriseComponent } from './pages/enterprise/enterprise.component';
 import { AboutUsComponent } from './pages/about-us/about-us.component';
 import { ContactUsEnterpriseComponent } from './components/contact-us-enterprise/contact-us-enterprise.component';
 import { ContactUsAboutUsComponent } from './components/contact-us-about-us/contact-us-about-us.component';
-
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { BannerComponent } from './components/banner/banner.component';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -25,6 +25,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ContactUsAboutUsComponent,
     BannerComponent,
   ],
-  imports: [CommonModule, HomeRoutingModule, MatIconModule, MatExpansionModule],
+  imports: [CommonModule, HomeRoutingModule, MatIconModule, MatExpansionModule,MatDialogModule],
 })
 export class HomeModule {}

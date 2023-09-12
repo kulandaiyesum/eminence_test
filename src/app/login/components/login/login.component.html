@@ -1,1 +1,49 @@
-<p>login works!</p>
+<div class="login-container">
+  <header>
+    <h2>MEMBER LOGIN</h2>
+    <p (click)="closeDialog()">X</p>
+  </header>
+  <div class="login-fields">
+    <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+      <input
+        type="text"
+        placeholder="Email address"
+        formControlName="userName"
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        formControlName="password"
+      />
+      <p
+        *ngIf="
+          loginForm.get('userName')!.invalid &&
+          (loginForm.get('userName')!.dirty ||
+            loginForm.get('userName')!.touched)
+        "
+      >
+        Email required, valid format.
+      </p>
+      <p
+        *ngIf="
+          loginForm.get('password')!.invalid &&
+          (loginForm.get('password')!.dirty ||
+            loginForm.get('password')!.touched)
+        "
+      >
+        Password: 8 characters minimum required.
+      </p>
+
+      <p
+        *ngIf="loginForm.invalid && (loginForm.dirty || loginForm.touched)"
+        id="all-field"
+      >
+        Please fill in all the required fields.
+      </p>
+      <button id="login" type="submit">LOG IN</button>
+      <br />
+      <button id="register">REGISTER</button>
+      <a href="">Forgot password</a>
+    </form>
+  </div>
+</div>
