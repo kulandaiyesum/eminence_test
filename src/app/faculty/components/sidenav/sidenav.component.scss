@@ -6,7 +6,6 @@
     height: 100vh;
     mat-sidenav-container {
       height: 100%;
-
       mat-sidenav {
         background-color: #f8fafe;
         width: auto;
@@ -67,19 +66,16 @@
       }
       mat-sidenav-content {
         background-color: #fff;
-        .sidenav-content{
+        .sidenav-content {
           width: 100%;
           height: 100vh;
-
         }
       }
     }
   }
   @media (max-width: 480px) {
-    .navigation-header{
+    .navigation-header {
       padding: 10px;
     }
   }
 }
-
-

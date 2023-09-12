@@ -1,7 +1,12 @@
 <div class="sidenav-container">
   <section>
     <mat-sidenav-container>
-      <mat-sidenav #sidenav mode="side" [(opened)]="opened" class="custom-sidenav">
+      <mat-sidenav
+        #sidenav
+        mode="side"
+        [(opened)]="opened"
+        class="custom-sidenav"
+      >
         <div class="navigation-header">
           <img src="assets/images/Eminence_logo.png" alt="Logo" />
           <h2>Eminence</h2>
@@ -9,13 +14,36 @@
         </div>
         <div class="navigation">
           <ul>
-            <li (click)="changeBackgroundColor(0)" [ngClass]="{'selected': selectedIndex === 0}" (click)="qgen()">QGen</li>
-            <li (click)="changeBackgroundColor(1)" [ngClass]="{'selected': selectedIndex === 1}" (click)="editor()">Editor</li>
-            <li (click)="changeBackgroundColor(2)" [ngClass]="{'selected': selectedIndex === 2}" (click)="askeminence()">Ask Eminence</li>
-            <li (click)="changeBackgroundColor(3)" [ngClass]="{'selected': selectedIndex === 3}" (click)="history()">History</li>
+            <li
+              (click)="changeBackgroundColor(0)"
+              [ngClass]="{ selected: selectedIndex === 0 }"
+              (click)="qgen()"
+            >
+              QGen
+            </li>
+            <li
+              (click)="changeBackgroundColor(1)"
+              [ngClass]="{ selected: selectedIndex === 1 }"
+              (click)="editor()"
+            >
+              Editor
+            </li>
+            <li
+              (click)="changeBackgroundColor(2)"
+              [ngClass]="{ selected: selectedIndex === 2 }"
+              (click)="askeminence()"
+            >
+              Ask Eminence
+            </li>
+            <li
+              (click)="changeBackgroundColor(3)"
+              [ngClass]="{ selected: selectedIndex === 3 }"
+              (click)="history()"
+            >
+              History
+            </li>
           </ul>
         </div>
-
       </mat-sidenav>
       <mat-sidenav-content>
         <button *ngIf="!opened" (click)="sidenav.toggle()">Toggles</button>
