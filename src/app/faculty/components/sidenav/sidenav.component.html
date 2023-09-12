@@ -1,0 +1,67 @@
+<div class="sidenav-container">
+  <section>
+    <mat-sidenav-container>
+      <mat-sidenav
+        #sidenav
+        mode="side"
+        [(opened)]="opened"
+        class="custom-sidenav"
+      >
+        <div class="navigation-header">
+          <img src="assets/images/Eminence_logo.png" alt="Logo" />
+          <h2>Eminence</h2>
+          <mat-icon (click)="sidenav.close()">arrow_back</mat-icon>
+        </div>
+        <div class="navigation">
+          <ul>
+            <li
+              (click)="changeBackgroundColor(0)"
+              [ngClass]="{ selected: selectedIndex === 0 }"
+              (click)="qgen()"
+            >
+              QGen
+            </li>
+            <li
+              (click)="changeBackgroundColor(1)"
+              [ngClass]="{ selected: selectedIndex === 1 }"
+              (click)="editor()"
+            >
+              Editor
+            </li>
+            <li
+              (click)="changeBackgroundColor(2)"
+              [ngClass]="{ selected: selectedIndex === 2 }"
+              (click)="askeminence()"
+            >
+              Ask Eminence
+            </li>
+            <li
+              (click)="changeBackgroundColor(3)"
+              [ngClass]="{ selected: selectedIndex === 3 }"
+              (click)="history()"
+            >
+              History
+            </li>
+          </ul>
+        </div>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <button *ngIf="!opened" (click)="sidenav.toggle()">Toggles</button>
+        <div class="sidenav-content" [ngSwitch]="component">
+          <div class="sidenav-content-component" *ngSwitchCase="'qgen'">
+            <app-qgen></app-qgen>
+          </div>
+          <div class="sidenav-content-component" *ngSwitchCase="'editor'">
+            <app-editor></app-editor>
+          </div>
+          <div class="sidenav-content-component" *ngSwitchCase="'askeminence'">
+            <app-askeminence></app-askeminence>
+          </div>
+          <div class="sidenav-content-component" *ngSwitchCase="'history'">
+            <app-history></app-history>
+          </div>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </section>
+</div>
