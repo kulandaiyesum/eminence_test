@@ -27,6 +27,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {}
 
   openLoginPopUp() {
+    this.isMenuDisply=!this.isMenuDisply
     const dialogRef = this.dialog.open(LoginComponent, {
       width: '400px',
       height: 'auto',
