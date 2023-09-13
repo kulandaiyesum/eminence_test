@@ -1,0 +1,46 @@
+.about-us {
+  width: 100%;
+  background-color: var(--bg-gray-color);
+  padding: 75px 0;
+
+  .about-us-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .form_head {
+      color: var(--text1-color);
+      font-size: 48px;
+      line-height: 1.4;
+      text-align: center;
+    }
+    form {
+      min-width: 330px;
+      max-width: 400px;
+      .form_input_container {
+        margin-bottom: 1rem;
+        .error {
+          line-height: 24px;
+          font-size: 14px;
+        }
+      }
+      .btn_container {
+        text-align: center;
+        padding-top: 10px;
+        .submit_button {
+          padding: 10px 28px;
+          border: none;
+          color: #fff;
+          background-color: #67cbe4;
+          border-radius: 48px;
+          font-weight: 700;
+          transition: all 0.15s;
+          font-size: 1.25rem;
+          &:hover {
+            background-color: #7bf3ff;
+          }
+        }
+      }
+    }
+  }
+}
