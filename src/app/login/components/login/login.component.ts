@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginService } from '../../service/login.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent {
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<LoginComponent>,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private loginService: LoginService
   ) {
     this.receivedData = data;
     console.log(this.receivedData);
@@ -31,7 +33,7 @@ export class LoginComponent {
   }
   initForm() {
     this.loginForm = this.formBuilder.group({
-      userName: ['', [Validators.required, Validators.email]], // Using built-in email validator
+      email: ['', [Validators.required, Validators.email]], // Using built-in email validator
       password: ['', [Validators.required, Validators.minLength(8)]], // Custom validator for minimum length of 8 characters
     });
   }
@@ -45,7 +47,14 @@ export class LoginComponent {
       this.loginForm.controls[controlName].markAsTouched();
     });
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
+      this.loginService.loginAuthenticate(this.loginForm.value).subscribe(
+        (response: any) => {
+          console.log("Response from back end "+response);
+        },
+        (error) => {
+          console.log('Error : ', error);
+        }
+      );
     }
   }
 }

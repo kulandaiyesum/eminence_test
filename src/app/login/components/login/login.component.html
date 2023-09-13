@@ -5,11 +5,7 @@
   </header>
   <div class="login-fields">
     <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
-      <input
-        type="text"
-        placeholder="Email address"
-        formControlName="userName"
-      />
+      <input type="text" placeholder="Email address" formControlName="email" />
       <input
         type="password"
         placeholder="Password"
@@ -17,9 +13,8 @@
       />
       <p
         *ngIf="
-          loginForm.get('userName')!.invalid &&
-          (loginForm.get('userName')!.dirty ||
-            loginForm.get('userName')!.touched)
+          loginForm.get('email')!.invalid &&
+          (loginForm.get('email')!.dirty || loginForm.get('email')!.touched)
         "
       >
         Email required, valid format.
