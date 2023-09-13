@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { LoginService } from '../../service/login.service';
 import * as CryptoJS from 'crypto-js';
 import { environment } from 'src/environments/environment';
+import { Register } from '../../model/register.model';
 
 @Component({
   selector: 'app-login',
@@ -17,12 +18,14 @@ export class LoginComponent {
   hidePassword: boolean = true;
   secretKeyLength = 32;
   secretKey = environment.secretKey;
-  encryptRole: string;
-  encryptFirstName: string;
-  encryptLastName: string;
-  public encryptID: string;
   public user;
-
+  public loginUser: Register = {
+    firstName: '',
+    lastName: '',
+    role: '',
+    id: '',
+    token: '',
+  };
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -59,33 +62,38 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.loginService.loginAuthenticate(this.loginForm.value).subscribe(
         (response: any) => {
+          this.loginUser.firstName = response.user.firstName;
+          this.loginUser.lastName = response.user.lastName;
+          this.loginUser.role = response.user.role.role;
+          this.loginUser.id = response.user._id;
+          this.loginUser.token = response.token;
           if (
             response.user.role.role === 'ADMIN' ||
             response.user.role.role === 'FACULTY'
           ) {
             this.router.navigateByUrl('/faculty/qgen');
             this.closeDialog();
-            this.encryptRole = this.encryptText(
+            this.loginUser.role = this.encryptText(
               response.user.role.role,
               this.secretKey
             );
-            this.encryptFirstName = this.encryptText(
+            this.loginUser.firstName = this.encryptText(
               response.user.firstName,
               this.secretKey
             );
-            this.encryptLastName = this.encryptText(
+            this.loginUser.lastName = this.encryptText(
               response.user.lastName,
               this.secretKey
             );
-            this.encryptID = this.encryptText(
+            this.loginUser.id = this.encryptText(
               response.user._id,
               this.secretKey
             );
-            localStorage.setItem('token', response.token);
-            localStorage.setItem('role', this.encryptRole);
-            localStorage.setItem('firstname', this.encryptFirstName);
-            localStorage.setItem('lastname', this.encryptLastName);
-            localStorage.setItem('id', this.encryptID);
+            localStorage.setItem('token', this.loginUser.token);
+            localStorage.setItem('role', this.loginUser.role);
+            localStorage.setItem('firstname', this.loginUser.firstName);
+            localStorage.setItem('lastname', this.loginUser.lastName);
+            localStorage.setItem('id', this.loginUser.id);
           } else {
           }
         },
