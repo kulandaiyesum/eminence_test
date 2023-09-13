@@ -34,7 +34,7 @@ export class LoginComponent {
   initForm() {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]], 
+      password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
   togglePasswordVisibility(event: Event) {
@@ -49,7 +49,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.loginService.loginAuthenticate(this.loginForm.value).subscribe(
         (response: any) => {
-          console.log("Response from back end "+response);
+          console.log(response);
         },
         (error) => {
           console.log('Error : ', error);
