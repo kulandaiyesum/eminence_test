@@ -56,25 +56,21 @@ export class SidenavComponent {
   }
 
   private tabletOrLaptopScreenMethod() {
-    this.opened = true; // Adjust this behavior as needed
-
+    this.opened = true;
   }
 
 
   private checkScreenWidth() {
     const screenWidth = window.innerWidth;
-    const mobileScreenWidthThreshold = 576; // Adjust this threshold for mobile screens
-    const tabletScreenWidthThreshold = 768; // Adjust this threshold for tablet screens
-    const laptopScreenWidthThreshold = 1024; // Adjust this threshold for laptop screens
+    const mobileScreenWidthThreshold = 576;
+    const tabletScreenWidthThreshold = 768;
+    const laptopScreenWidthThreshold = 1024;
 
     if (screenWidth < mobileScreenWidthThreshold) {
-      // Mobile screen detected, trigger your mobile screen method
       this.mobileScreenMethod();
     } else if (screenWidth >= mobileScreenWidthThreshold && screenWidth < tabletScreenWidthThreshold) {
-      // Tablet screen detected, trigger your tablet screen method
       this.tabletOrLaptopScreenMethod();
     } else if (screenWidth >= tabletScreenWidthThreshold && screenWidth < laptopScreenWidthThreshold) {
-      // Laptop screen detected, trigger your laptop screen method
       this.tabletOrLaptopScreenMethod();
     }
   }
