@@ -7,6 +7,7 @@ import { BannerContent } from '../../models/banner-content';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
+  componentName: string = 'home';
   scrollingItems: string[] = [
     'University of Kentucky College of Medicine',
     'Geisel School of Medicine',
@@ -29,29 +30,16 @@ export class HomeComponent {
 
   bannerContents: BannerContent[] = [
     {
-      // id: 1,
-      contentHead: 'Actionable Intel',
-      contentSubHead: 'Cutting-Edge',
-      contentParagraph:
-        'Our AI system offers personalized performance analysis to students, providing actionable insights for a more effective and focused study experience. Leverage data to drive student success and enhance learning outcomes.',
-      contentPara2: 'Coming Soon!',
-      isEven: false,
-      backgroundColor: 'var(--bg-gray-color)',
-      img: '../../../../assets/images/home_banner1.avif',
-    },
-    {
-      // id: 2,
       contentHead: 'Infinite Question Generation',
       contentSubHead: 'QGen',
       contentParagraph:
-        'Harness the potential of artificial intelligence with QGen, our automated question generator. Produce unlimited, high-quality, exam-focused questions tailored to the needs of your curriculum, saving time and resources.',
+        'Unlike with most QBanks, when you run out of questions on a particular topic on our platform, simply build more using QGen!',
       contentPara2: '',
       isEven: true,
       backgroundColor: '',
-      img: 'https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1200,f_auto,q_auto/12009105/990599_938505.png',
+      img: '../../../../assets/images/home_banner1.avif',
     },
     {
-      // id: 3,
       contentHead: 'Trustworthy, Accurate Content',
       contentSubHead: 'Dependable',
       contentParagraph:
@@ -59,17 +47,26 @@ export class HomeComponent {
       contentPara2: '',
       isEven: false,
       backgroundColor: 'var(--bg-gray-color)',
-      img: 'https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1200,f_auto,q_auto/12009105/764966_630604.png',
+      img: 'https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1200,f_auto,q_auto/12009105/990599_938505.png',
     },
     {
-      // id: 4,
-      contentHead: 'Affordability & Accesibility',
-      contentSubHead: 'Cost-effective',
+      contentHead: 'Practice With Friends and Others Online',
+      contentSubHead: 'Collaborative',
       contentParagraph:
-        'Through reduced overheads and AI-driven solutions, we provide high-quality, exam-focused content at a significantly reduced rate. Increase access to quality educational resources and promote equitable education within your institution.',
+        'Invite your friends or join a lobby online to practice questions with others in a virtual group exam room',
       contentPara2: 'Coming Soon!',
       isEven: true,
       backgroundColor: '',
+      img: 'https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1200,f_auto,q_auto/12009105/764966_630604.png',
+    },
+    {
+      contentHead: 'Actionable Intel',
+      contentSubHead: 'Cutting-Edge',
+      contentParagraph:
+        'Based on your performance analysis, Eminence will offer QGen recommendations to help you generate questions that turn your weaknesses into strengths.',
+      contentPara2: 'Coming Soon!',
+      isEven: false,
+      backgroundColor: 'var(--bg-gray-color)',
       img: 'https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_9000,w_1200,f_auto,q_auto/12009105/134978_374803.png',
     },
   ];

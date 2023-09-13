@@ -1,0 +1,67 @@
+.enterprise_container {
+  .banner_section {
+    padding-top: 75px;
+    background: var(--bg-enterprise);
+    color: #fff;
+    .banner_content_wrapper {
+      width: 94%;
+      margin: 0 auto;
+      margin-bottom: 10px;
+      .head1 {
+        font-size: 50px;
+      }
+      .p_content {
+        font-size: 20px;
+      }
+      .banner_button {
+        padding: 16px 28px;
+        border: none;
+        color: #fff;
+        background-color: #67cbe4;
+        border-radius: 48px;
+        font-weight: 700;
+        transition: all 0.15s;
+        font-size: 1.25rem;
+        &:hover {
+          background-color: #7bf3ff;
+        }
+      }
+    }
+    .banner_content_2 {
+      padding: 1rem;
+      width: 94%;
+      margin: 0 auto;
+      h4 {
+        margin-bottom: 1rem;
+      }
+      .scrolling-wrapper {
+        width: 100%;
+        overflow: hidden;
+        display: flex;
+        white-space: nowrap;
+        .scrolling-content {
+          display: flex;
+          padding: 20px;
+          animation: scroll 90s linear infinite;
+          .scrolling-item {
+            display: inline-block;
+            margin-right: 20px;
+            padding: 20px;
+            font-size: 1.25rem;
+            color: #fff;
+            border-radius: 8px;
+          }
+          @keyframes scroll {
+            0% {
+              transform: translateX(0);
+            }
+
+            100% {
+              transform: translateX(-100%);
+            }
+          }
+        }
+      }
+    }
+  }
+}
