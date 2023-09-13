@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -25,6 +26,13 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ContactUsAboutUsComponent,
     BannerComponent,
   ],
-  imports: [CommonModule, HomeRoutingModule, MatIconModule, MatExpansionModule,MatDialogModule],
+  imports: [
+    CommonModule,
+    HomeRoutingModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+  ],
 })
 export class HomeModule {}
