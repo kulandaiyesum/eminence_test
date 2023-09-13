@@ -17,10 +17,12 @@ export class LoginComponent {
   hidePassword: boolean = true;
   secretKeyLength = 32;
   secretKey = environment.secretKey;
-  encryptRole!: string;
-  encryptFirstName!: string;
-  encryptLastName!: string;
-  encryptID!: string;
+  encryptRole: string;
+  encryptFirstName: string;
+  encryptLastName: string;
+  public encryptID: string;
+  public user;
+
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,

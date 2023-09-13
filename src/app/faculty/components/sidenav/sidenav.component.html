@@ -46,7 +46,11 @@
         </div>
       </mat-sidenav>
       <mat-sidenav-content>
-        <button *ngIf="!opened" (click)="sidenav.toggle()">Toggles</button>
+        <!-- <button *ngIf="!opened" (click)="sidenav.toggle()">Toggles</button> -->
+        <div class="heading">
+          <h4> <mat-icon *ngIf="!opened" (click)="sidenav.toggle()">arrow_forward</mat-icon>Welcome {{decryptFirstName}}</h4>
+          <mat-icon class="custom-icon">account_circle</mat-icon>
+        </div>
         <div class="sidenav-content" [ngSwitch]="component">
           <div class="sidenav-content-component" *ngSwitchCase="'qgen'">
             <app-qgen></app-qgen>
