@@ -8,4 +8,5 @@ import { BannerContent } from '../../models/banner-content';
 })
 export class BannerComponent {
   @Input() bannerContent!: BannerContent;
+  @Input() componentName: string = '';
 }
