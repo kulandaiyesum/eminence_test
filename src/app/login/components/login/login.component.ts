@@ -7,6 +7,7 @@ import * as CryptoJS from 'crypto-js';
 import { environment } from 'src/environments/environment';
 import { Register } from '../../model/register.model';
 import { Login } from '../../model/login.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +38,8 @@ export class LoginComponent {
     private dialogRef: MatDialogRef<LoginComponent>,
     private formBuilder: FormBuilder,
     private router: Router,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private toastr: ToastrService
   ) {
     this.receivedData = data;
     console.log(this.receivedData);
@@ -98,10 +100,16 @@ export class LoginComponent {
             localStorage.setItem('3', this.loginUser.firstName);
             localStorage.setItem('4', this.loginUser.lastName);
             localStorage.setItem('5', this.loginUser.id);
+            this.toastr.success('Login success', '', {
+              timeOut: 3000,
+            });
           } else {
           }
         },
         (error) => {
+          this.toastr.error('Invalid credentials', '', {
+            timeOut: 3000,
+          });
           console.log('Error : ', error);
         }
       );
