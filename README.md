@@ -35,3 +35,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 <!-- 3 - firstName -->
 <!-- 4 - lastName -->
 <!-- 5 - id -->
+<!-- to install toastr -->
+<!-- npm install ngx-toastr --save -->

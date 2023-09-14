@@ -6,6 +6,7 @@ import { LoginService } from '../../service/login.service';
 import * as CryptoJS from 'crypto-js';
 import { environment } from 'src/environments/environment';
 import { Register } from '../../model/register.model';
+import { Login } from '../../model/login.model';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ import { Register } from '../../model/register.model';
 })
 export class LoginComponent {
   receivedData = '';
-  loginForm!: FormGroup;
+  loginForm: FormGroup;
   hidePassword: boolean = true;
   secretKeyLength = 32;
   secretKey = environment.secretKey;
@@ -25,6 +26,10 @@ export class LoginComponent {
     role: '',
     id: '',
     token: '',
+  };
+  public loginModel: Login = {
+    email: '',
+    password: '',
   };
 
   constructor(
@@ -56,9 +61,8 @@ export class LoginComponent {
   }
 
   onLoginSubmit() {
-    Object.keys(this.loginForm.controls).forEach((controlName) => {
-      this.loginForm.controls[controlName].markAsTouched();
-    });
+    this.loginForm.controls['email'].setValue(this.loginModel.email);
+    this.loginForm.controls['password'].setValue(this.loginModel.password);
     if (this.loginForm.valid) {
       this.loginService.loginAuthenticate(this.loginForm.value).subscribe(
         (response: any) => {
