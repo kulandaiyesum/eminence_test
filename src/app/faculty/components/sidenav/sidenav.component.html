@@ -52,7 +52,7 @@
               >arrow_forward</mat-icon
             >Welcome {{ decryptFirstName }}
           </h4>
-          <mat-icon class="custom-icon">account_circle</mat-icon>
+          <mat-icon class="custom-icon" (click)="profile()">account_circle</mat-icon>
         </div>
         <div class="sidenav-content" [ngSwitch]="component">
           <div class="sidenav-content-component" *ngSwitchCase="'qgen'">

@@ -89,11 +89,11 @@ export class LoginComponent {
               response.user._id,
               this.secretKey
             );
-            localStorage.setItem('token', this.loginUser.token);
-            localStorage.setItem('role', this.loginUser.role);
-            localStorage.setItem('firstname', this.loginUser.firstName);
-            localStorage.setItem('lastname', this.loginUser.lastName);
-            localStorage.setItem('id', this.loginUser.id);
+            localStorage.setItem('1', this.loginUser.token);
+            localStorage.setItem('2', this.loginUser.role);
+            localStorage.setItem('3', this.loginUser.firstName);
+            localStorage.setItem('4', this.loginUser.lastName);
+            localStorage.setItem('5', this.loginUser.id);
           } else {
           }
         },

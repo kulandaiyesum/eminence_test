@@ -4,8 +4,8 @@
     <p (click)="closeDialog()">X</p>
   </header>
   <div class="login-fields">
-    <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
-      <input type="text" placeholder="Email address" formControlName="email" />
+    <form [formGroup]="loginForm" >
+      <input type="text" placeholder="Email address" formControlName="email"  />
       <input
         type="password"
         placeholder="Password"
@@ -35,7 +35,7 @@
       >
         Please fill in all the required fields.
       </p>
-      <button id="login" type="submit">LOG IN</button>
+      <button id="login" type="submit" (click)="onLoginSubmit()">LOG IN</button>
       <br />
       <button id="register" type="button">REGISTER</button>
       <a href="">Forgot password</a>

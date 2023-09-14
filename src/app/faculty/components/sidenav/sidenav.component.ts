@@ -1,7 +1,9 @@
 import { Component,HostListener, Renderer2 } from '@angular/core';
+import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-sidenav',
@@ -15,7 +17,8 @@ export class SidenavComponent {
   decryptFirstName!:string;
   secretKey=environment.secretKey
   constructor(
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private router:Router
   ) {
     this.checkScreenWidth();
   }
@@ -73,6 +76,22 @@ export class SidenavComponent {
     } else if (screenWidth >= tabletScreenWidthThreshold && screenWidth < laptopScreenWidthThreshold) {
       this.tabletOrLaptopScreenMethod();
     }
+  }
+
+  profile(){
+    Swal.fire({
+      title: 'Logout',
+      text: 'Are you sure you want to logout?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, logout',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        this.router.navigate(['']);
+      }
+    });
   }
 
 }
