@@ -9,6 +9,9 @@ import { LoginModule } from './login/login.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { MasterModule } from './master/master.module';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +21,7 @@ import { MasterModule } from './master/master.module';
     BrowserAnimationsModule,
     NgbModule,
     LoginModule,HttpClientModule,
-    ToastrModule.forRoot(),MasterModule
+    ToastrModule.forRoot(),MatPaginatorModule,MatSortModule,MatTableModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
