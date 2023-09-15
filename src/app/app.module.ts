@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginModule } from './login/login.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { MasterModule } from './master/master.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,7 +18,7 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule,
     NgbModule,
     LoginModule,HttpClientModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot(),MasterModule
   ],
   providers: [],
   bootstrap: [AppComponent],
