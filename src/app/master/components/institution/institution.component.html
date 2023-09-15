@@ -4,11 +4,55 @@
       <h4>INSTITUTION</h4>
     </div>
     <div class="forms">
-      <form>
-        <input type="text" placeholder="Name" />
-        <input type="text" placeholder="Email" />
-        <input type="text" placeholder="Address" />
-        <button>Submit</button>
+      <form #instituteForm="ngForm">
+        <input
+          type="text"
+          placeholder="Name"
+          name="name"
+          [(ngModel)]="institutionModel.name"
+          required
+        />
+        <div
+          *ngIf="instituteForm.controls['name']?.errors?.['required'] && instituteForm.controls['name']?.touched"
+          class="error-message"
+        >
+          Name is required.
+        </div>
+        <input
+          type="text"
+          placeholder="Email"
+          name="email"
+          [(ngModel)]="institutionModel.email"
+          required
+          email
+        />
+        <div
+          *ngIf="instituteForm.controls['email']?.errors?.['required'] && instituteForm.controls['email']?.touched"
+          class="error-message"
+        >
+           Email is required.
+        </div>
+        <div
+        *ngIf="instituteForm.controls['email']?.errors?.['email'] && instituteForm.controls['email']?.touched"
+        class="error-message"
+      >
+        Invalid email format.
+      </div>
+        <input
+          type="text"
+          placeholder="Address"
+          name="address"
+          [(ngModel)]="institutionModel.address"
+          required
+        />
+        <div
+          *ngIf="instituteForm.controls['address']?.errors?.['required'] && instituteForm.controls['address']?.touched"
+          class="error-message"
+        >
+          Address is required.
+        </div>
+
+        <button type="submit" (click)="onInstituteSubmit()">Submit</button>
       </form>
     </div>
   </div>

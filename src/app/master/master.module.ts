@@ -6,6 +6,8 @@ import { PackageComponent } from './components/package/package.component';
 import { InstitutionComponent } from './components/institution/institution.component';
 import { SubscriptionComponent } from './components/subscription/subscription.component';
 import { RoleComponent } from './components/role/role.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -17,7 +19,7 @@ import { RoleComponent } from './components/role/role.component';
   ],
   imports: [
     CommonModule,
-    MasterRoutingModule
+    MasterRoutingModule,FormsModule, ReactiveFormsModule
   ],
   exports: [RoleComponent,InstitutionComponent,SubscriptionComponent,PackageComponent],
 })
