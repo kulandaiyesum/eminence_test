@@ -1,0 +1,40 @@
+<div class="enterprise_container">
+  <section class="banner_section">
+    <div class="banner_content_wrapper">
+      <div class="head1">
+        <strong style="color: var(--gold-color);">Vetted,</strong>&nbsp;<strong
+          style="color: var(--blue2-color);">High-Quality</strong><br><strong>Content for Your <br>Organization</strong>
+      </div>
+      <div>
+        <p style="color: var(--gold-color); margin-bottom: 2rem;" class="p_content">Streamline Education &#124; Empower
+          Learners &#124; Strengthen Academic Performance</p>
+        <p style="font-size: 17px;">Ask our medical knowledge base anything!</p>
+      </div>
+      <button class="banner_button">Contact Us!</button>
+    </div>
+    <div class="banner_content_2">
+      <h4 style="font-weight: bold; text-align: center;">Enabling Institutions to Empower Their Teams Across the World!
+      </h4>
+      <div class="scrolling-wrapper">
+        <div class="scrolling-content">
+          <ng-container *ngFor="let item of scrollingItems; let last = last">
+            <div class="scrolling-item">{{ item }}</div>
+          </ng-container>
+        </div>
+        <div class="scrolling-content">
+          <ng-container *ngFor="let item of scrollingItems; let last = last">
+            <div class="scrolling-item">{{ item }}</div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="banner2_section">
+    <ng-container *ngFor="let bannerContent of bannerContents">
+      <app-banner [bannerContent]="bannerContent" [componentName]="componentName"></app-banner>
+    </ng-container>
+  </section>
+  <section class="contact_us_form">
+    <app-contact-us-enterprise></app-contact-us-enterprise>
+  </section>
+</div>

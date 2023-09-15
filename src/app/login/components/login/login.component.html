@@ -1,0 +1,55 @@
+<div class="login-container">
+  <header>
+    <h2>MEMBER LOGIN</h2>
+    <p (click)="closeDialog()">X</p>
+  </header>
+  <div class="login-fields">
+    <form #loginForm="ngForm">
+      <input
+        type="text"
+        placeholder="Email address"
+        name="email"
+        [(ngModel)]="loginModel.email"
+        required
+        email
+      />
+      <div
+        *ngIf="loginForm.controls['email']?.errors?.['required'] && loginForm.controls['email']?.touched"
+        class="error-message"
+      >
+        Email is required.
+      </div>
+      <div
+        *ngIf="loginForm.controls['email']?.errors?.['email'] && loginForm.controls['email']?.touched"
+        class="error-message"
+      >
+        Invalid email format.
+      </div>
+      <input
+        type="password"
+        placeholder="Password"
+        name="password"
+        [(ngModel)]="loginModel.password"
+        required
+        minlength="8"
+      />
+      <div
+        *ngIf="loginForm.controls['password']?.errors?.['required'] && loginForm.controls['password']?.touched"
+        class="error-message"
+      >
+        Password is required.
+      </div>
+      <div
+        *ngIf="loginForm.controls['password']?.errors?.['minlength'] && loginForm.controls['password']?.touched"
+        class="error-message"
+      >
+        Password must be at least 8 characters long.
+      </div>
+
+      <button id="login" type="submit" (click)="onLoginSubmit()">LOG IN</button>
+      <br />
+      <button id="register" type="button">REGISTER</button>
+      <a href="">Forgot password</a>
+    </form>
+  </div>
+</div>

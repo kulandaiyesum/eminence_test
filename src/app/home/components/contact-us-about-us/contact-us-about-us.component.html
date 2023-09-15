@@ -1,0 +1,81 @@
+<div class="about-us">
+  <div class="about-us-wrapper container">
+    <p class="form_head">Contact Us</p>
+    <p>
+      Found a bug? Interested in a business or academic plan? We want to hear
+      from you!
+    </p>
+    <form [formGroup]="contactUsForm" (ngSubmit)="submitForm()">
+      <div class="form-group form_input_container">
+        <label for="name">Name <span style="color: #e64751"> *</span></label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          formControlName="name"
+        />
+        <div
+          style="color: #e64751"
+          class="error"
+          *ngIf="
+            contactUsForm.controls['name'].hasError('required') &&
+            contactUsForm.controls['name'].touched
+          "
+        >
+          Please fill this field
+        </div>
+      </div>
+      <div class="form-group form_input_container">
+        <label for="email">Email<span style="color: #e64751"> *</span></label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          formControlName="email"
+        />
+        <div
+          style="color: #e64751"
+          class="error"
+          *ngIf="
+            contactUsForm.controls['email'].hasError('required') &&
+            contactUsForm.controls['email'].touched
+          "
+        >
+          Please fill this field
+        </div>
+      </div>
+      <div class="form-group form_input_container">
+        <label for="contactTextarea"
+          >Message (Include size of organization)<span style="color: #e64751">
+            *</span
+          ></label
+        >
+        <textarea
+          formControlName="message"
+          class="form-control"
+          id="contactTextarea"
+          rows="3"
+        ></textarea>
+        <div
+          style="color: #e64751"
+          class="error"
+          *ngIf="
+            contactUsForm.controls['message'].hasError('required') &&
+            contactUsForm.controls['message'].touched
+          "
+        >
+          Please fill this field
+        </div>
+      </div>
+      <div class="btn_container">
+        <button
+          class="submit_button"
+          type="submit"
+          [disabled]="contactUsForm.invalid"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
