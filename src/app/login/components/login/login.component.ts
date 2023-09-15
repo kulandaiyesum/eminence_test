@@ -15,7 +15,6 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  receivedData = '';
   loginForm: FormGroup;
   hidePassword: boolean = true;
   secretKeyLength = 32;
@@ -41,8 +40,7 @@ export class LoginComponent {
     private loginService: LoginService,
     private toastr: ToastrService
   ) {
-    this.receivedData = data;
-    console.log(this.receivedData);
+
   }
   ngOnInit(): void {
     this.initForm();

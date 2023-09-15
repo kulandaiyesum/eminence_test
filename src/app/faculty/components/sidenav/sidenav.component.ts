@@ -26,7 +26,7 @@ export class SidenavComponent {
     this.decryptUserRole = this.decryptText(storedUserRole, this.secretKey);
     console.log(this.decryptUserRole);
     if (this.decryptUserRole === 'ADMIN') {
-      this.component = 'role';
+      this.component = 'institution';
     } else {
       this.component = 'qgen';
     }
