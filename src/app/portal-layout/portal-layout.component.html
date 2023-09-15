@@ -1,0 +1,51 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav
+    #drawer
+    class="sidenav"
+    fixedInViewport
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false"
+  >
+    <mat-toolbar class="logo_navigation">
+      <img
+        src="../../assets/images/Eminence_logo.png"
+        width="40"
+        height="40"
+        alt="logo"
+      />
+      <span class="logo_head">Eminence</span>
+      <div class="icon_back" (click)="drawer.toggle()" (click)="toggleMenu()">
+        <img
+          src="../../assets/images/back-button.png"
+          alt="back-button"
+          width="24"
+          height="24"
+        />
+      </div>
+    </mat-toolbar>
+    <div class="navigation_links">
+      <!-- <a routerLink="" routerLinkActive="activelink">Dashboard</a> -->
+      <a routerLink="/q/admin/master" routerLinkActive="activelink">Master</a>
+      <!-- <a mat-list-item  routerLinkActive="activelink">Add User</a> -->
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="drawer.toggle()"
+        (click)="hideMenu()"
+        *ngIf="showToggleButton || (isHandset$ | async)"
+      >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <span class="welcome_user">Welcome Admin</span>
+      <mat-icon class="user_account">account_circle</mat-icon>
+    </mat-toolbar>
+    <!-- Child routes for admin, faculty, vetter and Registered User -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
