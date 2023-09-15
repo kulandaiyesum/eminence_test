@@ -37,6 +37,7 @@ import { QgenComponent } from './components/qgen/qgen.component';
 import { EditorComponent } from './components/editor/editor.component';
 import { AskeminenceComponent } from './components/askeminence/askeminence.component';
 import { HistoryComponent } from './components/history/history.component';
+import { MasterModule } from '../master/master.module';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { HistoryComponent } from './components/history/history.component';
     MatSnackBarModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
-  ]
+    MatPaginatorModule,MasterModule
+  ],
+  exports: [SidenavComponent],
 })
 export class FacultyModule { }
