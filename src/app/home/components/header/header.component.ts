@@ -21,13 +21,15 @@ export class HeaderComponent implements OnInit {
         ) {
           this.currentRoute = event.url;
         }
+        if (event.url === '/' || event.url === '') {
+          this.currentRoute = '/home';
+        }
       }
     });
   }
   ngOnInit(): void {}
 
   openLoginPopUp() {
-    this.isMenuDisply=!this.isMenuDisply
     const dialogRef = this.dialog.open(LoginComponent, {
       width: '400px',
       height: 'auto',
