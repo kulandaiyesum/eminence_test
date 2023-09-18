@@ -22,12 +22,15 @@ export class InstitutionComponent {
   hidePassword: boolean = true;
   secretKeyLength = 32;
   secretKey = environment.secretKey;
+  elementStatus = true;
+
   displayedColumns: string[] = [
     'name',
     'mobile',
     'email',
     'address',
     'state',
+    'status',
     'action',
   ];
   public dataSource;
@@ -74,6 +77,11 @@ export class InstitutionComponent {
   togglePasswordVisibility(event: Event) {
     event.preventDefault();
     this.hidePassword = !this.hidePassword;
+  }
+
+
+  toggleStatus() {
+    this.elementStatus = !this.elementStatus;
   }
 
   onInstituteSubmit() {
