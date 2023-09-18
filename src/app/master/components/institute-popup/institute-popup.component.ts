@@ -118,6 +118,7 @@ export class InstitutePopupComponent {
         .subscribe(
           (response: any) => {
             console.log(response);
+            this.closeDialog()
           },
           (error) => {
             console.error('Not data get', error);

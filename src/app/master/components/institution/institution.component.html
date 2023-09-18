@@ -57,6 +57,13 @@
                 element.address
               }}</mat-cell>
             </ng-container>
+            <!-- status Column -->
+            <ng-container matColumnDef="status">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <mat-slide-toggle></mat-slide-toggle>
+              </mat-cell>
+            </ng-container>
 
             <!-- Action -->
             <ng-container matColumnDef="action">
