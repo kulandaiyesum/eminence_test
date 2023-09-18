@@ -6,12 +6,13 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginModule } from './login/login.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { MasterModule } from './master/master.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { AuthHttpInterceptorService } from './shared/service/auth-http-interceptor..service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,10 +21,20 @@ import { MatTableModule } from '@angular/material/table';
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
-    LoginModule,HttpClientModule,
-    ToastrModule.forRoot(),MatPaginatorModule,MatSortModule,MatTableModule,
+    LoginModule,
+    HttpClientModule,
+    ToastrModule.forRoot(),
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthHttpInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
