@@ -1,0 +1,51 @@
+.example-card {
+  width: 300px;
+  margin-top: 50px;
+  margin-left: 120px;
+  height: 280px;
+  margin-bottom: 20px;
+}
+table {
+  width: 100%;
+}
+#table {
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
+th,
+td {
+  width: 25%;
+}
+.example-full-width {
+  width: 100%;
+  text-align: center;
+}
+th {
+  background-color: #37474f;
+  //   color: white;
+}
+#previousButton {
+  left: 1px;
+  bottom: 35px;
+  float: left;
+  position: fixed;
+}
+
+#nextButton {
+  right: 18px;
+  bottom: 35px;
+  float: right;
+  position: fixed;
+}
+
+.example-card2 {
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: darkslategray;
+  margin-top: -30px;
+  margin-left: -10px;
+  padding: 1px;
+  //   color: white;
+  height: 35px;
+}

@@ -11,11 +11,10 @@ import { MatSort } from '@angular/material/sort';
 import { ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 
-
 @Component({
   selector: 'app-institution',
   templateUrl: './institution.component.html',
-  styleUrls: ['./institution.component.scss']
+  styleUrls: ['./institution.component.scss'],
 })
 export class InstitutionComponent {
   instituteForm: FormGroup;
@@ -23,36 +22,41 @@ export class InstitutionComponent {
   secretKeyLength = 32;
   secretKey = environment.secretKey;
 
-
-  public institutionModel:Institution={
+  public institutionModel: Institution = {
     name: '',
     email: '',
-    address: ''
-  }
+    address: '',
+  };
 
-  instituteData=[
+  instituteData = [
     {
-      name: 'AVM',
-      id: '1',
+      instituteName: 'AVM',
+
       email: 'AVM2gmail.com',
       address: 'Main road',
     },
     {
-      name: 'BVM',
-      id: '2',
+      instituteName: 'BVM',
       email: 'BVM2gmail.com',
       address: 'Tirupati road',
     },
     {
-      name: 'IMS',
-      id: '3',
+      instituteName: 'IMS',
       email: 'IMS2gmail.com',
       address: 'Trichy road',
     },
-
-  ]
-  displayedColumns: string[] = ['name', 'id', 'email', 'address'];
-  dataSource: MatTableDataSource<any>;
+  ];
+  dataSource;
+  displayedColumns: string[] = [
+    'instituteName',
+    'mailId',
+    'mobileNo',
+    'GSTIN',
+    'state',
+    'country',
+    'status',
+    'actions',
+  ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -60,10 +64,10 @@ export class InstitutionComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private toastr: ToastrService,
-    public dialog: MatDialog,
+    public dialog: MatDialog
   ) {
     this.dataSource = new MatTableDataSource(this.instituteData);
-   }
+  }
 
   ngOnInit(): void {
     this.initForm();
@@ -86,15 +90,17 @@ export class InstitutionComponent {
   }
 
   onInstituteSubmit() {
-    console.log("submitted");
+    console.log('submitted');
     this.instituteForm.controls['email'].setValue(this.institutionModel.email);
     this.instituteForm.controls['name'].setValue(this.institutionModel.name);
-    this.instituteForm.controls['address'].setValue(this.institutionModel.address);
+    this.instituteForm.controls['address'].setValue(
+      this.institutionModel.address
+    );
     if (this.instituteForm.valid) {
       console.log(this.instituteForm.value);
     }
   }
-  addData(){
+  addData() {
     const dialogRef = this.dialog.open(InstitutePopupComponent, {
       width: '350px',
       height: 'auto',
@@ -109,4 +115,8 @@ export class InstitutionComponent {
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+  addCustomer() {}
+  changeCustomerStatus(list) {}
+  editCustomer(customer) {}
+  deleteCustomer(list) {}
 }

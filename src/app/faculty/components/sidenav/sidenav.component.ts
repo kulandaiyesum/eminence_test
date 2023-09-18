@@ -60,7 +60,10 @@ export class SidenavComponent {
     this.opened = false;
     this.component = 'role';
   }
-
+  topic() {
+    this.opened = false;
+    this.component = 'topic';
+  }
   institution() {
     this.opened = false;
     this.component = 'institution';

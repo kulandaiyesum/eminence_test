@@ -18,26 +18,33 @@
               <li
                 (click)="changeBackgroundColor(0)"
                 [ngClass]="{ selected: selectedIndex === 0 }"
+                (click)="topic()"
+              >
+                Topic
+              </li>
+              <li
+                (click)="changeBackgroundColor(1)"
+                [ngClass]="{ selected: selectedIndex === 0 }"
                 (click)="role()"
               >
                 Role
               </li>
               <li
-                (click)="changeBackgroundColor(1)"
+                (click)="changeBackgroundColor(2)"
                 [ngClass]="{ selected: selectedIndex === 1 }"
                 (click)="institution()"
               >
                 Institution
               </li>
               <li
-                (click)="changeBackgroundColor(2)"
+                (click)="changeBackgroundColor(3)"
                 [ngClass]="{ selected: selectedIndex === 2 }"
                 (click)="subscription()"
               >
                 Subscription
               </li>
               <li
-                (click)="changeBackgroundColor(3)"
+                (click)="changeBackgroundColor(4)"
                 [ngClass]="{ selected: selectedIndex === 3 }"
                 (click)="package()"
               >
@@ -45,7 +52,6 @@
               </li>
             </ul>
           </div>
-
         </div>
         <div class="faculty" *ngIf="decryptUserRole === 'FACULTY'">
           <div class="navigation-header">
@@ -94,7 +100,9 @@
               >arrow_forward</mat-icon
             >Welcome {{ decryptFirstName }}
           </h4>
-          <mat-icon class="custom-icon" (click)="profile()">account_circle</mat-icon>
+          <mat-icon class="custom-icon" (click)="profile()"
+            >account_circle</mat-icon
+          >
         </div>
         <div class="sidenav-content" [ngSwitch]="component">
           <div class="sidenav-content-component" *ngSwitchCase="'qgen'">
@@ -111,6 +119,9 @@
           </div>
           <div class="sidenav-content-component" *ngSwitchCase="'role'">
             <app-role></app-role>
+          </div>
+          <div class="sidenav-content-component" *ngSwitchCase="'topic'">
+            <app-topic></app-topic>
           </div>
           <div class="sidenav-content-component" *ngSwitchCase="'institution'">
             <app-institution></app-institution>
