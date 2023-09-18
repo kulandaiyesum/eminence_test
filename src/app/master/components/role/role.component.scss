@@ -1,0 +1,55 @@
+.role_table_container {
+  width: 80%;
+  margin: 0 auto;
+  .search_and_add {
+    display: flex;
+    justify-content: space-between;
+    .search_box {
+      .search_field {
+        min-width: 330px;
+      }
+    }
+  }
+  .table-container {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    table {
+      width: 100%;
+      border-radius: 8px;
+      tr {
+        &:first-child {
+          border-radius: 8px 8px 0 0;
+        }
+        th {
+          background-color: #3b82f6;
+          font-size: 16px;
+          font-weight: 500;
+          color: #fff;
+          &:first-child {
+            border-radius: 8px 0 0 0;
+          }
+          &:last-child {
+            border-radius: 0 8px 0 0;
+          }
+        }
+        td {
+        }
+      }
+    }
+
+    .mat-paginator {
+      border-radius: 0 0 8px 8px;
+      width: 100% !important;
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      .mat-select-value {
+        font-size: 14px;
+      }
+    }
+  }
+}

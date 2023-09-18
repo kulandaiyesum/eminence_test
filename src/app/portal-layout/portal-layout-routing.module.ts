@@ -3,17 +3,17 @@ import { RouterModule, Routes } from '@angular/router';
 import { PortalLayoutComponent } from './portal-layout.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: PortalLayoutComponent,
-    children: [
-      {
-        path: 'admin',
-        loadChildren: () =>
-          import('../admin/admin.module').then((m) => m.AdminModule),
-      },
-    ],
-  },
+  // {
+  //   path: '',
+  //   component: PortalLayoutComponent,
+  //   children: [
+  //     {
+  //       path: 'admin',
+  //       loadChildren: () =>
+  //         import('../admin/admin.module').then((m) => m.AdminModule),
+  //     },
+  //   ],
+  // },
 ];
 
 @NgModule({
