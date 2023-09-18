@@ -1,23 +1,23 @@
-.main{
+.main {
   width: auto;
   height: auto;
   padding: 10px;
-  .data{
+  .data {
     width: auto;
     height: auto;
-    // border: 1px solid red;
-    .heading{
+
+    .heading {
       width: 100%;
       height: auto;
       text-align: center;
     }
-    .forms{
+    .forms {
       width: 100%;
       height: auto;
       display: flex;
       justify-content: center;
-      // border: 1px solid #1bb0e6;
-      form{
+
+      form {
         width: 70%;
         height: auto;
         input {

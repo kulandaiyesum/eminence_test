@@ -20,6 +20,32 @@
         </div>
         <input
           type="text"
+          placeholder="Mobile"
+          name="mobile"
+          [(ngModel)]="institutionModel.mobile"
+          required
+        />
+        <div
+          *ngIf="instituteForm.controls['mobile']?.errors?.['required'] && instituteForm.controls['mobile']?.touched"
+          class="error-message"
+        >
+          Mobile is required.
+        </div>
+        <input
+          type="text"
+          placeholder="State"
+          name="state"
+          [(ngModel)]="institutionModel.state"
+          required
+        />
+        <div
+          *ngIf="instituteForm.controls['state']?.errors?.['required'] && instituteForm.controls['state']?.touched"
+          class="error-message"
+        >
+          State is required.
+        </div>
+        <input
+          type="text"
           placeholder="Email"
           name="email"
           [(ngModel)]="institutionModel.email"
@@ -30,14 +56,14 @@
           *ngIf="instituteForm.controls['email']?.errors?.['required'] && instituteForm.controls['email']?.touched"
           class="error-message"
         >
-           Email is required.
+          Email is required.
         </div>
         <div
-        *ngIf="instituteForm.controls['email']?.errors?.['email'] && instituteForm.controls['email']?.touched"
-        class="error-message"
-      >
-        Invalid email format.
-      </div>
+          *ngIf="instituteForm.controls['email']?.errors?.['email'] && instituteForm.controls['email']?.touched"
+          class="error-message"
+        >
+          Invalid email format.
+        </div>
         <input
           type="text"
           placeholder="Address"
@@ -52,7 +78,16 @@
           Address is required.
         </div>
 
-        <button type="submit" (click)="onInstituteSubmit()">Submit</button>
+        <button
+          type="submit"
+          (click)="onInstituteSubmit()"
+          *ngIf="!visibleUpdate"
+        >
+          Submit
+        </button>
+        <button type="submit" *ngIf="visibleUpdate" (click)="updateInstitute()">
+          Update
+        </button>
       </form>
     </div>
   </div>

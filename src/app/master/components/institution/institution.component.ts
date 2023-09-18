@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { Institution } from '../../model/institution.class';
@@ -6,10 +6,11 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { InstitutePopupComponent } from '../institute-popup/institute-popup.component';
+import { InstituteserviceService } from '../../service/instituteservice.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-institution',
@@ -21,59 +22,42 @@ export class InstitutionComponent {
   hidePassword: boolean = true;
   secretKeyLength = 32;
   secretKey = environment.secretKey;
+  displayedColumns: string[] = [
+    'name',
+    'mobile',
+    'email',
+    'address',
+    'state',
+    'action',
+  ];
+  public dataSource;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  public instituteDetails: any;
 
   public institutionModel: Institution = {
     name: '',
     email: '',
     address: '',
+    mobile: '',
+    state: '',
+    _id: '',
   };
 
-  instituteData = [
-    {
-      instituteName: 'AVM',
+  // Sample data (replace with your own data source):
 
-      email: 'AVM2gmail.com',
-      address: 'Main road',
-    },
-    {
-      instituteName: 'BVM',
-      email: 'BVM2gmail.com',
-      address: 'Tirupati road',
-    },
-    {
-      instituteName: 'IMS',
-      email: 'IMS2gmail.com',
-      address: 'Trichy road',
-    },
-  ];
-  dataSource;
-  displayedColumns: string[] = [
-    'instituteName',
-    'mailId',
-    'mobileNo',
-    'GSTIN',
-    'state',
-    'country',
-    'status',
-    'actions',
-  ];
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private toastr: ToastrService,
-    public dialog: MatDialog
-  ) {
-    this.dataSource = new MatTableDataSource(this.instituteData);
-  }
+
+    public dialog: MatDialog,
+    public instituteService: InstituteserviceService
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
-    console.log(this.instituteData);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.getAllInstituteData();
   }
 
   initForm() {
@@ -81,6 +65,9 @@ export class InstitutionComponent {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       address: ['', Validators.required],
+      mobile: ['', Validators.required],
+      state: ['', Validators.required],
+      _id: [''],
     });
   }
 
@@ -104,7 +91,50 @@ export class InstitutionComponent {
     const dialogRef = this.dialog.open(InstitutePopupComponent, {
       width: '350px',
       height: 'auto',
-      data: 'Message from header',
+      data: null,
+      // Other MatDialog options
+    });
+    // You can handle dialog events here if needed
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+      this.getAllInstituteData();
+    });
+  }
+
+  getAllInstituteData() {
+    this.instituteService.getAllInstitute().subscribe(
+      (response: any) => {
+        console.log(response);
+        console.log(response.result);
+        this.instituteDetails = response.result;
+        this.dataSource = new MatTableDataSource(this.instituteDetails);
+        // Connect the paginator and sort to the data source
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      (error) => {
+        console.error('Not data get', error);
+      }
+    );
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+    // Reset sort to its initial state
+    this.dataSource.sort?.sort({ id: '', start: 'asc', disableClear: false });
+  }
+
+  updateInstitute(data: any) {
+    console.log(data);
+    const dialogRef = this.dialog.open(InstitutePopupComponent, {
+      width: '350px',
+      height: 'auto',
+      data: data,
       // Other MatDialog options
     });
     // You can handle dialog events here if needed
@@ -112,8 +142,30 @@ export class InstitutionComponent {
       console.log(`Dialog result: ${result}`);
     });
   }
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  deleteInstitute(element: any) {
+    Swal.fire({
+      title: 'Are you sure you want to delete?',
+      text: 'This action cannot be undone!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.performDelete(element);
+      }
+    });
+  }
+  performDelete(element: any) {
+    console.log(element);
+    this.instituteService.deleteInstitution(element).subscribe(
+      (response: any) => {
+        console.log(response);
+      },
+      (error) => {
+        console.error('Delete failed', error);
+      }
+    );
   }
   addCustomer() {}
   changeCustomerStatus(list) {}
