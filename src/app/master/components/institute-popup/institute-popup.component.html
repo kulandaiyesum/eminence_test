@@ -20,6 +20,32 @@
         </div>
         <input
           type="text"
+          placeholder="Mobile"
+          name="mobile"
+          [(ngModel)]="institutionModel.mobile"
+          required
+        />
+        <div
+          *ngIf="instituteForm.controls['mobile']?.errors?.['required'] && instituteForm.controls['mobile']?.touched"
+          class="error-message"
+        >
+          Mobile is required.
+        </div>
+        <input
+          type="text"
+          placeholder="State"
+          name="state"
+          [(ngModel)]="institutionModel.state"
+          required
+        />
+        <div
+          *ngIf="instituteForm.controls['state']?.errors?.['required'] && instituteForm.controls['state']?.touched"
+          class="error-message"
+        >
+          State is required.
+        </div>
+        <input
+          type="text"
           placeholder="Email"
           name="email"
           [(ngModel)]="institutionModel.email"
@@ -59,7 +85,9 @@
         >
           Submit
         </button>
-        <button type="submit" *ngIf="visibleUpdate">Update</button>
+        <button type="submit" *ngIf="visibleUpdate" (click)="updateInstitute()">
+          Update
+        </button>
       </form>
     </div>
   </div>

@@ -15,11 +15,18 @@
       .control {
         width: auto;
         height: auto;
-
+        // border: 1px solid black;
         h4 {
           text-align: center;
         }
-
+        .button{
+          display: flex;
+          justify-content: right;
+          button{
+            background-color: #1bb0e6;
+            color: #fff;
+          }
+        }
         #remove {
           margin-left: 20px;
         }

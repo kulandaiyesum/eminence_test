@@ -10,6 +10,7 @@ import { InstituteserviceService } from '../../service/instituteservice.service'
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import Swal from 'sweetalert2';
 
 interface UserData {
   id: number;
@@ -28,15 +29,26 @@ export class InstitutionComponent {
   hidePassword: boolean = true;
   secretKeyLength = 32;
   secretKey = environment.secretKey;
-  displayedColumns: string[] = ['id', 'name', 'email', 'address', 'action'];
+  displayedColumns: string[] = [
+    'name',
+    'mobile',
+    'email',
+    'address',
+    'state',
+    'action',
+  ];
   public dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  public instituteDetails: any;
 
   public institutionModel: Institution = {
     name: '',
     email: '',
     address: '',
+    mobile: '',
+    state: '',
+    _id: '',
   };
 
   // Sample data (replace with your own data source):
@@ -67,13 +79,7 @@ export class InstitutionComponent {
 
   ngOnInit(): void {
     this.initForm();
-    // this.getAllInstituteData();
-    this.dataSource = new MatTableDataSource(this.data);
-  }
-  ngAfterViewInit() {
-    // Connect the paginator and sort to the data source
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.getAllInstituteData();
   }
 
   initForm() {
@@ -81,6 +87,9 @@ export class InstitutionComponent {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       address: ['', Validators.required],
+      mobile: ['', Validators.required],
+      state: ['', Validators.required],
+      _id: [''],
     });
   }
 
@@ -110,6 +119,7 @@ export class InstitutionComponent {
     // You can handle dialog events here if needed
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
+      this.getAllInstituteData();
     });
   }
 
@@ -117,6 +127,12 @@ export class InstitutionComponent {
     this.instituteService.getAllInstitute().subscribe(
       (response: any) => {
         console.log(response);
+        console.log(response.result);
+        this.instituteDetails = response.result;
+        this.dataSource = new MatTableDataSource(this.instituteDetails);
+        // Connect the paginator and sort to the data source
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       },
       (error) => {
         console.error('Not data get', error);
@@ -148,7 +164,29 @@ export class InstitutionComponent {
       console.log(`Dialog result: ${result}`);
     });
   }
-  deleteInstitute(data: any) {
-    console.log(data);
+  deleteInstitute(element: any) {
+    Swal.fire({
+      title: 'Are you sure you want to delete?',
+      text: 'This action cannot be undone!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.performDelete(element);
+      }
+    });
+  }
+  performDelete(element: any) {
+    console.log(element);
+    this.instituteService.deleteInstitution(element).subscribe(
+      (response: any) => {
+        console.log(response);
+      },
+      (error) => {
+        console.error('Delete failed', error);
+      }
+    );
   }
 }
