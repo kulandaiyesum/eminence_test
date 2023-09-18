@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { RoleFormComponent } from './components/role-form/role-form.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -22,6 +22,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     HttpClientModule,
     MatTableModule,
     MatPaginatorModule,
+    FormsModule,
     ReactiveFormsModule,
     MatIconModule,
     MatButtonModule,

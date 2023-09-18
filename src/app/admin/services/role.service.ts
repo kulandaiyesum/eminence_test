@@ -9,9 +9,6 @@ import { Role } from '../model/role';
 })
 export class RoleService {
   private roleUrl: string = environment.localdomain + 'role';
-  private headers = new HttpHeaders()
-    .set('Content-Type', 'application/json')
-    .set('Authorization', `Bearer ${this.getToken()}`);
   constructor(private http: HttpClient) {}
 
   getToken() {
@@ -23,28 +20,20 @@ export class RoleService {
    * @returns Role[]
    */
   public getRole() {
-    return this.http.get<Role[]>(`${this.roleUrl}/getAll`, {
-      headers: this.headers,
-    });
+    return this.http.get<Role[]>(`${this.roleUrl}/getAll`);
   }
   public saveRole(role: string) {
     const body = { role: role };
-    return this.http.post(`${this.roleUrl}/save`, body, {
-      headers: this.headers,
-    });
+    return this.http.post(`${this.roleUrl}/save`, body);
   }
 
   public editRole(roleObject: any) {
-    console.log(roleObject, 'put method');
-    return this.http.put(`${this.roleUrl}/update`, roleObject, {
-      headers: this.headers,
-    });
+    return this.http.put(`${this.roleUrl}/update`, roleObject);
   }
   public deleteRole(roleId: string) {
     const params = new HttpParams().set('_id', roleId);
     return this.http.delete(`${this.roleUrl}/delete`, {
-      headers: this.headers,
-      params,
+      params
     });
   }
 }

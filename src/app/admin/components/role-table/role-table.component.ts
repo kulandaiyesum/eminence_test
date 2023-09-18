@@ -18,15 +18,15 @@ export class RoleTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort: MatSort | any;
   dataSource: MatTableDataSource<Role>;
-  displayedColumns: string[] = [
-    'sno',
-    'role',
-    // 'status',
-    'actions',
-  ];
+  displayedColumns: string[] = ['sno', 'role', 'status', 'actions'];
   constructor(private roleService: RoleService, private dialog: MatDialog) {}
   ngOnInit(): void {
     this.getRole();
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   getRole() {
@@ -47,9 +47,11 @@ export class RoleTableComponent implements OnInit {
     const dialogRef = this.dialog.open(RoleFormComponent);
     dialogRef.afterClosed().subscribe((result) => {
       console.log('AddRole ', result);
+      if(result === undefined) {
+        return;
+      }
       this.getRole();
     });
-    
   }
   editRole(roleObject: any): void {
     const dialogRef = this.dialog.open(RoleFormComponent, {
@@ -58,6 +60,9 @@ export class RoleTableComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed', result);
+      if (result === undefined) {
+        return;
+      }
       this.getRole();
     });
   }

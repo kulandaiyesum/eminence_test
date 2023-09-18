@@ -1,71 +1,83 @@
-<button class="btn btn-primary" (click)="addRole()">
-  Add Role
-</button>
+<div class="role_table_container">
+  <div class="search_and_add">
+    <div class="search_box">
+      <div class="search_field">
+        <input
+        class="form-control"
+          (keyup)="applyFilter($event)"
+          placeholder="Search Role"
+          #input
+        />
+      </div>
+    </div>
+    <button mat-raised-button color="accent" (click)="addRole()">Add Role</button>
+  </div>
 
-<div class="table-container mat-elevation-z8">
-  <table
-    mat-table
-    [dataSource]="dataSource"
-    class="complaint-table"
-    matSort
-    aria-label="Complaints Table"
-  >
-    <!-- Index number column -->
-    <ng-container matColumnDef="sno">
-      <th mat-header-cell *matHeaderCellDef>#</th>
-      <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
-    </ng-container>
+  <div class="table-container mat-elevation-z8">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      class="complaint-table"
+      matSort
+      aria-label="Complaints Table"
+    >
+      <!-- Index number column -->
+      <ng-container matColumnDef="sno">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
+      </ng-container>
 
-    <!-- Role column -->
-    <ng-container matColumnDef="role">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header >Role</th>
-      <td mat-cell *matCellDef="let row">
-        <div class="description-cell">{{ row.role }}</div>
-      </td>
-    </ng-container>
+      <!-- Role column -->
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="description-cell">{{ row.role }}</div>
+        </td>
+      </ng-container>
 
-    <!-- status column -->
-    <!-- <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-      <td mat-cell *matCellDef="let row">{{ row.status }}</td>
-    </ng-container> -->
+      <!-- status column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell *matCellDef="let row">{{ row.status }}</td>
+      </ng-container>
 
-    <!-- Actions column -->
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
-      <td mat-cell *matCellDef="let row">
-        <button
-          mat-icon-button
-          color="warn"
-          aria-label="Example icon button with a menu icon"
-          (click)="editRole(row)"
-        >
-          <mat-icon>edit</mat-icon>
-        </button>
-         <button
-          mat-icon-button
-          color="accent"
-          aria-label="Example icon button with a menu icon"
-          (click)="deleteRole(row)"
-        >
-          <mat-icon class="">delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+      <!-- Actions column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+        <td mat-cell *matCellDef="let row">
+          <button
+            mat-icon-button
+            color="accent"
+            aria-label="Example icon button with a menu icon"
+            (click)="editRole(row)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="warn"
+            aria-label="Example icon button with a menu icon"
+            (click)="deleteRole(row)"
+          >
+            <mat-icon class="">delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
 
-    <!-- Header and row definitions -->
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+      <!-- Header and row definitions -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
 
-  <!-- Paginator -->
-  <mat-paginator
-    #paginator
-    [length]="dataSource?.data?.length"
-    [pageIndex]="0"
-    [pageSize]="5"
-    [pageSizeOptions]="[5, 10, 20]"
-    aria-label="Select page"
-  >
-  </mat-paginator>
+    <!-- Paginator -->
+    <mat-paginator
+      #paginator
+      [length]="dataSource?.data?.length"
+      [pageIndex]="0"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 20]"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
 </div>
