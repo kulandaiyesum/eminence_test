@@ -1,34 +1,49 @@
 <div class="p-3">
   <div class="cardp-3">
-    <h1 class="">{{ data !== null ? "Edit Role" : "Add Role" }}</h1>
-    <form
-      [formGroup]="RoleForm"
-      (ngSubmit)="data !== null ? editRole() : submitRoleForm()"
-    >
-      <div class="form-group mt-4">
-        <label for="role">Role</label>
-        <input
-          type="text"
-          id="role"
-          class="form-control"
-          formControlName="role"
-        />
-        <div class="error">
-          <mat-error
-            *ngIf="
-              RoleForm.controls['role'].hasError('required') && RoleForm.touched
-            "
-            >Reqiured</mat-error
+    <h1 mat-dialog-title *ngIf="data === null">Add Role</h1>
+    <h1 mat-dialog-title *ngIf="data !== null">Edit Role</h1>
+    <form #formControl="ngForm" [formGroup]="RoleForm">
+      <div mat-dialog-content>
+        <div class="form-group">
+          <label for="role">Role</label>
+          <input
+            type="text"
+            id="role"
+            class="form-control"
+            formControlName="role"
+            [(ngModel)]="roles.role"
+          />
+          <div class="error">
+            <mat-error
+              *ngIf="
+                RoleForm.controls['role'].hasError('required') &&
+                RoleForm.touched
+              "
+              >Role is reqiured</mat-error
+            >
+          </div>
+        </div>
+
+        <div mat-dialog-actions align="end">
+          <button
+            [disabled]="RoleForm.invalid"
+            class="btn btn-primary"
+            *ngIf="data === null"
+            (click)="saveRole()"
           >
+            Add Role
+          </button>
+          <button
+            [disabled]="RoleForm.invalid"
+            class="btn btn-primary"
+            *ngIf="data !== null"
+            (click)="editRole()"
+          >
+            Edit Role
+          </button>
+          <button class="btn btn-danger ms-2" (click)="onNoClick()">Close  </button>
         </div>
       </div>
-      <button
-        type="submit"
-        [disabled]="RoleForm.invalid"
-        class="btn btn-primary mt-4"
-      >
-        {{ data !== null ? "Edit Role" : "Add Role" }}
-      </button>
     </form>
   </div>
 </div>
