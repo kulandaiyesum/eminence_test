@@ -7,7 +7,7 @@ const routes: Routes = [
     loadChildren: () => import('./home/home.module').then((h) => h.HomeModule),
   },
   {
-    path: 'Eminenceai',
+    path: 'eminenceai',
     loadChildren: () =>
       import('./faculty/faculty.module').then((h) => h.FacultyModule),
   },

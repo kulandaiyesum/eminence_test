@@ -26,7 +26,7 @@ export class SidenavComponent {
     this.decryptUserRole = this.decryptText(storedUserRole, this.secretKey);
     console.log(this.decryptUserRole);
     if (this.decryptUserRole === 'ADMIN') {
-      this.component = 'role';
+      this.component = 'institution';
     } else {
       this.component = 'qgen';
     }
@@ -39,43 +39,43 @@ export class SidenavComponent {
     this.selectedIndex = index;
   }
   qgen() {
-    this.opened = false;
+
     this.component = 'qgen';
   }
   editor() {
-    this.opened = false;
+
     this.component = 'editor';
   }
   askeminence() {
-    this.opened = false;
+
     this.component = 'askeminence';
   }
 
   history() {
-    this.opened = false;
+
     this.component = 'history';
   }
 
   role() {
-    this.opened = false;
+
     this.component = 'role';
   }
   topic() {
-    this.opened = false;
+
     this.component = 'topic';
   }
   institution() {
-    this.opened = false;
+
     this.component = 'institution';
   }
 
   subscription() {
-    this.opened = false;
+
     this.component = 'subscription';
   }
 
   package() {
-    this.opened = false;
+    
     this.component = 'package';
   }
 

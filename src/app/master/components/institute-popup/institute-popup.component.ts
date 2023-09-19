@@ -22,9 +22,6 @@ export class InstitutePopupComponent {
   public institutionModel: Institution = {
     name: '',
     email: '',
-    address: '',
-    mobile: '',
-    state: '',
     _id: '',
   };
 
@@ -41,9 +38,7 @@ export class InstitutePopupComponent {
       this.visibleUpdate = true;
       this.institutionModel.name = data.name;
       this.institutionModel.email = data.email;
-      this.institutionModel.address = data.address;
-      this.institutionModel.mobile = data.mobile;
-      this.institutionModel.state = data.state;
+
       this.institutionModel._id = data._id;
     }
   }
@@ -56,9 +51,6 @@ export class InstitutePopupComponent {
     this.instituteForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      address: ['', Validators.required],
-      mobile: ['', Validators.required],
-      state: ['', Validators.required],
       _id: [''],
     });
   }
@@ -75,14 +67,10 @@ export class InstitutePopupComponent {
     console.log('submitted');
     this.instituteForm.controls['email'].setValue(this.institutionModel.email);
     this.instituteForm.controls['name'].setValue(this.institutionModel.name);
-    this.instituteForm.controls['mobile'].setValue(
-      this.institutionModel.mobile
-    );
-    this.instituteForm.controls['state'].setValue(this.institutionModel.state);
 
-    this.instituteForm.controls['address'].setValue(
-      this.institutionModel.address
-    );
+
+
+
     if (this.instituteForm.valid) {
       console.log(this.instituteForm.value);
       this.closeDialog();
@@ -101,14 +89,10 @@ export class InstitutePopupComponent {
     console.log('submitted');
     this.instituteForm.controls['email'].setValue(this.institutionModel.email);
     this.instituteForm.controls['name'].setValue(this.institutionModel.name);
-    this.instituteForm.controls['mobile'].setValue(
-      this.institutionModel.mobile
-    );
-    this.instituteForm.controls['state'].setValue(this.institutionModel.state);
+
+
     this.instituteForm.controls['_id'].setValue(this.institutionModel._id);
-    this.instituteForm.controls['address'].setValue(
-      this.institutionModel.address
-    );
+    
     if (this.instituteForm.valid) {
       console.log('form valid for update');
       console.log(this.instituteForm.value._id);

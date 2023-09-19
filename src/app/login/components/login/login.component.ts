@@ -71,7 +71,7 @@ export class LoginComponent {
             response.result.user.role.role === 'FACULTY'
           ) {
             const role = response.result.user.role.role.toLowerCase();
-            this.router.navigateByUrl(`/Eminenceai/${role}`);
+            this.router.navigateByUrl(`/eminenceai/${role}`);
             this.closeDialog();
             this.loginUser.role = this.encryptText(
               response.result.user.role.role,

@@ -26,10 +26,8 @@ export class InstitutionComponent {
 
   displayedColumns: string[] = [
     'name',
-    'mobile',
     'email',
-    'address',
-    'state',
+    'update',
     'status',
     'action',
   ];
@@ -41,9 +39,6 @@ export class InstitutionComponent {
   public institutionModel: Institution = {
     name: '',
     email: '',
-    address: '',
-    mobile: '',
-    state: '',
     _id: '',
   };
 
@@ -88,9 +83,7 @@ export class InstitutionComponent {
     console.log('submitted');
     this.instituteForm.controls['email'].setValue(this.institutionModel.email);
     this.instituteForm.controls['name'].setValue(this.institutionModel.name);
-    this.instituteForm.controls['address'].setValue(
-      this.institutionModel.address
-    );
+
     if (this.instituteForm.valid) {
       console.log(this.instituteForm.value);
     }
@@ -148,6 +141,7 @@ export class InstitutionComponent {
     // You can handle dialog events here if needed
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
+      this.getAllInstituteData();
     });
   }
   deleteInstitute(element: any) {
@@ -169,6 +163,7 @@ export class InstitutionComponent {
     this.instituteService.deleteInstitution(element).subscribe(
       (response: any) => {
         console.log(response);
+        this.getAllInstituteData();
       },
       (error) => {
         console.error('Delete failed', error);
