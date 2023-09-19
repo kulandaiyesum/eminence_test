@@ -1,50 +1,48 @@
-<div class="p-3">
-  <div class="cardp-3">
-    <h1 mat-dialog-title *ngIf="data === null">Add Role</h1>
-    <h1 mat-dialog-title *ngIf="data !== null">Edit Role</h1>
+<div class="form_crud">
+  <mat-icon class="close_btn" mat-icon-button (click)="onNoClick()"
+    >close</mat-icon
+  >
+  <div class="form_wrap">
+    <div class="form_heading" *ngIf="data === null">Add Role</div>
+    <div class="form_heading" *ngIf="data !== null">Edit Role</div>
     <form [formGroup]="RoleForm">
-      <div mat-dialog-content>
-        <div class="form-group">
-          <label for="role">Role</label>
-          <input
-            type="text"
-            id="role"
-            class="form-control"
-            formControlName="role"
-            [(ngModel)]="roles.role"
-          />
-          <div class="error">
-            <mat-error
-              *ngIf="
-                RoleForm.controls['role'].hasError('required') &&
-                RoleForm.touched
-              "
-              >Role is reqiured</mat-error
-            >
-          </div>
-        </div>
-
-        <div mat-dialog-actions align="end">
-          <button
-            [disabled]="RoleForm.invalid"
-            class="btn btn-primary"
-            *ngIf="data === null"
-            (click)="saveRole()"
+      <div class="form-group custom_group">
+        <label for="role">Role</label>
+        <input
+          type="text"
+          id="role"
+          class="form-control"
+          formControlName="role"
+          placeholder="{{data !== null ? 'Edit Role': 'Add Role'}}"
+          [(ngModel)]="roles.role"
+        />
+        <div class="error">
+          <mat-error
+            *ngIf="
+              RoleForm.controls['role'].hasError('required') && RoleForm.touched
+            "
+            >Role is reqiured</mat-error
           >
-            Add Role
-          </button>
-          <button
-            [disabled]="RoleForm.invalid"
-            class="btn btn-primary"
-            *ngIf="data !== null"
-            (click)="editRole()"
-          >
-            Edit Role
-          </button>
-          <button class="btn btn-danger ms-2" (click)="onNoClick()">
-            Close
-          </button>
         </div>
+      </div>
+      <div class="form_btns">
+        <button
+          [disabled]="RoleForm.invalid"
+          class=""
+          *ngIf="data === null"
+          (click)="saveRole()"
+        >
+          Save
+        </button>
+        <button
+          [disabled]="RoleForm.invalid"
+          class=""
+          *ngIf="data !== null"
+          (click)="editRole()"
+        >
+          Update
+        </button>
+        <!-- <button class="btn btn-danger ms-2" (click)="onNoClick()">Close</button> -->
       </div>
     </form>
   </div>

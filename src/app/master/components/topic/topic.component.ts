@@ -58,9 +58,12 @@ export class TopicComponent {
     });
   }
   updateCoreBoxMaster(list) {
-    const dialogRef = this.dialog.open(TopicFormComponent, {
+    let dialogBoxSettings = {
+      width: '500px',
+      margin: '0 auto',
       data: list,
-    });
+    };
+    const dialogRef = this.dialog.open(TopicFormComponent, dialogBoxSettings);
     dialogRef.afterClosed().subscribe((result) => {
       console.log('editRqole ', result);
       if (result === undefined) {
@@ -71,13 +74,13 @@ export class TopicComponent {
       });
       this.getAllTopicMaster();
     });
-    // this.topic._id = list._id;
-    // this.topic.topic = list.topic;
-    // this.topic.status = list.status;
-    // this.saveButton = true;
   }
   saveCoreBoxMaster() {
-    const dialogRef = this.dialog.open(TopicFormComponent);
+    let dialogBoxSettings = {
+      width: '500px',
+      margin: '0 auto',
+    };
+    const dialogRef = this.dialog.open(TopicFormComponent, dialogBoxSettings);
     dialogRef.afterClosed().subscribe((result) => {
       console.log('AddRole ', result);
       if (result === undefined) {
@@ -89,49 +92,6 @@ export class TopicComponent {
 
       this.getAllTopicMaster();
     });
-
-    // this.saveButton = false;
-    // if (this.topic._id === undefined) {
-    //   this.topic.createdOn = this.decryptFirstName;
-    //   this.topicMasterService.saveTopicMaster(this.topic).subscribe(
-    //     (data: any) => {
-    //       this.getAllTopicMaster();
-    //       console.log('data', data);
-    //       this.myForm.reset({ status: this.status1 });
-    //       this.toastr.success(data.message, '', {
-    //         timeOut: 3000,
-    //       });
-    //       this.saveButton = true;
-    //     },
-    //     (err) => {
-    //       this.saveButton = true;
-    //       this.toastr.error(err.message, '', {
-    //         timeOut: 3000,
-    //       });
-    //       // this.notifier.notify('error', err.error.message);
-    //     }
-    //   );
-    // } else {
-    //   this.topicMasterService.updateTopicMaster(this.topic).subscribe(
-    //     (data: any) => {
-    //       this.toastr.success(data.message, '', {
-    //         timeOut: 3000,
-    //       });
-    //       // this.notifier.notify('success', data.message);
-    //       this.getAllTopicMaster();
-    //       this.myForm.reset({ status: this.status1 });
-    //       this.topic._id = undefined;
-    //       this.saveButton = true;
-    //     },
-    //     (err) => {
-    //       this.saveButton = true;
-    //       this.toastr.error(err.error.message, '', {
-    //         timeOut: 3000,
-    //       });
-    //       // this.notifier.notify('error', err.error.message);
-    //     }
-    //   );
-    // }
   }
   changeRoleStatus(list) {}
 

@@ -27,6 +27,7 @@ export class RoleFormComponent implements OnInit {
     console.log(this.RoleForm);
   }
   ngOnInit(): void {
+    this.roles = new Role();
     if (this.data === null) {
       this.roles = new Role();
     } else {
@@ -58,7 +59,7 @@ export class RoleFormComponent implements OnInit {
   }
   editRole() {
     console.log('edit role', this.roles);
-    this.roleService.editRole(this.RoleForm.value).subscribe((res: any) => {
+    this.roleService.editRole(this.roles).subscribe((res: any) => {
       console.log(res);
       this.dialogRef.close(res);
     });
