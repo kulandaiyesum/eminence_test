@@ -57,11 +57,11 @@ export class SidenavComponent {
   }
 
   role() {
-    // this.opened = false;
+    this.opened = false;
     this.component = 'role';
   }
   topic() {
-    // this.opened = false;
+    this.opened = false;
     this.component = 'topic';
   }
   institution() {
