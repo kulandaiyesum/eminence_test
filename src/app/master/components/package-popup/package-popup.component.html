@@ -1,0 +1,40 @@
+<div class="main">
+  <div class="form_crud">
+    <div class="form_wrap">
+      <div class="form_heading">
+        <h4>Add Package</h4>
+      </div>
+      <form #packageForm="ngForm">
+        <div class="custom_group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" [(ngModel)]="package.packageName" required />
+        </div>
+        <div class="custom_group">
+          <label for="questionsCount">Questions Count:</label>
+          <input type="number" id="questionsCount" name="questionsCount" [(ngModel)]="package.questionsCount" required />
+        </div>
+        <div class="custom_group">
+          <label for="amount">Amount:</label>
+          <input type="number" id="amount" name="amount" [(ngModel)]="package.amount" required />
+        </div>
+        <div class="custom_group">
+          <label for="rate">Rate:</label>
+          <input type="number" id="rate" name="rate" [(ngModel)]="package.rate" required />
+        </div>
+        <div class="custom_group">
+          <label for="duration_type">Duration Type:</label>
+          <input type="text" id="duration_type" name="duration_type" [(ngModel)]="package.durationType" required />
+        </div>
+        <div class="custom_group">
+          <label for="duration_count">Duration Count:</label>
+          <input type="number" id="duration_count" name="duration_count" [(ngModel)]="package.durationCount" required />
+        </div>
+        <div class="form_btns">
+          <button type="submit" (click)="visibleUpdate ? updatePackage() : onPackageSubmit()">
+            {{ visibleUpdate ? 'Update' : 'Add' }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

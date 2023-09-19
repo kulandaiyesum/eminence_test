@@ -1,17 +1,70 @@
 <div class="package-container">
   <div class="main">
-    <div class="heading">
-      <h4>PACKAGE</h4>
-    </div>
-    <div class="forms">
-      <form>
-        <input type="text" placeholder="Name" required />
-        <input type="number" placeholder="Questions Count" min="0" required />
-        <input type="text" placeholder="Amount" required  />
-        <input type="text" placeholder="Rate" required />
-        <input type="text" placeholder="Type" required />
-        <button>Submit</button>
-      </form>
+    <div class="data-area">
+      <div class="data">
+        <div class="control">
+          <h4>Packages</h4>
+          <div class="button">
+            <button mat-raised-button (click)="openAddPackagePopup()">Add Data</button>
+          </div>
+        </div>
+        <div class="table">
+          <!-- Add input fields for package data and validation -->
+          <input  placeholder="Search Here" />
+          <!-- Add more input fields for other package properties and validations -->
+
+          <!-- Table structure for displaying package data -->
+          <mat-table [dataSource]="dataSource" matSort matPaginator class="mat-elevation-z8">
+            <!-- Questions Count Column -->
+            <ng-container matColumnDef="packageName">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.packageName}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="questionsCount">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Questions Count</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.questionsCount }}</mat-cell>
+            </ng-container>
+
+            <!-- Amount Column -->
+            <ng-container matColumnDef="amount">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Amount</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.amount }}</mat-cell>
+            </ng-container>
+
+            <!-- Rate Column -->
+            <ng-container matColumnDef="rate">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Rate</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.rate }}</mat-cell>
+            </ng-container>
+
+            <!-- Duration Type Column -->
+            <ng-container matColumnDef="durationType">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Duration Type</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.durationType }}</mat-cell>
+            </ng-container>
+
+            <!-- Duration Count Column -->
+            <ng-container matColumnDef="durationCount">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Duration Count</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.durationCount }}</mat-cell>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+              <mat-cell *matCellDef="let element">
+                <mat-icon (click)="editPackage(element)">edit</mat-icon>
+                <mat-icon (click)="deletePackage(element)">delete</mat-icon>
+              </mat-cell>
+            </ng-container>
+
+            <!-- Define the displayed columns -->
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+          </mat-table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [pageIndex]="0"></mat-paginator>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -44,10 +44,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoleFormComponent } from './components/role-form/role-form.component';
 import { TopicFormComponent } from './components/topic-form/topic-form.component';
+import { PackagePopupComponent } from './components/package-popup/package-popup.component';
+
 
 @NgModule({
   declarations: [
-    PackageComponent,
+    PackageComponent,PackagePopupComponent,
     InstitutionComponent,
     SubscriptionComponent,
     RoleComponent,
