@@ -3,9 +3,9 @@
   position: relative;
   .close_btn {
     position: absolute;
-    top: 40px;
+    top: 30px;
     transform: translateY(-50%);
-    right: 30px;
+    right: 25px;
     cursor: pointer;
     &:hover {
       color: #555;
@@ -17,8 +17,13 @@
       color: #4b5056;
       font-weight: bold;
       margin-bottom: 10px;
+      text-align: center;
+      // background-color: #f5f5f5;
     }
     form {
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
       .custom_group {
         margin-bottom: 10px;
         label {
@@ -63,10 +68,6 @@
           transition: background-color 0.3s ease;
           &:hover {
             background-color: #57c4ff;
-          }
-          &:disabled {
-            cursor: default;
-            background-color: #ccc;
           }
         }
       }

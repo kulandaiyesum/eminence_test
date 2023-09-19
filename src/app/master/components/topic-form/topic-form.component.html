@@ -6,41 +6,45 @@
   <div class="form_wrap">
     <div class="form_heading" *ngIf="data === null">Add Topic</div>
     <div class="form_heading" *ngIf="data !== null">Edit Topic</div>
-
     <form #exampleForm="ngForm" [formGroup]="myForm">
       <div class="form-group custom_group">
+        <label for="topic">Topic</label>
         <input
           class="form-control"
           placeholder="Topic"
           formControlName="topic"
           name="topic"
+          id="topic"
           [(ngModel)]="topic.topic"
           autocomplete="off"
         />
-        <mat-error class="error">
-          <!-- <control-messages [control]="myForm.controls.topic"></control-messages> -->
-        </mat-error>
+        <div class="error">
+          <mat-error
+            *ngIf="
+              myForm.controls['topic'].hasError('required') && myForm.touched
+            "
+          >
+            Topic is required
+          </mat-error>
+        </div>
       </div>
-
       <div class="form_btns">
         <button
-          mat-raised-button
-          color="primary"
-          style="float: right"
           [disabled]="!exampleForm.valid || !saveButton"
           (click)="saveCoreBoxMaster()"
         >
           {{ topic && topic._id ? "Update" : "Save" }}
         </button>
-        <!-- <button
-        mat-raised-button
-        color="warn"
-        style="float: right"
-        (click)="onNoClick()"
-      >
-        cancel
-      </button> -->
       </div>
     </form>
   </div>
 </div>
+
+<!-- <button
+mat-raised-button
+color="warn"
+style="float: right"
+(click)="onNoClick()"
+>
+cancel
+</button> -->
