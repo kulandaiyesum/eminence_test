@@ -93,3 +93,8 @@
     color: #ffd43b;
   }
 }
+@media (max-width: 768px) {
+  .role_table_container {
+    width: 90%;
+  }
+}

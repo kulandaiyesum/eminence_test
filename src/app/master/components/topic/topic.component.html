@@ -2,13 +2,15 @@
   <div class="topic_table_container" id="table">
     <div class="search_and_add">
       <div class="search_box">
-        <input
-          matInput
-          placeholder="Search"
-          [(ngModel)]="value"
-          autocomplete="off"
-          class="form-control"
-        />
+        <div class="search_field">
+          <input
+            matInput
+            placeholder="Search"
+            [(ngModel)]="value"
+            autocomplete="off"
+            class="form-control"
+          />
+        </div>
         <button
           mat-button
           *ngIf="value"
@@ -21,7 +23,7 @@
         </button>
       </div>
       <div class="add_btn">
-        <button mat-raised-button (click)="saveCoreBoxMaster()" color="accent">Add Topic</button>
+        <button (click)="saveCoreBoxMaster()">Add Topic</button>
       </div>
     </div>
 
@@ -40,7 +42,7 @@
           <td mat-cell *matCellDef="let row">
             <mat-slide-toggle
               class="example-margin"
-              color="accent"
+              color="primary"
               [checked]="row.status == 1"
               (change)="changeRoleStatus(row)"
             >
@@ -51,23 +53,18 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>Actions</th>
           <td mat-cell *matCellDef="let row">
-            <button
-              mat-icon-button
-              color="accent"
-              matTooltip="Edit CoreBoxType"
-              [disabled]="row.status != 1"
+            <mat-icon
+              matTooltip="Edit"
+              class="set_edit_color_button"
               (click)="updateCoreBoxMaster(row)"
+              >edit</mat-icon
             >
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button
-              mat-icon-button
+            <mat-icon
               matTooltip="Delete"
-              color="warn"
+              class="set_edit_color_button ms-2"
               (click)="deleteCoreBoxMaster(row)"
+              >delete</mat-icon
             >
-              <mat-icon>delete</mat-icon>
-            </button>
           </td>
         </ng-container>
 
