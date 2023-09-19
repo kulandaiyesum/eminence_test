@@ -1,16 +1,14 @@
 <!-- form -->
-<div class="topic_form">
-  <div class="topic_header">
-    <h1 mat-dialog-title *ngIf="data === null" style="text-align: center">
-      Add Topic
-    </h1>
-    <h1 mat-dialog-title *ngIf="data !== null" style="text-align: center">
-      Edit Topic
-    </h1>
-  </div>
-  <form class="topic_form" #exampleForm="ngForm" [formGroup]="myForm">
-    <div mat-dialog-content>
-      <div class="form-group">
+<div class="form_crud">
+  <mat-icon class="close_btn" mat-icon-button (click)="onNoClick()"
+    >close</mat-icon
+  >
+  <div class="form_wrap">
+    <div class="form_heading" *ngIf="data === null">Add Topic</div>
+    <div class="form_heading" *ngIf="data !== null">Edit Topic</div>
+
+    <form #exampleForm="ngForm" [formGroup]="myForm">
+      <div class="form-group custom_group">
         <input
           class="form-control"
           placeholder="Topic"
@@ -19,29 +17,30 @@
           [(ngModel)]="topic.topic"
           autocomplete="off"
         />
-        <mat-error>
+        <mat-error class="error">
           <!-- <control-messages [control]="myForm.controls.topic"></control-messages> -->
         </mat-error>
       </div>
-    </div>
-    <div mat-dialog-actions align="end">
-      <button
-        mat-raised-button
-        color="primary"
-        style="float: right"
-        [disabled]="!exampleForm.valid || !saveButton"
-        (click)="saveCoreBoxMaster()"
-      >
-        {{ topic && topic._id ? "Update" : "Save" }}
-      </button>
-      <button
+
+      <div class="form_btns">
+        <button
+          mat-raised-button
+          color="primary"
+          style="float: right"
+          [disabled]="!exampleForm.valid || !saveButton"
+          (click)="saveCoreBoxMaster()"
+        >
+          {{ topic && topic._id ? "Update" : "Save" }}
+        </button>
+        <!-- <button
         mat-raised-button
         color="warn"
         style="float: right"
         (click)="onNoClick()"
       >
         cancel
-      </button>
-    </div>
-  </form>
+      </button> -->
+      </div>
+    </form>
+  </div>
 </div>
