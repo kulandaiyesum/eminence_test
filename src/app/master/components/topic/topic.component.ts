@@ -8,6 +8,8 @@ import { TopicService } from '../../service/topic.service';
 import { ToastrService } from 'ngx-toastr';
 import * as CryptoJS from 'crypto-js';
 import { MatTableDataSource } from '@angular/material/table';
+import { TopicFormComponent } from '../topic-form/topic-form.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-topic',
@@ -28,11 +30,12 @@ export class TopicComponent {
 
   constructor(
     private topicMasterService: TopicService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private dialog: MatDialog
   ) {
-    this.myForm = new FormGroup({
-      topic: new FormControl('', [Validators.required]),
-    });
+    // this.myForm = new FormGroup({
+    //   topic: new FormControl('', [Validators.required]),
+    // });
   }
 
   displayedColumns: string[] = ['topic', 'status', 'actions'];
@@ -55,54 +58,80 @@ export class TopicComponent {
     });
   }
   updateCoreBoxMaster(list) {
-    this.topic._id = list._id;
-    this.topic.topic = list.topic;
-    this.topic.status = list.status;
-    this.saveButton = true;
+    const dialogRef = this.dialog.open(TopicFormComponent, {
+      data: list,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('editRqole ', result);
+      if (result === undefined) {
+        return;
+      }
+      this.toastr.success(result.message, '', {
+        timeOut: 3000,
+      });
+      this.getAllTopicMaster();
+    });
+    // this.topic._id = list._id;
+    // this.topic.topic = list.topic;
+    // this.topic.status = list.status;
+    // this.saveButton = true;
   }
   saveCoreBoxMaster() {
-    this.saveButton = false;
-    if (this.topic._id === undefined) {
-      this.topic.createdOn = this.decryptFirstName;
-      this.topicMasterService.saveTopicMaster(this.topic).subscribe(
-        (data: any) => {
-          this.getAllTopicMaster();
-          console.log('data', data);
-          this.myForm.reset({ status: this.status1 });
-          this.toastr.success(data.message, '', {
-            timeOut: 3000,
-          });
-          this.saveButton = true;
-        },
-        (err) => {
-          this.saveButton = true;
-          this.toastr.error(err.message, '', {
-            timeOut: 3000,
-          });
-          // this.notifier.notify('error', err.error.message);
-        }
-      );
-    } else {
-      this.topicMasterService.updateTopicMaster(this.topic).subscribe(
-        (data: any) => {
-          this.toastr.success(data.message, '', {
-            timeOut: 3000,
-          });
-          // this.notifier.notify('success', data.message);
-          this.getAllTopicMaster();
-          this.myForm.reset({ status: this.status1 });
-          this.topic._id = undefined;
-          this.saveButton = true;
-        },
-        (err) => {
-          this.saveButton = true;
-          this.toastr.error(err.error.message, '', {
-            timeOut: 3000,
-          });
-          // this.notifier.notify('error', err.error.message);
-        }
-      );
-    }
+    const dialogRef = this.dialog.open(TopicFormComponent);
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('AddRole ', result);
+      if (result === undefined) {
+        return;
+      }
+      this.toastr.success(result.message, '', {
+        timeOut: 3000,
+      });
+
+      this.getAllTopicMaster();
+    });
+
+    // this.saveButton = false;
+    // if (this.topic._id === undefined) {
+    //   this.topic.createdOn = this.decryptFirstName;
+    //   this.topicMasterService.saveTopicMaster(this.topic).subscribe(
+    //     (data: any) => {
+    //       this.getAllTopicMaster();
+    //       console.log('data', data);
+    //       this.myForm.reset({ status: this.status1 });
+    //       this.toastr.success(data.message, '', {
+    //         timeOut: 3000,
+    //       });
+    //       this.saveButton = true;
+    //     },
+    //     (err) => {
+    //       this.saveButton = true;
+    //       this.toastr.error(err.message, '', {
+    //         timeOut: 3000,
+    //       });
+    //       // this.notifier.notify('error', err.error.message);
+    //     }
+    //   );
+    // } else {
+    //   this.topicMasterService.updateTopicMaster(this.topic).subscribe(
+    //     (data: any) => {
+    //       this.toastr.success(data.message, '', {
+    //         timeOut: 3000,
+    //       });
+    //       // this.notifier.notify('success', data.message);
+    //       this.getAllTopicMaster();
+    //       this.myForm.reset({ status: this.status1 });
+    //       this.topic._id = undefined;
+    //       this.saveButton = true;
+    //     },
+    //     (err) => {
+    //       this.saveButton = true;
+    //       this.toastr.error(err.error.message, '', {
+    //         timeOut: 3000,
+    //       });
+    //       // this.notifier.notify('error', err.error.message);
+    //     }
+    //   );
+    // }
   }
   changeRoleStatus(list) {}
 

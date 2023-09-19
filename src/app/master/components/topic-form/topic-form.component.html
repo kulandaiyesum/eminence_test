@@ -1,0 +1,47 @@
+<!-- form -->
+<div class="topic_form">
+  <div class="topic_header">
+    <h1 mat-dialog-title *ngIf="data === null" style="text-align: center">
+      Add Topic
+    </h1>
+    <h1 mat-dialog-title *ngIf="data !== null" style="text-align: center">
+      Edit Topic
+    </h1>
+  </div>
+  <form class="topic_form" #exampleForm="ngForm" [formGroup]="myForm">
+    <div mat-dialog-content>
+      <div class="form-group">
+        <input
+          class="form-control"
+          placeholder="Topic"
+          formControlName="topic"
+          name="topic"
+          [(ngModel)]="topic.topic"
+          autocomplete="off"
+        />
+        <mat-error>
+          <!-- <control-messages [control]="myForm.controls.topic"></control-messages> -->
+        </mat-error>
+      </div>
+    </div>
+    <div mat-dialog-actions align="end">
+      <button
+        mat-raised-button
+        color="primary"
+        style="float: right"
+        [disabled]="!exampleForm.valid || !saveButton"
+        (click)="saveCoreBoxMaster()"
+      >
+        {{ topic && topic._id ? "Update" : "Save" }}
+      </button>
+      <button
+        mat-raised-button
+        color="warn"
+        style="float: right"
+        (click)="onNoClick()"
+      >
+        cancel
+      </button>
+    </div>
+  </form>
+</div>
