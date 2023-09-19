@@ -6,7 +6,6 @@ import { PackageComponent } from './components/package/package.component';
 import { InstitutionComponent } from './components/institution/institution.component';
 import { SubscriptionComponent } from './components/subscription/subscription.component';
 import { RoleComponent } from './components/role/role.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -42,6 +41,9 @@ import { InstitutePopupComponent } from './components/institute-popup/institute-
 import { TopicComponent } from './components/topic/topic.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RoleFormComponent } from './components/role-form/role-form.component';
+import { TopicFormComponent } from './components/topic-form/topic-form.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +53,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RoleComponent,
     InstitutePopupComponent,
     TopicComponent,
+    RoleFormComponent,
+    TopicFormComponent,
   ],
   imports: [
     CommonModule,
