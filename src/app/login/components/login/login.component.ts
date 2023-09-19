@@ -70,7 +70,8 @@ export class LoginComponent {
             response.result.user.role.role === 'ADMIN' ||
             response.result.user.role.role === 'FACULTY'
           ) {
-            this.router.navigateByUrl('/faculty/qgen');
+            const role = response.result.user.role.role.toLowerCase();
+            this.router.navigateByUrl(`/Eminenceai/${role}`);
             this.closeDialog();
             this.loginUser.role = this.encryptText(
               response.result.user.role.role,

@@ -5,7 +5,7 @@ import { AuthGuard } from '../shared/guard/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'qgen',
+    path: ':role',
     component: SidenavComponent,
     canActivate: [AuthGuard],
   },
