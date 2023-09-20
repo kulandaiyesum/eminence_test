@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Package } from '../../model/package.class';
@@ -13,10 +13,10 @@ import { PackageService } from '../../service/package.service';
 export class PackagePopupComponent {
   packageForm: FormGroup;
   visibleUpdate: boolean = false;
-
+  // type: string = '';
   public package : Package
 
-
+  @ViewChild('packageForm', { static: false }) packageFormDirective: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,12 +44,14 @@ export class PackagePopupComponent {
     } else {
       this.package = new Package();
     }
+    this.initForm();
   }
+
+
 
 
   initForm() {
     this.packageForm = this.formBuilder.group({
-
       packageName: ['', Validators.required],
       questionsCount: [0, Validators.required],
       amount: [0, Validators.required],
@@ -59,9 +61,33 @@ export class PackagePopupComponent {
     });
   }
 
+
   closeDialog() {
     this.dialogRef.close();
   }
+
+  typeChanged() {
+    console.log("run")
+    // You can add logic here to enable/disable other fields based on the selected type
+    // if (this.selectedType === 'B2B') {
+    //   console.log("b2b")
+    //   // If 'B2B' is selected, enable the fields
+    //   this.packageForm.controls['questionsCount'].enable();
+    //   this.packageForm.controls['amount'].enable();
+    //   this.packageForm.controls['rate'].enable();
+    //   this.packageForm.controls['duration_type'].enable();
+    //   this.packageForm.controls['duration_count'].enable();
+    // } else {
+    //   console.log("b2c")
+    //   // If 'B2C' or any other type is selected, disable the fields
+    //   this.packageForm.controls['questionsCount'].disable();
+    //   this.packageForm.controls['amount'].disable();
+    //   this.packageForm.controls['rate'].disable();
+    //   this.packageForm.controls['duration_type'].disable();
+    //   this.packageForm.controls['duration_count'].disable();
+    // }
+  }
+
 
   onPackageSubmit() {
     // console.log(this.package);
@@ -108,6 +134,11 @@ export class PackagePopupComponent {
 
   }
 
+  resetForm() {
+    this.packageForm.reset();
+    this.packageFormDirective.resetForm();
+  }
+
   updatePackage() {
     console.log('submitted');
     // Set form values from package data
@@ -132,6 +163,9 @@ export class PackagePopupComponent {
         }
       );
     }
+  }
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
 

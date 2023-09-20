@@ -1,16 +1,28 @@
+
 <div class="package-container">
   <div class="main">
+    <div class="search_and_add">
+      <div class="search_box">
+        <div class="search_field">
+          <input
+            class="form-control"
+            (keyup)="applyFilter($event)"
+            placeholder="Search Here"
+            #input
+          />
+        </div>
+      </div>
+      <div class="add_btn">
+        <button mat-raised-button (click)="openAddPackagePopup()">Add Data</button>
+      </div>
+    </div>
+
     <div class="data-area">
       <div class="data">
-        <div class="control">
-          <h4>Packages</h4>
-          <div class="button">
-            <button mat-raised-button (click)="openAddPackagePopup()">Add Data</button>
-          </div>
-        </div>
+        <!-- <div class="control">
+          <h4>PACKAGES</h4>
+        </div> -->
         <div class="table">
-          <!-- Add input fields for package data and validation -->
-          <input  placeholder="Search Here" />
           <!-- Add more input fields for other package properties and validations -->
 
           <!-- Table structure for displaying package data -->
@@ -19,6 +31,10 @@
             <ng-container matColumnDef="packageName">
               <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
               <mat-cell *matCellDef="let element">{{ element.packageName}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="type">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
+              <mat-cell *matCellDef="let element">{{ element.type }}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="questionsCount">
               <mat-header-cell *matHeaderCellDef mat-sort-header>Questions Count</mat-header-cell>

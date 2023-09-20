@@ -20,6 +20,8 @@ export class LoginComponent {
   secretKeyLength = 32;
   secretKey = environment.secretKey;
   public user;
+  public errorMessage: string = '';
+
   public loginUser: Register = {
     firstName: '',
     lastName: '',
@@ -101,7 +103,7 @@ export class LoginComponent {
           }
         },
         (error) => {
-          this.toastr.error('Invalid credentials', '', {
+          this.toastr.error('You are not a registered member', '', {
             timeOut: 3000,
           });
           console.log('Error : ', error);

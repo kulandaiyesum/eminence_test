@@ -4,6 +4,46 @@
   display: flex;
   justify-content: center;
 
+  .search_and_add {
+    display: flex;
+    justify-content: space-between;
+    .search_box {
+      .search_field {
+        input {
+          border: 1px solid #c6c9cd;
+          border-radius: 3px;
+          color: #636972;
+          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+          font-family: "open_sans", "Open Sans", sans-serif;
+          line-height: 1.5;
+          font-weight: normal;
+          font-size: 14px;
+          font-style: normal;
+          padding: 6px 8px;
+          min-height: 36px;
+          &::placeholder {
+            font-weight: 600;
+            color: #bcbcbc;
+          }
+        }
+      }
+    }
+    .add_btn {
+      button {
+        background-color: var(--qgen-logo-blue);
+        padding: 8px 16px;
+        border: none;
+        color: #fff;
+        font-weight: 600;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        &:hover {
+          background-color: #57c4ff;
+        }
+      }
+    }
+  }
+
   .main {
     width: 80%;
     height: 85vh;
@@ -37,6 +77,9 @@
         height: auto;
         margin-top: 20px;
 
+
+
+
         input {
           width: 32%;
           border: 1px solid #1bb0e6;
@@ -59,6 +102,12 @@
             cursor: pointer;
             color: #ffd43b;
             font-size: 24px;
+          }
+          .mat-cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            // text-align: center; /* Optional: Center text within cells */
           }
         }
         mat-paginator {
