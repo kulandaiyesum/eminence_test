@@ -13,14 +13,18 @@
       display: flex;
       justify-content: space-between;
       h2 {
-        text-align: center;
+        margin-left: 20px;
         font-size: 20px;
         color: #4b5056;
         font-weight: bold;
       }
-      mat-icon {
-        cursor: pointer;
+      .icon{
+        // border: 1px solid red;
+        mat-icon {
+          cursor: pointer;
+        }
       }
+
     }
     .forms {
       min-width: 100%;
