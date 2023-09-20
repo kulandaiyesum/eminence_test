@@ -24,13 +24,7 @@ export class InstitutionComponent {
   secretKey = environment.secretKey;
   elementStatus = true;
 
-  displayedColumns: string[] = [
-    'name',
-    'email',
-    'update',
-    'status',
-    'action',
-  ];
+  displayedColumns: string[] = ['name', 'email', 'update', 'status', 'action'];
   public dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -74,7 +68,6 @@ export class InstitutionComponent {
     this.hidePassword = !this.hidePassword;
   }
 
-
   toggleStatus() {
     this.elementStatus = !this.elementStatus;
   }
@@ -90,7 +83,7 @@ export class InstitutionComponent {
   }
   addData() {
     const dialogRef = this.dialog.open(InstitutePopupComponent, {
-      width: '350px',
+      width: '500px',
       height: 'auto',
       data: null,
       // Other MatDialog options
@@ -133,7 +126,7 @@ export class InstitutionComponent {
   updateInstitute(data: any) {
     console.log(data);
     const dialogRef = this.dialog.open(InstitutePopupComponent, {
-      width: '350px',
+      width: '500px',
       height: 'auto',
       data: data,
       // Other MatDialog options

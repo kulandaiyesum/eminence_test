@@ -18,6 +18,7 @@ export class InstitutePopupComponent {
   secretKeyLength = 32;
   secretKey = environment.secretKey;
   visibleUpdate: boolean = false;
+  public items;
 
   public institutionModel: Institution = {
     name: '',
@@ -33,6 +34,7 @@ export class InstitutePopupComponent {
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<InstitutePopupComponent>
   ) {
+    this.items = data;
     if (data != null) {
       console.log(data);
       this.visibleUpdate = true;
@@ -68,9 +70,6 @@ export class InstitutePopupComponent {
     this.instituteForm.controls['email'].setValue(this.institutionModel.email);
     this.instituteForm.controls['name'].setValue(this.institutionModel.name);
 
-
-
-
     if (this.instituteForm.valid) {
       console.log(this.instituteForm.value);
       this.closeDialog();
@@ -90,9 +89,8 @@ export class InstitutePopupComponent {
     this.instituteForm.controls['email'].setValue(this.institutionModel.email);
     this.instituteForm.controls['name'].setValue(this.institutionModel.name);
 
-
     this.instituteForm.controls['_id'].setValue(this.institutionModel._id);
-    
+
     if (this.instituteForm.valid) {
       console.log('form valid for update');
       console.log(this.instituteForm.value._id);
@@ -102,7 +100,7 @@ export class InstitutePopupComponent {
         .subscribe(
           (response: any) => {
             console.log(response);
-            this.closeDialog()
+            this.closeDialog();
           },
           (error) => {
             console.error('Not data get', error);

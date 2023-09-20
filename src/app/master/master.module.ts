@@ -46,6 +46,7 @@ import { RoleFormComponent } from './components/role-form/role-form.component';
 import { TopicFormComponent } from './components/topic-form/topic-form.component';
 import { PackagePopupComponent } from './components/package-popup/package-popup.component';
 
+import { SubscriptionPopupComponent } from './components/subscription-popup/subscription-popup.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { PackagePopupComponent } from './components/package-popup/package-popup.
     TopicComponent,
     RoleFormComponent,
     TopicFormComponent,
+    SubscriptionPopupComponent,
   ],
   imports: [
     CommonModule,

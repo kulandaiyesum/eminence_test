@@ -75,7 +75,7 @@ export class SidenavComponent {
   }
 
   package() {
-    
+
     this.component = 'package';
   }
 
