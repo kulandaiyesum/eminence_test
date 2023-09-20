@@ -19,6 +19,7 @@ export class PackageComponent {
 
   displayedColumns: string[] = [
     'packageName',
+    'type',
     'questionsCount',
     'amount',
     'rate',
@@ -69,11 +70,13 @@ export class PackageComponent {
   }
 
   openAddPackagePopup() {
-    const dialogRef = this.dialog.open(PackagePopupComponent, {
-      width: '350px',
-      height: 'auto',
-      data: {},
-    });
+    let dialogBoxSettings = {
+      width: '500px',
+      margin: '0 auto',
+      // height:'80vh',
+      // overflow: 'auto',
+    };
+    const dialogRef = this.dialog.open(PackagePopupComponent, dialogBoxSettings);
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -97,12 +100,22 @@ export class PackageComponent {
     }
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   editPackage(element: Package) {
-    const dialogRef = this.dialog.open(PackagePopupComponent, {
-      width: '350px',
-      height: 'auto',
+
+    let dialogBoxSettings = {
+      width: '500px',
+      margin: '0 auto',
+      // height:'80vh',
+      // overflow: 'auto',
+
       data: { packageData: element },
-    });
+    };
+    const dialogRef = this.dialog.open(PackagePopupComponent, dialogBoxSettings);
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -110,9 +123,6 @@ export class PackageComponent {
       }
     });
   }
-
-
-
 
   deletePackage(element: Package) {
     Swal.fire({
