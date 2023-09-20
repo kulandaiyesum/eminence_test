@@ -24,7 +24,7 @@ export class InstitutionComponent {
   secretKey = environment.secretKey;
   elementStatus = true;
 
-  displayedColumns: string[] = ['name', 'email', 'update', 'status', 'action'];
+  displayedColumns: string[] = ['name', 'email', 'update','address','state','zip', 'status', 'action'];
   public dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -34,10 +34,10 @@ export class InstitutionComponent {
     name: '',
     email: '',
     _id: '',
+    address: '',
+    state: '',
+    zip: '',
   };
-
-  // Sample data (replace with your own data source):
-
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -50,7 +50,6 @@ export class InstitutionComponent {
   ngOnInit(): void {
     this.initForm();
     this.getAllInstituteData();
-    
   }
 
   initForm() {

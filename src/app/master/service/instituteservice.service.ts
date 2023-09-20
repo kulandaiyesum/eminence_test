@@ -21,27 +21,20 @@ export class InstituteserviceService {
   }
 
   createInstitute(data: any) {
-    return this.http.post(`${this.createInstituteURL}`, data, {
-      headers: this.headers,
-    });
+    return this.http.post(`${this.createInstituteURL}`, data,);
   }
 
   getAllInstitute(): Observable<any[]> {
-    return this.http.get<any[]>(this.getAllInstituteURL, {
-      headers: this.headers,
-    });
+    return this.http.get<any[]>(this.getAllInstituteURL,);
   }
 
   updateInstitution(data: any): Observable<any> {
-    return this.http.put(this.updateInstituteURL, data, {
-      headers: this.headers,
-    });
+    return this.http.put(this.updateInstituteURL, data,);
   }
 
   deleteInstitution(data: any): Observable<any> {
     return this.http.delete(this.deleteInstituteURL, {
       body: data,
-      headers: this.headers,
     });
   }
 }

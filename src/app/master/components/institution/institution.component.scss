@@ -15,15 +15,11 @@
       .control {
         width: auto;
         height: auto;
-        
-        h4 {
-          text-align: center;
-        }
-        .button{
+        .button {
           display: flex;
           justify-content: space-between;
-          button{
-            background-color: #46B3EB;
+          button {
+            background-color: #46b3eb;
             color: #fff;
           }
           input {
@@ -53,32 +49,43 @@
         height: auto;
         margin-top: 20px;
         border-radius: 8px;
-        input {
-          width: 32%;
-          border: 1px solid #46B3EB;
-          padding: 5px;
-          border-radius: 2px;
-          @media (max-width: 768px) {
-            width: 100%;
-          }
-        }
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: transparent;
+        border-radius: 8px;
         mat-table {
           width: auto;
           height: auto;
           margin-top: 15px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-          border-radius: 8px;
+          // border: 3px solid yellow;
+
           mat-header-cell {
-            background-color: #46B3EB;
+            background-color: var(--qgen-logo-blue);
+            font-size: 16px;
+            font-weight: 500;
             color: #fff;
           }
-          mat-icon{
-            color: #FABF01;
+          #first-header {
+            border-top-left-radius: 8px;
+          }
+          #last-header {
+            border-top-right-radius: 8px;
+          }
+          mat-icon {
+            color: #fabf01;
+          }
+          .odd-row {
+            background-color: #F5F5F5;
+          }
+
+          .even-row {
+            background-color: white;
           }
         }
         mat-paginator {
           z-index: 1;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+          border-bottom-left-radius: 8px;
+          border-bottom-right-radius: 8px;
         }
       }
     }
