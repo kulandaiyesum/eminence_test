@@ -1,6 +1,7 @@
 .form_crud {
   padding: 40px;
   position: relative;
+  max-height: 80vh;
   .close_btn {
     position: absolute;
     top: 30px;
@@ -12,6 +13,7 @@
     }
   }
   .form_wrap {
+    padding-bottom: 20px;
     .form_heading {
       font-size: 20px;
       color: #4b5056;
@@ -77,6 +79,9 @@
           transition: background-color 0.3s ease;
           &:hover {
             background-color: #57c4ff;
+          }
+          &:disabled {
+            background-color: #ccc;
           }
         }
       }

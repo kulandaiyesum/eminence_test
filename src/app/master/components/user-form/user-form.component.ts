@@ -6,6 +6,8 @@ import { TopicService } from '../../service/topic.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../model/user';
+import { passwordMatchValidator } from 'src/app/shared/validators/custom-validator';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-form',
@@ -24,6 +26,11 @@ export class UserFormComponent implements OnInit {
     subscriptionId: undefined,
     topicId: undefined,
   };
+
+  roles: any;
+  topics: any;
+  intitutions: any;
+  subscriptions: any;
   constructor(
     private userService: UserService,
     private institutionService: InstituteserviceService,
@@ -32,18 +39,19 @@ export class UserFormComponent implements OnInit {
     public dialogRef: MatDialogRef<UserFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
-    console.log(data, 'check data');
-    this.userForm = new FormGroup({
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
-      confirmPassword: new FormControl('', Validators.required),
-      role: new FormControl('', Validators.required),
-      institutionId: new FormControl('', Validators.required),
-      subscriptionId: new FormControl('', Validators.required),
-      topicId: new FormControl('', Validators.required),
-    });
+    this.userForm = new FormGroup(
+      {
+        firstName: new FormControl('', Validators.required),
+        lastName: new FormControl('', Validators.required),
+        email: new FormControl('', Validators.required),
+        password: new FormControl('', Validators.required),
+        confirmPassword: new FormControl('', Validators.required),
+        role: new FormControl('', Validators.required),
+        institutionId: new FormControl('', Validators.required),
+        topicId: new FormControl('', Validators.required),
+      },
+      { validators: passwordMatchValidator }
+    );
   }
   ngOnInit(): void {
     this.userObject = new User();
@@ -56,15 +64,54 @@ export class UserFormComponent implements OnInit {
       this.userObject.lastName = this.data.lastName;
       this.userObject.password = this.data.password;
       this.userObject.role = this.data.role;
-      this.userObject.subscriptionId = this.data.subscriptionId;
       this.userObject.topicId = this.data.topicId;
       this.userObject.institutionId = this.data.institutionId;
     }
+    this.getInstitution();
+    this.getRole();
+    this.getTopic();
+    console.log(this.userForm);
   }
-  saveUserMaster() {}
+  saveUserMaster() {
+    this.userService.saveUserMaster(this.userObject).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.userForm.reset();
+        this.dialogRef.close(res);
+      },
+      (err: HttpErrorResponse) => {
+        console.log(err);
+      }
+    );
+  }
   updateUserMaster() {
-
-  }f
+    console.log(this.userObject, 'update');
+    this.userService.updateUserMaster(this.userObject).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.userForm.reset();
+        this.dialogRef.close(res);
+      },
+      (err: HttpErrorResponse) => {
+        console.log(err);
+      }
+    );
+  }
+  getRole() {
+    this.roleService.getRole().subscribe((res: any) => {
+      this.roles = res.result;
+    });
+  }
+  getTopic() {
+    this.topicService.getAllTopicMaster().subscribe((res: any) => {
+      this.topics = res.result;
+    });
+  }
+  getInstitution() {
+    this.institutionService.getAllInstitute().subscribe((res: any) => {
+      this.intitutions = res.result;
+    });
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
