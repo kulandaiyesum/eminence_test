@@ -1,0 +1,187 @@
+<div class="form_crud">
+  <mat-icon class="close_btn" mat-icon-button (click)="onNoClick()">close</mat-icon>
+  <div class="form_wrap">
+    <div class="form_heading">Add User</div>
+    <form [formGroup]="userForm">
+      <div class="flex_group">
+        <div class="col_group">
+          <div class="form-group custom_group">
+            <label for="firstName">First name</label>
+            <input
+              type="text"
+              id="firstName"
+              class="form-control"
+              name="firstName"
+              formControlName="firstName"
+              [(ngModel)]="userObject.firstName"
+            />
+            <div class="error">
+              <mat-error>first name is required</mat-error>
+            </div>
+          </div>
+        </div>
+        <div class="col_group">
+          <div class="form-group custom_group">
+            <label for="lastName">Last name</label>
+            <input
+              type="text"
+              id="lastName"
+              class="form-control"
+              name="firstName"
+              formControlName="firstName"
+              [(ngModel)]="userObject.firstName"
+            />
+            <div class="error">
+              <mat-error>last name is required</mat-error>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex_group">
+        <div class="col_group">
+          <div class="form-group custom_group">
+            <label for="email">Email</label>
+            <input
+              type="text"
+              id="email"
+              class="form-control"
+              name="firstName"
+              formControlName="firstName"
+              [(ngModel)]="userObject.firstName"
+            />
+            <div class="error">
+              <mat-error>email is required</mat-error>
+            </div>
+          </div>
+        </div>
+        <div class="col_group">
+          <div class="form-group custom_group">
+            <label for="role">Role</label>
+            <!-- <input type="text" id="role" class="form-control" /> -->
+            <select
+              id="role"
+              class="form-select"
+              aria-label="Default select example"
+              name="role"
+              formControlName="role"
+              [(ngModel)]="userObject.role"
+            >
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+            <div class="error">
+              <mat-error>Role is required</mat-error>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex_group">
+        <div class="col_group">
+          <div class="form-group custom_group">
+            <label for="institution">Institution</label>
+            <!-- <input type="text" class="form-control" /> -->
+            <select
+              id="institution"
+              class="form-select"
+              aria-label="Default select example"
+              name="institutionId"
+              formControlName="institutionId"
+              [(ngModel)]="userObject.institutionId"
+            >
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+            <div class="error">
+              <mat-error>Role is required</mat-error>
+            </div>
+          </div>
+        </div>
+        <div class="col_group">
+          <div class="form-group custom_group">
+            <label for="subscription">Subscription</label>
+            <!-- <input type="text" id="subscription" class="form-control" /> -->
+            <select
+              id="subscription"
+              class="form-select"
+              aria-label="Default select example"
+              name="subscriptionId"
+              formControlName="subscriptionId"
+              [(ngModel)]="userObject.subscriptionId"
+            >
+              <option selected>Open this select menu</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+            <div class="error">
+              <mat-error>Subscription is required</mat-error>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group custom_group">
+        <label for="topic">Topic</label>
+        <!-- <input type="text" id="subscription" class="form-control" /> -->
+        <select
+          id="topic"
+          class="form-select"
+          aria-label="Default select example"
+          name="topicId"
+          formControlName="topicId"
+          [(ngModel)]="userObject.topicId"
+        >
+          <option selected>Open this select menu</option>
+          <option value="1">One</option>
+          <option value="2">Two</option>
+          <option value="3">Three</option>
+        </select>
+        <div class="error">
+          <mat-error>Subscription is required</mat-error>
+        </div>
+      </div>
+      <div class="flex_group">
+        <div class="col_group">
+          <div class="form-group custom_group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              name="password"
+              formControlName="password"
+              [(ngModel)]="userObject.password"
+            />
+            <div class="error">
+              <mat-error>password is required</mat-error>
+            </div>
+          </div>
+        </div>
+        <div class="col_group">
+          <div class="form-group custom_group">
+            <label for="confirmPassword">Confirm password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              class="form-control"
+              name="confirmPassword"
+              formControlName="confirmPassword"
+            />
+            <div class="error">
+              <mat-error>Confirm password is required</mat-error>
+              <mat-error>Password does not match</mat-error>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form_btns">
+        <button>Save</button>
+      </div>
+    </form>
+  </div>
+</div>

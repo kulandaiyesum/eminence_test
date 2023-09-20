@@ -50,6 +50,13 @@
               >
                 Role
               </li>
+              <li
+                (click)="changeBackgroundColor(6)"
+                [ngClass]="{ selected: selectedIndex === 6 }"
+                (click)="user()"
+              >
+                User
+              </li>
             </ul>
           </div>
         </div>
@@ -119,6 +126,9 @@
           </div>
           <div class="sidenav-content-component" *ngSwitchCase="'role'">
             <app-role></app-role>
+          </div>
+          <div class="sidenav-content-component" *ngSwitchCase="'user'">
+            <app-user></app-user>
           </div>
           <div class="sidenav-content-component" *ngSwitchCase="'topic'">
             <app-topic></app-topic>

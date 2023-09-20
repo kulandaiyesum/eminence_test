@@ -28,6 +28,9 @@ export class InstitutePopupComponent {
     name: '',
     email: '',
     _id: '',
+    address: '',
+    state: '',
+    zip: ''
   };
 
   constructor(
@@ -46,8 +49,10 @@ export class InstitutePopupComponent {
       this.visibleUpdate = true;
       this.institutionModel.name = data.name;
       this.institutionModel.email = data.email;
-
       this.institutionModel._id = data._id;
+      this.institutionModel.address = data.address;
+      this.institutionModel.state = data.state;
+      this.institutionModel.zip = data.zip;
     }
   }
 
@@ -61,6 +66,9 @@ export class InstitutePopupComponent {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       _id: [''],
+      address: ['', Validators.required],
+      state: ['', Validators.required],
+      zip: ['', Validators.required],
     });
   }
   getPackageData() {
@@ -87,6 +95,9 @@ export class InstitutePopupComponent {
     console.log('submitted');
     this.instituteForm.controls['email'].setValue(this.institutionModel.email);
     this.instituteForm.controls['name'].setValue(this.institutionModel.name);
+    this.instituteForm.controls['address'].setValue(this.institutionModel.address);
+    this.instituteForm.controls['state'].setValue(this.institutionModel.state);
+    this.instituteForm.controls['zip'].setValue(this.institutionModel.zip);
 
     if (this.instituteForm.valid) {
       console.log(this.instituteForm.value);
@@ -106,7 +117,9 @@ export class InstitutePopupComponent {
     console.log('submitted');
     this.instituteForm.controls['email'].setValue(this.institutionModel.email);
     this.instituteForm.controls['name'].setValue(this.institutionModel.name);
-
+    this.instituteForm.controls['address'].setValue(this.institutionModel.address);
+    this.instituteForm.controls['state'].setValue(this.institutionModel.state);
+    this.instituteForm.controls['zip'].setValue(this.institutionModel.zip);
     this.instituteForm.controls['_id'].setValue(this.institutionModel._id);
 
     if (this.instituteForm.valid) {

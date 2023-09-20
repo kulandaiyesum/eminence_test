@@ -127,6 +127,7 @@ export class PackagePopupComponent {
     console.log(this.package,"dddddddddddddddddddddd");
 
     this.packageService.createPackage(this.package).subscribe((data:any)=>{
+      this.dialogRef.close();
       console.log(data);
 
     })

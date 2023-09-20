@@ -1,0 +1,112 @@
+<div class="user_container">
+  <div class="search_and_add">
+    <div class="search_box">
+      <div class="search_field">
+        <input
+          class="form-control"
+          (keyup)="applyFilter($event)"
+          placeholder="Search Role"
+          #input
+        />
+      </div>
+    </div>
+    <div class="add_btn">
+      <button class="" (click)="saveUserMaster()">Add Role</button>
+    </div>
+  </div>
+  <div class="table-container mat-elevation-z8">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      class="complaint-table"
+      matSort
+      aria-label="Complaints Table"
+    >
+      <!-- Index number column -->
+      <ng-container matColumnDef="sno">
+        <th mat-header-cell *matHeaderCellDef>SNO</th>
+        <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+      <!-- name column -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="description-cell">
+            {{ row.firstName }} {{ row.lastName }}
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- email column -->
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="description-cell">{{ row.email }}</div>
+        </td>
+      </ng-container>
+
+      <!-- role column -->
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="description-cell">{{ row?.role?.role }}</div>
+        </td>
+      </ng-container>
+
+      <!-- institution column -->
+      <ng-container matColumnDef="institution">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Institution</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="description-cell">{{ row?.institutionId?.name }}</div>
+        </td>
+      </ng-container>
+
+      <!-- subscription column -->
+      <ng-container matColumnDef="subscription">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Subscription</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="description-cell">{{ row?.subscriptionId }}</div>
+        </td>
+      </ng-container>
+      <!-- topic column -->
+      <ng-container matColumnDef="topic">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>topic</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="description-cell">{{ row?.topicId?.topic }}</div>
+        </td>
+      </ng-container>
+      <!-- Actions column -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ACTION</th>
+        <td mat-cell *matCellDef="let row">
+          <mat-icon
+            class="set_edit_color_button"
+            matTooltip="edit"
+            (click)="updateUserMaster(row)"
+            >edit</mat-icon
+          >
+
+          <mat-icon
+            class="set_edit_color_button ms-2"
+            matTooltip="delete"
+            (click)="deleteUserMaster(row._id)"
+            >delete</mat-icon
+          >
+        </td>
+      </ng-container>
+      <!-- Header and row definitions -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <!-- Paginator -->
+    <mat-paginator
+      #paginator
+      [length]="dataSource?.data?.length"
+      [pageIndex]="0"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 20]"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
+</div>
