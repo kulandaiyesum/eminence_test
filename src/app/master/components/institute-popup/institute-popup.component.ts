@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { InstituteserviceService } from '../../service/instituteservice.service';
+import { PackageService } from '../../service/package.service';
+import { LogicalfuntionService } from 'src/app/shared/logicalfuntion.service';
 
 @Component({
   selector: 'app-institute-popup',
@@ -19,6 +21,8 @@ export class InstitutePopupComponent {
   secretKey = environment.secretKey;
   visibleUpdate: boolean = false;
   public items;
+  public packageList;
+  public unqiuePackage = [];
 
   public institutionModel: Institution = {
     name: '',
@@ -31,6 +35,8 @@ export class InstitutePopupComponent {
     private router: Router,
     private toastr: ToastrService,
     private instituteService: InstituteserviceService,
+    public packageService: PackageService,
+    public logicalService: LogicalfuntionService,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<InstitutePopupComponent>
   ) {
@@ -47,6 +53,7 @@ export class InstitutePopupComponent {
 
   ngOnInit(): void {
     this.initForm();
+    this.getPackageData();
   }
 
   initForm() {
@@ -54,6 +61,17 @@ export class InstitutePopupComponent {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       _id: [''],
+    });
+  }
+  getPackageData() {
+    this.packageService.getAllPackages().subscribe((doc: any) => {
+      console.log(doc);
+      this.packageList = doc.result;
+      this.unqiuePackage = this.logicalService.filteredArrayWithJsonValue(
+        this.packageList,
+        'packageName'
+      );
+      console.log(this.unqiuePackage);
     });
   }
 

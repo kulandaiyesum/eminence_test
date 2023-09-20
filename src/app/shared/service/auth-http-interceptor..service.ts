@@ -17,9 +17,7 @@ export class AuthHttpInterceptorService {
   public basicAuth;
   constructor(private router: Router) {
     this.token = 'Bearer ' + localStorage.getItem('1');
-    this.basicAuth =
-      `Basic ` +
-      btoa('shinelogics:DAF87DSFDSFDSA98FSADKJE324KJL32HFD7FDSFB24343J49DSF');
+    this.basicAuth = `Basic ` + btoa('EminenceAI:ZW1pbmVuY2VBSUAxMjM=');
   }
 
   handelError(error: HttpErrorResponse): any {

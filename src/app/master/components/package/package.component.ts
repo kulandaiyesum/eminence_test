@@ -56,8 +56,7 @@ export class PackageComponent {
   loadPackageData() {
     this.packageService.getAllPackages().subscribe(
       (packages: any) => {
-
-        this.packageData = packages.result
+        this.packageData = packages.result;
         console.log(this.packageData);
         this.dataSource = new MatTableDataSource(this.packageData);
         this.dataSource.paginator = this.paginator;
@@ -76,7 +75,10 @@ export class PackageComponent {
       // height:'80vh',
       // overflow: 'auto',
     };
-    const dialogRef = this.dialog.open(PackagePopupComponent, dialogBoxSettings);
+    const dialogRef = this.dialog.open(
+      PackagePopupComponent,
+      dialogBoxSettings
+    );
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -92,6 +94,7 @@ export class PackageComponent {
         (response) => {
           console.log('Package created successfully', response);
           this.packageForm.reset();
+          this.loadPackageData();
         },
         (error) => {
           console.error('Failed to create package', error);
@@ -106,7 +109,6 @@ export class PackageComponent {
   }
 
   editPackage(element: Package) {
-
     let dialogBoxSettings = {
       width: '500px',
       margin: '0 auto',
@@ -115,7 +117,10 @@ export class PackageComponent {
 
       data: { packageData: element },
     };
-    const dialogRef = this.dialog.open(PackagePopupComponent, dialogBoxSettings);
+    const dialogRef = this.dialog.open(
+      PackagePopupComponent,
+      dialogBoxSettings
+    );
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
@@ -131,7 +136,7 @@ export class PackageComponent {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, keep it'
+      cancelButtonText: 'No, keep it',
     }).then((result) => {
       if (result.isConfirmed) {
         // User clicked "Yes, delete it!"
