@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,6 +22,7 @@ import { AuthHttpInterceptorService } from './shared/service/auth-http-intercept
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
+    FormsModule,
     LoginModule,
     HttpClientModule,
     ToastrModule.forRoot(),
