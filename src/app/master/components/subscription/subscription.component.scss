@@ -12,10 +12,6 @@
       .control {
         width: auto;
         height: auto;
-
-        h4 {
-          text-align: center;
-        }
         .button {
           display: flex;
           justify-content: space-between;
@@ -58,21 +54,31 @@
             width: 100%;
           }
         }
-        mat-table {
+        table {
           width: auto;
           height: auto;
           margin-top: 15px;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-          mat-header-cell {
+          th {
             background-color: #46b3eb;
             color: #fff;
           }
           mat-icon {
             color: #fabf01;
           }
+          .odd-row {
+            background-color: #F5F5F5;
+          }
+
+          .even-row {
+            background-color: white;
+          }
+
         }
         mat-paginator {
           z-index: 1;
+          background-color: #fff;
+          border: none;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
       }
