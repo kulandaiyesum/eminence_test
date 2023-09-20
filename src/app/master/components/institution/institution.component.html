@@ -5,11 +5,12 @@
         <div class="control">
           <h4>INSTITUTION</h4>
           <div class="button">
+            <input placeholder="Search here" (keyup)="applyFilter($event)" />
             <button mat-raised-button (click)="addData()">Add Data</button>
           </div>
         </div>
         <div class="table">
-          <input placeholder="Search here" (keyup)="applyFilter($event)" />
+          
           <mat-table
             [dataSource]="dataSource"
             matSort

@@ -16,36 +16,36 @@
           <div class="navigation">
             <ul>
               <li
-                (click)="changeBackgroundColor(2)"
+                (click)="changeBackgroundColor(0)"
                 [ngClass]="{ selected: selectedIndex === 0 }"
                 (click)="institution()"
               >
                 Institution
               </li>
               <li
-                (click)="changeBackgroundColor(4)"
+                (click)="changeBackgroundColor(1)"
                 [ngClass]="{ selected: selectedIndex === 1 }"
                 (click)="package()"
               >
                 Package
               </li>
               <li
-                (click)="changeBackgroundColor(3)"
+                (click)="changeBackgroundColor(2)"
                 [ngClass]="{ selected: selectedIndex === 2 }"
                 (click)="subscription()"
               >
                 Subscription
               </li>
               <li
-                (click)="changeBackgroundColor(0)"
+                (click)="changeBackgroundColor(3)"
                 [ngClass]="{ selected: selectedIndex === 3 }"
                 (click)="topic()"
               >
                 Topic
               </li>
               <li
-                (click)="changeBackgroundColor(1)"
-                [ngClass]="{ selected: selectedIndex === 1 }"
+                (click)="changeBackgroundColor(4)"
+                [ngClass]="{ selected: selectedIndex === 4 }"
                 (click)="role()"
               >
                 Role

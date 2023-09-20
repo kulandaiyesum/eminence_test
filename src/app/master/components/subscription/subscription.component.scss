@@ -1,0 +1,93 @@
+.subscription-container {
+  width: 100%;
+  height: 85vh;
+  display: flex;
+  justify-content: center;
+  .main {
+    width: 80%;
+    height: 85vh;
+    .data {
+      width: 100%;
+      height: auto;
+      .control {
+        width: auto;
+        height: auto;
+
+        h4 {
+          text-align: center;
+        }
+        .button {
+          display: flex;
+          justify-content: space-between;
+          button {
+            background-color: #46b3eb;
+            color: #fff;
+          }
+          input {
+            border: 1px solid #c6c9cd;
+            border-radius: 3px;
+            color: #636972;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            font-family: "open_sans", "Open Sans", sans-serif;
+            line-height: 1.5;
+            font-weight: normal;
+            font-size: 14px;
+            font-style: normal;
+            padding: 6px 8px;
+            min-height: 36px;
+            &::placeholder {
+              font-weight: 600;
+              color: #bcbcbc;
+            }
+          }
+        }
+        #remove {
+          margin-left: 20px;
+        }
+      }
+      .table {
+        width: 100%;
+        height: auto;
+        margin-top: 20px;
+        input {
+          width: 32%;
+          border: 1px solid #46b3eb;
+          padding: 5px;
+          border-radius: 2px;
+          @media (max-width: 768px) {
+            width: 100%;
+          }
+        }
+        mat-table {
+          width: auto;
+          height: auto;
+          margin-top: 15px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+          mat-header-cell {
+            background-color: #46b3eb;
+            color: #fff;
+          }
+          mat-icon {
+            color: #fabf01;
+          }
+        }
+        mat-paginator {
+          z-index: 1;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 425px) {
+    .main {
+      width: 100%;
+      .table {
+        width: auto;
+        input {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

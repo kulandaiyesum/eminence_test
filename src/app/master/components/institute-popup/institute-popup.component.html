@@ -1,10 +1,15 @@
 <div class="main">
   <div class="data">
     <div class="heading">
-      <h4>INSTITUTION</h4>
+      <h2 *ngIf="items === null">Add Institution</h2>
+      <h2 *ngIf="items !== null">Update Institution</h2>
+      <mat-icon class="close_btn" mat-icon-button (click)="closeDialog()"
+        >close</mat-icon
+      >
     </div>
     <div class="forms">
       <form #instituteForm="ngForm">
+        <label for="name">Institute Name</label>
         <input
           type="text"
           placeholder="Name"
@@ -18,8 +23,7 @@
         >
           Name is required.
         </div>
-
-
+        <label for="email">Email</label>
         <input
           type="text"
           placeholder="Email"
@@ -40,16 +44,21 @@
         >
           Invalid email format.
         </div>
-        
 
         <button
           type="submit"
           (click)="onInstituteSubmit()"
           *ngIf="!visibleUpdate"
+          [disabled]="instituteForm.invalid"
         >
           Submit
         </button>
-        <button type="submit" *ngIf="visibleUpdate" (click)="updateInstitute()">
+        <button
+          type="submit"
+          *ngIf="visibleUpdate"
+          [disabled]="instituteForm.invalid"
+          (click)="updateInstitute()"
+        >
           Update
         </button>
       </form>
