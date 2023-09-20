@@ -39,43 +39,37 @@ export class SidenavComponent {
     this.selectedIndex = index;
   }
   qgen() {
-
     this.component = 'qgen';
   }
   editor() {
-
     this.component = 'editor';
   }
   askeminence() {
-
     this.component = 'askeminence';
   }
 
   history() {
-
     this.component = 'history';
   }
 
   role() {
-
     this.component = 'role';
   }
+  user() {
+    this.component = 'user';
+  }
   topic() {
-
     this.component = 'topic';
   }
   institution() {
-
     this.component = 'institution';
   }
 
   subscription() {
-
     this.component = 'subscription';
   }
 
   package() {
-
     this.component = 'package';
   }
 

@@ -45,12 +45,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoleFormComponent } from './components/role-form/role-form.component';
 import { TopicFormComponent } from './components/topic-form/topic-form.component';
 import { PackagePopupComponent } from './components/package-popup/package-popup.component';
-
+import { UserComponent } from './components/user/user.component';
+import { UserFormComponent } from './components/user-form/user-form.component';
 import { SubscriptionPopupComponent } from './components/subscription-popup/subscription-popup.component';
 
 @NgModule({
   declarations: [
-    PackageComponent,PackagePopupComponent,
+    PackageComponent,
+    PackagePopupComponent,
     InstitutionComponent,
     SubscriptionComponent,
     RoleComponent,
@@ -58,6 +60,8 @@ import { SubscriptionPopupComponent } from './components/subscription-popup/subs
     TopicComponent,
     RoleFormComponent,
     TopicFormComponent,
+    UserComponent,
+    UserFormComponent,
     SubscriptionPopupComponent,
   ],
   imports: [
@@ -102,6 +106,7 @@ import { SubscriptionPopupComponent } from './components/subscription-popup/subs
     SubscriptionComponent,
     PackageComponent,
     TopicComponent,
+    UserComponent,
   ],
 })
 export class MasterModule {}
