@@ -3,9 +3,11 @@
     <div class="heading">
       <h2 *ngIf="items === null">Add Institution</h2>
       <h2 *ngIf="items !== null">Update Institution</h2>
-      <mat-icon class="close_btn" mat-icon-button (click)="closeDialog()"
+      <div class="icon">
+        <mat-icon class="close_btn" mat-icon-button (click)="closeDialog()"
         >close</mat-icon
       >
+      </div>
     </div>
     <div class="forms">
       <form #instituteForm="ngForm">

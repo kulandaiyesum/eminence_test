@@ -50,6 +50,7 @@ export class InstitutionComponent {
   ngOnInit(): void {
     this.initForm();
     this.getAllInstituteData();
+    
   }
 
   initForm() {
