@@ -29,13 +29,13 @@
               >
                 Package
               </li>
-              <li
+              <!-- <li
                 (click)="changeBackgroundColor(2)"
                 [ngClass]="{ selected: selectedIndex === 2 }"
                 (click)="subscription()"
               >
                 Subscription
-              </li>
+              </li> -->
               <li
                 (click)="changeBackgroundColor(3)"
                 [ngClass]="{ selected: selectedIndex === 3 }"
@@ -136,9 +136,9 @@
           <div class="sidenav-content-component" *ngSwitchCase="'institution'">
             <app-institution></app-institution>
           </div>
-          <div class="sidenav-content-component" *ngSwitchCase="'subscription'">
+          <!-- <div class="sidenav-content-component" *ngSwitchCase="'subscription'">
             <app-subscription></app-subscription>
-          </div>
+          </div> -->
           <div class="sidenav-content-component" *ngSwitchCase="'package'">
             <app-package></app-package>
           </div>

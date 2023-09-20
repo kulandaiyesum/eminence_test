@@ -1,7 +1,10 @@
 <div class="form_crud">
-  <mat-icon class="close_btn" mat-icon-button (click)="onNoClick()">close</mat-icon>
+  <mat-icon class="close_btn" mat-icon-button (click)="onNoClick()"
+    >close</mat-icon
+  >
   <div class="form_wrap">
-    <div class="form_heading">Add User</div>
+    <div class="form_heading" *ngIf="data === null">Add User</div>
+    <div class="form_heading" *ngIf="data !== null">Edit User</div>
     <form [formGroup]="userForm">
       <div class="flex_group">
         <div class="col_group">
@@ -16,7 +19,13 @@
               [(ngModel)]="userObject.firstName"
             />
             <div class="error">
-              <mat-error>first name is required</mat-error>
+              <mat-error
+                *ngIf="
+                  userForm.controls['firstName'].hasError('required') &&
+                  userForm.controls['firstName'].touched
+                "
+                >first name is required</mat-error
+              >
             </div>
           </div>
         </div>
@@ -27,12 +36,18 @@
               type="text"
               id="lastName"
               class="form-control"
-              name="firstName"
-              formControlName="firstName"
-              [(ngModel)]="userObject.firstName"
+              name="lastName"
+              formControlName="lastName"
+              [(ngModel)]="userObject.lastName"
             />
             <div class="error">
-              <mat-error>last name is required</mat-error>
+              <mat-error
+                *ngIf="
+                  userForm.controls['lastName'].hasError('required') &&
+                  userForm.controls['lastName'].touched
+                "
+                >last name is required</mat-error
+              >
             </div>
           </div>
         </div>
@@ -46,12 +61,18 @@
               type="text"
               id="email"
               class="form-control"
-              name="firstName"
-              formControlName="firstName"
-              [(ngModel)]="userObject.firstName"
+              name="email"
+              formControlName="email"
+              [(ngModel)]="userObject.email"
             />
             <div class="error">
-              <mat-error>email is required</mat-error>
+              <mat-error
+                *ngIf="
+                  userForm.controls['email'].hasError('required') &&
+                  userForm.controls['email'].touched
+                "
+                >email is required</mat-error
+              >
             </div>
           </div>
         </div>
@@ -67,13 +88,19 @@
               formControlName="role"
               [(ngModel)]="userObject.role"
             >
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option disabled selected value="">select role</option>
+              <option *ngFor="let role of roles" [value]="role._id">
+                {{ role.role }}
+              </option>
             </select>
             <div class="error">
-              <mat-error>Role is required</mat-error>
+              <mat-error
+                *ngIf="
+                  userForm.controls['role'].hasError('required') &&
+                  userForm.controls['role'].touched
+                "
+                >Role is required</mat-error
+              >
             </div>
           </div>
         </div>
@@ -91,57 +118,52 @@
               formControlName="institutionId"
               [(ngModel)]="userObject.institutionId"
             >
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option disabled selected value="">select Institution</option>
+              <option
+                *ngFor="let intitution of intitutions"
+                [value]="intitution._id"
+              >
+                {{ intitution.name }}
+              </option>
             </select>
             <div class="error">
-              <mat-error>Role is required</mat-error>
+              <mat-error
+                *ngIf="
+                  userForm.controls['institutionId'].hasError('required') &&
+                  userForm.controls['institutionId'].touched
+                "
+                >Role is required</mat-error
+              >
             </div>
           </div>
         </div>
         <div class="col_group">
           <div class="form-group custom_group">
-            <label for="subscription">Subscription</label>
+            <label for="topic">Topic</label>
             <!-- <input type="text" id="subscription" class="form-control" /> -->
             <select
-              id="subscription"
+              id="topic"
               class="form-select"
               aria-label="Default select example"
-              name="subscriptionId"
-              formControlName="subscriptionId"
-              [(ngModel)]="userObject.subscriptionId"
+              name="topicId"
+              formControlName="topicId"
+              [(ngModel)]="userObject.topicId"
             >
-              <option selected>Open this select menu</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              <option disabled selected value="">select topic</option>
+              <option *ngFor="let topic of topics" [value]="topic._id">
+                {{ topic.topic }}
+              </option>
             </select>
             <div class="error">
-              <mat-error>Subscription is required</mat-error>
+              <mat-error
+                *ngIf="
+                  userForm.controls['topicId'].hasError('required') &&
+                  userForm.controls['topicId'].touched
+                "
+                >Topic is required</mat-error
+              >
             </div>
           </div>
-        </div>
-      </div>
-      <div class="form-group custom_group">
-        <label for="topic">Topic</label>
-        <!-- <input type="text" id="subscription" class="form-control" /> -->
-        <select
-          id="topic"
-          class="form-select"
-          aria-label="Default select example"
-          name="topicId"
-          formControlName="topicId"
-          [(ngModel)]="userObject.topicId"
-        >
-          <option selected>Open this select menu</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-        <div class="error">
-          <mat-error>Subscription is required</mat-error>
         </div>
       </div>
       <div class="flex_group">
@@ -157,7 +179,13 @@
               [(ngModel)]="userObject.password"
             />
             <div class="error">
-              <mat-error>password is required</mat-error>
+              <mat-error
+                *ngIf="
+                  userForm.controls['password'].hasError('required') &&
+                  userForm.controls['password'].touched
+                "
+                >password is required</mat-error
+              >
             </div>
           </div>
         </div>
@@ -172,15 +200,35 @@
               formControlName="confirmPassword"
             />
             <div class="error">
-              <mat-error>Confirm password is required</mat-error>
-              <mat-error>Password does not match</mat-error>
+              <mat-error
+                *ngIf="
+                  userForm.hasError('passwordMismatch') &&
+                  userForm.get('confirmPassword').touched
+                "
+                >Password does not match</mat-error
+              >
             </div>
           </div>
         </div>
       </div>
 
       <div class="form_btns">
-        <button>Save</button>
+        <button
+          [disabled]="userForm.invalid"
+          class=""
+          *ngIf="data === null"
+          (click)="saveUserMaster()"
+        >
+          Save
+        </button>
+        <button
+          [disabled]="userForm.invalid"
+          class=""
+          *ngIf="data !== null"
+          (click)="updateUserMaster()"
+        >
+          Update
+        </button>
       </div>
     </form>
   </div>
