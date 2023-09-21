@@ -33,12 +33,16 @@ header {
         align-items: center;
         gap: 20px;
         li {
+          button {
+            cursor: pointer;
+          }
           a {
             text-decoration: none;
             color: #fff;
             font-weight: bold;
             line-height: 1.2;
             font-size: 18.72px;
+            cursor:  pointer !important;
             &:hover {
               border-bottom: 1px solid #fff;
             }
