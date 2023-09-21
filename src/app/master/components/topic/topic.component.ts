@@ -10,6 +10,7 @@ import * as CryptoJS from 'crypto-js';
 import { MatTableDataSource } from '@angular/material/table';
 import { TopicFormComponent } from '../topic-form/topic-form.component';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-topic',
@@ -33,9 +34,6 @@ export class TopicComponent {
     private toastr: ToastrService,
     private dialog: MatDialog
   ) {
-    // this.myForm = new FormGroup({
-    //   topic: new FormControl('', [Validators.required]),
-    // });
   }
 
   displayedColumns: string[] = ['topic', 'status', 'actions'];
@@ -50,7 +48,6 @@ export class TopicComponent {
   }
   getAllTopicMaster() {
     this.topicMasterService.getAllTopicMaster().subscribe((doc: any) => {
-      console.log(doc);
       this.TopicList = doc.result;
       this.dataSource = new MatTableDataSource(doc.result);
       this.dataSource.paginator = this.paginator;
@@ -65,13 +62,9 @@ export class TopicComponent {
     };
     const dialogRef = this.dialog.open(TopicFormComponent, dialogBoxSettings);
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('editRqole ', result);
       if (result === undefined) {
         return;
       }
-      this.toastr.success(result.message, '', {
-        timeOut: 3000,
-      });
       this.getAllTopicMaster();
     });
   }
@@ -82,24 +75,23 @@ export class TopicComponent {
     };
     const dialogRef = this.dialog.open(TopicFormComponent, dialogBoxSettings);
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('AddRole ', result);
       if (result === undefined) {
         return;
       }
-      this.toastr.success(result.message, '', {
-        timeOut: 3000,
-      });
-
       this.getAllTopicMaster();
     });
   }
   changeRoleStatus(list) {}
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   clearFilter = () => {
     this.dataSource.filter = '';
     this.value = '';
   };
-  deleteCoreBoxMaster(list) {}
   cancel() {
     this.myForm.reset({ status: this.status1 });
     this.topic._id = undefined;
@@ -109,5 +101,32 @@ export class TopicComponent {
   decryptText(encryptedText: string, secretKey: string): string {
     const decrypted = CryptoJS.AES.decrypt(encryptedText, secretKey);
     return decrypted.toString(CryptoJS.enc.Utf8);
+  }
+  deleteCoreBoxMaster(_id: string) {
+    Swal.fire({
+      title: 'Delete',
+      text: 'Are you sure you want to Delete?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.topicMasterService.deleteTopicMaster(_id).subscribe(
+          (result: any) => {
+            this.toastr.success(result.message, '', {
+              timeOut: 3000,
+            });
+            this.getAllTopicMaster();
+          },
+          (err: any) => {
+            this.toastr.error(err.message, '', {
+              timeOut: 3000,
+            });
+            this.getAllTopicMaster();
+          }
+        );
+      }
+    });
   }
 }

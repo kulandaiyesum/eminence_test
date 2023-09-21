@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Topic } from '../model/topic';
@@ -19,5 +19,12 @@ export class TopicService {
 
   updateTopicMaster(topic: Topic) {
     return this.http.put(this.loginURL + 'update', topic);
+  }
+
+  deleteTopicMaster(topic_id: string) {
+    const params = new HttpParams().set('_id', topic_id);
+    return this.http.delete(this.loginURL + 'delete', {
+      params,
+    });
   }
 }

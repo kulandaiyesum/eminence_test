@@ -28,7 +28,7 @@ export class InstitutionComponent {
   displayedColumns: string[] = [
     'name',
     'email',
-    'update',
+    'city',
     'address',
     'state',
     'zip',
@@ -50,6 +50,7 @@ export class InstitutionComponent {
     packageName: '',
     questionsCount: '',
     packageNameId: '',
+    city: ''
   };
   constructor(
     private formBuilder: FormBuilder,
@@ -96,7 +97,7 @@ export class InstitutionComponent {
   addData() {
     const dialogRef = this.dialog.open(InstitutePopupComponent, {
       width: '500px',
-      height: 'auto',
+      height: '200vh',
       data: null,
       // Other MatDialog options
     });
@@ -139,7 +140,7 @@ export class InstitutionComponent {
     console.log(data);
     const dialogRef = this.dialog.open(InstitutePopupComponent, {
       width: '500px',
-      height: 'auto',
+      height: '200vh',
       data: data,
       // Other MatDialog options
     });

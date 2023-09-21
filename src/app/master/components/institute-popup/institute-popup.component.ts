@@ -34,6 +34,7 @@ export class InstitutePopupComponent {
     packageName: '',
     questionsCount: '',
     packageNameId: '',
+    city: ''
   };
 
   constructor(
@@ -56,6 +57,8 @@ export class InstitutePopupComponent {
       this.institutionModel.address = data.address;
       this.institutionModel.state = data.state;
       this.institutionModel.zip = data.zip;
+      this.institutionModel.city = data.city;
+      this.institutionModel.packageName = data.packageNameId.packageName;
     }
   }
 
@@ -72,6 +75,7 @@ export class InstitutePopupComponent {
       address: ['', Validators.required],
       state: ['', Validators.required],
       zip: ['', Validators.required],
+      city: ['', Validators.required],
     });
   }
   getPackageData() {
@@ -98,6 +102,8 @@ export class InstitutePopupComponent {
   }
   onInstituteSubmit() {
     console.log('submitted');
+    console.log(this.institutionModel);
+
     this.instituteForm.controls['email'].setValue(this.institutionModel.email);
     this.instituteForm.controls['name'].setValue(this.institutionModel.name);
     this.instituteForm.controls['address'].setValue(
@@ -105,6 +111,7 @@ export class InstitutePopupComponent {
     );
     this.instituteForm.controls['state'].setValue(this.institutionModel.state);
     this.instituteForm.controls['zip'].setValue(this.institutionModel.zip);
+    this.instituteForm.controls['city'].setValue(this.institutionModel.city);
 
     if (this.instituteForm.valid) {
       console.log(this.instituteForm.value);
@@ -129,8 +136,9 @@ export class InstitutePopupComponent {
     );
     this.instituteForm.controls['state'].setValue(this.institutionModel.state);
     this.instituteForm.controls['zip'].setValue(this.institutionModel.zip);
+    this.instituteForm.controls['city'].setValue(this.institutionModel.city);
     this.instituteForm.controls['_id'].setValue(this.institutionModel._id);
-
+    console.log(this.instituteForm.value);
     if (this.instituteForm.valid) {
       console.log('form valid for update');
       console.log(this.instituteForm.value._id);

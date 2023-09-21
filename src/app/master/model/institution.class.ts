@@ -8,4 +8,5 @@ export class Institution {
   packageName: string;
   questionsCount: string;
   packageNameId: string;
+  city: string;
 }

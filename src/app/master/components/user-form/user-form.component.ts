@@ -8,6 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../model/user';
 import { passwordMatchValidator } from 'src/app/shared/validators/custom-validator';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-user-form',
@@ -33,6 +34,7 @@ export class UserFormComponent implements OnInit {
   passwordVisible: boolean = true;
   constructor(
     private userService: UserService,
+    private toastr: ToastrService,
     private institutionService: InstituteserviceService,
     private roleService: RoleService,
     private topicService: TopicService,
@@ -96,30 +98,36 @@ export class UserFormComponent implements OnInit {
     });
   }
   saveUserMaster() {
-    console.log(this.userObject, 'save');
     this.userService.saveUserMaster(this.userObject).subscribe(
       (res: any) => {
-        console.log(res);
         this.userForm.reset();
+        this.toastr.success(res.message, '', {
+          timeOut: 3000,
+        });
         this.dialogRef.close(res);
       },
-      (err: HttpErrorResponse) => {
-        console.log(err);
+      (err: any) => {
+        this.toastr.error(err.message, '', {
+          timeOut: 3000,
+        });
         this.dialogRef.close(err);
       }
     );
   }
   updateUserMaster() {
-    console.log(this.userObject, 'update');
-
     this.userService.updateUserMaster(this.userObject).subscribe(
       (res: any) => {
         console.log(res);
         this.userForm.reset();
+        this.toastr.success(res.message, '', {
+          timeOut: 3000,
+        });
         this.dialogRef.close(res);
       },
-      (err: HttpErrorResponse) => {
-        console.log(err);
+      (err: any) => {
+        this.toastr.error(err.message, '', {
+          timeOut: 3000,
+        });
         this.dialogRef.close(err);
       }
     );
@@ -127,9 +135,6 @@ export class UserFormComponent implements OnInit {
   getRole() {
     this.roleService.getRole().subscribe((res: any) => {
       this.roles = res.result;
-      if (this.data !== null) {
-        this.roles.forEach((element) => {});
-      }
     });
   }
   getTopic() {
