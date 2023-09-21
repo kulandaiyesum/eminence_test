@@ -1,0 +1,89 @@
+.email-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .main {
+    width: 35%;
+    height: auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.219),
+      0px 0px 6px 0px rgba(0, 0, 0, 0.219), 0px 0px 6px 0px rgba(0, 0, 0, 0.219),
+      0px 0px 6px 0px rgba(0, 0, 0, 0.219);
+    padding: 30px;
+
+    .forms {
+      width: auto;
+      height: auto;
+      border-radius: 8px;
+      .heading {
+        width: 100%;
+        height: auto;
+        #head {
+          color: #4b5056;
+          text-transform: uppercase;
+          font-size: 20px;
+          font-weight: bold;
+          font-family: "brandon-grotesque", "brandon", martel-sans, sans-serif;
+        }
+        p {
+          color: #636972;
+          font-size: 14px;
+          font-family: sans-serif;
+        }
+      }
+      form {
+        width: auto;
+        input {
+          padding: 5px 5px;
+          width: 65%;
+          border: 2px solid rgb(173, 216, 230);
+          font-family: "open_sans", "Open Sans", sans-serif;
+          border-radius: 5px;
+        }
+        #otp {
+          margin-top: 15px;
+          width: 100%;
+        }
+        #sendotp {
+          padding: 5px 5px;
+          border-radius: 5px;
+          background-color: #fff;
+          color: #46b3eb;
+          cursor: pointer;
+          border-color: #46b3eb;
+          float: right;
+        }
+        #sendotp:hover {
+          background-color: #46b3eb;
+          color: #fff;
+          font-weight: bold;
+        }
+        #verifyotp {
+          margin-top: 15px;
+          width: 100%;
+          padding: 4px 4px;
+          border-radius: 5px;
+          background-color: #46b3eb;
+          color: #fff;
+          border: none;
+        }
+      }
+    }
+  }
+  /* Media Query for Tablet View */
+  @media screen and (max-width: 768px) {
+    .main {
+      width: 70%;
+    }
+  }
+
+  /* Media Query for Mobile View */
+  @media screen and (max-width: 480px) {
+    .main {
+      width: 90%;
+    }
+  }
+}
