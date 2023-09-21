@@ -5,4 +5,7 @@ export class Institution {
   address: string;
   state: string;
   zip: string;
+  packageName: string;
+  questionsCount: string;
+  packageNameId: string;
 }

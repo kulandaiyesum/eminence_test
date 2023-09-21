@@ -3,16 +3,44 @@
     <div class="heading">
       <div class="head">
         <h2 *ngIf="items === null">Add Institution</h2>
-      <h2 *ngIf="items !== null">Update Institution</h2>
+        <h2 *ngIf="items !== null">Update Institution</h2>
       </div>
       <div class="icon">
         <mat-icon class="close_btn" mat-icon-button (click)="closeDialog()"
-        >close</mat-icon
-      >
+          >close</mat-icon
+        >
       </div>
     </div>
     <div class="forms">
       <form #instituteForm="ngForm">
+        <div class="row_group">
+          <div class="form-group custom_group">
+            <label for="type">Package</label>
+            <select
+              id="type"
+              class="form-select"
+              name="type"
+              placeholder="select package type"
+              [(ngModel)]="institutionModel.packageName"
+              (ngModelChange)="getPackgeType(institutionModel.packageName)"
+              required
+            >
+              <option
+                *ngFor="let package of packageList"
+                [value]="package.packageName"
+              >
+                $ {{ package.amount }} {{ "" }}/ {{ package.packageName }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <label for="name" *ngIf="institutionModel.packageName"
+          >package Details</label
+        >
+        <div *ngIf="institutionModel.packageName">
+          {{ institutionModel.questionsCount }} Questions Per Package
+        </div>
         <label for="name">Institute Name</label>
         <input
           type="text"

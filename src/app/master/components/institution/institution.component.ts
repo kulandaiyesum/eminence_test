@@ -25,7 +25,16 @@ export class InstitutionComponent {
   secretKey = environment.secretKey;
   elementStatus = true;
 
-  displayedColumns: string[] = ['name', 'email', 'update','address','state','zip', 'status', 'action'];
+  displayedColumns: string[] = [
+    'name',
+    'email',
+    'update',
+    'address',
+    'state',
+    'zip',
+    'status',
+    'action',
+  ];
   public dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -38,12 +47,14 @@ export class InstitutionComponent {
     address: '',
     state: '',
     zip: '',
+    packageName: '',
+    questionsCount: '',
+    packageNameId: '',
   };
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private toastr: ToastrService,
-
     public dialog: MatDialog,
     public instituteService: InstituteserviceService
   ) {}

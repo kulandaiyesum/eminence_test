@@ -30,7 +30,10 @@ export class InstitutePopupComponent {
     _id: '',
     address: '',
     state: '',
-    zip: ''
+    zip: '',
+    packageName: '',
+    questionsCount: '',
+    packageNameId: '',
   };
 
   constructor(
@@ -73,13 +76,11 @@ export class InstitutePopupComponent {
   }
   getPackageData() {
     this.packageService.getAllPackages().subscribe((doc: any) => {
-      console.log(doc);
       this.packageList = doc.result;
       this.unqiuePackage = this.logicalService.filteredArrayWithJsonValue(
         this.packageList,
         'packageName'
       );
-      console.log(this.unqiuePackage);
     });
   }
 
@@ -90,19 +91,25 @@ export class InstitutePopupComponent {
   closeDialog() {
     this.dialogRef.close();
   }
-
+  getPackgeType(list) {
+    let data = this.packageList.find((x) => x.packageName === list);
+    this.institutionModel.questionsCount = data.questionsCount;
+    this.institutionModel.packageNameId = data._id;
+  }
   onInstituteSubmit() {
     console.log('submitted');
     this.instituteForm.controls['email'].setValue(this.institutionModel.email);
     this.instituteForm.controls['name'].setValue(this.institutionModel.name);
-    this.instituteForm.controls['address'].setValue(this.institutionModel.address);
+    this.instituteForm.controls['address'].setValue(
+      this.institutionModel.address
+    );
     this.instituteForm.controls['state'].setValue(this.institutionModel.state);
     this.instituteForm.controls['zip'].setValue(this.institutionModel.zip);
 
     if (this.instituteForm.valid) {
       console.log(this.instituteForm.value);
       this.closeDialog();
-      this.instituteService.createInstitute(this.instituteForm.value).subscribe(
+      this.instituteService.createInstitute(this.institutionModel).subscribe(
         (response: any) => {
           console.log(response);
         },
@@ -117,7 +124,9 @@ export class InstitutePopupComponent {
     console.log('submitted');
     this.instituteForm.controls['email'].setValue(this.institutionModel.email);
     this.instituteForm.controls['name'].setValue(this.institutionModel.name);
-    this.instituteForm.controls['address'].setValue(this.institutionModel.address);
+    this.instituteForm.controls['address'].setValue(
+      this.institutionModel.address
+    );
     this.instituteForm.controls['state'].setValue(this.institutionModel.state);
     this.instituteForm.controls['zip'].setValue(this.institutionModel.zip);
     this.instituteForm.controls['_id'].setValue(this.institutionModel._id);
