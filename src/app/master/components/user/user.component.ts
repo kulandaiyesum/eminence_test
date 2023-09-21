@@ -46,13 +46,14 @@ export class UserComponent implements OnInit {
   getAllUserMaster() {
     this.userService.getAllUserMaster().subscribe(
       (res: any) => {
-        console.log('All users', res.result);
         this.dataSource = new MatTableDataSource(res.result);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
-      (err: HttpErrorResponse) => {
-        console.log('Error', err);
+      (err: any) => {
+        this.toastr.error(err.message, '', {
+          timeOut: 3000,
+        });
       }
     );
   }
@@ -65,7 +66,6 @@ export class UserComponent implements OnInit {
     };
     const dialogRef = this.dialog.open(UserFormComponent, dialogBoxSettings);
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('AddRole ', result);
       if (result === undefined) {
         return;
       }
@@ -80,9 +80,7 @@ export class UserComponent implements OnInit {
       overflow: 'auto',
     };
     const dialogRef = this.dialog.open(UserFormComponent, dialogBoxSettings);
-
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result);
       if (result === undefined) {
         return;
       }
@@ -91,7 +89,6 @@ export class UserComponent implements OnInit {
   }
 
   deleteUserMaster(user_id: string) {
-    console.log(user_id, 'delete');
     Swal.fire({
       title: 'Delete',
       text: 'Are you sure you want to Delete?',
@@ -109,7 +106,6 @@ export class UserComponent implements OnInit {
             this.getAllUserMaster();
           },
           (err: any) => {
-            console.log(err);
             this.toastr.error(err.message, '', {
               timeOut: 3000,
             });
