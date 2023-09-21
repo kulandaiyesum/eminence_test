@@ -15,4 +15,7 @@ export class LoginService {
       headers: this.headers,
     });
   }
+  resetPassword(data) {
+    return this.http.post(`${this.loginURL}forgotPassword`, data);
+  }
 }
