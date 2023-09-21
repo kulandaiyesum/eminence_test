@@ -87,9 +87,9 @@
     }
   }
 }
-::ng-deep .mat-mdc-table  {
-  table-layout:fixed !important;
-}
+// .user-table ::ng-deep .mat-mdc-table  {
+//   table-layout:fixed !important;
+// }
 .set_edit_color_button {
   color: var(--qgen-logo-yellow);
   cursor: pointer;

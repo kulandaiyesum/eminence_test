@@ -4,11 +4,10 @@
       <div class="search_box">
         <div class="search_field">
           <input
-            matInput
-            placeholder="Search"
-            [(ngModel)]="value"
-            autocomplete="off"
             class="form-control"
+            (keyup)="applyFilter($event)"
+            placeholder="Search Role"
+            #input
           />
         </div>
         <button
@@ -62,7 +61,7 @@
             <mat-icon
               matTooltip="Delete"
               class="set_edit_color_button ms-2"
-              (click)="deleteCoreBoxMaster(row)"
+              (click)="deleteCoreBoxMaster(row._id)"
               >delete</mat-icon
             >
           </td>

@@ -106,7 +106,7 @@ export class UserFormComponent implements OnInit {
         });
         this.dialogRef.close(res);
       },
-      (err: HttpErrorResponse) => {
+      (err: any) => {
         this.toastr.error(err.message, '', {
           timeOut: 3000,
         });
@@ -124,8 +124,7 @@ export class UserFormComponent implements OnInit {
         });
         this.dialogRef.close(res);
       },
-      (err: HttpErrorResponse) => {
-        console.log(err);
+      (err: any) => {
         this.toastr.error(err.message, '', {
           timeOut: 3000,
         });
@@ -136,9 +135,6 @@ export class UserFormComponent implements OnInit {
   getRole() {
     this.roleService.getRole().subscribe((res: any) => {
       this.roles = res.result;
-      if (this.data !== null) {
-        this.roles.forEach((element) => {});
-      }
     });
   }
   getTopic() {

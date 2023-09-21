@@ -5,6 +5,7 @@ import { Topic } from '../../model/topic';
 import { TopicService } from '../../service/topic.service';
 import { environment } from 'src/environments/environment';
 import * as CryptoJS from 'crypto-js';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-topic-form',
@@ -21,6 +22,7 @@ export class TopicFormComponent implements OnInit {
   secretKey = environment.secretKey;
   constructor(
     private topicMasterService: TopicService,
+    private toastr: ToastrService,
     public dialogRef: MatDialogRef<TopicFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
@@ -35,7 +37,6 @@ export class TopicFormComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    console.log(this.data, 'check 123');
     this.myForm = new FormGroup({
       topic: new FormControl(this.data?.topic || '', [Validators.required]),
     });
@@ -44,27 +45,33 @@ export class TopicFormComponent implements OnInit {
   }
   saveCoreBoxMaster() {
     if (this.data === null) {
-      console.log('save method', this.topic);
       this.topic.createdOn = this.decryptFirstName;
       this.topicMasterService.saveTopicMaster(this.topic).subscribe(
         (res: any) => {
-          console.log(res);
+          this.toastr.success(res.message, '', {
+            timeOut: 3000,
+          });
           this.dialogRef.close(res);
         },
         (err) => {
-          console.log(err);
+          this.toastr.error(err.message, '', {
+            timeOut: 3000,
+          });
           this.dialogRef.close(err);
         }
       );
     } else {
-      console.log('edit method', this.topic);
       this.topicMasterService.updateTopicMaster(this.topic).subscribe(
         (res: any) => {
-          console.log(res);
+          this.toastr.success(res.message, '', {
+            timeOut: 3000,
+          });
           this.dialogRef.close(res);
         },
         (err) => {
-          console.log(err);
+          this.toastr.error(err.message, '', {
+            timeOut: 3000,
+          });
           this.dialogRef.close(err);
         }
       );
