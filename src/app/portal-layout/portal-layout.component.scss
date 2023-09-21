@@ -1,0 +1,76 @@
+//mat-sidenav-container
+.sidenav-container {
+  //side navigation
+  background-color: #fff !important;
+  .sidenav {
+    height: 100%;
+    width: 250px;
+    background: var(--qgen-bg-color) !important;
+    .mat-toolbar {
+      background: inherit;
+    }
+    .mat-toolbar.mat-primary {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    .logo_navigation {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      margin-bottom: 2rem;
+      .logo_head {
+        font-size: 24px;
+        font-weight: 600;
+      }
+      .icon_back {
+        padding-left: 10px;
+      }
+    }
+
+    .navigation_links {
+      width: 100%;
+      a {
+        display: block;
+        transition: color 0.3s ease-in-out;
+        text-decoration: none;
+        color: #000;
+        font-weight: 500;
+        padding: 10px;
+        font-size: 18px;
+      }
+    }
+    a:hover {
+      background-color: #fff !important;
+    }
+    .activelink {
+      background-color: #fff !important;
+    }
+  }
+  //mat-sidenav-content
+  .mat-sidenav-content {
+    position: relative;
+    .mat-toolbar,
+    .mat-toolbar-single-row {
+      background: #fff !important;
+    }
+    .welcome_user {
+      padding-left: 1rem;
+      font-weight: 600;
+      font-size: 24px;
+    }
+    .user_account {
+      position: absolute;
+      right: 1rem;
+      top: 1rem;
+      font-size: 30px;
+      width: 30px;
+      height: 30px;
+    }
+  }
+}
+::ng-deep .mdc-list-item__primary-text {
+  font-family: "montserret", sans-serif !important;
+  font-weight: 500 !important;
+}

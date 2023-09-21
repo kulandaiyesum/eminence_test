@@ -1,0 +1,267 @@
+<div class="form_crud">
+  <mat-icon class="close_btn" mat-icon-button (click)="onNoClick()"
+    >close</mat-icon
+  >
+  <div class="form_wrap">
+    <div class="form_heading" *ngIf="data === null">Add User</div>
+    <div class="form_heading" *ngIf="data !== null">Edit User</div>
+    <form [formGroup]="userForm">
+      <div class="flex_group">
+        <div class="col_group">
+          <div class="form-group custom_group">
+            <label for="firstName">First name</label>
+            <input
+              type="text"
+              id="firstName"
+              class="form-control"
+              name="firstName"
+              formControlName="firstName"
+              [(ngModel)]="userObject.firstName"
+            />
+            <div class="error">
+              <mat-error
+                *ngIf="
+                  userForm.controls['firstName'].hasError('required') &&
+                  userForm.get('firstName').touched
+                "
+                >first name is required</mat-error
+              >
+              <mat-error
+                *ngIf="userForm.controls['firstName'].hasError('minlength')"
+                >first name must be at least 3 characters long
+              </mat-error>
+              <mat-error
+                *ngIf="userForm.controls['firstName'].hasError('maxlength')"
+                >first name cannot exceed 20 characters
+              </mat-error>
+            </div>
+          </div>
+        </div>
+        <div class="col_group">
+          <div class="form-group custom_group">
+            <label for="lastName">Last name</label>
+            <input
+              type="text"
+              id="lastName"
+              class="form-control"
+              name="lastName"
+              formControlName="lastName"
+              [(ngModel)]="userObject.lastName"
+            />
+            <div class="error">
+              <mat-error
+                *ngIf="
+                  userForm.controls['lastName'].hasError('required') &&
+                  userForm.controls['lastName'].touched
+                "
+                >last name is required</mat-error
+              >
+              <mat-error
+                *ngIf="userForm.controls['lastName'].hasError('minlength')"
+                >last name must be at least 3 characters long
+              </mat-error>
+              <mat-error
+                *ngIf="userForm.controls['lastName'].hasError('maxlength')"
+                >last name cannot exceed 20 characters
+              </mat-error>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex_group">
+        <div class="col_group">
+          <div class="form-group custom_group">
+            <label for="email">Email</label>
+            <input
+              type="text"
+              id="email"
+              class="form-control"
+              name="email"
+              formControlName="email"
+              [(ngModel)]="userObject.email"
+            />
+            <div class="error">
+              <mat-error
+                *ngIf="
+                  userForm.controls['email'].hasError('required') &&
+                  userForm.controls['email'].touched
+                "
+                >email is required</mat-error
+              >
+              <mat-error *ngIf="userForm.controls['email'].hasError('email')"
+                >Enter valid email address</mat-error
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col_group">
+          <div class="form-group custom_group">
+            <label for="role">Role</label>
+            <!-- <input type="text" id="role" class="form-control" /> -->
+            <select
+              id="role"
+              class="form-select"
+              aria-label="Default select example"
+              name="role"
+              formControlName="role"
+              [(ngModel)]="userObject.role"
+            >
+              <option disabled selected value="">select role</option>
+              <option *ngFor="let role of roles" [value]="role._id">
+                {{ role.role }}
+              </option>
+            </select>
+            <div class="error">
+              <mat-error
+                *ngIf="
+                  userForm.controls['role'].hasError('required') &&
+                  userForm.controls['role'].touched
+                "
+                >Role is required</mat-error
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex_group">
+        <div
+          class="col_group"
+          *ngIf="userObject.role === '65014b97f85f27c0258567af'"
+        >
+          <div class="form-group custom_group">
+            <label for="institution">Institution</label>
+            <!-- <input type="text" class="form-control" /> -->
+            <select
+              id="institution"
+              class="form-select"
+              aria-label="Default select example"
+              name="institutionId"
+              formControlName="institutionId"
+              [(ngModel)]="userObject.institutionId"
+            >
+              <option disabled selected value="">select Institution</option>
+              <option
+                *ngFor="let intitution of intitutions"
+                [value]="intitution._id"
+              >
+                {{ intitution.name }}
+              </option>
+            </select>
+            <div class="error">
+              <mat-error
+                *ngIf="
+                  userForm.controls['institutionId'].hasError('required') &&
+                  userForm.controls['institutionId'].touched
+                "
+                >Role is required</mat-error
+              >
+            </div>
+          </div>
+        </div>
+        <div
+          class="col_group"
+          [style.width]="
+            userObject.role !== '65014b97f85f27c0258567af' ? '100%' : ''
+          "
+        >
+          <div class="form-group custom_group">
+            <label for="topic">Topic</label>
+            <!-- <input type="text" id="subscription" class="form-control" /> -->
+            <select
+              id="topic"
+              class="form-select"
+              aria-label="Default select example"
+              name="topicId"
+              formControlName="topicId"
+              [(ngModel)]="userObject.topicId"
+              placehoder="select"
+            >
+              <!-- <option disabled selected value="">select topic</option> -->
+              <option *ngFor="let topic of topics" [value]="topic._id">
+                {{ topic.topic }}
+              </option>
+            </select>
+            <div class="error">
+              <mat-error
+                *ngIf="
+                  userForm.controls['topicId'].hasError('required') &&
+                  userForm.controls['topicId'].touched
+                "
+                >Topic is required</mat-error
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex_group" *ngIf="passwordVisible">
+        <div class="col_group">
+          <div class="form-group custom_group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              name="password"
+              formControlName="password"
+              [(ngModel)]="userObject.password"
+            />
+            <div class="error">
+              <mat-error
+                *ngIf="
+                  userForm.controls['password'].hasError('required') &&
+                  userForm.controls['password'].touched
+                "
+                >password is required</mat-error
+              >
+              <mat-error
+                *ngIf="userForm.controls['password'].hasError('pattern')"
+                >Password must contain 8 to 16 characters</mat-error
+              >
+            </div>
+          </div>
+        </div>
+        <div class="col_group">
+          <div class="form-group custom_group">
+            <label for="confirmPassword">Confirm password</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              class="form-control"
+              name="confirmPassword"
+              formControlName="confirmPassword"
+            />
+            <div class="error">
+              <mat-error
+                *ngIf="
+                  userForm.hasError('passwordMismatch') &&
+                  userForm.get('confirmPassword').touched
+                "
+                >Password does not match</mat-error
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form_btns">
+        <button
+          [disabled]="userForm.invalid"
+          class=""
+          *ngIf="data === null"
+          (click)="saveUserMaster()"
+        >
+          Save
+        </button>
+        <button
+          [disabled]="userForm.invalid"
+          class=""
+          *ngIf="data !== null"
+          (click)="updateUserMaster()"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

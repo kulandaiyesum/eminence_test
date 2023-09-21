@@ -1,0 +1,51 @@
+<div class="subscription-popup-container">
+  <div class="heading">
+    <div class="head">
+      <h2 *ngIf="items === null">Add Subscription</h2>
+    <h2 *ngIf="items !== null">Update Subscription</h2>
+    </div>
+    <div class="icon">
+      <mat-icon class="close_btn" mat-icon-button (click)="closeDialog()"
+      >close</mat-icon
+    >
+    </div>
+  </div>
+  <div class="forms">
+    <form>
+      <label for="role">Institute Name</label>
+      <br />
+      <input
+        type="text"
+        placeholder="Institute name"
+        aria-label="Number"
+        matInput
+        [formControl]="myControl"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        (optionSelected)="optionSelected($event)"
+      >
+        <mat-option
+          *ngFor="let option of filteredOptions | async"
+          [value]="option"
+        >
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+      <label for="role">Package type</label>
+      <select name="package" id="package">
+        <option value="" disabled selected hidden>Package Type</option>
+        <option value="monthly">Monthly</option>
+        <option value="3 monthly">3 Months</option>
+        <option value="6 monthly">6 Months</option>
+        <option value="yearly">Yearly</option>
+      </select>
+      <button
+          type="submit"
+        >
+          Submit
+        </button>
+    </form>
+  </div>
+</div>

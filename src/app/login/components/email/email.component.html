@@ -1,0 +1,71 @@
+<div class="email-container">
+  <div class="main">
+    <div class="forms">
+      <div class="heading">
+        <p id="head">Forgot Password</p>
+        <p>Enter your email to reset your password.</p>
+      </div>
+      <form [formGroup]="emailForgotPasswordForm">
+        <input
+          type="text"
+          placeholder="Email address"
+          name="email"
+          formControlName="email"
+          [attr.disabled]="isSendingOTP"
+        />
+        <button
+          id="sendotp"
+          type="submit"
+          (click)="sendOTP()"
+          mat-raised-button
+        >
+          Send Otp
+        </button>
+        <br />
+        <span
+          *ngIf="
+            emailForgotPasswordForm.get('email')!.invalid &&
+            (emailForgotPasswordForm.get('email')!.dirty ||
+              emailForgotPasswordForm.get('email')!.touched)
+          "
+        >
+          Email required, valid format.
+        </span>
+      </form>
+      <form [formGroup]="otpForgotPasswordForm">
+        <input
+          matInput
+          type="text"
+          placeholder="Enter OTP Here"
+          name="otp"
+          id="otp"
+          formControlName="otp"
+          minlength="4"
+        />
+        <span
+          *ngIf="
+            otpForgotPasswordForm.get('otp')!.invalid &&
+            (otpForgotPasswordForm.get('otp')!.dirty ||
+              otpForgotPasswordForm.get('otp')!.touched)
+          "
+        >
+          OTP required,valid format.
+        </span>
+        <span
+          *ngIf="otpForgotPasswordForm.controls['otp']?.errors?.['minlength'] && otpForgotPasswordForm.controls['otp']?.touched"
+          class="error-message"
+        >
+          OTP must be at least 4 characters long.
+        </span>
+        <button
+          id="verifyotp"
+          type="submit"
+          (click)="verifyOTP()"
+          mat-raised-button
+        >
+          Verify Otp
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -15,12 +15,13 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  receivedData = '';
   loginForm: FormGroup;
   hidePassword: boolean = true;
   secretKeyLength = 32;
   secretKey = environment.secretKey;
   public user;
+  public errorMessage: string = '';
+
   public loginUser: Register = {
     firstName: '',
     lastName: '',
@@ -41,8 +42,7 @@ export class LoginComponent {
     private loginService: LoginService,
     private toastr: ToastrService
   ) {
-    this.receivedData = data;
-    console.log(this.receivedData);
+
   }
   ngOnInit(): void {
     this.initForm();
@@ -68,34 +68,30 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.loginService.loginAuthenticate(this.loginForm.value).subscribe(
         (response: any) => {
-          this.loginUser.firstName = response.user.firstName;
-          this.loginUser.lastName = response.user.lastName;
-          this.loginUser.role = response.user.role.role;
-          this.loginUser.id = response.user._id;
-          this.loginUser.token = response.token;
           if (
-            response.user.role.role === 'ADMIN' ||
-            response.user.role.role === 'FACULTY'
+            response.result.user.role.role === 'ADMIN' ||
+            response.result.user.role.role === 'FACULTY'
           ) {
-            this.router.navigateByUrl('/faculty/qgen');
+            const role = response.result.user.role.role.toLowerCase();
+            this.router.navigateByUrl(`/eminenceai/${role}`);
             this.closeDialog();
             this.loginUser.role = this.encryptText(
-              response.user.role.role,
+              response.result.user.role.role,
               this.secretKey
             );
             this.loginUser.firstName = this.encryptText(
-              response.user.firstName,
+              response.result.user.firstName,
               this.secretKey
             );
             this.loginUser.lastName = this.encryptText(
-              response.user.lastName,
+              response.result.user.lastName,
               this.secretKey
             );
             this.loginUser.id = this.encryptText(
-              response.user._id,
+              response.result._id,
               this.secretKey
             );
-            localStorage.setItem('1', this.loginUser.token);
+            localStorage.setItem('1', response.result.token);
             localStorage.setItem('2', this.loginUser.role);
             localStorage.setItem('3', this.loginUser.firstName);
             localStorage.setItem('4', this.loginUser.lastName);
@@ -107,7 +103,7 @@ export class LoginComponent {
           }
         },
         (error) => {
-          this.toastr.error('Invalid credentials', '', {
+          this.toastr.error('You are not a registered member', '', {
             timeOut: 3000,
           });
           console.log('Error : ', error);
@@ -123,4 +119,6 @@ export class LoginComponent {
     const decrypted = CryptoJS.AES.decrypt(encryptedText, secretKey);
     return decrypted.toString(CryptoJS.enc.Utf8);
   }
+
+  
 }

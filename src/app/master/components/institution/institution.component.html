@@ -1,0 +1,112 @@
+<div class="institution-container">
+  <div class="main">
+    <div class="data-area">
+      <div class="data">
+        <div class="control">
+          <div class="button">
+            <input placeholder="Search here" (keyup)="applyFilter($event)" />
+            <button mat-raised-button (click)="addData()">Add Data</button>
+          </div>
+        </div>
+        <div class="table">
+          <mat-table
+            [dataSource]="dataSource"
+            matSort
+            matPaginator
+            class="mat-elevation-z8"
+          >
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                id="first-header"
+                >Name</mat-header-cell
+              >
+              <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+            </ng-container>
+
+            <!-- Email Column -->
+            <ng-container matColumnDef="email">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Email</mat-header-cell
+              >
+              <mat-cell *matCellDef="let element">{{ element.email }}</mat-cell>
+            </ng-container>
+            <!-- address Column -->
+            <ng-container matColumnDef="address">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Address</mat-header-cell
+              >
+              <mat-cell *matCellDef="let element">{{
+                element.address
+              }}</mat-cell>
+            </ng-container>
+            <!-- state Column -->
+            <ng-container matColumnDef="state">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >State</mat-header-cell
+              >
+              <mat-cell *matCellDef="let element">{{ element.state }}</mat-cell>
+            </ng-container>
+            <!-- zip Column -->
+            <ng-container matColumnDef="zip">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Zip</mat-header-cell
+              >
+              <mat-cell *matCellDef="let element">{{ element.zip }}</mat-cell>
+            </ng-container>
+            <!-- Update Column -->
+            <ng-container matColumnDef="update">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Modified</mat-header-cell
+              >
+              <mat-cell *matCellDef="let element">{{
+                element.modifiedAt
+              }}</mat-cell>
+            </ng-container>
+
+            <!-- status Column -->
+            <ng-container matColumnDef="status">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Status</mat-header-cell
+              >
+              <mat-cell *matCellDef="let element">
+                <mat-slide-toggle></mat-slide-toggle>
+              </mat-cell>
+            </ng-container>
+
+            <!-- Action -->
+            <ng-container matColumnDef="action">
+              <mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                id="last-header"
+                >Action</mat-header-cell
+              >
+              <mat-cell *matCellDef="let element">
+                <mat-icon (click)="updateInstitute(element)">edit</mat-icon>
+                <mat-icon (click)="deleteInstitute(element)">delete</mat-icon>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row
+              *matHeaderRowDef="displayedColumns"
+            ></mat-header-row>
+            <mat-row
+              *matRowDef="let row; columns: displayedColumns; let even = even"
+              [class.odd-row]="!even"
+              [class.even-row]="even"
+            ></mat-row>
+          </mat-table>
+
+          <mat-paginator
+            [pageSizeOptions]="[5, 10, 25, 100]"
+            [pageSize]="5"
+            [pageIndex]="0"
+          ></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,178 @@
+.main {
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // width: auto;
+  // height: auto;
+  // padding: 40px;
+  // overflow: auto;
+}
+.form_crud {
+  padding: 40px;
+  position: relative;
+  overflow-y: auto;
+  .close_btn {
+    position: absolute;
+    top: 30px;
+    transform: translateY(-50%);
+    right: 25px;
+    cursor: pointer;
+    &:hover {
+      color: #555;
+    }
+  }
+  .form_wrap {
+    .form_heading {
+      font-size: 20px;
+      color: #4b5056;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-align: center;
+      // background-color: #f5f5f5;
+    }
+    form {
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      .flex_form {
+        display: flex;
+        justify-content: space-between;
+        // align-items: center;
+        .row_group {
+          width: 48%;
+          .custom_group {
+            margin-bottom: 10px;
+            label {
+              color: #4b5056;
+              font-weight: bold;
+              margin-bottom: 5px;
+            }
+            input, select {
+              border: 1px solid #c6c9cd;
+              border-radius: 3px;
+              color: #636972;
+              box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+              font-family: "open_sans", "Open Sans", sans-serif;
+              line-height: 1.5;
+              font-weight: normal;
+              font-size: 14px;
+              font-style: normal;
+              padding: 6px 8px;
+              min-height: 36px;
+              &::placeholder {
+                font-weight: 600;
+                color: #bcbcbc;
+              }
+            }
+            .error {
+              line-height: 20px !important;
+              height: 20px !important;
+              font-size: 14px;
+            }
+          }
+        }
+      }
+      .form_btns {
+        width: 100%;
+        button {
+          width: 100%;
+          text-align: center;
+          padding: 8px 16px;
+          margin-top: 20px;
+          border: none;
+          color: #fff;
+          font-weight: 600;
+          background-color: var(--qgen-logo-blue);
+          border-radius: 4px;
+          transition: background-color 0.3s ease;
+          &:hover {
+            background-color: #57c4ff;
+          }
+        }
+      }
+    }
+  }
+}
+
+// .form_crud {
+//   padding: 40px;
+//   position: relative;
+//   width: 100%;
+//   margin: 10vh auto;
+//   border: 1px solid red;
+//   .form_wrap {
+//     .form_heading {
+//       font-size: 20px;
+//       color: #4b5056;
+//       font-weight: bold;
+//       margin-bottom: 10px;
+//       text-align: center;
+//     }
+//     form {
+//       padding: 20px;
+//       border: 1px solid #ccc;
+//       border-radius: 4px;
+
+//       .custom_group {
+//         margin-bottom: 20px;
+
+//         label {
+//           color: #4b5056;
+//           font-weight: bold;
+//           margin-bottom: 5px;
+//         }
+
+//         input,
+//         mat-select {
+//           width: 100%;
+//           max-width: 100%; /* Ensure the input fields expand to the container width */
+//         }
+
+//         input {
+//           border: 1px solid #c6c9cd;
+//           border-radius: 3px;
+//           color: #636972;
+//           box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+//           font-family: "open_sans", "Open Sans", sans-serif;
+//           line-height: 1.5;
+//           font-weight: normal;
+//           font-size: 14px;
+//           font-style: normal;
+//           padding: 8px; /* Adjust the padding as per your design */
+//           min-height: 36px;
+
+//           &::placeholder {
+//             font-weight: 600;
+//             color: #bcbcbc;
+//           }
+//         }
+
+//         .error {
+//           line-height: 20px !important;
+//           height: 20px !important;
+//           font-size: 14px;
+//         }
+//       }
+
+//       .form_btns {
+//         width: 100%;
+
+//         button {
+//           width: 100%;
+//           text-align: center;
+//           padding: 8px 16px;
+//           border: none;
+//           color: #fff;
+//           font-weight: 600;
+//           background-color: var(--qgen-logo-blue);
+//           border-radius: 4px;
+//           transition: background-color 0.3s ease;
+
+//           &:hover {
+//             background-color: #57c4ff;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }

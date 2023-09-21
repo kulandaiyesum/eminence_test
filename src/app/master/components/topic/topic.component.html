@@ -1,0 +1,88 @@
+<div class="container-fluid">
+  <div class="topic_table_container" id="table">
+    <div class="search_and_add">
+      <div class="search_box">
+        <div class="search_field">
+          <input
+            matInput
+            placeholder="Search"
+            [(ngModel)]="value"
+            autocomplete="off"
+            class="form-control"
+          />
+        </div>
+        <button
+          mat-button
+          *ngIf="value"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="clearFilter()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <div class="add_btn">
+        <button (click)="saveCoreBoxMaster()">Add Topic</button>
+      </div>
+    </div>
+
+    <!-- table -->
+    <div class="mat-elevation-z8 table-container">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="topic">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Topic Master
+          </th>
+          <td mat-cell *matCellDef="let row">{{ row.topic }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let row">
+            <mat-slide-toggle
+              class="example-margin"
+              color="primary"
+              [checked]="row.status == 1"
+              (change)="changeRoleStatus(row)"
+            >
+            </mat-slide-toggle>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let row">
+            <mat-icon
+              matTooltip="Edit"
+              class="set_edit_color_button"
+              (click)="updateCoreBoxMaster(row)"
+              >edit</mat-icon
+            >
+            <mat-icon
+              matTooltip="Delete"
+              class="set_edit_color_button ms-2"
+              (click)="deleteCoreBoxMaster(row)"
+              >delete</mat-icon
+            >
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+</div>
+<!-- <button mat-mini-fab color="accent" id="previousButton" matTooltip="previous" (click)="previousPage()">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </button>
+  <button mat-mini-fab color="accent" id="nextButton" matTooltip="next" (click)="nextPage()">
+    <mat-icon>keyboard_arrow_right</mat-icon>
+  </button> -->
+<!--
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" color="#1459cd" type="ball-spin-clockwise" [fullScreen]="true">
+        <p style="color: white"> Loading... </p>
+    </ngx-spinner>
+  <notifier-container></notifier-container> -->
