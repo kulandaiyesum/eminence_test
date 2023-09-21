@@ -22,10 +22,18 @@
               <mat-error
                 *ngIf="
                   userForm.controls['firstName'].hasError('required') &&
-                  userForm.controls['firstName'].touched
+                  userForm.get('firstName').touched
                 "
                 >first name is required</mat-error
               >
+              <mat-error
+                *ngIf="userForm.controls['firstName'].hasError('minlength')"
+                >first name must be at least 3 characters long
+              </mat-error>
+              <mat-error
+                *ngIf="userForm.controls['firstName'].hasError('maxlength')"
+                >first name cannot exceed 20 characters
+              </mat-error>
             </div>
           </div>
         </div>
@@ -48,6 +56,14 @@
                 "
                 >last name is required</mat-error
               >
+              <mat-error
+                *ngIf="userForm.controls['lastName'].hasError('minlength')"
+                >last name must be at least 3 characters long
+              </mat-error>
+              <mat-error
+                *ngIf="userForm.controls['lastName'].hasError('maxlength')"
+                >last name cannot exceed 20 characters
+              </mat-error>
             </div>
           </div>
         </div>
@@ -72,6 +88,9 @@
                   userForm.controls['email'].touched
                 "
                 >email is required</mat-error
+              >
+              <mat-error *ngIf="userForm.controls['email'].hasError('email')"
+                >Enter valid email address</mat-error
               >
             </div>
           </div>
@@ -106,7 +125,10 @@
         </div>
       </div>
       <div class="flex_group">
-        <div class="col_group">
+        <div
+          class="col_group"
+          *ngIf="userObject.role === '65014b97f85f27c0258567af'"
+        >
           <div class="form-group custom_group">
             <label for="institution">Institution</label>
             <!-- <input type="text" class="form-control" /> -->
@@ -137,7 +159,12 @@
             </div>
           </div>
         </div>
-        <div class="col_group">
+        <div
+          class="col_group"
+          [style.width]="
+            userObject.role !== '65014b97f85f27c0258567af' ? '100%' : ''
+          "
+        >
           <div class="form-group custom_group">
             <label for="topic">Topic</label>
             <!-- <input type="text" id="subscription" class="form-control" /> -->
@@ -148,8 +175,9 @@
               name="topicId"
               formControlName="topicId"
               [(ngModel)]="userObject.topicId"
+              placehoder="select"
             >
-              <option disabled selected value="">select topic</option>
+              <!-- <option disabled selected value="">select topic</option> -->
               <option *ngFor="let topic of topics" [value]="topic._id">
                 {{ topic.topic }}
               </option>
@@ -166,7 +194,7 @@
           </div>
         </div>
       </div>
-      <div class="flex_group">
+      <div class="flex_group" *ngIf="passwordVisible">
         <div class="col_group">
           <div class="form-group custom_group">
             <label for="password">Password</label>
@@ -185,6 +213,10 @@
                   userForm.controls['password'].touched
                 "
                 >password is required</mat-error
+              >
+              <mat-error
+                *ngIf="userForm.controls['password'].hasError('pattern')"
+                >Password must contain 8 to 16 characters</mat-error
               >
             </div>
           </div>
