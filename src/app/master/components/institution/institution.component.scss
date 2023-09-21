@@ -45,13 +45,13 @@
         }
       }
       .table {
-        width: 100%;
+        width: 100;
         height: auto;
         margin-top: 20px;
         border-radius: 8px;
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         background-color: transparent;
-        border-radius: 8px;
+
         mat-table {
           width: auto;
           height: auto;
@@ -80,6 +80,27 @@
           .even-row {
             background-color: white;
           }
+        }
+        table {
+          max-width: 50%;
+          height: auto;
+          margin-top: 15px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+          th {
+            background-color: #46b3eb;
+            color: #fff;
+          }
+          mat-icon {
+            color: #fabf01;
+          }
+          .odd-row {
+            background-color: #F5F5F5;
+          }
+
+          .even-row {
+            background-color: white;
+          }
+
         }
         mat-paginator {
           z-index: 1;

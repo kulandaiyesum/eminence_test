@@ -60,6 +60,7 @@ export class UserComponent implements OnInit {
     let dialogBoxSettings = {
       width: '600px',
       margin: '0 auto',
+      overflow: 'auto',
     };
     const dialogRef = this.dialog.open(UserFormComponent, dialogBoxSettings);
     dialogRef.afterClosed().subscribe((result) => {
@@ -78,6 +79,7 @@ export class UserComponent implements OnInit {
       width: '600px',
       margin: '0 auto',
       data: user,
+      overflow: 'auto',
     };
     const dialogRef = this.dialog.open(UserFormComponent, dialogBoxSettings);
 
