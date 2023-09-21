@@ -89,7 +89,7 @@ export class UserFormComponent implements OnInit {
       this.userForm.get('confirmPassword').disable();
     }
     this.userForm.get('role').valueChanges.subscribe((selectedRole) => {
-      if (selectedRole === '65014b97f85f27c0258567af') {
+      if (selectedRole === '650c7bf56d16fcce04fad515') {
         this.userForm.get('institutionId').enable();
       } else {
         this.userForm.get('institutionId').disable();
@@ -145,6 +145,7 @@ export class UserFormComponent implements OnInit {
   getInstitution() {
     this.institutionService.getAllInstitute().subscribe((res: any) => {
       this.intitutions = res.result;
+      // this.uniqueInstitutions = this;
     });
   }
   onNoClick(): void {

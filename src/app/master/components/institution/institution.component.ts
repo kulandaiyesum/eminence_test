@@ -28,10 +28,8 @@ export class InstitutionComponent {
   displayedColumns: string[] = [
     'name',
     'email',
-    'city',
-    'address',
-    'state',
     'zip',
+    'city',
     'status',
     'action',
   ];
@@ -50,7 +48,7 @@ export class InstitutionComponent {
     packageName: '',
     questionsCount: '',
     packageNameId: '',
-    city: ''
+    city: '',
   };
   constructor(
     private formBuilder: FormBuilder,
@@ -111,8 +109,6 @@ export class InstitutionComponent {
   getAllInstituteData() {
     this.instituteService.getAllInstitute().subscribe(
       (response: any) => {
-        console.log(response);
-        console.log(response.result);
         this.instituteDetails = response.result;
         this.dataSource = new MatTableDataSource(this.instituteDetails);
         // Connect the paginator and sort to the data source

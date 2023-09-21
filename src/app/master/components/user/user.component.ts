@@ -16,9 +16,10 @@ import Swal from 'sweetalert2';
   styleUrls: ['./user.component.scss'],
 })
 export class UserComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator | any;
-  @ViewChild(MatSort) sort: MatSort | any;
-  dataSource: MatTableDataSource<User>;
+  public userList;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  dataSource;
   displayedColumns: string[] = [
     'sno',
     'name',
@@ -46,6 +47,9 @@ export class UserComponent implements OnInit {
   getAllUserMaster() {
     this.userService.getAllUserMaster().subscribe(
       (res: any) => {
+        this.userList = res.result;
+        console.log(this.userList);
+
         this.dataSource = new MatTableDataSource(res.result);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

@@ -5,7 +5,9 @@
         <div class="control">
           <div class="button">
             <input placeholder="Search here" (keyup)="applyFilter($event)" />
-            <button mat-raised-button (click)="addData()">Add Data</button>
+            <button mat-raised-button (click)="addData()">
+              Add Institution
+            </button>
           </div>
         </div>
         <div class="table">
@@ -21,7 +23,7 @@
                 *matHeaderCellDef
                 mat-sort-header
                 id="first-header"
-                >Name</mat-header-cell
+                >NAME</mat-header-cell
               >
               <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
             </ng-container>
@@ -29,47 +31,49 @@
             <!-- Email Column -->
             <ng-container matColumnDef="email">
               <mat-header-cell *matHeaderCellDef mat-sort-header
-                >Email</mat-header-cell
+                >EMAIL</mat-header-cell
               >
               <mat-cell *matCellDef="let element">{{ element.email }}</mat-cell>
             </ng-container>
             <!-- address Column -->
-            <ng-container matColumnDef="address">
+            <!-- <ng-container matColumnDef="address">
               <mat-header-cell *matHeaderCellDef mat-sort-header
                 >Address</mat-header-cell
               >
               <mat-cell *matCellDef="let element">{{
                 element.address
               }}</mat-cell>
-            </ng-container>
+            </ng-container> -->
             <!-- state Column -->
-            <ng-container matColumnDef="state">
+            <!-- <ng-container matColumnDef="state">
               <mat-header-cell *matHeaderCellDef mat-sort-header
                 >State</mat-header-cell
               >
               <mat-cell *matCellDef="let element">{{ element.state }}</mat-cell>
-            </ng-container>
+            </ng-container> -->
             <!-- zip Column -->
             <ng-container matColumnDef="zip">
               <mat-header-cell *matHeaderCellDef mat-sort-header
-                >Zip</mat-header-cell
+                >SUBSCRIPTION</mat-header-cell
               >
-              <mat-cell *matCellDef="let element">{{ element.zip }}</mat-cell>
+              <mat-cell *matCellDef="let element"
+                >${{ element.packageNameId.amount }}/{{
+                  element.packageNameId.packageName
+                }}</mat-cell
+              >
             </ng-container>
             <!-- Update Column -->
             <ng-container matColumnDef="city">
               <mat-header-cell *matHeaderCellDef mat-sort-header
-                >City</mat-header-cell
+                >CITY</mat-header-cell
               >
-              <mat-cell *matCellDef="let element">{{
-                element.city
-              }}</mat-cell>
+              <mat-cell *matCellDef="let element">{{ element.city }}</mat-cell>
             </ng-container>
 
             <!-- status Column -->
             <ng-container matColumnDef="status">
               <mat-header-cell *matHeaderCellDef mat-sort-header
-                >Status</mat-header-cell
+                >STATUS</mat-header-cell
               >
               <mat-cell *matCellDef="let element">
                 <mat-slide-toggle></mat-slide-toggle>
@@ -82,7 +86,7 @@
                 *matHeaderCellDef
                 mat-sort-header
                 id="last-header"
-                >Action</mat-header-cell
+                >ACTION</mat-header-cell
               >
               <mat-cell *matCellDef="let element">
                 <mat-icon (click)="updateInstitute(element)">edit</mat-icon>
