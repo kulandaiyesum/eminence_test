@@ -105,6 +105,7 @@ export class UserFormComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         console.log(err);
+        this.dialogRef.close(err);
       }
     );
   }
@@ -119,6 +120,7 @@ export class UserFormComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         console.log(err);
+        this.dialogRef.close(err);
       }
     );
   }
