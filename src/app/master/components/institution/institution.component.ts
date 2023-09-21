@@ -50,6 +50,7 @@ export class InstitutionComponent {
     packageName: '',
     questionsCount: '',
     packageNameId: '',
+    city: ''
   };
   constructor(
     private formBuilder: FormBuilder,

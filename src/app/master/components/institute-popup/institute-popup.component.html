@@ -13,7 +13,10 @@
     </div>
     <div class="forms">
       <form #instituteForm="ngForm">
-        <div class="row_group" [ngClass]="{'highlight': institutionModel.packageName}">
+        <div
+          class="row_group"
+          [ngClass]="{ highlight: institutionModel.packageName }"
+        >
           <div class="form-group custom_group">
             <label for="type">Subscription</label>
             <select
@@ -37,13 +40,12 @@
             </select>
           </div>
           <label for="name" *ngIf="institutionModel.packageName"
-          >package Details</label
-        >
-        <div *ngIf="institutionModel.packageName" class="package-details">
-          {{ institutionModel.questionsCount }} Questions Per Package
+            >package Details</label
+          >
+          <div *ngIf="institutionModel.packageName" class="package-details">
+            {{ institutionModel.questionsCount }} Questions Per Package
+          </div>
         </div>
-        </div>
-
 
         <label for="name">Institute Name</label>
         <input
@@ -100,6 +102,20 @@
           class="error-message"
         >
           Zip code is required.
+        </div>
+        <label for="city">City</label>
+        <input
+          type="text"
+          placeholder="City"
+          name="city"
+          [(ngModel)]="institutionModel.city"
+          required
+        />
+        <div
+          *ngIf="instituteForm.controls['city']?.errors?.['required'] && instituteForm.controls['city']?.touched"
+          class="error-message"
+        >
+          City is required.
         </div>
         <label for="email">Email</label>
         <input
