@@ -1,152 +1,160 @@
-<div class="main">
-  <div class="form_crud">
-    <mat-icon class="close_btn" mat-icon-button (click)="onNoClick()">close</mat-icon>
-    <div class="form_wrap">
-      <div class="form_heading">Add Package</div>
-      <form #packageForm="ngForm">
-        <div class="flex_form">
-          <div class="row_group">
-            <div class="form-group custom_group">
-              <label for="packageName">Name</label>
-              <input
-                type="text"
-                id="packageName"
-                name="packageName"
-                class="form-control"
-                [(ngModel)]="package.packageName"
-                required
-              />
-              <div class="error">
-                <mat-error
-                  *ngIf="packageForm.controls['packageName']?.errors?.['required'] && packageForm.controls['packageName']?.touched"
-                  >Package name is required.</mat-error
-                >
-              </div>
-            </div>
-          </div>
-          <div class="row_group">
-            <div class="form-group custom_group">
-              <label for="type">Type:</label>
-              <select
-                id="type"
-                class="form-select"
-                name="type"
-                aria-label="select package type"
-                [(ngModel)]="package.type"
-                required
-                (change)="typeChanged()"
+<div class="form_crud">
+  <mat-icon class="close_btn" mat-icon-button (click)="onNoClick()"
+    >close</mat-icon
+  >
+  <div class="form_wrap">
+    <div class="form_heading">Add Package</div>
+    <form [formGroup]="packageForm">
+      <div class="flex_form">
+        <div class="row_group">
+          <div class="form-group custom_group">
+            <label for="packageName">Package name</label>
+            <input
+              type="text"
+              id="packageName"
+              name="packageName"
+              class="form-control"
+              formControlName="packageName"
+              [(ngModel)]="package.packageName"
+            />
+            <div class="error">
+              <mat-error
+                *ngIf="
+                  packageForm.controls['packageName'].hasError('required') &&
+                  packageForm.controls['packageName'].touched
+                "
+                >Package name is required</mat-error
               >
-                <option selected>select package type</option>
-                <option value="B2B">B2B</option>
-                <option value="B2C">B2C</option>
-              </select>
-              <div class="error">
-                <mat-error
-                  *ngIf="packageForm.controls['type']?.errors?.['required'] && packageForm.controls['type']?.touched"
-                  >Required.</mat-error
-                >
-              </div>
-              <!-- <mat-select
-                id="type"
-                name="type"
-                [(ngModel)]="package.type"
-                (change)="typeChanged()"
-                required
-              >
-                <mat-option value="B2B">B2B</mat-option>
-                <mat-option value="B2C">B2C</mat-option>
-              </mat-select> -->
             </div>
           </div>
         </div>
-        <div class="form-group custom_group"  *ngIf="package.type === 'B2B'">
-          <label for="questionsCount">Questions Count</label>
-          <input
-            type="number"
-            id="questionsCount"
-            name="questionsCount"
-            class="form-control"
-            [(ngModel)]="package.questionsCount"
-          />
-          <div class="error">
-            <mat-error
-              *ngIf="packageForm.controls['questionsCount']?.errors?.['required'] && packageForm.controls['questionsCount']?.touched"
-              >Required.</mat-error
+        <div class="row_group">
+          <div class="form-group custom_group">
+            <label for="type">Type</label>
+            <select
+              id="type"
+              class="form-select"
+              name="type"
+              formControlName="type"
+              aria-label="select package type"
+              [(ngModel)]="package.type"
             >
+              <option selected>select package type</option>
+              <option value="B2B">B2B</option>
+              <option value="B2C">B2C</option>
+            </select>
+            <div class="error">
+              <mat-error
+                *ngIf="
+                  packageForm.controls['type'].hasError('required') &&
+                  packageForm.controls['type'].touched
+                "
+                >Package type is required</mat-error
+              >
+            </div>
           </div>
         </div>
-        <div class="form-group custom_group" *ngIf="package.type === 'B2B' || package.type === 'B2C'">
-          <label for="amount">Amount</label>
-          <input
-            type="number"
-            id="amount"
-            name="amount"
-            class="form-control"
-            [(ngModel)]="package.amount"
-          />
-          <div class="error">
-            <mat-error
-              *ngIf="packageForm.controls['amount']?.errors?.['required'] && packageForm.controls['amount']?.touched"
-              >Required.</mat-error
-            >
-          </div>
+      </div>
+      <div class="form-group custom_group" *ngIf="package.type === 'B2B'">
+        <label for="questionsCount">Questions Count</label>
+        <input
+          type="number"
+          id="questionsCount"
+          name="questionsCount"
+          formControlName="questionsCount"
+          class="form-control"
+          [(ngModel)]="package.questionsCount"
+        />
+        <div class="error">
+          <mat-error
+            *ngIf="
+              packageForm.controls['questionsCount'].hasError('required') &&
+              packageForm.controls['questionsCount'].touched
+            "
+            >Questions count is required</mat-error
+          >
         </div>
-        <div class="form-group custom_group"  *ngIf="package.type === 'B2B'">
-          <label for="rate">Rate (Per question)</label>
-          <input
-            type="number"
-            id="rate"
-            name="rate"
-            class="form-control"
-            [(ngModel)]="package.rate"
-          />
-          <div class="error">
-            <mat-error
-              *ngIf="packageForm.controls['rate']?.errors?.['required'] && packageForm.controls['rate']?.touched"
-              >Required.</mat-error
-            >
-          </div>
+      </div>
+      <div
+        class="form-group custom_group"
+        *ngIf="package.type === 'B2B' || package.type === 'B2C'"
+      >
+        <label for="amount">Amount</label>
+        <input
+          type="number"
+          id="amount"
+          name="amount"
+          formControlName="amount"
+          class="form-control"
+          [(ngModel)]="package.amount"
+        />
+        <div class="error">
+          <mat-error
+            *ngIf="
+              packageForm.controls['amount'].hasError('required') &&
+              packageForm.controls['amount'].touched
+            "
+            >Amount is required</mat-error
+          >
         </div>
-        <div class="form-group custom_group"  *ngIf="package.type === 'B2B' || package.type === 'B2C'">
-          <label for="duration_type">Duration Type</label>
-          <input
-            type="text"
-            id="duration_type"
-            name="duration_type"
-            class="form-control"
-            [(ngModel)]="package.durationType"
-          />
-          <div class="error">
-            <mat-error
-              *ngIf="packageForm.controls['durationType']?.errors?.['required'] && packageForm.controls['durationType']?.touched"
-              >Required.</mat-error
-            >
-          </div>
+      </div>
+      <div class="form-group custom_group" *ngIf="package.type === 'B2B'">
+        <label for="rate">Rate (Per question)</label>
+        <input
+          type="number"
+          id="rate"
+          name="rate"
+          formControlName="rate"
+          class="form-control"
+          [(ngModel)]="package.rate"
+        />
+        <div class="error">
+          <mat-error
+            *ngIf="
+              packageForm.controls['rate'].hasError('required') &&
+              packageForm.controls['rate'].touched
+            "
+            >Rate per question is required</mat-error
+          >
         </div>
-        <div class="form-group custom_group"  *ngIf="package.type === 'B2B'">
-          <label for="duration_count">Duration Count (In months)</label>
-          <input
-            type="number"
-            id="duration_count"
-            name="duration_count"
-            class="form-control"
-            [(ngModel)]="package.durationCount"
-          />
-          <div class="error">
-            <mat-error
-              *ngIf="packageForm.controls['durationCount']?.errors?.['required'] && packageForm.controls['durationCount']?.touched"
-              >Required.</mat-error
-            >
-          </div>
+      </div>
+      <div
+        class="form-group custom_group"
+        *ngIf="package.type === 'B2B' || package.type === 'B2C'"
+      >
+        <label for="duration_type">Duration Type</label>
+        <select
+          name="durationTyype"
+          class="form-select"
+          formControlName="durationType"
+          id="duration_type"
+          [(ngModel)]="package.durationType"
+        >
+          <option selected value="">select duration type</option>
+          <option value="monthly">Monthly</option>
+          <option value="quarterly">Quarterly</option>
+          <option value="half-yearly">Half-yearly</option>
+          <option value="annually">Annually</option>
+        </select>
+        <div class="error">
+          <mat-error
+            *ngIf="
+              packageForm.controls['durationType'].hasError('required') &&
+              packageForm.controls['durationType'].touched
+            "
+            >Duration type is required</mat-error
+          >
         </div>
-
-        <div class="form_btns">
-          <button type="submit" (click)="visibleUpdate ? updatePackage() : onPackageSubmit()">
-            {{ visibleUpdate ? 'Update' : 'Add' }}
-          </button>
-
-        </div>
-      </form>
-    </div>
+      </div>
+      <div class="form_btns">
+        <button
+          [disabled]="packageForm.invalid"
+          type="submit"
+          (click)="visibleUpdate ? updatePackage() : onPackageSubmit()"
+        >
+          {{ visibleUpdate ? "Update" : "Add" }}
+        </button>
+      </div>
+    </form>
   </div>
 </div>

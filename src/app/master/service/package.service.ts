@@ -20,29 +20,20 @@ export class PackageService {
   constructor(private http: HttpClient) {}
 
   createPackage = (data) => {
-
-    return this.http.post(this.createPackageUrl,data);
-
-  }
+    return this.http.post(this.createPackageUrl, data);
+  };
 
   getAllPackages(): Observable<Package[]> {
-    return this.http.get<Package[]>(`${this.getAllPackagesUrl}`, {
-      // headers: this.headers,
-    });
+    return this.http.get<Package[]>(`${this.getAllPackagesUrl}`);
   }
 
   updatePackage(data: any): Observable<any> {
-    return this.http.put(`${this.updatePackageUrl}`, data, {
-      // headers: this.headers,
-    });
+    return this.http.put(`${this.updatePackageUrl}`, data);
   }
-
 
   deletePackage(data: any): Observable<any> {
     return this.http.delete(this.deletePackageUrl, {
       body: data,
-      headers: this.headers,
     });
   }
-
 }

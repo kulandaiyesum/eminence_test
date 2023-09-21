@@ -4,7 +4,6 @@ export class Package {
   amount: number;
   rate: number;
   durationType: string;
-  durationCount: number;
   type: string;
   _id: string;
 }
