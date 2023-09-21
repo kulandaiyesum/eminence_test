@@ -1,6 +1,7 @@
 .home_container {
   width: 100%;
   margin: 0 auto;
+  border: none !important;
   .banner_section {
     padding-top: 75px;
     background: linear-gradient(to bottom, #1f495f 0%, #717372 100%);
@@ -168,6 +169,15 @@
 }
 @media (max-width: 800px) {
   .home_container {
+    .banner_section {
+      .banner_content_wrapper {
+        .col_1 {
+          .head1 {
+            font-size: 40px;
+          }
+        }
+      }
+    }
     .acdamic_section {
       .acdamic_section_wrap {
         .acadamic_content {

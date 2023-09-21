@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { UserFormComponent } from '../user-form/user-form.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user',
@@ -68,9 +69,6 @@ export class UserComponent implements OnInit {
       if (result === undefined) {
         return;
       }
-      this.toastr.success(result.message, '', {
-        timeOut: 3000,
-      });
       this.getAllUserMaster();
     });
   }
@@ -88,14 +86,37 @@ export class UserComponent implements OnInit {
       if (result === undefined) {
         return;
       }
-      this.toastr.success(result.message, '', {
-        timeOut: 3000,
-      });
       this.getAllUserMaster();
     });
   }
 
   deleteUserMaster(user_id: string) {
     console.log(user_id, 'delete');
+    Swal.fire({
+      title: 'Delete',
+      text: 'Are you sure you want to Delete?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.deleteUserMaster(user_id).subscribe(
+          (result: any) => {
+            this.toastr.success(result.message, '', {
+              timeOut: 3000,
+            });
+            this.getAllUserMaster();
+          },
+          (err: any) => {
+            console.log(err);
+            this.toastr.error(err.message, '', {
+              timeOut: 3000,
+            });
+            this.getAllUserMaster();
+          }
+        );
+      }
+    });
   }
 }
