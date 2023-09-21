@@ -8,6 +8,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { LoginLayoutComponent } from './pages/login-layout/login-layout.component';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EmailComponent } from './components/email/email.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RegisterComponent,
     ForgotPasswordComponent,
     LoginLayoutComponent,
+    EmailComponent,
   ],
   imports: [
     CommonModule,
