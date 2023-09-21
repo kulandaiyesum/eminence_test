@@ -3,7 +3,6 @@
     <div class="data-area">
       <div class="data">
         <div class="control">
-          
           <div class="button">
             <input placeholder="Search here" (keyup)="applyFilter($event)" />
             <button mat-raised-button (click)="addData()">Add Data</button>
@@ -79,7 +78,10 @@
 
             <!-- Action -->
             <ng-container matColumnDef="action">
-              <mat-header-cell *matHeaderCellDef mat-sort-header id="last-header"
+              <mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                id="last-header"
                 >Action</mat-header-cell
               >
               <mat-cell *matCellDef="let element">
@@ -91,7 +93,11 @@
             <mat-header-row
               *matHeaderRowDef="displayedColumns"
             ></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns; let even = even" [class.odd-row]="!even" [class.even-row]="even"></mat-row>
+            <mat-row
+              *matRowDef="let row; columns: displayedColumns; let even = even"
+              [class.odd-row]="!even"
+              [class.even-row]="even"
+            ></mat-row>
           </mat-table>
 
           <mat-paginator
