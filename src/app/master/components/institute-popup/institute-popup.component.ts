@@ -56,6 +56,7 @@ export class InstitutePopupComponent {
       this.institutionModel.address = data.address;
       this.institutionModel.state = data.state;
       this.institutionModel.zip = data.zip;
+      this.institutionModel.packageName = data.packageNameId.packageName;
     }
   }
 
