@@ -13,7 +13,7 @@
     </div>
     <div class="forms">
       <form #instituteForm="ngForm">
-        <div class="row_group">
+        <div class="row_group" [ngClass]="{'highlight': institutionModel.packageName}">
           <div class="form-group custom_group">
             <label for="type">Package</label>
             <select
@@ -26,21 +26,25 @@
               required
             >
               <option
-                *ngFor="let package of packageList"
+                *ngFor="let package of packageList; let i = index"
                 [value]="package.packageName"
+                [class.selected]="
+                  package.packageName === institutionModel.packageName
+                "
               >
                 $ {{ package.amount }} {{ "" }}/ {{ package.packageName }}
               </option>
             </select>
           </div>
-        </div>
-
-        <label for="name" *ngIf="institutionModel.packageName"
+          <label for="name" *ngIf="institutionModel.packageName"
           >package Details</label
         >
-        <div *ngIf="institutionModel.packageName">
+        <div *ngIf="institutionModel.packageName" class="package-details">
           {{ institutionModel.questionsCount }} Questions Per Package
         </div>
+        </div>
+
+
         <label for="name">Institute Name</label>
         <input
           type="text"

@@ -75,7 +75,7 @@
             >
           </div>
         </div>
-        <div class="form-group custom_group" *ngIf="package.type === 'B2B'">
+        <div class="form-group custom_group" *ngIf="package.type === 'B2B' || package.type === 'B2C'">
           <label for="amount">Amount</label>
           <input
             type="number"
@@ -107,7 +107,7 @@
             >
           </div>
         </div>
-        <div class="form-group custom_group"  *ngIf="package.type === 'B2B'">
+        <div class="form-group custom_group"  *ngIf="package.type === 'B2B' || package.type === 'B2C'">
           <label for="duration_type">Duration Type</label>
           <input
             type="text"

@@ -36,10 +36,33 @@
       justify-content: center;
       padding: 20px;
       border: 1px solid #ccc;
+      .highlight {
+        background-color: #ccc;
+        // border: 1px solid #57c4ff; // Border style and color
+        // color: #57c4ff; // Text color for highlighted elements
+      }
 
       form {
         min-width: 100%;
         height: auto;
+        .row_group {
+          &.highlight {
+            background-color: #f4f6f8;
+            // border: 1px solid #b9b9b9;
+            // color: #57c4ff;
+             padding:20px;
+          }
+          .form-group.custom_group {
+            label {
+              &.highlight {
+                background-color: transparent; // Background color for label when highlighted
+                padding: 0 4px; // Adjust padding as needed
+                margin-left: -4px; // Adjust margin as needed
+                font-weight: bold; // Bold font when highlighted
+              }
+            }
+          }
+        }
         label {
           color: #4b5056;
           font-weight: bold;
@@ -79,9 +102,26 @@
             background-color: #57c4ff;
           }
         }
-      }
+        select.form-select {
+          option.selected {
+            background-color: transparent; // Transparent background
+            color: #57c4ff; // Text color for selected option
+            border: 1px solid #57c4ff; // Border for selected option
+          }
+        }
+
+        .package-details {
+          background-color: transparent; // Transparent background
+          padding: 10px;
+          margin-top: 5px;
+          border: 1px solid #f0f0f0; // Border for package details
+          border-radius: 3px;
+          color: #333; // Change text color to your preference
+        }      }
     }
   }
-}
+      }
+
+
 
 
