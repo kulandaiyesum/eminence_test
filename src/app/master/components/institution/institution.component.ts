@@ -61,6 +61,7 @@ export class InstitutionComponent {
   ngOnInit(): void {
     this.initForm();
     this.getAllInstituteData();
+    this.addData();
   }
 
   initForm() {
@@ -94,8 +95,8 @@ export class InstitutionComponent {
   }
   addData() {
     const dialogRef = this.dialog.open(InstitutePopupComponent, {
-      width: '500px',
-      height: '200vh',
+      width: '600px',
+      height: '80vh',
       data: null,
       // Other MatDialog options
     });
@@ -135,8 +136,8 @@ export class InstitutionComponent {
   updateInstitute(data: any) {
     console.log(data);
     const dialogRef = this.dialog.open(InstitutePopupComponent, {
-      width: '500px',
-      height: '200vh',
+      width: '600px',
+      height: '80vh',
       data: data,
       // Other MatDialog options
     });
