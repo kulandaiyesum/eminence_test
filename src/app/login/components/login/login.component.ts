@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../service/login.service';
@@ -8,6 +8,8 @@ import { environment } from 'src/environments/environment';
 import { Register } from '../../model/register.model';
 import { Login } from '../../model/login.model';
 import { ToastrService } from 'ngx-toastr';
+import { EmailComponent } from '../email/email.component';
+import { EmailPopupComponent } from '../email-popup/email-popup.component';
 
 @Component({
   selector: 'app-login',
@@ -40,7 +42,8 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private loginService: LoginService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialog: MatDialog,
   ) {
 
   }
@@ -120,5 +123,18 @@ export class LoginComponent {
     return decrypted.toString(CryptoJS.enc.Utf8);
   }
 
-  
+  forgotPassword(){
+    this.closeDialog();
+    const dialogRef = this.dialog.open(EmailComponent, {
+      width: '400px',
+      height: 'auto',
+      data: null,
+
+      // Other MatDialog options
+    });
+    // You can handle dialog events here if needed
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: `);
+    });
+  }
 }

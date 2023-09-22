@@ -9,6 +9,7 @@ import { LoginLayoutComponent } from './pages/login-layout/login-layout.componen
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmailComponent } from './components/email/email.component';
+import { EmailPopupComponent } from './components/email-popup/email-popup.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { EmailComponent } from './components/email/email.component';
     ForgotPasswordComponent,
     LoginLayoutComponent,
     EmailComponent,
+    EmailPopupComponent,
   ],
   imports: [
     CommonModule,
