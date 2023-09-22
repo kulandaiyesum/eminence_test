@@ -3,7 +3,9 @@
     >close</mat-icon
   >
   <div class="form_wrap">
-    <div class="form_heading">{{ visibleUpdate ? 'Edit Package' : 'Add Package' }}</div>
+    <div class="form_heading">
+      {{ visibleUpdate ? "Edit Package" : "Add Package" }}
+    </div>
     <form [formGroup]="packageForm">
       <div class="flex_form">
         <div class="row_group">

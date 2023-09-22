@@ -98,15 +98,13 @@ export class UserFormComponent implements OnInit {
         this.data !== null &&
         this.selectedRole === 'FACULTY'
       ) {
-      } else if (roleObj !== undefined) {
+      } else if (roleObj !== undefined && roleObj?.role === 'FACULTY') {
         this.selectedRole = roleObj?.role;
         this.userForm.get('institutionId').enable();
-        console.log(this.userObject.institutionId, 'nan');
       } else {
         this.selectedRole = '';
         this.userForm.get('institutionId').disable();
         this.userObject.institutionId = undefined;
-        console.log(this.userObject.institutionId);
       }
     });
   }
