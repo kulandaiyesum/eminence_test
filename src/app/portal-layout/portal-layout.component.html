@@ -44,7 +44,7 @@
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span class="welcome_user">Welcome {{firstName}}</span>
+      <span class="welcome_user">Welcome {{firstName | titlecase}}</span>
       <mat-icon class="user_account" (click)="logout()" style="cursor: pointer">account_circle</mat-icon>
     </mat-toolbar>
     <!-- Child routes for admin, faculty, vetter and Registered User -->
