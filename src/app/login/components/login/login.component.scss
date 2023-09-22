@@ -33,6 +33,11 @@
         border: 1px solid rgb(173, 216, 230);
         font-family: 'open_sans', 'Open Sans', sans-serif;
       }
+      .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+      }
       button{
         width: 100%;
         padding-top: 5px;
@@ -56,9 +61,10 @@
         background-color: #46B3EB;
         color: #fff;
       }
-      a{
+      p{
+        text-decoration: underline;
         color: #A9AEB2;
-        margin-top: 20px;
+        // margin-top: 20px;
         height: 5vh;
       }
     }

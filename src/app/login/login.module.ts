@@ -53,6 +53,8 @@ const customNotifierOptions: NotifierOptions = {
   },
 };
 
+import { EmailPopupComponent } from './components/email-popup/email-popup.component';
+
 @NgModule({
   declarations: [
     LoginComponent,
@@ -60,6 +62,7 @@ const customNotifierOptions: NotifierOptions = {
     ForgotPasswordComponent,
     LoginLayoutComponent,
     EmailComponent,
+    EmailPopupComponent,
   ],
   imports: [
     CommonModule,
