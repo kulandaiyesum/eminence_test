@@ -72,8 +72,14 @@ export class LoginComponent {
             response.result.user.role.role === 'ADMIN' ||
             response.result.user.role.role === 'FACULTY'
           ) {
-            const role = response.result.user.role.role.toLowerCase();
-            this.router.navigateByUrl(`/eminenceai/${role}`);
+            if (response.result.user.role.role === 'ADMIN') {
+              this.router.navigateByUrl('/eminence/admin');
+            }
+            if (response.result.user.role.role === 'FACULTY') {
+              this.router.navigateByUrl('/eminence/faculty');
+            }
+              const role = response.result.user.role.role.toLowerCase();
+            // this.router.navigateByUrl(`/eminenceai/${role}`);
             this.closeDialog();
             this.loginUser.role = this.encryptText(
               response.result.user.role.role,
