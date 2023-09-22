@@ -19,7 +19,7 @@ export class RoleComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort: MatSort | any;
   dataSource: MatTableDataSource<Role>;
-  displayedColumns: string[] = ['sno', 'role', 'actions']; // 'status'
+  displayedColumns: string[] = ['sno', 'role']; // 'status',  'actions'
   constructor(
     private roleService: RoleService,
     private dialog: MatDialog,
@@ -62,7 +62,7 @@ export class RoleComponent implements OnInit {
       this.getRole();
     });
   }
-  editRole(roleObject: any): void {
+  editRole(roleObject: Role): void {
     let dialogBoxSettings = {
       width: '500px',
       margin: '0 auto',
@@ -76,7 +76,7 @@ export class RoleComponent implements OnInit {
       this.getRole();
     });
   }
-  deleteRole(role: any) {
+  deleteRole(role: Role) {
     Swal.fire({
       title: 'Delete',
       text: 'Are you sure you want to Delete?',
