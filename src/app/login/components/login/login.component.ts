@@ -41,9 +41,7 @@ export class LoginComponent {
     private router: Router,
     private loginService: LoginService,
     private toastr: ToastrService
-  ) {
-
-  }
+  ) {}
   ngOnInit(): void {
     this.initForm();
   }
@@ -78,7 +76,7 @@ export class LoginComponent {
             if (response.result.user.role.role === 'FACULTY') {
               this.router.navigateByUrl('/eminence/faculty');
             }
-              const role = response.result.user.role.role.toLowerCase();
+            const role = response.result.user.role.role.toLowerCase();
             // this.router.navigateByUrl(`/eminenceai/${role}`);
             this.closeDialog();
             this.loginUser.role = this.encryptText(
@@ -110,6 +108,7 @@ export class LoginComponent {
         },
         (error) => {
           this.toastr.error('You are not a registered member', '', {
+            positionClass: 'toast-top-center',
             timeOut: 3000,
           });
           console.log('Error : ', error);
@@ -125,6 +124,4 @@ export class LoginComponent {
     const decrypted = CryptoJS.AES.decrypt(encryptedText, secretKey);
     return decrypted.toString(CryptoJS.enc.Utf8);
   }
-
-  
 }

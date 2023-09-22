@@ -9,6 +9,49 @@ import { LoginLayoutComponent } from './pages/login-layout/login-layout.componen
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmailComponent } from './components/email/email.component';
+import { MaterialModule } from 'src/app/shared/material/material.module';
+import { NotifierModule, NotifierOptions } from 'angular-notifier';
+
+const customNotifierOptions: NotifierOptions = {
+  position: {
+    horizontal: {
+      position: 'middle',
+      distance: 12,
+    },
+    vertical: {
+      position: 'top',
+      distance: 50,
+      gap: 10,
+    },
+  },
+  theme: 'material',
+  behaviour: {
+    autoHide: 1000,
+    onClick: 'hide',
+    onMouseover: 'pauseAutoHide',
+    showDismissButton: true,
+    stacking: 4,
+  },
+  animations: {
+    enabled: true,
+    show: {
+      preset: 'slide',
+      speed: 300,
+      easing: 'ease',
+    },
+    hide: {
+      preset: 'fade',
+      speed: 300,
+      easing: 'ease',
+      offset: 50,
+    },
+    shift: {
+      speed: 300,
+      easing: 'ease',
+    },
+    overlap: 10,
+  },
+};
 
 @NgModule({
   declarations: [
@@ -24,6 +67,8 @@ import { EmailComponent } from './components/email/email.component';
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+    MaterialModule,
+    NotifierModule.withConfig(customNotifierOptions),
   ],
 })
 export class LoginModule {}

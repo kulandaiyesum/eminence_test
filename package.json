@@ -22,6 +22,7 @@
     "@angular/router": "^16.2.0",
     "@ng-bootstrap/ng-bootstrap": "^15.1.1",
     "@popperjs/core": "^2.11.6",
+    "angular-notifier": "^14.0.0",
     "bootstrap": "^5.2.3",
     "crypto-js": "^4.1.1",
     "ngx-toastr": "^17.0.2",
