@@ -1,10 +1,5 @@
 import { ChangeDetectorRef, Component, Inject } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Package } from '../../model/package.class';
 import { PackageService } from '../../service/package.service';
@@ -26,9 +21,7 @@ export class PackagePopupComponent {
     private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private cdr: ChangeDetectorRef
-  ) {
-    console.log(this.data);
-  }
+  ) {}
 
   ngOnInit(): void {
     this.package = new Package();
@@ -76,7 +69,6 @@ export class PackagePopupComponent {
 
   // add
   onPackageSubmit() {
-    console.log(this.package, 'add');
     this.packageService.createPackage(this.package).subscribe(
       (data: any) => {
         this.toastr.success(data.message, '', {
@@ -98,7 +90,6 @@ export class PackagePopupComponent {
 
   // edit
   updatePackage() {
-    console.log(this.package, 'edit');
     this.packageService.updatePackage(this.package).subscribe(
       (res: any) => {
         this.toastr.success(res.message, '', {
@@ -119,8 +110,14 @@ export class PackagePopupComponent {
   }
   restrictInput(event: KeyboardEvent) {
     const input = event.target as HTMLInputElement;
-    if (/[^0-9]/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Delete' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+    if (
+      /[^0-9]/.test(event.key) &&
+      event.key !== 'Backspace' &&
+      event.key !== 'Delete' &&
+      event.key !== 'ArrowLeft' &&
+      event.key !== 'ArrowRight'
+    ) {
       event.preventDefault();
     }
-}
+  }
 }

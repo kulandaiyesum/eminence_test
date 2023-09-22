@@ -1,4 +1,3 @@
-
 <div class="package-container">
   <div class="h2 mb-5 text-center">Package Master</div>
   <div class="main">
@@ -14,44 +13,71 @@
         </div>
       </div>
       <div class="add_btn">
-        <button mat-raised-button (click)="openAddPackagePopup()">Add Package</button>
+        <button mat-raised-button (click)="openAddPackagePopup()">
+          Add Package
+        </button>
       </div>
     </div>
 
     <div class="data-area">
       <div class="data">
         <div class="table">
-          <mat-table [dataSource]="dataSource" matSort matPaginator class="mat-elevation-z8">
+          <mat-table
+            [dataSource]="dataSource"
+            matSort
+            matPaginator
+            class="mat-elevation-z8"
+          >
             <!-- Questions Count Column -->
             <ng-container matColumnDef="packageName">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>NAME</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.packageName}}</mat-cell>
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >NAME</mat-header-cell
+              >
+              <mat-cell *matCellDef="let element">{{
+                element.packageName
+              }}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="type">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>TYPE</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >TYPE</mat-header-cell
+              >
               <mat-cell *matCellDef="let element">{{ element.type }}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="questionsCount">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>QUESTIONS COUNT</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.questionsCount }}</mat-cell>
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >QUESTIONS COUNT</mat-header-cell
+              >
+              <mat-cell *matCellDef="let element">{{
+                element.questionsCount
+              }}</mat-cell>
             </ng-container>
 
             <!-- Amount Column -->
             <ng-container matColumnDef="amount">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>AMOUNT</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.amount }}</mat-cell>
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >AMOUNT</mat-header-cell
+              >
+              <mat-cell *matCellDef="let element">{{
+                element.amount
+              }}</mat-cell>
             </ng-container>
 
             <!-- Rate Column -->
             <ng-container matColumnDef="rate">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>RATE</mat-header-cell>
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >RATE</mat-header-cell
+              >
               <mat-cell *matCellDef="let element">{{ element.rate }}</mat-cell>
             </ng-container>
 
             <!-- Duration Type Column -->
             <ng-container matColumnDef="durationType">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>DURATION</mat-header-cell>
-              <mat-cell *matCellDef="let element">{{ element.durationType }}</mat-cell>
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >DURATION</mat-header-cell
+              >
+              <mat-cell *matCellDef="let element">{{
+                element.durationType
+              }}</mat-cell>
             </ng-container>
 
             <!-- Actions Column -->
@@ -64,10 +90,16 @@
             </ng-container>
 
             <!-- Define the displayed columns -->
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-header-row
+              *matHeaderRowDef="displayedColumns"
+            ></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
           </mat-table>
-          <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [pageIndex]="0"></mat-paginator>
+          <mat-paginator
+            [pageSizeOptions]="[5, 10, 25, 100]"
+            [pageSize]="5"
+            [pageIndex]="0"
+          ></mat-paginator>
         </div>
       </div>
     </div>

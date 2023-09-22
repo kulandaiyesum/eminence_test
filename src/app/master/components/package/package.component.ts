@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -23,7 +22,6 @@ export class PackageComponent implements OnInit {
     'amount',
     'rate',
     'durationType',
-    // 'durationCount',
     'action',
   ];
   dataSource: MatTableDataSource<Package>;
@@ -35,8 +33,7 @@ export class PackageComponent implements OnInit {
     private packageService: PackageService,
     public dialog: MatDialog,
     private toastr: ToastrService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loadPackageData();
@@ -46,13 +43,11 @@ export class PackageComponent implements OnInit {
     this.packageService.getAllPackages().subscribe(
       (packages: any) => {
         this.packageData = packages.result;
-        console.log(this.packageData);
         this.dataSource = new MatTableDataSource(this.packageData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
       (error) => {
-        console.error('Failed to load packages', error);
         this.toastr.error(error.message, '', {
           timeOut: 3000,
         });
@@ -119,7 +114,6 @@ export class PackageComponent implements OnInit {
             this.loadPackageData();
           },
           (error) => {
-            console.error('Failed to delete package', error);
             this.toastr.error(error.message, '', {
               timeOut: 3000,
             });
