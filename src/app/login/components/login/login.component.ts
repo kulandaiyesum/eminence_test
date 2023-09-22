@@ -81,7 +81,7 @@ export class LoginComponent {
             if (response.result.user.role.role === 'FACULTY') {
               this.router.navigateByUrl('/eminence/faculty');
             }
-              const role = response.result.user.role.role.toLowerCase();
+            const role = response.result.user.role.role.toLowerCase();
             // this.router.navigateByUrl(`/eminenceai/${role}`);
             this.closeDialog();
             this.loginUser.role = this.encryptText(
@@ -105,9 +105,6 @@ export class LoginComponent {
             localStorage.setItem('3', this.loginUser.firstName);
             localStorage.setItem('4', this.loginUser.lastName);
             localStorage.setItem('5', this.loginUser.id);
-            this.toastr.success('Login success', '', {
-              timeOut: 3000,
-            });
           } else {
           }
         },
