@@ -75,12 +75,14 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>ACTION</th>
           <td mat-cell *matCellDef="let row">
             <mat-icon
+              *ngIf="row.role.role !== 'ADMIN'"
               class="set_edit_color_button"
               matTooltip="edit"
               (click)="updateUserMaster(row)"
               >edit</mat-icon
             >
             <mat-icon
+              *ngIf="row.role.role !== 'ADMIN'"
               class="set_edit_color_button ms-2"
               matTooltip="delete"
               (click)="deleteUserMaster(row._id)"
