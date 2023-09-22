@@ -35,7 +35,7 @@
         padding: 8px 16px;
         border: none;
         color: #fff;
-        font-weight: 600;
+        font-size: 16px;
         border-radius: 4px;
         transition: background-color 0.3s ease;
         &:hover {
@@ -98,11 +98,13 @@
           mat-header-cell {
             background-color: #1bb0e6;
             color: #fff;
+            font-size: 16px;
           }
           .mat-icon {
             cursor: pointer;
-            color: #ffd43b;
+            color: #fbbf02;
             font-size: 24px;
+            margin: 0px 0px 0px 8px;
           }
           .mat-cell {
             display: flex;
