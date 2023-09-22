@@ -1,10 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Inject,
-  Renderer2,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -111,6 +105,7 @@ export class PackagePopupComponent {
           timeOut: 3000,
         });
         this.dialogRef.close(res);
+        this.visibleUpdate = true;
       },
       (err: any) => {
         this.toastr.error(err.message, '', {
@@ -122,4 +117,10 @@ export class PackagePopupComponent {
   onNoClick(): void {
     this.dialogRef.close();
   }
+  restrictInput(event: KeyboardEvent) {
+    const input = event.target as HTMLInputElement;
+    if (/[^0-9]/.test(event.key) && event.key !== 'Backspace' && event.key !== 'Delete' && event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+      event.preventDefault();
+    }
+}
 }
