@@ -34,8 +34,12 @@ export class InstitutePopupComponent {
     packageName: '',
     questionsCount: '',
     packageNameId: '',
-    city: ''
+    city: '',
+    startdate: new Date(),
+    enddate: new Date()
   };
+  public minDate: string = this.calculateMinDate();
+
 
   constructor(
     private formBuilder: FormBuilder,
@@ -59,6 +63,8 @@ export class InstitutePopupComponent {
       this.institutionModel.zip = data.zip;
       this.institutionModel.city = data.city;
       this.institutionModel.packageName = data.packageNameId.packageName;
+      this.institutionModel.startdate = data.packageNameId.startdate;
+      this.institutionModel.enddate = data.packageNameId.enddate;
     }
   }
 
@@ -76,8 +82,17 @@ export class InstitutePopupComponent {
       state: ['', Validators.required],
       zip: ['', Validators.required],
       city: ['', Validators.required],
+      startdate: [new Date(), Validators.required],
     });
   }
+  private calculateMinDate(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
   getPackageData() {
     this.packageService.getAllPackages().subscribe((doc: any) => {
       this.packageList = doc.result;
@@ -112,6 +127,8 @@ export class InstitutePopupComponent {
     this.instituteForm.controls['state'].setValue(this.institutionModel.state);
     this.instituteForm.controls['zip'].setValue(this.institutionModel.zip);
     this.instituteForm.controls['city'].setValue(this.institutionModel.city);
+    this.instituteForm.controls['startdate'].setValue(this.institutionModel.startdate);
+
 
     if (this.instituteForm.valid) {
       console.log(this.instituteForm.value);

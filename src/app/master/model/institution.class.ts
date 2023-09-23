@@ -9,4 +9,6 @@ export class Institution {
   questionsCount: string;
   packageNameId: string;
   city: string;
+  startdate: Date;
+  enddate: Date;
 }

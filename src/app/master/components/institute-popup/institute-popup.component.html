@@ -46,6 +46,22 @@
             {{ institutionModel.questionsCount }} Questions Per Package
           </div>
         </div>
+        <div class="dates">
+          <label for="datePicker">Start Date:</label>
+          <input
+            type="date"
+            name="startdate"
+
+            [(ngModel)]="institutionModel.startdate"
+            [min]="minDate"
+          />
+          <div
+            *ngIf="instituteForm.controls['startdate']?.errors?.['required'] && instituteForm.controls['startdate']?.touched"
+            class="error-message"
+          >
+            Start date is required.
+          </div>
+        </div>
         <div class="part-input">
           <div class="sub-part-input">
             <label for="name">Institute Name</label><br />
