@@ -50,7 +50,8 @@ export class InstitutionComponent {
     packageNameId: '',
     city: '',
     startdate: new Date(),
-    enddate: new Date()
+    enddate: new Date(),
+    durationType: '',
   };
   constructor(
     private formBuilder: FormBuilder,
@@ -63,7 +64,6 @@ export class InstitutionComponent {
   ngOnInit(): void {
     this.initForm();
     this.getAllInstituteData();
-    this.addData();
   }
 
   initForm() {

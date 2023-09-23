@@ -23,6 +23,9 @@ export class InstitutePopupComponent {
   public items;
   public packageList;
   public unqiuePackage = [];
+  isPackageSelected: boolean = true;
+  public selectedDurationType: string;
+  public calculatedEndDate: string;
 
   public institutionModel: Institution = {
     name: '',
@@ -36,10 +39,10 @@ export class InstitutePopupComponent {
     packageNameId: '',
     city: '',
     startdate: new Date(),
-    enddate: new Date()
+    enddate: new Date(),
+    durationType: '',
   };
   public minDate: string = this.calculateMinDate();
-
 
   constructor(
     private formBuilder: FormBuilder,
@@ -63,6 +66,7 @@ export class InstitutePopupComponent {
       this.institutionModel.zip = data.zip;
       this.institutionModel.city = data.city;
       this.institutionModel.packageName = data.packageNameId.packageName;
+      this.institutionModel.durationType = data.packageNameId.durationType;
       this.institutionModel.startdate = data.packageNameId.startdate;
       this.institutionModel.enddate = data.packageNameId.enddate;
     }
@@ -83,6 +87,7 @@ export class InstitutePopupComponent {
       zip: ['', Validators.required],
       city: ['', Validators.required],
       startdate: [new Date(), Validators.required],
+      enddate: [new Date(), Validators.required],
     });
   }
   private calculateMinDate(): string {
@@ -96,11 +101,50 @@ export class InstitutePopupComponent {
   getPackageData() {
     this.packageService.getAllPackages().subscribe((doc: any) => {
       this.packageList = doc.result;
+
       this.unqiuePackage = this.logicalService.filteredArrayWithJsonValue(
         this.packageList,
         'packageName'
       );
     });
+  }
+
+  calculateEndDate() {
+    const startDate = new Date(this.institutionModel.startdate);
+    let endDate: Date;
+
+    switch (this.selectedDurationType) {
+      case 'monthly':
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 29);
+        break;
+      case 'quarterly':
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 89);
+        break;
+      case 'half-yearly':
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 179);
+        break;
+      case 'annually':
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 364);
+        break;
+      default:
+        endDate = null;
+    }
+    this.institutionModel.enddate = new Date(
+      endDate ? endDate.toISOString().substring(0, 10) : ''
+    );
+
+    if (endDate) {
+      const year = endDate.getFullYear();
+      const month = String(endDate.getMonth() + 1).padStart(2, '0');
+      const day = String(endDate.getDate()).padStart(2, '0');
+      this.calculatedEndDate = `${day}/${month}/${year}`;
+    } else {
+      this.calculatedEndDate = '';
+    }
   }
 
   togglePasswordVisibility(event: Event) {
@@ -111,14 +155,15 @@ export class InstitutePopupComponent {
     this.dialogRef.close();
   }
   getPackgeType(list) {
+    this.isPackageSelected = false;
     let data = this.packageList.find((x) => x.packageName === list);
     this.institutionModel.questionsCount = data.questionsCount;
     this.institutionModel.packageNameId = data._id;
+    this.institutionModel.durationType = data.durationType;
+
+    this.selectedDurationType = this.institutionModel.durationType;
   }
   onInstituteSubmit() {
-    console.log('submitted');
-    console.log(this.institutionModel);
-
     this.instituteForm.controls['email'].setValue(this.institutionModel.email);
     this.instituteForm.controls['name'].setValue(this.institutionModel.name);
     this.instituteForm.controls['address'].setValue(
@@ -127,11 +172,14 @@ export class InstitutePopupComponent {
     this.instituteForm.controls['state'].setValue(this.institutionModel.state);
     this.instituteForm.controls['zip'].setValue(this.institutionModel.zip);
     this.instituteForm.controls['city'].setValue(this.institutionModel.city);
-    this.instituteForm.controls['startdate'].setValue(this.institutionModel.startdate);
-
+    this.instituteForm.controls['startdate'].setValue(
+      this.institutionModel.startdate
+    );
+    this.instituteForm.controls['enddate'].setValue(
+      this.institutionModel.enddate
+    );
 
     if (this.instituteForm.valid) {
-      console.log(this.instituteForm.value);
       this.closeDialog();
       this.instituteService.createInstitute(this.institutionModel).subscribe(
         (response: any) => {
@@ -145,7 +193,6 @@ export class InstitutePopupComponent {
   }
 
   updateInstitute() {
-    console.log('submitted');
     this.instituteForm.controls['email'].setValue(this.institutionModel.email);
     this.instituteForm.controls['name'].setValue(this.institutionModel.name);
     this.instituteForm.controls['address'].setValue(
@@ -154,12 +201,15 @@ export class InstitutePopupComponent {
     this.instituteForm.controls['state'].setValue(this.institutionModel.state);
     this.instituteForm.controls['zip'].setValue(this.institutionModel.zip);
     this.instituteForm.controls['city'].setValue(this.institutionModel.city);
+    this.instituteForm.controls['startdate'].setValue(
+      this.institutionModel.startdate
+    );
+    this.instituteForm.controls['enddate'].setValue(
+      this.institutionModel.enddate
+    );
     this.instituteForm.controls['_id'].setValue(this.institutionModel._id);
-    console.log(this.instituteForm.value);
-    if (this.instituteForm.valid) {
-      console.log('form valid for update');
-      console.log(this.instituteForm.value._id);
 
+    if (this.instituteForm.valid) {
       this.instituteService
         .updateInstitution(this.instituteForm.value)
         .subscribe(

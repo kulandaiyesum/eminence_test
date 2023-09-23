@@ -44,6 +44,7 @@
           >
           <div *ngIf="institutionModel.packageName" class="package-details">
             {{ institutionModel.questionsCount }} Questions Per Package
+            {{ institutionModel.durationType }}
           </div>
         </div>
         <div class="dates">
@@ -51,10 +52,12 @@
           <input
             type="date"
             name="startdate"
-
             [(ngModel)]="institutionModel.startdate"
             [min]="minDate"
+            (change)="calculateEndDate()"
+            [disabled]="isPackageSelected"
           />
+          <p><b>End Date :</b>{{ calculatedEndDate }}</p>
           <div
             *ngIf="instituteForm.controls['startdate']?.errors?.['required'] && instituteForm.controls['startdate']?.touched"
             class="error-message"
