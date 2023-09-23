@@ -211,7 +211,7 @@ export class InstitutePopupComponent {
 
     if (this.instituteForm.valid) {
       this.instituteService
-        .updateInstitution(this.instituteForm.value)
+        .updateInstitution(this.institutionModel)
         .subscribe(
           (response: any) => {
             console.log(response);
