@@ -36,6 +36,7 @@ export class UserFormComponent implements OnInit {
   intitutions: Institution[] = [];
   passwordVisible: boolean = true;
   selectedRole: string = '';
+  showTopic: boolean = true;
   constructor(
     private userService: UserService,
     private toastr: ToastrService,
@@ -84,12 +85,19 @@ export class UserFormComponent implements OnInit {
       this.userObject.lastName = this.data.lastName;
       this.userObject.password = this.data.password;
       this.userObject.role = this.data.role._id;
-      this.userObject.topicId = this.data.topicId._id;
-      this.userObject.institutionId = this.data.institutionId._id;
+      this.userObject.topicId = this.data?.topicId?._id;
+      this.userObject.institutionId = this.data?.institutionId?._id;
       this.passwordVisible = false;
       this.userForm.get('password').disable();
       this.userForm.get('confirmPassword').disable();
       this.selectedRole = this.data.role.role;
+      if (
+        this.data.role.role === 'ADMIN' ||
+        this.data.role.role === 'STUDENT'
+      ) {
+        this.userForm.get('topicId').disable();
+        this.showTopic = false;
+      }
     }
     this.userForm.get('role').valueChanges.subscribe((selectedRole) => {
       const roleObj = this.roles.find((role) => role._id === selectedRole);
@@ -106,6 +114,22 @@ export class UserFormComponent implements OnInit {
         this.userForm.get('institutionId').disable();
         this.userObject.institutionId = undefined;
       }
+      if (
+        (roleObj === undefined &&
+          this.data !== null &&
+          this.data.role.role=== 'ADMIN') ||
+        (roleObj === undefined &&
+          this.data !== null &&
+          this.data.role.role === 'STUDENT')
+      ) {
+      } else if (roleObj?.role === 'ADMIN' || roleObj?.role === 'STUDENT') {
+        this.userForm.get('topicId').disable();
+        this.showTopic = false;
+        this.userObject.topicId = undefined;
+      } else {
+        this.userForm.get('topicId').enable();
+        this.showTopic = true;
+      }
     });
   }
   saveUserMaster() {
@@ -121,7 +145,7 @@ export class UserFormComponent implements OnInit {
         this.toastr.error(err.error.message, '', {
           timeOut: 3000,
         });
-        this.dialogRef.close(err);
+        // this.dialogRef.close(err);
       }
     );
   }
@@ -135,10 +159,10 @@ export class UserFormComponent implements OnInit {
         this.dialogRef.close(res);
       },
       (err: any) => {
-        this.toastr.error(err.message, '', {
+        this.toastr.error(err.error.message, '', {
           timeOut: 3000,
         });
-        this.dialogRef.close(err);
+        // this.dialogRef.close(err);
       }
     );
   }

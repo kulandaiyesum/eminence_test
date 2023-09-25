@@ -9,11 +9,11 @@ import { HistoryComponent } from './components/history/history.component';
 
 
 const routes: Routes = [
-  {
-    path: ':role',
-    component: SidenavComponent,
-    canActivate: [AuthGuard],
-  },
+  // {
+  //   path: ':role',
+  //   component: SidenavComponent,
+  //   canActivate: [AuthGuard],
+  // },
   { path: '', redirectTo: 'qgen', pathMatch: 'full' },
   { path: 'qgen', component: QgenComponent },
   { path: 'askeminence', component: AskeminenceComponent },

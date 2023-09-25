@@ -71,6 +71,13 @@
     .route_container {
       padding-top: 2rem;
     }
+    .faculty_route_container {
+      margin: 3.5rem 3.5rem 1rem 3.5rem ;
+      background-color: var(--qgen-bg-color);
+      // background-color: #ccc;
+      border-radius: 1rem;
+      min-height: 80vh;
+    }
   }
 }
 ::ng-deep .mdc-list-item__primary-text {

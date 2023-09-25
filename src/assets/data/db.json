@@ -1,0 +1,329 @@
+{
+  "additionalQuestions" : [
+  {
+    "request_id": "9876",
+    "questions": [
+      {
+        "id": "65026d69ba03c50001a4e5ef",
+        "title":
+          "A 55-year-old male with a history of hypertension presents with palpitations. His blood pressure is 150/90 mm Hg. An ECG shows atrial fibrillation with a rapid ventricular response. Which of the following is the most appropriate initial management?",
+        "options": [
+          {
+            "id": "1",
+            " text": "Administer rate-control medications",
+            "explanation": "Explanation for option 1",
+            "correct_answer": true
+          },
+          {
+            "id": "2",
+            " text": "Administer rhythm-control medications",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "3",
+            " text": "Administer anticoagulants",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "4",
+            " text": "Administer antiarrhythmics",
+            "explanation": null,
+            "correct_answer": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "request_id": "5432",
+    "questions": [
+      {
+        "id": "65026d69ba03c50001a4e5f0",
+        "title":
+          "A 35-year-old female presents with sudden-onset severe right lower quadrant abdominal pain. On examination, there is tenderness and guarding in the right lower quadrant. Which of the following is the most likely diagnosis?",
+        "options": [
+          {
+            "id": "1",
+            " text": "Acute appendicitis",
+            "explanation": "Explanation for option 1",
+            "correct_answer": true
+          },
+          {
+            "id": "2",
+            " text": "Renal colic",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "3",
+            " text": "Diverticulitis",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "4",
+            " text": "Cholecystitis",
+            "explanation": null,
+            "correct_answer": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "request_id": "2345",
+    "questions": [
+      {
+        "id": "65026d69ba03c50001a4e5f1",
+        "title":
+          "A 60-year-old female with a history of rheumatoid arthritis presents with a sudden-onset headache, confusion, and visual disturbances. Her blood pressure is 160/100 mm Hg. An MRI shows multiple areas of acute infarction in the brain. Which of the following is the most likely diagnosis?",
+        "options": [
+          {
+            "id": "1",
+            " text": "Hypertensive emergency",
+            "explanation": "Explanation for option 1",
+            "correct_answer": true
+          },
+          {
+            "id": "2",
+            " text": "Migraine with aura",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "3",
+            " text": "Rheumatoid vasculitis",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "4",
+            " text": "Subarachnoid hemorrhage",
+            "explanation": null,
+            "correct_answer": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "request_id": "3456",
+    "questions": [
+      {
+        "id": "65026d69ba03c50001a4e5f2",
+        "title":
+          "A 28-year-old male presents with painful, swollen joints in his wrists and knees. He reports morning stiffness lasting more than 1 hour. On physical examination, there are tender and swollen joints with synovitis. Which of the following is the most likely diagnosis?",
+        "options": [
+          {
+            "id": "1",
+            " text": "Rheumatoid arthritis",
+            "explanation": "Explanation for option 1",
+            "correct_answer": true
+          },
+          {
+            "id": "2",
+            " text": "Osteoarthritis",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "3",
+            " text": "Gout",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "4",
+            " text": "Ankylosing spondylitis",
+            "explanation": null,
+            "correct_answer": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "request_id": "7890",
+    "questions": [
+      {
+        "id": "65026d69ba03c50001a4e5f3",
+        "title":
+          "A 50-year-old female presents with chronic cough and shortness of breath. She has a history of smoking. A chest X-ray shows an irregularly shaped mass in the left upper lobe of the lung. Which of the following is the most likely diagnosis?",
+        "options": [
+          {
+            "id": "1",
+            " text": "Lung cancer",
+            "explanation": "Explanation for option 1",
+            "correct_answer": true
+          },
+          {
+            "id": "2",
+            " text": "Pulmonary fibrosis",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "3",
+            " text": "Tuberculosis",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "4",
+            " text": "Pneumonia",
+            "explanation": null,
+            "correct_answer": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "request_id": "4321",
+    "questions": [
+      {
+        "id": "65026d69ba03c50001a4e5f4",
+        "title":
+          "A 45-year-old male presents with acute onset of severe back pain. He describes it as a tearing, ripping sensation in his back. On examination, blood pressure is significantly higher in the right arm than in the left arm. Which of the following is the most likely diagnosis?",
+        "options": [
+          {
+            "id": "1",
+            " text": "Aortic dissection",
+            "explanation": "Explanation for option 1",
+            "correct_answer": true
+          },
+          {
+            "id": "2",
+            " text": "Myocardial infarction",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "3",
+            " text": "Pulmonary embolism",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "4",
+            " text": "Pneumothorax",
+            "explanation": null,
+            "correct_answer": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "request_id": "8765",
+    "questions": [
+      {
+        "id": "65026d69ba03c50001a4e5f5",
+        "title":
+          "A 30-year-old female presents with irregular menstrual cycles and hirsutism. On examination, there is acne and increased hair growth on her face and chest. Which of the following is the most likely diagnosis?",
+        "options": [
+          {
+            "id": "1",
+            " text": "Polycystic ovarian syndrome (PCOS)",
+            "explanation": "Explanation for option 1",
+            "correct_answer": true
+          },
+          {
+            "id": "2",
+            " text": "Endometriosis",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "3",
+            " text": "Primary ovarian insufficiency",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "4",
+            " text": "Uterine fibroids",
+            "explanation": null,
+            "correct_answer": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "request_id": "7654",
+    "questions": [
+      {
+        "id": "65026d69ba03c50001a4e5f6",
+        "title":
+          "A 25-year-old male presents with pain and swelling in the right testicle. On examination, the right testicle is tender, swollen, and elevated. Which of the following is the most likely diagnosis?",
+        "options": [
+          {
+            "id": "1",
+            " text": "Testicular torsion",
+            "explanation": "Explanation for option 1",
+            "correct_answer": true
+          },
+          {
+            "id": "2",
+            " text": "Epididymitis",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "3",
+            " text": "Hernia",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "4",
+            " text": "Testicular cancer",
+            "explanation": null,
+            "correct_answer": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "request_id": "6543",
+    "questions": [
+      {
+        "id": "65026d69ba03c50001a4e5f7",
+        "title":
+          "A 40-year-old female presents with recurrent episodes of severe abdominal pain and diarrhea. She also experiences flushing and wheezing. Which of the following is the most likely diagnosis?",
+        "options": [
+          {
+            "id": "1",
+            " text": "Carcinoid syndrome",
+            "explanation": "Explanation for option 1",
+            "correct_answer": true
+          },
+          {
+            "id": "2",
+            " text": "Inflammatory bowel disease (IBD)",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "3",
+            " text": "Irritable bowel syndrome (IBS)",
+            "explanation": null,
+            "correct_answer": null
+          },
+          {
+            "id": "4",
+            " text": "Gastroenteritis",
+            "explanation": null,
+            "correct_answer": null
+          }
+        ]
+      }
+    ]
+  }
+]
+
+}

@@ -1,9 +1,9 @@
+import { RsaService } from './../shared/service/rsa.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, map, shareReplay } from 'rxjs';
 import Swal from 'sweetalert2';
-import * as CryptoJS from 'crypto-js';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -13,11 +13,18 @@ import { environment } from 'src/environments/environment';
 })
 export class PortalLayoutComponent implements OnInit {
   secretKey: string = environment.secretKey;
-  constructor(private router: Router) {}
+  public role: string = '';
+  constructor(private router: Router, private rsaService: RsaService) {}
   firstName: string = '';
   ngOnInit(): void {
+    const encrptedRole = localStorage.getItem('2');
+    this.role = this.rsaService.decryptText(encrptedRole, this.secretKey);
+    console.log(this.role);
     const storedFirstName: string = localStorage.getItem('3');
-    this.firstName = this.decryptText(storedFirstName, this.secretKey);
+    this.firstName = this.rsaService.decryptText(
+      storedFirstName,
+      this.secretKey
+    );
   }
   private breakpointObserver = inject(BreakpointObserver);
 
@@ -51,9 +58,11 @@ export class PortalLayoutComponent implements OnInit {
       }
     });
   }
+  isAdmin() {
+    return this.role === 'ADMIN';
+  }
 
-  decryptText(encryptedText: string, secretKey: string): string {
-    const decrypted = CryptoJS.AES.decrypt(encryptedText, secretKey);
-    return decrypted.toString(CryptoJS.enc.Utf8);
+  isFaculty() {
+    return this.role === 'FACULTY';
   }
 }
