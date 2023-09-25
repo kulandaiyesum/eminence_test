@@ -4,6 +4,8 @@ import { LogicalfuntionService } from 'src/app/shared/logicalfuntion.service';
 import { PackageService } from '../../service/package.service';
 import { Institution } from '../../model/institution.class';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SubscriptionService } from '../../service/subscription.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-subscription',
@@ -45,7 +47,9 @@ export class AddSubscriptionComponent implements OnInit {
     private dialogRef: MatDialogRef<AddSubscriptionComponent>,
     public logicalService: LogicalfuntionService,
     public packageService: PackageService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private subscriptionService: SubscriptionService,
+    private toastr: ToastrService
   ) {
     if (data != null) {
       this.institutionModel.name = data.name;
@@ -90,6 +94,8 @@ export class AddSubscriptionComponent implements OnInit {
   }
 
   calculateEndDate() {
+    console.log('end date');
+
     const startDate = new Date(this.institutionModel.startdate);
     let endDate: Date;
     this.selectedDurationType = this.selectedPackageOption.durationType;
@@ -157,12 +163,12 @@ export class AddSubscriptionComponent implements OnInit {
         (pkg) => pkg.amount === selectedValue
       );
       this.institutionModel.startdate === new Date();
-
       if (selectedPackage) {
         this.isPackageSelected = false;
         this.selectedPackageOption = selectedPackage;
         console.log('Selected Package:', this.selectedPackageOption);
         this.institutionModel.packageNameId = this.selectedPackageOption._id;
+        this.calculateEndDate();
       } else {
         console.log('No package selected');
       }
@@ -178,6 +184,25 @@ export class AddSubscriptionComponent implements OnInit {
     );
     if (this.addSubscriptionForm.valid) {
       console.log(this.institutionModel);
+      this.subscriptionService
+        .createSubscription(this.institutionModel)
+        .subscribe(
+          (response: any) => {
+            console.log(response);
+            this.toastr.success(response.message, '', {
+              positionClass: 'toast-top-center',
+              timeOut: 1000,
+            });
+            this.closeDialog();
+          },
+          (error) => {
+            this.toastr.error(error.error.message, '', {
+              positionClass: 'toast-top-center',
+              timeOut: 1000,
+            });
+            console.error('Not data get', error);
+          }
+        );
     }
   }
 }

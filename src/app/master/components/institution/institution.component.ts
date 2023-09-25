@@ -29,7 +29,7 @@ export class InstitutionComponent {
   displayedColumns: string[] = [
     'name',
     'email',
-    'zip',
+    
     'city',
     'status',
     'action',

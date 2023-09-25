@@ -63,6 +63,7 @@
           font-weight: bold;
           margin-top: 10px;
         }
+
         input {
           width: 100%;
           margin-top: 5px;
@@ -82,8 +83,8 @@
             color: #bcbcbc;
           }
         }
-        p {
-          margin-top: 10px;
+        #date{
+          display: flex;
         }
         .error-message {
           color: red;
@@ -110,5 +111,18 @@
         }
       }
     }
+  }
+  @media (max-width: 768px) {
+    /* Change the maximum width (768px) to suit your breakpoint for tablet view */
+    .main{
+      padding: 0px;
+    }
+  }
+}
+@media (max-width: 768px) {
+  /* Change the maximum width (768px) to suit your breakpoint for tablet view */
+  .add-subscription-container{
+    padding: 20px;
+    height: auto;
   }
 }

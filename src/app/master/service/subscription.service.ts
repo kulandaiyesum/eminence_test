@@ -7,10 +7,15 @@ import { environment } from 'src/environments/environment';
 })
 export class SubscriptionService {
   private baseUrl: string = environment.localdomain + 'subscription';
+  private createSubscriptionUrl: string = environment.localdomain + 'subscription/save';
 
   constructor(private http: HttpClient) {}
 
   getAllSubscriptions() {
     return this.http.get(this.baseUrl + '/getAll');
+  }
+
+  createSubscription(data: any) {
+    return this.http.post(`${this.createSubscriptionUrl}`, data,);
   }
 }
