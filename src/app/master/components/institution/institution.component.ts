@@ -12,6 +12,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import Swal from 'sweetalert2';
 import { PackageService } from '../../service/package.service';
+import { AddSubscriptionComponent } from '../add-subscription/add-subscription.component';
 
 @Component({
   selector: 'app-institution',
@@ -32,6 +33,7 @@ export class InstitutionComponent {
     'city',
     'status',
     'action',
+    'add',
   ];
   public dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -52,6 +54,7 @@ export class InstitutionComponent {
     startdate: new Date(),
     enddate: new Date(),
     durationType: '',
+    country: '',
   };
   constructor(
     private formBuilder: FormBuilder,
@@ -179,4 +182,18 @@ export class InstitutionComponent {
   changeCustomerStatus(list) {}
   editCustomer(customer) {}
   deleteCustomer(list) {}
+
+  addSubscription(data) {
+    const dialogRef = this.dialog.open(AddSubscriptionComponent, {
+      width: '600px',
+      height: '80vh',
+      data: data,
+      // Other MatDialog options
+    });
+    // You can handle dialog events here if needed
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+      this.getAllInstituteData();
+    });
+  }
 }

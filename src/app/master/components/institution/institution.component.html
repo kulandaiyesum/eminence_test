@@ -83,15 +83,23 @@
 
             <!-- Action -->
             <ng-container matColumnDef="action">
-              <mat-header-cell
-                *matHeaderCellDef
-                mat-sort-header
-                id="last-header"
+              <mat-header-cell *matHeaderCellDef mat-sort-header
                 >ACTION</mat-header-cell
               >
               <mat-cell *matCellDef="let element">
                 <mat-icon (click)="updateInstitute(element)">edit</mat-icon>
                 <mat-icon (click)="deleteInstitute(element)">delete</mat-icon>
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="add">
+              <mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                id="last-header"
+                >Package</mat-header-cell
+              >
+              <mat-cell *matCellDef="let element">
+                <mat-icon (click)="addSubscription(element)">add</mat-icon>
               </mat-cell>
             </ng-container>
 

@@ -1,0 +1,114 @@
+.add-subscription-container {
+  width: 100%;
+  height: 80vh;
+  border-radius: 8px;
+  padding: 40px;
+  .main {
+    width: auto;
+    height: auto;
+    padding: 20px;
+
+    .heading {
+      width: 100%;
+      height: auto;
+
+      .icon {
+        width: 100%;
+        display: flex;
+        justify-content: right;
+      }
+      .head {
+        h2 {
+          text-align: center;
+          font-size: 20px;
+          color: #4b5056;
+          font-weight: bold;
+        }
+      }
+    }
+    .forms {
+      min-width: 100%;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+      border: 1px solid #ccc;
+      padding-bottom: 20px;
+      .highlight {
+        background-color: #ccc;
+      }
+      form {
+        min-width: 100%;
+        height: auto;
+        .row_group {
+          &.highlight {
+            background-color: #f4f6f8;
+            // border: 1px solid #b9b9b9;
+            // color: #57c4ff;
+            padding: 20px;
+          }
+          .form-group.custom_group {
+            label {
+              &.highlight {
+                background-color: transparent; // Background color for label when highlighted
+                padding: 0 4px; // Adjust padding as needed
+                margin-left: -4px; // Adjust margin as needed
+                font-weight: bold; // Bold font when highlighted
+              }
+            }
+          }
+        }
+        label {
+          color: #4b5056;
+          font-weight: bold;
+          margin-top: 10px;
+        }
+        input {
+          width: 100%;
+          margin-top: 5px;
+          border: 1px solid #c6c9cd;
+          border-radius: 3px;
+          color: #636972;
+          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+          font-family: "open_sans", "Open Sans", sans-serif;
+          line-height: 1.5;
+          font-weight: normal;
+          font-size: 14px;
+          font-style: normal;
+          padding: 6px 8px;
+          min-height: 36px;
+          &::placeholder {
+            font-weight: 600;
+            color: #bcbcbc;
+          }
+        }
+        p {
+          margin-top: 10px;
+        }
+        .error-message {
+          color: red;
+          font-size: 14px;
+        }
+        button {
+          margin-top: 25px;
+          width: 100%;
+          text-align: center;
+          padding: 8px 16px;
+          border: none;
+          color: #fff;
+          font-weight: 600;
+          background-color: var(--qgen-logo-blue);
+          border-radius: 4px;
+          transition: background-color 0.3s ease;
+          &:hover {
+            background-color: #57c4ff;
+          }
+        }
+        select {
+          width: 100%;
+          padding: 6px 8px;
+        }
+      }
+    }
+  }
+}

@@ -56,13 +56,14 @@
             [min]="minDate"
             (change)="calculateEndDate()"
             [disabled]="isPackageSelected"
+            required
           />
           <p><b>End Date :</b>{{ calculatedEndDate }}</p>
           <div
             *ngIf="instituteForm.controls['startdate']?.errors?.['required'] && instituteForm.controls['startdate']?.touched"
             class="error-message"
           >
-            Start date is required.
+            Start Date is required.
           </div>
         </div>
         <div class="part-input">
@@ -101,22 +102,6 @@
         </div>
         <div class="part-input">
           <div class="sub-part-input">
-            <label for="state">State</label>
-            <input
-              type="text"
-              placeholder="State"
-              name="state"
-              [(ngModel)]="institutionModel.state"
-              required
-            />
-            <div
-              *ngIf="instituteForm.controls['state']?.errors?.['required'] && instituteForm.controls['state']?.touched"
-              class="error-message"
-            >
-              State is required.
-            </div>
-          </div>
-          <div class="sub-part-input">
             <label for="city">City</label>
             <input
               type="text"
@@ -130,6 +115,22 @@
               class="error-message"
             >
               City is required.
+            </div>
+          </div>
+          <div class="sub-part-input">
+            <label for="state">State</label>
+            <input
+              type="text"
+              placeholder="State"
+              name="state"
+              [(ngModel)]="institutionModel.state"
+              required
+            />
+            <div
+              *ngIf="instituteForm.controls['state']?.errors?.['required'] && instituteForm.controls['state']?.touched"
+              class="error-message"
+            >
+              State is required.
             </div>
           </div>
         </div>
@@ -151,27 +152,44 @@
             </div>
           </div>
           <div class="sub-part-input">
-            <label for="email">Email</label>
+            <label for="country">Country</label>
             <input
               type="text"
-              placeholder="Email"
-              name="email"
-              [(ngModel)]="institutionModel.email"
+              placeholder="Country"
+              name="country"
+              [(ngModel)]="institutionModel.country"
               required
-              email
             />
             <div
-              *ngIf="instituteForm.controls['email']?.errors?.['required'] && instituteForm.controls['email']?.touched"
+              *ngIf="instituteForm.controls['country']?.errors?.['required'] && instituteForm.controls['country']?.touched"
               class="error-message"
             >
-              Email is required.
+              Country is required.
             </div>
-            <div
-              *ngIf="instituteForm.controls['email']?.errors?.['email'] && instituteForm.controls['email']?.touched"
-              class="error-message"
-            >
-              Invalid email format.
-            </div>
+          </div>
+        </div>
+        <div class="email">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            placeholder="Email"
+            name="email"
+            [(ngModel)]="institutionModel.email"
+            [value]="minDate"
+            required
+            email
+          />
+          <div
+            *ngIf="instituteForm.controls['email']?.errors?.['required'] && instituteForm.controls['email']?.touched"
+            class="error-message"
+          >
+            Email is required.
+          </div>
+          <div
+            *ngIf="instituteForm.controls['email']?.errors?.['email'] && instituteForm.controls['email']?.touched"
+            class="error-message"
+          >
+            Invalid email format.
           </div>
         </div>
         <button

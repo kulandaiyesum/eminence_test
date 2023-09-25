@@ -41,6 +41,7 @@ export class InstitutePopupComponent {
     startdate: new Date(),
     enddate: new Date(),
     durationType: '',
+    country: '',
   };
   public minDate: string = this.calculateMinDate();
 
@@ -65,6 +66,7 @@ export class InstitutePopupComponent {
       this.institutionModel.state = data.state;
       this.institutionModel.zip = data.zip;
       this.institutionModel.city = data.city;
+      this.institutionModel.country = data.country;
       this.institutionModel.packageName = data.packageNameId.packageName;
       this.institutionModel.durationType = data.packageNameId.durationType;
       this.institutionModel.startdate = data.packageNameId.startdate;
@@ -86,6 +88,7 @@ export class InstitutePopupComponent {
       state: ['', Validators.required],
       zip: ['', Validators.required],
       city: ['', Validators.required],
+      country: ['', Validators.required],
       startdate: [new Date(), Validators.required],
       enddate: [new Date(), Validators.required],
     });
@@ -100,8 +103,8 @@ export class InstitutePopupComponent {
 
   getPackageData() {
     this.packageService.getAllPackages().subscribe((doc: any) => {
-      this.packageList = doc.result;
-
+      this.packageList = doc.result.filter((item) => item.type === 'B2B');
+      console.log(this.packageList);
       this.unqiuePackage = this.logicalService.filteredArrayWithJsonValue(
         this.packageList,
         'packageName'
@@ -160,9 +163,9 @@ export class InstitutePopupComponent {
     this.institutionModel.questionsCount = data.questionsCount;
     this.institutionModel.packageNameId = data._id;
     this.institutionModel.durationType = data.durationType;
-
     this.selectedDurationType = this.institutionModel.durationType;
   }
+
   onInstituteSubmit() {
     this.instituteForm.controls['email'].setValue(this.institutionModel.email);
     this.instituteForm.controls['name'].setValue(this.institutionModel.name);
@@ -172,6 +175,9 @@ export class InstitutePopupComponent {
     this.instituteForm.controls['state'].setValue(this.institutionModel.state);
     this.instituteForm.controls['zip'].setValue(this.institutionModel.zip);
     this.instituteForm.controls['city'].setValue(this.institutionModel.city);
+    this.instituteForm.controls['country'].setValue(
+      this.institutionModel.country
+    );
     this.instituteForm.controls['startdate'].setValue(
       this.institutionModel.startdate
     );
@@ -201,6 +207,9 @@ export class InstitutePopupComponent {
     this.instituteForm.controls['state'].setValue(this.institutionModel.state);
     this.instituteForm.controls['zip'].setValue(this.institutionModel.zip);
     this.instituteForm.controls['city'].setValue(this.institutionModel.city);
+    this.instituteForm.controls['country'].setValue(
+      this.institutionModel.country
+    );
     this.instituteForm.controls['startdate'].setValue(
       this.institutionModel.startdate
     );
@@ -210,17 +219,15 @@ export class InstitutePopupComponent {
     this.instituteForm.controls['_id'].setValue(this.institutionModel._id);
 
     if (this.instituteForm.valid) {
-      this.instituteService
-        .updateInstitution(this.institutionModel)
-        .subscribe(
-          (response: any) => {
-            console.log(response);
-            this.closeDialog();
-          },
-          (error) => {
-            console.error('Not data get', error);
-          }
-        );
+      this.instituteService.updateInstitution(this.institutionModel).subscribe(
+        (response: any) => {
+          console.log(response);
+          this.closeDialog();
+        },
+        (error) => {
+          console.error('Not data get', error);
+        }
+      );
     }
   }
 }
