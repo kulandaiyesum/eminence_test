@@ -43,6 +43,13 @@ export class PackageComponent implements OnInit {
     this.packageService.getAllPackages().subscribe(
       (packages: any) => {
         this.packageData = packages.result;
+
+        this.packageData.forEach((pkg: Package) => {
+          if (pkg.type === 'b2c') {
+            pkg.questionsCount = 'UNLIMITED';
+          }
+        });
+
         this.dataSource = new MatTableDataSource(this.packageData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -54,6 +61,7 @@ export class PackageComponent implements OnInit {
       }
     );
   }
+
 
   openAddPackagePopup() {
     let dialogBoxSettings = {

@@ -1,6 +1,6 @@
 export class Package {
   packageName: string;
-  questionsCount: number;
+  questionsCount: string;
   amount: string;
   rate: string;
   durationType: string;
