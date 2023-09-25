@@ -32,7 +32,7 @@ export class PackagePopupComponent {
       this.package.packageName = this.data.packageName; //
       this.package.questionsCount = this.data.questionsCount; //
       this.package.rate = this.data.rate; //
-      this.package.type = this.data.type; //
+      this.package.type = this.data.type;
       this.visibleUpdate = true;
     } else {
       this.package = new Package();
@@ -42,11 +42,13 @@ export class PackagePopupComponent {
       if (selectType === 'B2C') {
         this.packageForm.get('questionsCount').disable();
         this.packageForm.get('rate').disable();
-        this.package.questionsCount = 0;
-        this.package.rate = 0;
+        this.package.questionsCount = '';
+        this.package.rate = '-';
+        this.package.questionsCount = "UNLIMITED"
       } else {
         this.packageForm.get('questionsCount').enable();
         this.packageForm.get('rate').enable();
+
       }
       this.cdr.detectChanges();
     });
@@ -67,7 +69,6 @@ export class PackagePopupComponent {
     this.dialogRef.close();
   }
 
-  // add
   onPackageSubmit() {
     this.packageService.createPackage(this.package).subscribe(
       (data: any) => {
@@ -77,9 +78,8 @@ export class PackagePopupComponent {
         this.dialogRef.close(data);
       },
       (err: any) => {
-        this.toastr.error(err.message, '', {
-          timeOut: 3000,
-        });
+        console.log(err);
+        this.toastr.error(err.error.message, '', { timeOut: 3000 });
       }
     );
   }

@@ -84,13 +84,12 @@
       >
         <label for="amount">Amount</label>
         <input
-          type="tel"
+          type="text"
           id="amount"
           name="amount"
           formControlName="amount"
           class="form-control"
           [(ngModel)]="package.amount"
-          (keydown)="restrictInput($event)"
         />
         <div class="error">
           <mat-error
@@ -105,13 +104,12 @@
       <div class="form-group custom_group" *ngIf="package.type === 'B2B'">
         <label for="rate">Rate (per question)</label>
         <input
-          type="tel"
+          type="text"
           id="rate"
           name="rate"
           formControlName="rate"
           class="form-control"
           [(ngModel)]="package.rate"
-          (keydown)="restrictInput($event)"
         />
         <div class="error">
           <mat-error
