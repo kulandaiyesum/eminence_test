@@ -170,7 +170,9 @@ export class InstitutionComponent {
     console.log(element);
     this.instituteService.deleteInstitution(element).subscribe(
       (response: any) => {
-        console.log(response);
+        this.toastr.success(response.message, '', {
+          timeOut: 3000,
+        });
         this.getAllInstituteData();
       },
       (error) => {
