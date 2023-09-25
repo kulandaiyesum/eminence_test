@@ -43,7 +43,7 @@ export class PackagePopupComponent {
         this.packageForm.get('questionsCount').disable();
         this.packageForm.get('rate').disable();
         this.package.questionsCount = 0;
-        this.package.rate = 0;
+        this.package.rate = "";
       } else {
         this.packageForm.get('questionsCount').enable();
         this.packageForm.get('rate').enable();
