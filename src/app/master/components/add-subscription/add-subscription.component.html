@@ -23,7 +23,23 @@
           {{ selectedPackageOption.durationType }}
         </p>
         <div class="dates">
-          <label for="datePicker">Start Date:</label>
+          <!-- <mat-form-field class="example-full-width"> -->
+          <mat-label> Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="institutionModel.startdate"
+            [max]="maxDate"
+            name="startdate"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <!-- </mat-form-field> -->
+          <!-- <label for="datePicker">Start Date:</label>
           <input
             type="date"
             name="startdate"
@@ -31,7 +47,7 @@
             (change)="calculateEndDate()"
             [disabled]="isPackageSelected"
             required
-          />
+          /> -->
           <p><b>End Date :</b>{{ calculatedEndDate }}</p>
           <div
             *ngIf="addSubscriptionForm.controls['startdate']?.errors?.['required'] && addSubscriptionForm.controls['startdate']?.touched"

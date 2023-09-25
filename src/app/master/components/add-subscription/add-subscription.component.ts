@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LogicalfuntionService } from 'src/app/shared/logicalfuntion.service';
 import { PackageService } from '../../service/package.service';
@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './add-subscription.component.html',
   styleUrls: ['./add-subscription.component.scss'],
 })
-export class AddSubscriptionComponent {
+export class AddSubscriptionComponent implements OnInit {
   addSubscriptionForm: FormGroup;
 
   public packageList;
@@ -36,6 +36,7 @@ export class AddSubscriptionComponent {
     durationType: '',
     country: '',
   };
+  public maxDate = new Date();
 
   public minDate: string = this.calculateMinDate();
 
@@ -148,6 +149,7 @@ export class AddSubscriptionComponent {
   }
 
   selectedPackage(event: Event) {
+    this.institutionModel.startdate = new Date();
     const selectedValue = (event.target as HTMLSelectElement).value;
     if (selectedValue !== 'package') {
       // Find the selected package object based on the selected value

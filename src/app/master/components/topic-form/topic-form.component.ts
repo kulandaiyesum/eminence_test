@@ -54,7 +54,7 @@ export class TopicFormComponent implements OnInit {
           this.dialogRef.close(res);
         },
         (err) => {
-          this.toastr.error(err.message, '', {
+          this.toastr.error(err.error.message, '', {
             timeOut: 3000,
           });
           this.dialogRef.close(err);
@@ -69,7 +69,7 @@ export class TopicFormComponent implements OnInit {
           this.dialogRef.close(res);
         },
         (err) => {
-          this.toastr.error(err.message, '', {
+          this.toastr.error(err.error.message, '', {
             timeOut: 3000,
           });
           this.dialogRef.close(err);
