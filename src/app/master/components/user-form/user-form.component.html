@@ -157,6 +157,7 @@
         <div
           class="col_group"
           [style.width]="selectedRole !== 'FACULTY' ? '100%' : ''"
+          *ngIf="showTopic"
         >
           <div class="form-group custom_group">
             <label for="topic">Topic</label>
