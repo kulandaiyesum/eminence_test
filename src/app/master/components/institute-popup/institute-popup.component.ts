@@ -222,6 +222,9 @@ export class InstitutePopupComponent {
       this.instituteService.updateInstitution(this.institutionModel).subscribe(
         (response: any) => {
           console.log(response);
+          this.toastr.success(response.message, '', {
+            timeOut: 3000,
+          });
           this.closeDialog();
         },
         (error) => {
