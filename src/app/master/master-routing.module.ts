@@ -5,6 +5,7 @@ import { InstitutionComponent } from './components/institution/institution.compo
 import { TopicComponent } from './components/topic/topic.component';
 import { RoleComponent } from './components/role/role.component';
 import { UserComponent } from './components/user/user.component';
+import { SubscriptionComponent } from './components/subscription/subscription.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'package', pathMatch: 'full' },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'topic', component: TopicComponent },
   { path: 'role', component: RoleComponent },
   { path: 'user', component: UserComponent },
+  { path: 'subscriber', component: SubscriptionComponent },
 ];
 
 @NgModule({
