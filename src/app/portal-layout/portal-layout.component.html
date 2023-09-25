@@ -25,24 +25,45 @@
       </div>
     </mat-toolbar>
     <div class="navigation_links">
-      <a routerLink="/eminence/admin/package" routerLinkActive="activelink"
-        >Package</a
-      >
-      <a routerLink="/eminence/admin/institution" routerLinkActive="activelink"
-        >Institution</a
-      >
-      <a routerLink="/eminence/admin/subscriber" routerLinkActive="activelink"
-        >Subscription</a
-      >
-      <a routerLink="/eminence/admin/topic" routerLinkActive="activelink"
-        >Topic</a
-      >
-      <a routerLink="/eminence/admin/role" routerLinkActive="activelink"
-        >Role</a
-      >
-      <a routerLink="/eminence/admin/user" routerLinkActive="activelink"
-        >User</a
-      >
+      <ng-container *ngIf="isAdmin()">
+        <a routerLink="/eminence/admin/package" routerLinkActive="activelink"
+          >Package</a
+        >
+        <a
+          routerLink="/eminence/admin/institution"
+          routerLinkActive="activelink"
+          >Institution</a
+        >
+        <a routerLink="/eminence/admin/subscriber" routerLinkActive="activelink"
+          >Subscription</a
+        >
+        <a routerLink="/eminence/admin/topic" routerLinkActive="activelink"
+          >Topic</a
+        >
+        <a routerLink="/eminence/admin/role" routerLinkActive="activelink"
+          >Role</a
+        >
+        <a routerLink="/eminence/admin/user" routerLinkActive="activelink"
+          >User</a
+        >
+      </ng-container>
+
+      <ng-container *ngIf="isFaculty()">
+        <a routerLink="/eminence/faculty/qgen" routerLinkActive="activelink"
+          >QGen</a
+        >
+        <a routerLink="/eminence/faculty/editor" routerLinkActive="activelink"
+          >Editor</a
+        >
+        <a
+          routerLink="/eminence/faculty/askeminence"
+          routerLinkActive="activelink"
+          >ask Eminence</a
+        >
+        <a routerLink="/eminence/faculty/history" routerLinkActive="activelink"
+          >History</a
+        >
+      </ng-container>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -63,7 +84,10 @@
       >
     </mat-toolbar>
     <!-- Child routes for admin, faculty, vetter and Registered User -->
-    <div class="route_container">
+    <div *ngIf="!isFaculty()" class="route_container">
+      <router-outlet></router-outlet>
+    </div>
+    <div *ngIf="isFaculty()" class="faculty_route_container">
       <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
