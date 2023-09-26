@@ -29,7 +29,7 @@ export class InstitutionComponent {
   displayedColumns: string[] = [
     'name',
     'email',
-    
+
     'city',
     'status',
     'action',
@@ -186,6 +186,10 @@ export class InstitutionComponent {
   deleteCustomer(list) {}
 
   addSubscription(data) {
+    console.log(data);
+
+    console.log("add subscriptions");
+
     const dialogRef = this.dialog.open(AddSubscriptionComponent, {
       width: '600px',
       height: '80vh',

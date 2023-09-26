@@ -52,6 +52,8 @@ export class AddSubscriptionComponent implements OnInit {
     private toastr: ToastrService
   ) {
     if (data != null) {
+      console.log(data);
+
       this.institutionModel.name = data.name;
       this.institutionModel.email = data.email;
       this.institutionModel._id = data._id;
@@ -60,10 +62,10 @@ export class AddSubscriptionComponent implements OnInit {
       this.institutionModel.zip = data.zip;
       this.institutionModel.city = data.city;
       this.institutionModel.country = data.country;
-      this.institutionModel.packageName = data.packageNameId.packageName;
-      this.institutionModel.durationType = data.packageNameId.durationType;
-      this.institutionModel.startdate = data.packageNameId.startdate;
-      this.institutionModel.enddate = data.packageNameId.enddate;
+      // this.institutionModel.packageName = data.packageNameId.packageName;
+      // this.institutionModel.durationType = data.packageNameId.durationType;
+      // this.institutionModel.startdate = data.packageNameId.startdate;
+      // this.institutionModel.enddate = data.packageNameId.enddate;
     }
   }
 
@@ -160,14 +162,17 @@ export class AddSubscriptionComponent implements OnInit {
     if (selectedValue !== 'package') {
       // Find the selected package object based on the selected value
       const selectedPackage = this.packageList.find(
-        (pkg) => pkg.amount === selectedValue
+        (pkg) => pkg._id === selectedValue
       );
       this.institutionModel.startdate === new Date();
       if (selectedPackage) {
         this.isPackageSelected = false;
         this.selectedPackageOption = selectedPackage;
-        console.log('Selected Package:', this.selectedPackageOption);
+        console.log(this.selectedPackageOption);
         this.institutionModel.packageNameId = this.selectedPackageOption._id;
+        this.institutionModel.packageName = this.selectedPackageOption.packageName;
+        this.institutionModel.questionsCount = this.selectedPackageOption.questionsCount;
+        this.institutionModel.durationType = this.selectedPackageOption.durationType;
         this.calculateEndDate();
       } else {
         console.log('No package selected');

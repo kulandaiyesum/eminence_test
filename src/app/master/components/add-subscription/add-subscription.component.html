@@ -14,7 +14,7 @@
       <form #addSubscriptionForm="ngForm">
         <select name="package" id="packages" (change)="selectedPackage($event)">
           <option value="package">Select package</option>
-          <option *ngFor="let package of packageList" [value]="package.amount">
+          <option *ngFor="let package of packageList" [value]="package._id">
             {{ package.packageName }} - ${{ package.amount }}
           </option>
         </select>
