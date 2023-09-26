@@ -1,7 +1,8 @@
 .form_crud {
   padding: 40px;
   position: relative;
-  max-height: 80vh !important;
+  max-height: 100% !important;
+  overflow-y: auto;
   .close_btn {
     position: absolute;
     top: 30px;
@@ -24,6 +25,7 @@
       padding: 20px;
       border: 1px solid #ccc;
       border-radius: 4px;
+      height: auto;
       label {
         font-weight: bold;
       }

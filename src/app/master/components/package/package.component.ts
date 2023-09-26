@@ -67,7 +67,6 @@ export class PackageComponent implements OnInit {
     let dialogBoxSettings = {
       width: '600px',
       margin: '0 auto',
-      overflow: 'auto',
     };
     const dialogRef = this.dialog.open(
       PackagePopupComponent,
@@ -89,7 +88,6 @@ export class PackageComponent implements OnInit {
     let dialogBoxSettings = {
       width: '600px',
       margin: '0 auto',
-      overflow: 'auto',
       data: element,
     };
     const dialogRef = this.dialog.open(
