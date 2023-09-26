@@ -247,13 +247,16 @@
           Save
         </button>
         <button
-          [disabled]="userForm.invalid"
+          [disabled]="userForm.invalid || !isFormValueChanged"
           class=""
           *ngIf="data !== null"
           (click)="updateUserMaster()"
         >
           Update
         </button>
+        <div class="message" *ngIf="data !== null && !isFormValueChanged">
+          Make changes to enable the Update button
+        </div>
       </div>
     </form>
   </div>

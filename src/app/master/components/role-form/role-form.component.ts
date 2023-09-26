@@ -42,7 +42,8 @@ export class RoleFormComponent implements OnInit {
   }
 
   saveRole() {
-    this.roleService.saveRole(this.roles.role).subscribe(
+    const roleToUpCase = this.roles.role.toUpperCase();
+    this.roleService.saveRole(roleToUpCase).subscribe(
       (res: any) => {
         this.RoleForm.reset();
         this.toastr.success(res.message, '', {
