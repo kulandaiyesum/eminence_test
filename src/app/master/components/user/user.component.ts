@@ -48,8 +48,6 @@ export class UserComponent implements OnInit {
     this.userService.getAllUserMaster().subscribe(
       (res: any) => {
         this.userList = res.result;
-        console.log(this.userList);
-
         this.dataSource = new MatTableDataSource(res.result);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

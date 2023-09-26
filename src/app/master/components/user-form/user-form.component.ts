@@ -31,6 +31,8 @@ export class UserFormComponent implements OnInit {
     topicId: undefined,
   };
 
+  initialFormValues: any;
+  isFormValueChanged: boolean = false;
   roles: Role[] = [];
   topics: Topic[] = [];
   intitutions: Institution[] = [];
@@ -48,20 +50,29 @@ export class UserFormComponent implements OnInit {
   ) {
     this.userForm = new FormGroup(
       {
-        firstName: new FormControl('', [
+        firstName: new FormControl(this.data.firstName || '', [
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(20),
         ]),
-        lastName: new FormControl('', [
+        lastName: new FormControl(this.data.lastName || '', [
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(20),
         ]),
-        email: new FormControl('', [Validators.required, Validators.email]),
-        role: new FormControl('', Validators.required),
-        institutionId: new FormControl('', Validators.required),
-        topicId: new FormControl('', Validators.required),
+        email: new FormControl(this.data.email || '', [
+          Validators.required,
+          Validators.email,
+        ]),
+        role: new FormControl(this.data.role?._id || '', Validators.required),
+        institutionId: new FormControl(
+          this.data.institutionId._id || '',
+          Validators.required
+        ),
+        topicId: new FormControl(
+          this.data.topicId._id || '',
+          Validators.required
+        ),
         password: new FormControl('', [
           Validators.required,
           Validators.pattern('^[A-Za-z0-9@$!%*#?&]{8,16}'),
@@ -91,6 +102,7 @@ export class UserFormComponent implements OnInit {
       this.userForm.get('password').disable();
       this.userForm.get('confirmPassword').disable();
       this.selectedRole = this.data.role.role;
+      this.initialFormValues = this.userForm.value;
       if (
         this.data.role.role === 'ADMIN' ||
         this.data.role.role === 'STUDENT'
@@ -117,7 +129,7 @@ export class UserFormComponent implements OnInit {
       if (
         (roleObj === undefined &&
           this.data !== null &&
-          this.data.role.role=== 'ADMIN') ||
+          this.data.role.role === 'ADMIN') ||
         (roleObj === undefined &&
           this.data !== null &&
           this.data.role.role === 'STUDENT')
@@ -131,6 +143,16 @@ export class UserFormComponent implements OnInit {
         this.showTopic = true;
       }
     });
+    this.userForm.valueChanges.subscribe(() => {
+      const currentFormValues = this.userForm.value;
+      this.isFormValueChanged = !this.areFormValuesEqual(
+        this.initialFormValues,
+        currentFormValues
+      );
+    });
+  }
+  areFormValuesEqual(obj1: any, obj2: any): boolean {
+    return JSON.stringify(obj1) === JSON.stringify(obj2);
   }
   saveUserMaster() {
     this.userService.saveUserMaster(this.userObject).subscribe(
