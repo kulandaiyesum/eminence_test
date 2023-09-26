@@ -128,7 +128,7 @@ export class AddSubscriptionComponent implements OnInit {
       const year = endDate.getFullYear();
       const month = String(endDate.getMonth() + 1).padStart(2, '0');
       const day = String(endDate.getDate()).padStart(2, '0');
-      this.calculatedEndDate = `${day}/${month}/${year}`;
+      this.calculatedEndDate = `${month}/${day}/${year}`;
     } else {
       this.calculatedEndDate = '';
     }

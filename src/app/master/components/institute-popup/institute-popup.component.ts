@@ -67,10 +67,6 @@ export class InstitutePopupComponent {
       this.institutionModel.zip = data.zip;
       this.institutionModel.city = data.city;
       this.institutionModel.country = data.country;
-      this.institutionModel.packageName = data.packageNameId.packageName;
-      this.institutionModel.durationType = data.packageNameId.durationType;
-      this.institutionModel.startdate = data.packageNameId.startdate;
-      this.institutionModel.enddate = data.packageNameId.enddate;
     }
   }
 
@@ -190,8 +186,14 @@ export class InstitutePopupComponent {
       this.instituteService.createInstitute(this.institutionModel).subscribe(
         (response: any) => {
           console.log(response);
+          this.toastr.success(response.message, '', {
+            timeOut: 3000,
+          });
         },
         (error) => {
+          this.toastr.error(error.error.message, '', {
+            timeOut: 3000,
+          });
           console.error('Not data get', error);
         }
       );
@@ -228,6 +230,9 @@ export class InstitutePopupComponent {
           this.closeDialog();
         },
         (error) => {
+          this.toastr.error(error.error.message, '', {
+            timeOut: 3000,
+          });
           console.error('Not data get', error);
         }
       );
