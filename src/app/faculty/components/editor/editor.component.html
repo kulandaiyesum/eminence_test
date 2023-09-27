@@ -1,1 +1,74 @@
-<p>editor works!</p>
+<div class="editor_container">
+  <p>
+    <strong style="color: var(--qgen-red)">Editor</strong> allows you to review
+    and tweak the questions to your specific needs.
+  </p>
+  <div class="editor_question_wrap">
+    <!-- Question Optons section -->
+    <div class="question_info mb-3">
+      <div class="question_inputs">
+        <div>
+          <strong>Input: </strong>hyperkalemia, depolarization, cell membrane
+        </div>
+        <div><strong>Question count: </strong>10</div>
+      </div>
+      <div class="question_actions">
+        <button class="btn">Save Changes</button>
+        <button class="btn ms-2">Export</button>
+      </div>
+    </div>
+    <!-- Question Optons section -->
+
+    <!-- Question Links section -->
+    <div class="question_links mb-4">
+      <button
+        *ngFor="let question of questions; let i = index"
+        (click)="getQuestion(question.id, i)"
+      >
+        {{ i + 1 }}
+      </button>
+    </div>
+    <!-- Question Links section -->
+
+    <!-- Questions section -->
+    <div class="question_container">
+      <div class="question_no">{{ tempQuestion?.index + 1 }}.</div>
+      <div class="question_content">
+        <div class="question_q">{{ tempQuestion?.question.title }}</div>
+        <ol class="answer_options">
+          <ng-container *ngFor="let option of tempQuestion?.question?.options">
+            <div>
+              <li
+                class="list-item"
+                [ngClass]="option?.correct_answer ? 'correct_option' : ''"
+              >
+                <div>{{ option?.text }}</div>
+              </li>
+            </div>
+          </ng-container>
+        </ol>
+        <div
+          class="question_explanation"
+          *ngFor="let option of tempQuestion?.question.options"
+        >
+          <ng-container *ngIf="option.correct_answer">
+            <strong>Explanation: </strong>{{ option?.explanation }}
+          </ng-container>
+        </div>
+      </div>
+      <div class="question_action">
+        <div class="delete_option">
+          <mat-icon class="mb-2" (click)="toggleDivSection()">delete</mat-icon>
+          <div *ngIf="showDiv" class="why_delete">
+            <div class="why_q mb-1">Why?</div>
+            <div class="reason" *ngFor="let reason of reasons">
+              {{ reason }}
+            </div>
+          </div>
+        </div>
+        <mat-icon (click)="editQuestion(tempQuestion.question)">edit</mat-icon>
+      </div>
+    </div>
+    <!-- Questions section -->
+  </div>
+</div>

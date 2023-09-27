@@ -1,11 +1,99 @@
+// --qgen-red: #ff0a0a;
+//   --qgen-red1: #ff0101;
+//   --qgen-green: #1cee7d;
+// --qgen-logo-yellow: #fbbf02: #fbbf02
+
 .qgen_container {
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   padding: 1.5rem;
+  form {
+    .custom_textarea_group {
+      textarea {
+        border: 1px solid #000;
+      }
+    }
+    .bulid_qestion {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      input {
+        width: 80px;
+        border-radius: 10px;
+        border: 1px solid #000;
+      }
+      .build_btn {
+        button {
+          font-weight: 600;
+          border: 1px solid #000;
+          background-color: var(--qgen-logo-yellow);
+        }
+      }
+    }
+  }
+  .qgen_response_container {
+    .qgen-response {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: 20px;
+      flex-wrap: wrap;
+      .response {
+        width: 30%;
+        min-width: 300px;
+        max-width: 330px;
+        border: 1px solid #000;
+        border-radius: 20px;
+        padding: 10px 1rem;
+        .input_wrap {
+          margin-bottom: 6px;
+        }
+        .questions_wrap {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 10px;
+          .questions {
+          }
+          .loader {
+            width: 48px;
+            height: 48px;
+            img {
+              width: 100%;
+              height: 100%;
+            }
+
+            mat-icon {
+              width: 100%;
+              height: 100%;
+              font-size: 40px;
+            }
+          }
+        }
+        .completion_bar {
+          height: 10px;
+          .red_bg {
+            height: inherit;
+            width: 100%;
+            background-color: var(--qgen-red1);
+            .green_bg {
+              height: inherit;
+              background-color: var(--qgen-green);
+            }
+          }
+        }
+      }
+    }
+  }
 }
-.bulid_qestion {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 10px;
+.fw-500 {
+  font-weight: 500;
 }
+
+.fw-600 {
+  font-weight: 600;
+}
+// .custom_check_icon .material-icons {
+//   font-size: 40px;
+// }
