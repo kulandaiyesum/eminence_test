@@ -1,25 +1,28 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { LogicalfuntionService } from 'src/app/shared/logicalfuntion.service';
-import { PackageService } from '../../service/package.service';
+import { Component,Inject } from '@angular/core';
 import { Institution } from '../../model/institution.class';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SubscriptionService } from '../../service/subscription.service';
 import { ToastrService } from 'ngx-toastr';
+import { SubscriptionService } from '../../service/subscription.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PackageService } from '../../service/package.service';
+import { LogicalfuntionService } from 'src/app/shared/logicalfuntion.service';
+import { AddSubscriptionComponent } from '../add-subscription/add-subscription.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-interface dateObject {
+interface MyObject {
   _id: string;
+  institutionId: string;
   packageNameId: string;
   startdate: Date;
 }
 
 @Component({
-  selector: 'app-add-subscription',
-  templateUrl: './add-subscription.component.html',
-  styleUrls: ['./add-subscription.component.scss'],
+  selector: 'app-update-subscription',
+  templateUrl: './update-subscription.component.html',
+  styleUrls: ['./update-subscription.component.scss']
 })
-export class AddSubscriptionComponent implements OnInit {
-  addSubscriptionForm: FormGroup;
+export class UpdateSubscriptionComponent {
+
+  updateSubscriptionForm: FormGroup;
 
   public packageList;
 
@@ -49,9 +52,7 @@ export class AddSubscriptionComponent implements OnInit {
   public maxDate = new Date();
 
   public minDate: string = this.calculateMinDate();
-
-  dateObject: dateObject;
-
+  public myObject: MyObject;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -62,22 +63,15 @@ export class AddSubscriptionComponent implements OnInit {
     private subscriptionService: SubscriptionService,
     private toastr: ToastrService
   ) {
-    if (data != null) {
-      console.log(data);
-
-      this.institutionModel.name = data.name;
-      this.institutionModel.email = data.email;
-      this.institutionModel._id = data._id;
-      this.institutionModel.address = data.address;
-      this.institutionModel.state = data.state;
-      this.institutionModel.zip = data.zip;
-      this.institutionModel.city = data.city;
-      this.institutionModel.country = data.country;
-      // this.institutionModel.packageName = data.packageNameId.packageName;
-      // this.institutionModel.durationType = data.packageNameId.durationType;
-      // this.institutionModel.startdate = data.packageNameId.startdate;
-      // this.institutionModel.enddate = data.packageNameId.enddate;
-    }
+    console.log(data);
+    this.myObject = {
+      _id: "",               // Initialize with your desired values
+      institutionId: "",               // Initialize with your desired values
+      packageNameId: "",
+      startdate: new Date()  // Initialize with the current date or your desired date
+    };
+    this.myObject.institutionId=data.institutionId._id
+    this.myObject._id=data._id
   }
 
   ngOnInit(): void {
@@ -88,14 +82,9 @@ export class AddSubscriptionComponent implements OnInit {
   }
 
   initForm() {
-    this.addSubscriptionForm = this.formBuilder.group({
+    this.updateSubscriptionForm = this.formBuilder.group({
       startdate: [this.institutionModel.startdate, Validators.required],
-      enddate: [new Date(), Validators.required],
     });
-  }
-
-  closeDialog() {
-    this.dialogRef.close();
   }
 
   private calculateMinDate(): string {
@@ -106,62 +95,22 @@ export class AddSubscriptionComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
 
-  calculateEndDate() {
-    console.log('end date');
-    console.log(this.institutionModel.startdate);
-    this.subscriptionService
-          .createSubscriptionAuto(this.institutionModel)
-          .subscribe(
-            (response: any) => {
-              console.log(response);
-
-            },
-            (error) => {
-              console.error('Not data get', error);
-            }
-          );
-
-    const startDate = new Date(this.institutionModel.startdate);
-    let endDate: Date;
-    this.selectedDurationType = this.selectedPackageOption.durationType;
-
-    switch (this.selectedDurationType) {
-      case 'monthly':
-        endDate = new Date(startDate);
-        endDate.setDate(startDate.getDate() + 29);
-        break;
-      case 'quarterly':
-        endDate = new Date(startDate);
-        endDate.setDate(startDate.getDate() + 89);
-        break;
-      case 'half-yearly':
-        endDate = new Date(startDate);
-        endDate.setDate(startDate.getDate() + 179);
-        break;
-      case 'annually':
-        endDate = new Date(startDate);
-        endDate.setDate(startDate.getDate() + 364);
-        break;
-      default:
-        endDate = null;
+  onSubscriptionUpdate(){
+    this.myObject.startdate=this.institutionModel.startdate
+    console.log(this.myObject);
+    this.subscriptionService.updateSubscription(this.myObject).subscribe((response)=>{
+      console.log(response);
+      this.closeDialog()
+      
+    },
+    (error) => {
+      console.error('Not data get', error);
     }
-    // this.institutionModel.enddate = new Date(
-    //   endDate ? endDate.toISOString().substring(0, 10) : ''
-    // );
+    )
+  }
 
-    if (endDate) {
-      const year = endDate.getFullYear();
-      const month = String(endDate.getMonth() + 1).padStart(2, '0');
-      const day = String(endDate.getDate()).padStart(2, '0');
-      this.calculatedEndDate = `${month}/${day}/${year}`;
-    } else {
-      this.calculatedEndDate = '';
-    }
-
-
-    console.log("Date changed");
-    console.log(this.institutionModel);
-
+  closeDialog() {
+    this.dialogRef.close();
   }
 
   getPackageData() {
@@ -197,6 +146,7 @@ export class AddSubscriptionComponent implements OnInit {
         this.isPackageSelected = false;
         this.selectedPackageOption = selectedPackage;
         console.log(this.selectedPackageOption);
+        this.myObject.packageNameId=this.selectedPackageOption._id;
         this.institutionModel.packageNameId = this.selectedPackageOption._id;
         this.institutionModel.packageName =
           this.selectedPackageOption.packageName;
@@ -232,34 +182,52 @@ export class AddSubscriptionComponent implements OnInit {
     }
   }
 
-  onSubscriptionSubmit() {
-    this.addSubscriptionForm.controls['startdate'].setValue(
-      this.institutionModel.startdate
+
+
+
+  calculateEndDate() {
+    console.log("Data changed");
+    console.log('end date');
+    const startDate = new Date(this.institutionModel.startdate);
+    let endDate: Date;
+    this.selectedDurationType = this.selectedPackageOption.durationType;
+
+    switch (this.selectedDurationType) {
+      case 'monthly':
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 29);
+        break;
+      case 'quarterly':
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 89);
+        break;
+      case 'half-yearly':
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 179);
+        break;
+      case 'annually':
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 364);
+        break;
+      default:
+        endDate = null;
+    }
+    this.institutionModel.enddate = new Date(
+      endDate ? endDate.toISOString().substring(0, 10) : ''
     );
-    this.addSubscriptionForm.controls['enddate'].setValue(
-      this.institutionModel.enddate
-    );
-    if (this.addSubscriptionForm.valid) {
-      console.log(this.institutionModel);
-      this.subscriptionService
-        .createSubscription(this.institutionModel)
-        .subscribe(
-          (response: any) => {
-            console.log(response);
-            this.toastr.success(response.message, '', {
-              positionClass: 'toast-top-center',
-              timeOut: 1000,
-            });
-            this.closeDialog();
-          },
-          (error) => {
-            this.toastr.error(error.error.message, '', {
-              positionClass: 'toast-top-center',
-              timeOut: 1000,
-            });
-            console.error('Not data get', error);
-          }
-        );
+    if (endDate) {
+      const year = endDate.getFullYear();
+      const month = String(endDate.getMonth() + 1).padStart(2, '0');
+      const day = String(endDate.getDate()).padStart(2, '0');
+      this.calculatedEndDate = `${month}/${day}/${year}`;
+    } else {
+      this.calculatedEndDate = '';
     }
   }
+
+
+
+
+
+
 }

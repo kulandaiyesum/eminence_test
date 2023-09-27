@@ -49,6 +49,7 @@ import { UserComponent } from './components/user/user.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { SubscriptionPopupComponent } from './components/subscription-popup/subscription-popup.component';
 import { AddSubscriptionComponent } from './components/add-subscription/add-subscription.component';
+import { UpdateSubscriptionComponent } from './components/update-subscription/update-subscription.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { AddSubscriptionComponent } from './components/add-subscription/add-subs
     UserFormComponent,
     SubscriptionPopupComponent,
     AddSubscriptionComponent,
+    UpdateSubscriptionComponent,
   ],
   imports: [
     CommonModule,
