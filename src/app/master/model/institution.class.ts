@@ -10,6 +10,7 @@ export class Institution {
   questionsCount: string;
   packageNameId: string;
   durationType: string;
+  questionsCountResetDate: string;
   city: string;
   startdate: Date;
   enddate: Date;

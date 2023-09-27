@@ -42,6 +42,7 @@ export class InstitutePopupComponent {
     enddate: new Date(),
     durationType: '',
     country: '',
+    questionsCountResetDate: ''
   };
   public minDate: string = this.calculateMinDate();
 

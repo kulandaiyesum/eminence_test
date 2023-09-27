@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 export class SubscriptionService {
   private baseUrl: string = environment.localdomain + 'subscription';
   private createSubscriptionUrl: string = environment.localdomain + 'subscription/save';
+  private createSubscriptionUrlAutoDate: string = environment.localdomain + 'subscription/getDate';
 
   constructor(private http: HttpClient) {}
 
@@ -15,7 +16,10 @@ export class SubscriptionService {
     return this.http.get(this.baseUrl + '/getAll');
   }
 
-  createSubscription(data: any) {
+  createSubscription(data) {
     return this.http.post(`${this.createSubscriptionUrl}`, data,);
+  }
+  createSubscriptionAuto(data) {
+    return this.http.post(`${this.createSubscriptionUrlAutoDate}`, data,);
   }
 }

@@ -55,6 +55,7 @@ export class InstitutionComponent {
     enddate: new Date(),
     durationType: '',
     country: '',
+    questionsCountResetDate: ''
   };
   constructor(
     private formBuilder: FormBuilder,

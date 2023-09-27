@@ -18,6 +18,7 @@ export class AddSubscriptionComponent implements OnInit {
   public packageList;
 
   public unqiuePackage = [];
+  public Packageid = [];
   isPackageSelected: boolean = true;
   public selectedDurationType: string;
   public calculatedEndDate: string;
@@ -37,6 +38,7 @@ export class AddSubscriptionComponent implements OnInit {
     enddate: new Date(),
     durationType: '',
     country: '',
+    questionsCountResetDate: '',
   };
   public maxDate = new Date();
 
@@ -170,10 +172,34 @@ export class AddSubscriptionComponent implements OnInit {
         this.selectedPackageOption = selectedPackage;
         console.log(this.selectedPackageOption);
         this.institutionModel.packageNameId = this.selectedPackageOption._id;
-        this.institutionModel.packageName = this.selectedPackageOption.packageName;
-        this.institutionModel.questionsCount = this.selectedPackageOption.questionsCount;
-        this.institutionModel.durationType = this.selectedPackageOption.durationType;
+        this.institutionModel.packageName =
+          this.selectedPackageOption.packageName;
+        this.institutionModel.questionsCount =
+          this.selectedPackageOption.questionsCount;
+        this.institutionModel.durationType =
+          this.selectedPackageOption.durationType;
         this.calculateEndDate();
+        this.subscriptionService
+          .createSubscriptionAuto(this.institutionModel)
+          .subscribe(
+            (response: any) => {
+              console.log(response);
+              this.institutionModel.startdate = new Date(
+                response.result.startDate
+              );
+              this.institutionModel.enddate = new Date(response.result.endDate);
+              this.institutionModel.questionsCountResetDate = '';
+              console.log(this.institutionModel.enddate);
+              const inputDate = this.institutionModel.enddate
+              const day = String(inputDate.getDate()).padStart(2, '0'); // Add leading zero if needed
+              const month = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+              const year = inputDate.getFullYear();
+              this.calculatedEndDate=`${day}/${month}/${year}`;
+            },
+            (error) => {
+              console.error('Not data get', error);
+            }
+          );
       } else {
         console.log('No package selected');
       }
