@@ -50,27 +50,27 @@ export class UserFormComponent implements OnInit {
   ) {
     this.userForm = new FormGroup(
       {
-        firstName: new FormControl(this.data.firstName || '', [
+        firstName: new FormControl(this.data?.firstName || '', [
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(20),
         ]),
-        lastName: new FormControl(this.data.lastName || '', [
+        lastName: new FormControl(this.data?.lastName || '', [
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(20),
         ]),
-        email: new FormControl(this.data.email || '', [
+        email: new FormControl(this.data?.email || '', [
           Validators.required,
           Validators.email,
         ]),
-        role: new FormControl(this.data.role?._id || '', Validators.required),
+        role: new FormControl(this.data?.role?._id || '', Validators.required),
         institutionId: new FormControl(
-          this.data.institutionId._id || '',
+          this.data?.institutionId?._id || '',
           Validators.required
         ),
         topicId: new FormControl(
-          this.data.topicId._id || '',
+          this.data?.topicId?._id || '',
           Validators.required
         ),
         password: new FormControl('', [
