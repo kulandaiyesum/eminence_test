@@ -1,9 +1,8 @@
 <div class="qgen_container">
-  <p>Qgen Works</p>
-  <!-- <p>
-    <strong style="color: red">QGen</strong> is your custom question generator.
-    Enter a few key words or a key concept to build a full USMLE-style question
-    that pertains to your input.
+  <p>
+    <strong style="color: var(--qgen-red)">QGen</strong> is your custom question
+    generator. Enter a few key words or a key concept to build a full
+    USMLE-style question that pertains to your input.
   </p>
   <br />
   <p>Example Input: antiphospholipid syndrome, anticardiolipin, SLE</p>
@@ -12,28 +11,83 @@
     lamina via Type 7 collagen.
   </p>
 
-  <form >
-    <div class="form-group mb-3">
-      <textarea class="form-control" name="" id="" rows="6" placeholder="Enter Input...">
-    </textarea>
+  <form>
+    <div class="form-group mb-3 custom_textarea_group">
+      <textarea
+        class="form-control"
+        name=""
+        id=""
+        rows="6"
+        placeholder="Enter Input..."
+      >
+      </textarea>
     </div>
     <div class="bulid_qestion">
-      <div>Number of Questions:</div>
+      <div class="fw-600">Number of Questions:</div>
       <div class="form-group" style="display: inline-block">
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" />
       </div>
-      <div>
-        <button class="btn btn-primary" type="button">Build</button>
+      <div class="build_btn">
+        <button class="btn" type="button">Build</button>
       </div>
     </div>
   </form>
 
   <div class="qgen_response_container">
-    <div class="h5" style="font-weight: 600;">Pending</div>
+    <div class="h5 fw-600" style="color: var(--qgen-red)">Pending</div>
     <div class="qgen-response">
       <div class="response">
-        <div class="input"></div>
+        <div class="input_wrap">
+          <strong>Input: </strong>myelin, nodes of Ranvier, sodium channels
+        </div>
+        <div class="questions_wrap">
+          <div class="questions"><strong>Questions:</strong> 14</div>
+          <div class="loader me-3">
+            <img src="../../../../assets/images/loader.gif" />
+          </div>
+        </div>
+        <div class="completion_bar">
+          <div class="red_bg">
+            <div class="green_bg" style="width: 65%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="response">
+        <div class="input_wrap">
+          <strong>Input: </strong>hyperkalemia, depolarization, cell membrane
+        </div>
+        <div class="questions_wrap">
+          <div class="questions"><strong>Questions:</strong> 10</div>
+          <div class="loader me-3">
+            <!-- <img src="../../../../assets/images/loader.gif" /> -->
+            <mat-icon>check_circle</mat-icon>
+          </div>
+        </div>
+        <div class="completion_bar">
+          <div class="red_bg">
+            <div class="green_bg" style="width: 100%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="response">
+        <div class="input_wrap">
+          <strong>Input: </strong>microtubules, dynein, basal body
+          <div class="questions_wrap">
+            <div class="questions"><strong>Questions:</strong> 7</div>
+            <div class="loader me-3">
+              <!-- <img src="../../../../assets/images/loader.gif" /> -->
+              <mat-icon class="custom_check_icon">check_circle</mat-icon>
+            </div>
+          </div>
+          <div class="completion_bar">
+            <div class="red_bg">
+              <div class="green_bg" style="width: 100%"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div> -->
+  </div>
 </div>
