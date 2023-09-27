@@ -1,3 +1,23 @@
+.bottom-left-icon {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  background-color: var(--qgen-bg-color);
+  padding: 0.5rem;
+  gap: 0.5rem;
+  cursor: pointer;
+  mat-icon {
+    font-size: 24px;
+  }
+  span {
+    font-size: 18px;
+  }
+  .help-report-error {
+    display: none;
+  }
+}
 //mat-sidenav-container
 .sidenav-container {
   //side navigation
@@ -72,7 +92,7 @@
       padding-top: 2rem;
     }
     .faculty_route_container {
-      margin: 3.5rem 3.5rem 1rem 3.5rem ;
+      margin: 3.5rem 3.5rem 1rem 3.5rem;
       background-color: var(--qgen-bg-color);
       // background-color: #ccc;
       border-radius: 1rem;

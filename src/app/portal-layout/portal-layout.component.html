@@ -65,6 +65,10 @@
         >
       </ng-container>
     </div>
+    <div class="help-report-error" *ngIf="!isAdmin()" class="bottom-left-icon">
+      <mat-icon>help</mat-icon>
+      <span>Help / Report Error</span>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar>
