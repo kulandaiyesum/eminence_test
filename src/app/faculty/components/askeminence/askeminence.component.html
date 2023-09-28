@@ -1,1 +1,43 @@
-<p>askeminence works!</p>
+<div class="ask_eminence">
+  <p>
+    <strong style="color: var(--qgen-red)">Ask Eminence</strong> allows you to
+    query our knowledge base of any purpose.
+  </p>
+  <div class="prompt_section mb-sm-2 mb-3">
+    <div class="mb-1 mb-sm-2"><strong>Sample Prompts:</strong></div>
+    <div class="prompts_wrap">
+      <div class="sample_prompt" *ngFor="let prompt of prompts">
+        <q>{{ prompt }}</q>
+      </div>
+    </div>
+  </div>
+  <form class="mb-3">
+    <div class="form-group mb-3">
+      <textarea
+        class="form-control"
+        name=""
+        id=""
+        rows="5"
+        placeholder="Enter Input..."
+      ></textarea>
+    </div>
+    <div class="text-center">
+      <button class="btn" type="button">Build</button>
+    </div>
+  </form>
+
+  <div class="ask_eminence_response_container mt-3 mt-sm-2">
+    <div class="ask_emi_options pt-2 ps-2 pe-2">
+      <div class="img_icon">
+        <img src="../../../../assets/images/icons8-download-30.png" alt="" />
+      </div>
+      <mat-icon>edit</mat-icon>
+      <mat-icon>delete</mat-icon>
+    </div>
+    <form class="response_qgen">
+      <div class="form-group mb-3">
+        <textarea class="form-control" name="" id="" rows="6"></textarea>
+      </div>
+    </form>
+  </div>
+</div>
