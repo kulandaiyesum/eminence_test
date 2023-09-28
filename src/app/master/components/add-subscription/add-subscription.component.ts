@@ -44,14 +44,13 @@ export class AddSubscriptionComponent implements OnInit {
     enddate: new Date(),
     durationType: '',
     country: '',
-    questionsCountResetDate: '',
+    questionsCountResetDate: new Date(),
   };
   public maxDate = new Date();
 
   public minDate: string = this.calculateMinDate();
 
   dateObject: dateObject;
-
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -110,16 +109,16 @@ export class AddSubscriptionComponent implements OnInit {
     console.log('end date');
     console.log(this.institutionModel.startdate);
     this.subscriptionService
-          .createSubscriptionAuto(this.institutionModel)
-          .subscribe(
-            (response: any) => {
-              console.log(response);
-
-            },
-            (error) => {
-              console.error('Not data get', error);
-            }
-          );
+      .createSubscriptionAuto(this.institutionModel)
+      .subscribe(
+        (response: any) => {
+          this.institutionModel.questionsCountResetDate =
+            response.result.questionsCountResetDate;
+        },
+        (error) => {
+          console.error('Not data get', error);
+        }
+      );
 
     const startDate = new Date(this.institutionModel.startdate);
     let endDate: Date;
@@ -157,11 +156,6 @@ export class AddSubscriptionComponent implements OnInit {
     } else {
       this.calculatedEndDate = '';
     }
-
-
-    console.log("Date changed");
-    console.log(this.institutionModel);
-
   }
 
   getPackageData() {
@@ -209,18 +203,17 @@ export class AddSubscriptionComponent implements OnInit {
           .createSubscriptionAuto(this.institutionModel)
           .subscribe(
             (response: any) => {
-              console.log(response);
               this.institutionModel.startdate = new Date(
                 response.result.startDate
               );
               this.institutionModel.enddate = new Date(response.result.endDate);
-              this.institutionModel.questionsCountResetDate = '';
-              console.log(this.institutionModel.enddate);
-              const inputDate = this.institutionModel.enddate
+              this.institutionModel.questionsCountResetDate =
+                response.result.questionsCountResetDate;
+              const inputDate = this.institutionModel.enddate;
               const day = String(inputDate.getDate()).padStart(2, '0'); // Add leading zero if needed
               const month = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
               const year = inputDate.getFullYear();
-              this.calculatedEndDate=`${day}/${month}/${year}`;
+              this.calculatedEndDate = `${day}/${month}/${year}`;
             },
             (error) => {
               console.error('Not data get', error);

@@ -55,7 +55,7 @@ export class InstitutionComponent {
     enddate: new Date(),
     durationType: '',
     country: '',
-    questionsCountResetDate: ''
+    questionsCountResetDate: new Date(),
   };
   constructor(
     private formBuilder: FormBuilder,
@@ -189,7 +189,7 @@ export class InstitutionComponent {
   addSubscription(data) {
     console.log(data);
 
-    console.log("add subscriptions");
+    console.log('add subscriptions');
 
     const dialogRef = this.dialog.open(AddSubscriptionComponent, {
       width: '600px',

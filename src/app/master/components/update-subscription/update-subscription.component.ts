@@ -1,4 +1,4 @@
-import { Component,Inject } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Institution } from '../../model/institution.class';
 import { ToastrService } from 'ngx-toastr';
 import { SubscriptionService } from '../../service/subscription.service';
@@ -18,10 +18,9 @@ interface MyObject {
 @Component({
   selector: 'app-update-subscription',
   templateUrl: './update-subscription.component.html',
-  styleUrls: ['./update-subscription.component.scss']
+  styleUrls: ['./update-subscription.component.scss'],
 })
 export class UpdateSubscriptionComponent {
-
   updateSubscriptionForm: FormGroup;
 
   public packageList;
@@ -47,7 +46,7 @@ export class UpdateSubscriptionComponent {
     enddate: new Date(),
     durationType: '',
     country: '',
-    questionsCountResetDate: '',
+    questionsCountResetDate: new Date(),
   };
   public maxDate = new Date();
 
@@ -65,19 +64,18 @@ export class UpdateSubscriptionComponent {
   ) {
     console.log(data);
     this.myObject = {
-      _id: "",               // Initialize with your desired values
-      institutionId: "",               // Initialize with your desired values
-      packageNameId: "",
-      startdate: new Date()  // Initialize with the current date or your desired date
+      _id: '', // Initialize with your desired values
+      institutionId: '', // Initialize with your desired values
+      packageNameId: '',
+      startdate: new Date(), // Initialize with the current date or your desired date
     };
-    this.myObject.institutionId=data.institutionId._id
-    this.myObject._id=data._id
+    this.myObject.institutionId = data.institutionId._id;
+    this.myObject._id = data._id;
   }
 
   ngOnInit(): void {
     this.getPackageData();
     this.institutionModel.startdate = new Date();
-    console.log(this.institutionModel.startdate);
     this.initForm();
   }
 
@@ -95,18 +93,21 @@ export class UpdateSubscriptionComponent {
     return `${year}-${month}-${day}`;
   }
 
-  onSubscriptionUpdate(){
-    this.myObject.startdate=this.institutionModel.startdate
-    console.log(this.myObject);
-    this.subscriptionService.updateSubscription(this.myObject).subscribe((response)=>{
-      console.log(response);
-      this.closeDialog()
-      
-    },
-    (error) => {
-      console.error('Not data get', error);
-    }
-    )
+  onSubscriptionUpdate() {
+    this.myObject.startdate = this.institutionModel.startdate;
+    this.subscriptionService.updateSubscription(this.myObject).subscribe(
+      (response: any) => {
+        this.toastr.success(response.message, '', {
+          timeOut: 3000,
+        });
+        this.closeDialog();
+      },
+      (error) => {
+        this.toastr.error(error.error.message, '', {
+          timeOut: 3000,
+        });
+      }
+    );
   }
 
   closeDialog() {
@@ -146,7 +147,7 @@ export class UpdateSubscriptionComponent {
         this.isPackageSelected = false;
         this.selectedPackageOption = selectedPackage;
         console.log(this.selectedPackageOption);
-        this.myObject.packageNameId=this.selectedPackageOption._id;
+        this.myObject.packageNameId = this.selectedPackageOption._id;
         this.institutionModel.packageNameId = this.selectedPackageOption._id;
         this.institutionModel.packageName =
           this.selectedPackageOption.packageName;
@@ -164,13 +165,13 @@ export class UpdateSubscriptionComponent {
                 response.result.startDate
               );
               this.institutionModel.enddate = new Date(response.result.endDate);
-              this.institutionModel.questionsCountResetDate = '';
+              // this.institutionModel.questionsCountResetDate = '';
               console.log(this.institutionModel.enddate);
-              const inputDate = this.institutionModel.enddate
+              const inputDate = this.institutionModel.enddate;
               const day = String(inputDate.getDate()).padStart(2, '0'); // Add leading zero if needed
               const month = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
               const year = inputDate.getFullYear();
-              this.calculatedEndDate=`${day}/${month}/${year}`;
+              this.calculatedEndDate = `${day}/${month}/${year}`;
             },
             (error) => {
               console.error('Not data get', error);
@@ -182,12 +183,7 @@ export class UpdateSubscriptionComponent {
     }
   }
 
-
-
-
   calculateEndDate() {
-    console.log("Data changed");
-    console.log('end date');
     const startDate = new Date(this.institutionModel.startdate);
     let endDate: Date;
     this.selectedDurationType = this.selectedPackageOption.durationType;
@@ -224,10 +220,4 @@ export class UpdateSubscriptionComponent {
       this.calculatedEndDate = '';
     }
   }
-
-
-
-
-
-
 }
