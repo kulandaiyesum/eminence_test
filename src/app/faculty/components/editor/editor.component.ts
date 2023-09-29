@@ -1,11 +1,7 @@
-import { Question } from '../../model/question';
+import { Subject } from 'rxjs';
+import { Question, TempQuestion } from '../../model/question';
 import { QgenService } from './../../service/qgen.service';
-import { Component, HostListener, OnInit } from '@angular/core';
-
-interface tempQuestion {
-  index: number;
-  question: Question;
-}
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-editor',
@@ -13,9 +9,9 @@ interface tempQuestion {
   styleUrls: ['./editor.component.scss'],
 })
 export class EditorComponent implements OnInit {
-  showDiv = false;
+  eventsSubject: Subject<void> = new Subject<void>();
   questions: Question[];
-  tempQuestion: tempQuestion;
+  tempQuestion: TempQuestion;
   requet_id: string;
   reasons: string[] = [
     "Simply didn't need it",
@@ -43,28 +39,8 @@ export class EditorComponent implements OnInit {
     };
   }
 
-  editQuestion(question: Question) {
-    console.log(question);
-  }
-  deleteQuestion(question: Question) {}
-  showDeleteOption() {}
-
-  @HostListener('document:click', ['$event'])
-  onClickOutside(event: Event) {
-    if (!this.showDiv) {
-      return;
-    }
-    const target = event.target as HTMLElement;
-    const divSection = document.querySelector('.why_delete');
-    console.log(divSection.contains(target));
-    if (!divSection && !divSection.contains(target)) {
-      console.log('clg');
-      this.showDiv = false;
-    }
-  }
-
-  toggleDivSection() {
-    console.log('clicked!');
-    this.showDiv = !this.showDiv;
+  saveChange() {
+    console.log('save called in parent');
+    this.eventsSubject.next();
   }
 }

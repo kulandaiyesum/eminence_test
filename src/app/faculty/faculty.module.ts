@@ -39,6 +39,8 @@ import { AskeminenceComponent } from './components/askeminence/askeminence.compo
 import { HistoryComponent } from './components/history/history.component';
 import { MasterModule } from '../master/master.module';
 import { HttpClientModule } from '@angular/common/http';
+import { QuestionComponent } from './components/question/question.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { HttpClientModule } from '@angular/common/http';
     EditorComponent,
     AskeminenceComponent,
     HistoryComponent,
+    QuestionComponent,
   ],
   imports: [
     CommonModule,
@@ -83,6 +86,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatPaginatorModule,
     MasterModule,
     HttpClientModule,
+    FormsModule,
   ],
   exports: [SidenavComponent],
 })
