@@ -13,8 +13,7 @@
         <div><strong>Question count: </strong>10</div>
       </div>
       <div class="question_actions">
-        <button class="btn">Save Changes</button>
-        <button class="btn ms-2">Export</button>
+        <button class="btn" (click)="saveChange()">Save Changes</button>
       </div>
     </div>
     <!-- Question Optons section -->
@@ -31,13 +30,23 @@
     <!-- Question Links section -->
 
     <!-- Questions section -->
-    <div class="question_container">
+    <app-question
+      *ngIf="tempQuestion"
+      [tempQuestion]="tempQuestion"
+      [events]="eventsSubject.asObservable()"
+    ></app-question>
+    <!-- Questions section -->
+  </div>
+</div>
+
+<!-- <div class="question_container">
       <div class="question_no">{{ tempQuestion?.index + 1 }}.</div>
       <div class="question_content">
         <div class="question_q">{{ tempQuestion?.question.title }}</div>
         <ol class="answer_options">
           <ng-container *ngFor="let option of tempQuestion?.question?.options">
             <div>
+              <input type="radio"  />
               <li
                 class="list-item"
                 [ngClass]="option?.correct_answer ? 'correct_option' : ''"
@@ -68,7 +77,4 @@
         </div>
         <mat-icon (click)="editQuestion(tempQuestion.question)">edit</mat-icon>
       </div>
-    </div>
-    <!-- Questions section -->
-  </div>
-</div>
+    </div> -->
