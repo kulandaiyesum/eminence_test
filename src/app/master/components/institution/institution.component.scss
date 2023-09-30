@@ -78,31 +78,10 @@
             color: #fabf01;
           }
           .odd-row {
-            background-color: #f5f5f5;
+            background-color: #F5F5F5;
           }
-
           .even-row {
-            background-color: white;
-          }
-        }
-        table {
-          max-width: 50%;
-          height: auto;
-          margin-top: 15px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-          th {
-            background-color: #46b3eb;
-            color: #fff;
-          }
-          mat-icon {
-            color: #fabf01;
-          }
-          .odd-row {
-            background-color: #f5f5f5;
-          }
-
-          .even-row {
-            background-color: white;
+            background-color: #ffffff;
           }
         }
         mat-paginator {
