@@ -14,6 +14,7 @@ import { Login } from '../../model/login.model';
 import { ToastrService } from 'ngx-toastr';
 import { EmailComponent } from '../email/email.component';
 import { EmailPopupComponent } from '../email-popup/email-popup.component';
+import { RegisterComponent } from '../register/register.component';
 
 @Component({
   selector: 'app-login',
@@ -34,6 +35,8 @@ export class LoginComponent {
     role: '',
     id: '',
     token: '',
+    email: '',
+    password: ''
   };
   public loginModel: Login = {
     email: '',
@@ -130,6 +133,20 @@ export class LoginComponent {
     return decrypted.toString(CryptoJS.enc.Utf8);
   }
 
+  registerPop() {
+    this.closeDialog();
+    const dialogRef = this.dialog.open(RegisterComponent, {
+      width: '50%',
+      height: '600px',
+      data: null,
+
+      // Other MatDialog options
+    });
+    // You can handle dialog events here if needed
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: `);
+    });
+  }
   forgotPassword() {
     this.closeDialog();
     const dialogRef = this.dialog.open(EmailComponent, {

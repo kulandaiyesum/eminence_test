@@ -1,10 +1,69 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { RegisterService } from '../../service/register.service';
+import { Register } from '../../model/register.model';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
+  registrationForm: FormGroup;
+  firstName: string = '';
+  lastName: string = '';
+  email: string = '';
+  password: string = '';
 
+  public registerModel: Register = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    role: '',
+    token: '',
+    id: ''
+  };
+
+  constructor(
+    private fb: FormBuilder,
+    private toastr: ToastrService,
+    private registerService: RegisterService
+  ) {}
+
+  ngOnInit() {
+    this.registrationForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+    });
+  }
+
+  onRegistrationSubmit() {
+    const userData = {
+      firstName: this.firstName,
+      lastName: this.lastName,
+      email: this.email,
+      password: this.password,
+    };
+
+    console.log(this.registerModel);
+
+    this.registrationForm.controls['email'].setValue(this.registerModel.email);
+    this.registrationForm.controls['lastName'].setValue(this.registerModel.lastName);
+    this.registrationForm.controls['firstName'].setValue(this.registerModel.firstName);
+    this.registrationForm.controls['password'].setValue(this.registerModel.password);
+    this.registerService.registerUser(this.registrationForm.value).subscribe(
+      (response) => {
+        console.log(response, 'User Data');
+        this.toastr.success('Registration successful!', 'Success');
+      },
+      (error) => {
+        console.error(error, 'Error');
+        this.toastr.error('Registration failed!', 'Error');
+      }
+    );
+  }
 }

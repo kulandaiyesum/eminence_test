@@ -1,45 +1,152 @@
-<div class="register_container">
-  <mat-icon class="close_btn" mat-icon-button>close</mat-icon>
-  <div class="form_wrap">
-    <div class="form_heading">REGISTER ACCOUNT</div>
-    <form>
-      <div class="form-Group ratio_group">
-        <label for="premium" class="label_flex">
-          <input type="radio" id="premium" checked /> 
-          <div class="label_group">
-            <div class="tier_info">Premium</div>
-            <div>Enjoy unlimited question generation with the premium membership!</div>
-            <label for="price"><input type="radio" name="price" id="price" checked>$8.00/month</label>
-            <label for="price"><input type="radio" name="price" id="price">$20.00/quarter</label>
+<div class="container">
+  <div class="form_crud">
+    <mat-icon class="close_btn" mat-icon-button>close</mat-icon>
+
+    <div class="form_wrap">
+      <div class="form_heading">REGISTER ACCOUNT</div>
+
+      <div class="tier_info_section">
+        <div class="form-Group ratio_group">
+          <label for="premium" class="label_flex">
+            <input type="radio" id="premium" checked />
+            <span class="tier_info">Premium</span>
+          </label>
+          <div class="description">
+            Enjoy unlimited question generation with the premium membership!
           </div>
-        </label>
+          <div class="price-options">
+            <label for="price"
+              ><input
+                type="radio"
+                name="price"
+                id="price"
+                checked
+              />$8.00/month</label
+            >
+          </div>
+          <div class="price-options">
+            <label for="price"
+              ><input
+                type="radio"
+                name="price"
+                id="price"
+              />$20.00/quarter</label
+            >
+          </div>
+        </div>
       </div>
-    </form>
-  </div>
-</div>
-<!-- <div class="col_group">
+
+      <form #registrationForm="ngForm">
+        <div class="flex_form">
+          <div class="row_group">
+            <div class="form-group custom_group">
+              <label for="firstName">First Name</label>
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                class="form-control"
+                [(ngModel)]="registerModel.firstName"
+              />
+              <div class="error">
+                <div
+                  *ngIf="registrationForm.controls['firstName']?.errors?.['required'] && registrationForm.controls['firstName']?.touched"
+                  class="error-message"
+                >
+                  firstName is required.
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group custom_group">
+              <label for="lastName">Last Name</label>
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                class="form-control"
+                [(ngModel)]="registerModel.lastName"
+              />
+              <div class="error">
+                <div
+                  *ngIf="registrationForm.controls['lastName']?.errors?.['required'] && registrationForm.controls['lastName']?.touched"
+                  class="error-message"
+                >
+                  lastName is required.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group custom_group">
+            <label for="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              [(ngModel)]="registerModel.email"
+            />
+            <div class="error">
+              <div
+                *ngIf="registrationForm.controls['email']?.errors?.['required'] && registrationForm.controls['email']?.touched"
+                class="error-message"
+              >
+                Email is required.
+              </div>
+              <div
+                *ngIf="registrationForm.controls['email']?.errors?.['email'] && registrationForm.controls['email']?.touched"
+                class="error-message"
+              >
+                Invalid email format.
+              </div>
+            </div>
+          </div>
+
           <div class="form-group custom_group">
             <label for="password">Password</label>
             <input
               type="password"
               id="password"
-              class="form-control"
               name="password"
-              formControlName="password"
-              [(ngModel)]="userObject.password"
+              class="form-control"
+              [(ngModel)]="registerModel.password"
             />
             <div class="error">
-              <mat-error
-                *ngIf="
-                  userForm.controls['password'].hasError('required') &&
-                  userForm.controls['password'].touched
-                "
-                >password is required</mat-error
+              <div
+                *ngIf="registrationForm.controls['password']?.errors?.['required'] && registrationForm.controls['password']?.touched"
+                class="error-message"
               >
-              <mat-error
-                *ngIf="userForm.controls['password'].hasError('pattern')"
-                >Password must contain 8 to 16 characters</mat-error
+                Password is required.
+              </div>
+              <div
+                *ngIf="registrationForm.controls['password']?.errors?.['minlength'] && registrationForm.controls['password']?.touched"
+                class="error-message"
               >
+                Password must be at least 8 characters long.
+              </div>
             </div>
           </div>
-        </div> -->
+        </div>
+
+        <div class="form_btns">
+          <div class="form_btn_continue">
+            <button
+              type="submit"
+              (click)="onRegistrationSubmit()"
+              [ngClass]="{
+                'valid-form': registrationForm.valid,
+                'invalid-form': !registrationForm.valid
+              }"
+            >
+              Continue to Checkout
+            </button>
+          </div>
+          <div class="form_btn_login">
+            <button type="button">Login</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
