@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Askeminice } from '../../model/askeminice';
 import { AskEmininceService } from '../../service/ask-eminince.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-askeminence',
@@ -10,6 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class AskeminenceComponent implements OnInit {
   public askEminence: Askeminice;
+  loading = false;
   constructor(
     private askEmininveService: AskEmininceService,
     private spinner: NgxSpinnerService
@@ -26,9 +28,11 @@ export class AskeminenceComponent implements OnInit {
 
   bulid() {
     this.spinner.show();
+    this.loading = true;
     this.askEmininveService
       .getAskeminice(this.askEminence)
       .subscribe((doc: any) => {
+        this.loading = false;
         if (doc.result.length > 0) {
           this.spinner.hide();
           this.askEminence.result = doc.result;
