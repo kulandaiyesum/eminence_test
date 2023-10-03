@@ -33,8 +33,7 @@ export class InstituteserviceService {
   }
 
   deleteInstitution(data: any): Observable<any> {
-    console.log(data);
-
+    
     return this.http.delete(this.deleteInstituteURL, {
       body: data,
     });
