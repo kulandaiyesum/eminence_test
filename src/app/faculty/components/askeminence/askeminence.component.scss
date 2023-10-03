@@ -75,6 +75,16 @@
     }
   }
 }
+ngx-spinner{
+  
+  img{
+    width: 100px;
+    height: 100px;
+  }
+  p{
+    text-align: center;
+  }
+}
 
 @media (max-width: 1120px) {
   .ask_eminence {

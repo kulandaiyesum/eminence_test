@@ -32,9 +32,9 @@ export class AskeminenceComponent implements OnInit {
     this.askEmininveService
       .getAskeminice(this.askEminence)
       .subscribe((doc: any) => {
-        this.loading = false;
         if (doc.result.length > 0) {
           this.spinner.hide();
+          this.loading = false;
           this.askEminence.result = doc.result;
         }
       });

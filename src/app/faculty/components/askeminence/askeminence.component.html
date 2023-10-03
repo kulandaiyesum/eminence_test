@@ -22,10 +22,6 @@
     </div>
     <div class="text-center">
       <button class="btn" type="button" (click)="bulid()">Build</button>
-      <div class="spinner">
-        <img *ngIf="loading" src="../../../../assets/images/loader.gif" />
-        <!-- <mat-spinner *ngIf="loading"></mat-spinner> -->
-      </div>
     </div>
   </form>
 
@@ -51,12 +47,13 @@
     </form>
   </div>
 </div>
-<!-- <ngx-spinner
+<ngx-spinner
   bdColor="rgba(0, 0, 0, 0.8)"
   size="medium"
   color="#1459cd"
   type="ball-spin-clockwise"
   [fullScreen]="true"
 >
+  <img *ngIf="loading" src="../../../../assets/images/loader.gif" alt="loader" id="loader"/>
   <p style="color: white">Loading...</p>
-</ngx-spinner> -->
+</ngx-spinner>
