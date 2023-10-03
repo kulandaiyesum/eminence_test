@@ -40,7 +40,7 @@ import { HistoryComponent } from './components/history/history.component';
 import { MasterModule } from '../master/master.module';
 import { HttpClientModule } from '@angular/common/http';
 import { QuestionComponent } from './components/question/question.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
@@ -88,6 +88,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MasterModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     NgxSpinnerModule,
   ],
   exports: [SidenavComponent],

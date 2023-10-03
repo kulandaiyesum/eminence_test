@@ -83,6 +83,14 @@ export class LoginComponent {
               this.router.navigateByUrl('/eminence/admin');
             }
             if (response.result.user.role.role === 'FACULTY') {
+
+              const topicId = this.encryptText(
+                response.result.user?.topicId.topic,
+                this.secretKey
+              );
+              if (topicId) {
+                localStorage.setItem('6', topicId);
+              }
               this.router.navigateByUrl('/eminence/faculty');
             }
             if (response.result.user.role.role === 'VETTER') {
@@ -104,7 +112,7 @@ export class LoginComponent {
               this.secretKey
             );
             this.loginUser.id = this.encryptText(
-              response.result._id,
+              response.result.user._id,
               this.secretKey
             );
             localStorage.setItem('1', response.result.token);
