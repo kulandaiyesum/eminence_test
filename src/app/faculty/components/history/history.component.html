@@ -117,6 +117,17 @@
   <div class="table">
     <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
       <!-- Input Column -->
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Created Date</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let row; let i = index"
+          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+          >{{ row.date }}</mat-cell
+        >
+      </ng-container>
+      <!-- Input Column -->
       <ng-container matColumnDef="input">
         <mat-header-cell *matHeaderCellDef mat-sort-header
           >Input</mat-header-cell
