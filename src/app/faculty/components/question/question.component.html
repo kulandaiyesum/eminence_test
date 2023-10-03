@@ -1,0 +1,119 @@
+<div class="question-container">
+  <div class="question-no">{{ tempQuestion?.index + 1 }}.</div>
+  <div class="question-content">
+    <div class="question-q">{{ tempQuestion?.question.title }}</div>
+    <ol class="options">
+      <ng-container *ngFor="let option of tempQuestion?.question?.options">
+        <div>
+          <input
+            *ngIf="isEditMode"
+            type="radio"
+            id="{{ option.id }}"
+            [checked]="option.id === selectedAnswer"
+            [value]="option.id"
+            [(ngModel)]="selectedAnswer"
+            (change)="selectAnswer(option.id); updateExplanation(option.id)"
+            class="form-check-input me-2"
+          />
+          <li
+            class="list-item"
+            [ngClass]="{ 'correct-option': option.correct_answer }"
+          >
+            <label [for]="option.id"
+              ><div>{{ option.text }}</div></label
+            >
+          </li>
+        </div>
+      </ng-container>
+    </ol>
+    <div
+      class="explanation"
+      *ngFor="let option of tempQuestion?.question.options"
+    >
+      <ng-container *ngIf="option.correct_answer">
+        <div class="mb-2" *ngIf="!isEditMode">
+          <strong>Explanation: </strong>{{ option.explanation }}
+        </div>
+        <div class="mb-2" *ngIf="isEditMode">
+          <strong>Explanation: </strong>
+          <textarea
+            [(ngModel)]="selectedOptionExplanation"
+            rows="7"
+            class="form-control"
+          ></textarea>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="question-action">
+    <div class="delete-option">
+      <mat-icon class="mb-2" (click)="toggleDivSection()">delete</mat-icon>
+      <div *ngIf="showDiv" class="why-delete">
+        <div class="why-q mb-1">Why?</div>
+        <div class="reason" *ngFor="let reason of reasons">
+          {{ reason }}
+        </div>
+      </div>
+    </div>
+    <mat-icon (click)="editQuestion(tempQuestion.question)">edit</mat-icon>
+    <mat-icon *ngIf="isEditMode" (click)="cancelEdit()">close</mat-icon>
+  </div>
+</div>
+
+<!-- <div class="question_container">
+  <div class="question_no">{{ tempQuestion?.index + 1 }}.</div>
+  <div class="question_content">
+    <div class="question_q">{{ tempQuestion?.question.title }}</div>
+    <ol class="options">
+      <ng-container *ngFor="let option of tempQuestion?.question?.options">
+        <div>
+          <input
+            *ngIf="isEditMode"
+            type="radio"
+            id="option"
+            checked="{{ option?.correct_answer }}"
+            [value]="option.id"
+            [(ngModel)]="selectedAnswer"
+            (change)="selectAnswer(option.id)"
+            class="form-check-input me-2"
+          />
+          <li
+            class="list-item"
+            [ngClass]="option?.correct_answer ? 'correct_option' : ''"
+          >
+            <label for="option"><div>{{ option?.text }}</div></label>
+          </li>
+        </div>
+      </ng-container>
+    </ol>
+    <div
+      class="explanation"
+      *ngFor="let option of tempQuestion?.question.options"
+    >
+      <ng-container *ngIf="option.correct_answer">
+        <div class="mb-2" *ngIf="!isEditMode">
+          <strong>Explanation: </strong>{{ option?.explanation }}
+        </div>
+        <div class="mb-2" *ngIf="isEditMode">
+          <strong>Explanation: </strong>
+          <textarea name="explanation" id="" rows="7" class="form-control">{{
+            option?.explanation
+          }}</textarea>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <div class="question_action">
+    <div class="delete_option">
+      <mat-icon class="mb-2" (click)="toggleDivSection()">delete</mat-icon>
+      <div *ngIf="showDiv" class="why_delete">
+        <div class="why_q mb-1">Why?</div>
+        <div class="reason" *ngFor="let reason of reasons">
+          {{ reason }}
+        </div>
+      </div>
+    </div>
+    <mat-icon (click)="editQuestion(tempQuestion.question)">edit</mat-icon>
+    <mat-icon *ngIf="isEditMode" (click)="cancelEdit()">close</mat-icon>
+  </div>
+</div> -->

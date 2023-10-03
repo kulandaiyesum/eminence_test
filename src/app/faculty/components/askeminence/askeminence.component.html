@@ -15,14 +15,17 @@
     <div class="form-group mb-3">
       <textarea
         class="form-control"
-        name=""
-        id=""
-        rows="5"
+        name="question"
+        [(ngModel)]="askEminence.question"
         placeholder="Enter Input..."
       ></textarea>
     </div>
     <div class="text-center">
-      <button class="btn" type="button">Build</button>
+      <button class="btn" type="button" (click)="bulid()">Build</button>
+      <div class="spinner">
+        <img *ngIf="loading" src="../../../../assets/images/loader.gif" />
+        <!-- <mat-spinner *ngIf="loading"></mat-spinner> -->
+      </div>
     </div>
   </form>
 
@@ -36,8 +39,24 @@
     </div>
     <form class="response_qgen">
       <div class="form-group mb-3">
-        <textarea class="form-control" name="" id="" rows="6"></textarea>
+        <textarea
+          class="form-control"
+          name=""
+          id=""
+          rows="6"
+          name="result"
+          [(ngModel)]="askEminence.result"
+        ></textarea>
       </div>
     </form>
   </div>
 </div>
+<!-- <ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#1459cd"
+  type="ball-spin-clockwise"
+  [fullScreen]="true"
+>
+  <p style="color: white">Loading...</p>
+</ngx-spinner> -->

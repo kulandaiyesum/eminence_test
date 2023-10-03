@@ -18,6 +18,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('../faculty/faculty.module').then((m) => m.FacultyModule),
       },
+      {
+        path: 'vetter',
+        loadChildren: () =>
+          import('../vetter/vetter.module').then((m) => m.VetterModule),
+      },
     ],
   },
 ];

@@ -28,7 +28,15 @@
         resize: none;
       }
     }
-
+    .spinner{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img{
+        width: 75px;
+        height: 75px;
+      }
+    }
     button {
       font-size: 20px;
       padding: 12px 24px;

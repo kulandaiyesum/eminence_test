@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Qgen } from '../model/qgen';
 
 @Injectable({
   providedIn: 'root',
@@ -11,5 +12,9 @@ export class QgenService {
 
   public getQgenQuestionData() {
     return this.http.get(this.sampleDomain);
+  }
+
+  public submitQgen(qgen: Qgen) {
+    console.log(qgen);
   }
 }

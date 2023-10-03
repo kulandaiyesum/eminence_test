@@ -79,13 +79,25 @@ export class LoginComponent {
         (response: any) => {
           if (
             response.result.user.role.role === 'ADMIN' ||
-            response.result.user.role.role === 'FACULTY'
+            response.result.user.role.role === 'FACULTY'||
+            response.result.user.role.role === 'VETTER'
           ) {
             if (response.result.user.role.role === 'ADMIN') {
               this.router.navigateByUrl('/eminence/admin');
             }
             if (response.result.user.role.role === 'FACULTY') {
+
+              const topicId = this.encryptText(
+                response.result.user?.topicId.topic,
+                this.secretKey
+              );
+              if (topicId) {
+                localStorage.setItem('6', topicId);
+              }
               this.router.navigateByUrl('/eminence/faculty');
+            }
+            if (response.result.user.role.role === 'VETTER') {
+              this.router.navigateByUrl('/eminence/vetter');
             }
             const role = response.result.user.role.role.toLowerCase();
             // this.router.navigateByUrl(`/eminenceai/${role}`);
@@ -103,7 +115,7 @@ export class LoginComponent {
               this.secretKey
             );
             this.loginUser.id = this.encryptText(
-              response.result._id,
+              response.result.user._id,
               this.secretKey
             );
             localStorage.setItem('1', response.result.token);

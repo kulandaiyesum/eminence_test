@@ -17,6 +17,7 @@ export class SubscriptionComponent implements OnInit {
     'instituteId',
     'packageType',
     'packageTypeId',
+    'questionsCountResetDate',
     'action',
   ];
   dataSource;
@@ -64,7 +65,7 @@ export class SubscriptionComponent implements OnInit {
     this.dataSource.sort?.sort({ id: '', start: 'asc', disableClear: false });
   }
 
-  updateSubscription(data:any){
+  updateSubscription(data: any) {
     console.log(data);
     const dialogRef = this.dialog.open(UpdateSubscriptionComponent, {
       width: '600px',
@@ -79,13 +80,14 @@ export class SubscriptionComponent implements OnInit {
     });
   }
 
-  deleteSubscription(data:any){
-    this.subscriptionService.deleteSubscription(data).subscribe((response)=>{
-      console.log(response);
-    },
-    (error) => {
-      console.error('Not delete get', error);
-    }
-    )
+  deleteSubscription(data: any) {
+    this.subscriptionService.deleteSubscription(data).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.error('Not delete get', error);
+      }
+    );
   }
 }

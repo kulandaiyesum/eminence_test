@@ -58,16 +58,23 @@
         <a
           routerLink="/eminence/faculty/askeminence"
           routerLinkActive="activelink"
-          >ask Eminence</a
+          >Ask Eminence</a
         >
         <a routerLink="/eminence/faculty/history" routerLinkActive="activelink"
           >History</a
         >
       </ng-container>
+
+      <ng-container *ngIf="isVetter()">
+        <a routerLink="/eminence/vetter/questions" routerLinkActive="activelink"
+          >Questions</a
+        >
+      </ng-container>
     </div>
     <div class="help-report-error" *ngIf="!isAdmin()" class="bottom-left-icon">
       <mat-icon>help</mat-icon>
-      <span>Help / Report Error</span>
+      <span *ngIf="!isVetter()">Help / Report Error</span>
+      <span *ngIf="isVetter()">Help</span>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
