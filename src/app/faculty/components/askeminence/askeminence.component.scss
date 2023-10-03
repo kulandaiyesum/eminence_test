@@ -72,11 +72,15 @@
         box-shadow: none;
         resize: none;
       }
+      textarea[disabled] {
+        background-color: transparent; /* or any other background color you prefer */
+        cursor: not-allowed; /* Change the cursor style when disabled */
+      }
     }
   }
 }
 ngx-spinner{
-  
+
   img{
     width: 100px;
     height: 100px;

@@ -28,10 +28,11 @@
   <div class="ask_eminence_response_container mt-3 mt-sm-2">
     <div class="ask_emi_options pt-2 ps-2 pe-2">
       <div class="img_icon">
-        <img src="../../../../assets/images/icons8-download-30.png" alt="" />
+        <img src="../../../../assets/images/icons8-download-30.png" alt=""  (click)="showFileFormatDialog()"/>
       </div>
-      <mat-icon>edit</mat-icon>
-      <mat-icon>delete</mat-icon>
+      <mat-icon *ngIf="isEditMode" (click)="editResult()">edit</mat-icon>
+      <mat-icon *ngIf="!isEditMode" (click)="saveIt()">save</mat-icon>
+      <mat-icon (click)="deleteItem()">delete</mat-icon>
     </div>
     <form class="response_qgen">
       <div class="form-group mb-3">
@@ -41,7 +42,9 @@
           id=""
           rows="6"
           name="result"
+          id="resultextarea"
           [(ngModel)]="askEminence.result"
+          [disabled]="isTextareaDisabled"
         ></textarea>
       </div>
     </form>
@@ -54,6 +57,11 @@
   type="ball-spin-clockwise"
   [fullScreen]="true"
 >
-  <img *ngIf="loading" src="../../../../assets/images/loader.gif" alt="loader" id="loader"/>
+  <img
+    *ngIf="loading"
+    src="../../../../assets/images/loader.gif"
+    alt="loader"
+    id="loader"
+  />
   <p style="color: white">Loading...</p>
 </ngx-spinner>
