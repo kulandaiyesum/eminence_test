@@ -36,7 +36,8 @@ export class LoginComponent {
     id: '',
     token: '',
     email: '',
-    password: ''
+    password: '',
+    institutionName: ''
   };
   public loginModel: Login = {
     email: '',

@@ -79,6 +79,25 @@
           </div>
 
           <div class="form-group custom_group">
+            <label for="email">Institution Name</label>
+            <input
+              type="text"
+              id="institutionName"
+              name="institutionName"
+              class="form-control"
+              [(ngModel)]="registerModel.institutionName"
+            />
+            <div class="error">
+              <div
+                *ngIf="registrationForm.controls['institutionName']?.errors?.['required'] && registrationForm.controls['institutionName']?.touched"
+                class="error-message"
+              >
+                Instition Name is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group custom_group">
             <label for="email">Email Address</label>
             <input
               type="email"

@@ -15,6 +15,7 @@ export class RegisterComponent {
   lastName: string = '';
   email: string = '';
   password: string = '';
+  institutionName: string = '';
 
   public registerModel: Register = {
     firstName: '',
@@ -23,7 +24,8 @@ export class RegisterComponent {
     password: '',
     role: '',
     token: '',
-    id: ''
+    id: '',
+    institutionName: ''
   };
 
   constructor(
@@ -47,6 +49,7 @@ export class RegisterComponent {
       lastName: this.lastName,
       email: this.email,
       password: this.password,
+      institutionName: this.institutionName
     };
 
     console.log(this.registerModel);
