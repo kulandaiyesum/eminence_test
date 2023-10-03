@@ -76,13 +76,17 @@ export class LoginComponent {
         (response: any) => {
           if (
             response.result.user.role.role === 'ADMIN' ||
-            response.result.user.role.role === 'FACULTY'
+            response.result.user.role.role === 'FACULTY'||
+            response.result.user.role.role === 'VETTER'
           ) {
             if (response.result.user.role.role === 'ADMIN') {
               this.router.navigateByUrl('/eminence/admin');
             }
             if (response.result.user.role.role === 'FACULTY') {
               this.router.navigateByUrl('/eminence/faculty');
+            }
+            if (response.result.user.role.role === 'VETTER') {
+              this.router.navigateByUrl('/eminence/vetter');
             }
             const role = response.result.user.role.role.toLowerCase();
             // this.router.navigateByUrl(`/eminenceai/${role}`);
