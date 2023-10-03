@@ -11,24 +11,62 @@
     lamina via Type 7 collagen.
   </p>
 
-  <form>
-    <div class="form-group mb-3 custom_textarea_group">
+  <form [formGroup]="gGenForm">
+    <div
+      style="margin-bottom: 1.125rem"
+      class="form-group custom_textarea_group"
+    >
       <textarea
         class="form-control"
         name=""
         id=""
         rows="6"
+        formControlName="keywords"
         placeholder="Enter Input..."
       >
       </textarea>
+      <div class="error">
+        <mat-error
+          *ngIf="
+            gGenForm.controls['keywords'].hasError('required') &&
+            gGenForm.controls['keywords'].touched
+          "
+          >Please enter a valid input. it cannot be empty</mat-error
+        >
+      </div>
     </div>
     <div class="bulid_qestion">
       <div class="fw-600">Number of Questions:</div>
-      <div class="form-group" style="display: inline-block">
-        <input type="text" class="form-control" />
+      <div class="form-group number_input" style="display: inline-block">
+        <input
+          type="number"
+          class="form-control"
+          formControlName="questionsCount"
+        />
+        <div class="re_error">
+          <mat-error
+            *ngIf="
+              gGenForm.controls['questionsCount'].hasError('required') &&
+              gGenForm.controls['questionsCount'].touched
+            "
+            >Enter a valid input.</mat-error
+          >
+          <mat-error *ngIf="gGenForm.controls['questionsCount'].hasError('max')"
+            >Maximum question count is 10</mat-error
+          >
+          <mat-error *ngIf="gGenForm.controls['questionsCount'].hasError('min')"
+            >Minimum question count is 1</mat-error
+          >
+        </div>
       </div>
       <div class="build_btn">
-        <button class="btn" type="button">Build</button>
+        <button
+          [disabled]="gGenForm.invalid"
+          type="button"
+          (click)="submitQgen()"
+        >
+          Build
+        </button>
       </div>
     </div>
   </form>

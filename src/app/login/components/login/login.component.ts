@@ -14,6 +14,7 @@ import { Login } from '../../model/login.model';
 import { ToastrService } from 'ngx-toastr';
 import { EmailComponent } from '../email/email.component';
 import { EmailPopupComponent } from '../email-popup/email-popup.component';
+import { RegisterComponent } from '../register/register.component';
 
 @Component({
   selector: 'app-login',
@@ -34,6 +35,8 @@ export class LoginComponent {
     role: '',
     id: '',
     token: '',
+    email: '',
+    password: ''
   };
   public loginModel: Login = {
     email: '',
@@ -83,6 +86,14 @@ export class LoginComponent {
               this.router.navigateByUrl('/eminence/admin');
             }
             if (response.result.user.role.role === 'FACULTY') {
+
+              const topicId = this.encryptText(
+                response.result.user?.topicId.topic,
+                this.secretKey
+              );
+              if (topicId) {
+                localStorage.setItem('6', topicId);
+              }
               this.router.navigateByUrl('/eminence/faculty');
             }
             if (response.result.user.role.role === 'VETTER') {
@@ -104,7 +115,7 @@ export class LoginComponent {
               this.secretKey
             );
             this.loginUser.id = this.encryptText(
-              response.result._id,
+              response.result.user._id,
               this.secretKey
             );
             localStorage.setItem('1', response.result.token);
@@ -134,6 +145,20 @@ export class LoginComponent {
     return decrypted.toString(CryptoJS.enc.Utf8);
   }
 
+  registerPop() {
+    this.closeDialog();
+    const dialogRef = this.dialog.open(RegisterComponent, {
+      width: '50%',
+      height: '600px',
+      data: null,
+
+      // Other MatDialog options
+    });
+    // You can handle dialog events here if needed
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: `);
+    });
+  }
   forgotPassword() {
     this.closeDialog();
     const dialogRef = this.dialog.open(EmailComponent, {

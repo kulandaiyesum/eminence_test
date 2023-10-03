@@ -4,5 +4,6 @@ export interface Register {
   role: string;
   token: string;
   id: string;
-
+  email: string;
+  password: string;
 }
