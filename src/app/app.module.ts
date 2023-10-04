@@ -14,7 +14,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { AuthHttpInterceptorService } from './shared/service/auth-http-interceptor..service';
-
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [AppComponent, ],
@@ -29,7 +29,7 @@ import { AuthHttpInterceptorService } from './shared/service/auth-http-intercept
     ToastrModule.forRoot(),
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule,
+    MatTableModule,MatCheckboxModule
   ],
   providers: [
     {
