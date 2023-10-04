@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { RegisterService } from '../../service/register.service';
 import { Register } from '../../model/register.model';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-register',
@@ -27,6 +28,7 @@ export class RegisterComponent {
     id: '',
     institutionName: ''
   };
+  dialog: any;
 
   constructor(
     private fb: FormBuilder,
@@ -43,6 +45,19 @@ export class RegisterComponent {
     });
   }
 
+  openLoginPopUp() {
+    const dialogRef = this.dialog.open(LoginComponent, {
+      width: '400px',
+      height: 'auto',
+      data: 'Message from header',
+      // Other MatDialog options
+    });
+    // You can handle dialog events here if needed
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
   onRegistrationSubmit() {
     const userData = {
       firstName: this.firstName,
@@ -51,6 +66,10 @@ export class RegisterComponent {
       password: this.password,
       institutionName: this.institutionName
     };
+
+
+
+
 
     console.log(this.registerModel);
 

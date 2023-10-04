@@ -149,7 +149,7 @@ export class LoginComponent {
   registerPop() {
     this.closeDialog();
     const dialogRef = this.dialog.open(RegisterComponent, {
-      width: '50%',
+      width: '40%',
       height: '600px',
       data: null,
 

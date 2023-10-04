@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   height: auto;
-  background-color:white;
+  background-color: white;
 }
 
 .form_crud {
@@ -66,7 +66,6 @@
       }
     }
 
-
     form {
       padding: 20px;
       border: 1px solid #ccc;
@@ -82,26 +81,32 @@
         margin-bottom: 20px;
         border: none;
 
-        .row_group {
+        .name-fields-container {
           display: flex;
+          justify-content: space-between;
           margin-right: 2%;
-          .form-group {
-            margin-left: 10px;
-          }
-        }
 
-        .custom_group {
-          flex:1;
+
+          .form-group {
+            flex: 1;
+            margin-left: 10px;
+
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+
           label {
-            color: #4b5056;
+            color: black;
             font-weight: bold;
             margin-bottom: 5px;
             display: block;
+            width: 100%;
           }
 
-          input,
-          select {
+          input {
             border: 1px solid #c6c9cd;
+            width: 100%;
             border-radius: 3px;
             color: #636972;
             box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
@@ -112,11 +117,95 @@
             font-style: normal;
             padding: 6px 8px;
             min-height: 36px;
-            width: 100%;
 
             &::placeholder {
               font-weight: 600;
               color: #bcbcbc;
+            }
+          }
+        }
+
+        .form-group.custom_group {
+          flex: 1;
+          .name-fields-container1 {
+            // border: 1px solid red;
+            width: 100%;
+            padding: 11px;
+            label {
+              width: 100%;
+            }
+            input {
+              border: 1px solid #c6c9cd;
+              width: 100%;
+              border-radius: 3px;
+              color: #636972;
+              box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+              font-family: "open_sans", "Open Sans", sans-serif;
+              line-height: 1.5;
+              font-weight: normal;
+              font-size: 14px;
+              font-style: normal;
+              padding: 6px 8px;
+              min-height: 36px;
+
+              &::placeholder {
+                font-weight: 600;
+                color: #bcbcbc;
+              }
+            }
+          }
+          .name-fields-container2 {
+            // border: 1px solid red;
+            width: 100%;
+            padding: 11px;
+            label {
+              width: 100%;
+            }
+            input {
+              border: 1px solid #c6c9cd;
+              width: 100%;
+              border-radius: 3px;
+              color: #636972;
+              box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+              font-family: "open_sans", "Open Sans", sans-serif;
+              line-height: 1.5;
+              font-weight: normal;
+              font-size: 14px;
+              font-style: normal;
+              padding: 6px 8px;
+              min-height: 36px;
+
+              &::placeholder {
+                font-weight: 600;
+                color: #bcbcbc;
+              }
+            }
+          }
+          .name-fields-container3 {
+            // border: 1px solid red;
+            width: 100%;
+            padding: 11px;
+            label {
+              width: 100%;
+            }
+            input {
+              border: 1px solid #c6c9cd;
+              width: 100%;
+              border-radius: 3px;
+              color: #636972;
+              box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+              font-family: "open_sans", "Open Sans", sans-serif;
+              line-height: 1.5;
+              font-weight: normal;
+              font-size: 14px;
+              font-style: normal;
+              padding: 6px 8px;
+              min-height: 36px;
+
+              &::placeholder {
+                font-weight: 600;
+                color: #bcbcbc;
+              }
             }
           }
         }
@@ -137,18 +226,17 @@
             transition: background-color 0.3s ease;
 
             &.valid-form {
-              background-color:#93B719;;
+              background-color: #93b719;
             }
 
             &.invalid-form {
               background-color: #ccc;
               color: #000;
-
             }
 
             &:hover {
               &.valid-form {
-                background-color: #93B719;;
+                background-color: #93b719;
               }
             }
           }
@@ -161,14 +249,10 @@
             margin-top: 20px;
             border: none;
             color: #fff;
-            background-color:#93B719;
+            background-color: #93b719;
             font-weight: 600;
             border-radius: 4px;
             transition: background-color 0.3s ease;
-
-
-
-            }
           }
         }
       }
@@ -180,3 +264,4 @@
     height: 20px !important;
     font-size: 14px;
   }
+}
