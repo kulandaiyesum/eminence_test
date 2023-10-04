@@ -69,6 +69,9 @@
         <a routerLink="/eminence/vetter/questions" routerLinkActive="activelink"
           >Questions</a
         >
+        <div class="questions-numbers">
+          <p *ngFor="let number of questionNumbers" class="circle-background">{{ number }}</p>
+        </div>
       </ng-container>
     </div>
     <div class="help-report-error" *ngIf="!isAdmin()" class="bottom-left-icon">

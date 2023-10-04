@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 export class PortalLayoutComponent implements OnInit {
   secretKey: string = environment.secretKey;
   public role: string = '';
+  questionNumbers = [1, 2, 3, 4, 5, 6, 7];
   constructor(private router: Router, private rsaService: RsaService) {}
   firstName: string = '';
   ngOnInit(): void {
