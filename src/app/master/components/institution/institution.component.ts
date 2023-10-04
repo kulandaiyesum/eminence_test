@@ -156,7 +156,7 @@ export class InstitutionComponent {
   deleteInstitute(element: any) {
     Swal.fire({
       title: 'Are you sure you want to delete?',
-      text: 'This action cannot be undone!',
+      text: 'It will reflects on user and subscription',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
