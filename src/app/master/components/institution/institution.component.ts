@@ -13,6 +13,7 @@ import { MatSort } from '@angular/material/sort';
 import Swal from 'sweetalert2';
 import { PackageService } from '../../service/package.service';
 import { AddSubscriptionComponent } from '../add-subscription/add-subscription.component';
+import { SubscriptionService } from '../../service/subscription.service';
 
 @Component({
   selector: 'app-institution',
@@ -40,6 +41,8 @@ export class InstitutionComponent {
   @ViewChild(MatSort) sort: MatSort;
   public instituteDetails: any;
 
+  public subscriptionList = [];
+
   public institutionModel: Institution = {
     name: '',
     email: '',
@@ -62,12 +65,14 @@ export class InstitutionComponent {
     private router: Router,
     private toastr: ToastrService,
     public dialog: MatDialog,
-    public instituteService: InstituteserviceService
+    public instituteService: InstituteserviceService,
+    private subscriptionService: SubscriptionService
   ) {}
 
   ngOnInit(): void {
     this.initForm();
     this.getAllInstituteData();
+    this.getAllDataOfSubscription();
   }
 
   initForm() {
@@ -153,20 +158,61 @@ export class InstitutionComponent {
       this.getAllInstituteData();
     });
   }
-  deleteInstitute(element: any) {
-    Swal.fire({
-      title: 'Are you sure you want to delete?',
-      text: 'It will reflects on user and subscription',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.performDelete(element);
-      }
+
+  getAllDataOfSubscription() {
+    this.subscriptionService.getAllSubscriptions().subscribe((data: any) => {
+      this.subscriptionList = data.result;
+      console.log(this.subscriptionList);
     });
   }
+
+  deleteInstitute(element: any) {
+    const isIdInResponse = this.subscriptionList.some(
+      (item) => item.institutionId._id === element._id
+    );
+
+    if (isIdInResponse) {
+      Swal.fire({
+        title: 'This institution subscription is still valid',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Proceed anyway',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: 'Are you sure you want to delete?',
+            text: 'It will reflects on user and subscription',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.performDelete(element);
+            }
+          });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // The user clicked "Cancel" or closed the alert
+          console.log('Cancel clicked');
+        }
+      });
+    } else {
+      Swal.fire({
+        title: 'Are you sure you want to delete?',
+        text: 'It will reflects on user and subscription',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.performDelete(element);
+        }
+      });
+    }
+  }
+
   performDelete(element: any) {
     console.log(element);
     this.instituteService.deleteInstitution(element).subscribe(
@@ -201,6 +247,7 @@ export class InstitutionComponent {
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
       this.getAllInstituteData();
+      this.getAllDataOfSubscription();
     });
   }
 }
