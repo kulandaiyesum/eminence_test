@@ -69,4 +69,7 @@ export class PortalLayoutComponent implements OnInit {
   isVetter() {
     return this.role === 'VETTER';
   }
+  isStudent() {
+    return this.role === 'STUDENT';
+  }
 }

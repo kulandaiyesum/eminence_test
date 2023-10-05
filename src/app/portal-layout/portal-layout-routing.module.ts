@@ -23,6 +23,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('../vetter/vetter.module').then((m) => m.VetterModule),
       },
+      {
+        path: 'student',
+        loadChildren: () =>
+          import('../registered-user/registered-user.module').then(
+            (u) => u.RegisteredUserModule
+          ),
+      },
     ],
   },
 ];

@@ -59,6 +59,16 @@
         font-weight: 500;
         padding: 1rem 1.25rem;
         font-size: 18px;
+        .icon_route {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          mat-icon {
+            width: 30px;
+            height: 30px;
+            font-size: 30px;
+          }
+        }
       }
       .questions-numbers{
         width: 100%;

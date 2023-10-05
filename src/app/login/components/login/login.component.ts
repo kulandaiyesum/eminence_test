@@ -80,14 +80,14 @@ export class LoginComponent {
         (response: any) => {
           if (
             response.result.user.role.role === 'ADMIN' ||
-            response.result.user.role.role === 'FACULTY'||
-            response.result.user.role.role === 'VETTER'
+            response.result.user.role.role === 'FACULTY' ||
+            response.result.user.role.role === 'VETTER' ||
+            response.result.user.role.role === 'STUDENT'
           ) {
             if (response.result.user.role.role === 'ADMIN') {
               this.router.navigateByUrl('/eminence/admin');
             }
             if (response.result.user.role.role === 'FACULTY') {
-
               const topicId = this.encryptText(
                 response.result.user?.topicId.topic,
                 this.secretKey
@@ -100,6 +100,9 @@ export class LoginComponent {
             if (response.result.user.role.role === 'VETTER') {
               this.router.navigateByUrl('/eminence/vetter');
             }
+           if (response.result.user.role.role === 'STUDENT') {
+             this.router.navigateByUrl('/eminence/student');
+           }
             const role = response.result.user.role.role.toLowerCase();
             // this.router.navigateByUrl(`/eminenceai/${role}`);
             this.closeDialog();
