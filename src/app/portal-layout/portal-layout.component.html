@@ -70,8 +70,46 @@
           >Questions</a
         >
         <div class="questions-numbers">
-          <p *ngFor="let number of questionNumbers" class="circle-background">{{ number }}</p>
+          <p *ngFor="let number of questionNumbers" class="circle-background">
+            {{ number }}
+          </p>
         </div>
+      </ng-container>
+
+      <ng-container *ngIf="isStudent()">
+        <a
+          routerLink="/eminence/student/build-test"
+          routerLinkActive="activelink"
+        >
+          <div class="icon_route">
+            <span>Build Test</span>
+            <mat-icon>build</mat-icon>
+          </div>
+        </a>
+        <a
+          routerLink="/eminence/student/performance"
+          routerLinkActive="activelink"
+        >
+          <div class="icon_route">
+            <span>Performance</span>
+            <mat-icon> bar_chart</mat-icon>
+          </div>
+        </a>
+        <a routerLink="/eminence/student/saved" routerLinkActive="activelink">
+          <div class="icon_route">
+            <span>Saved</span>
+            <mat-icon>insert_drive_file</mat-icon>
+          </div>
+        </a>
+        <a
+          routerLink="/eminence/student/exam-room"
+          routerLinkActive="activelink"
+        >
+          <div class="icon_route">
+            <span>Exam Room</span>
+            <mat-icon>people</mat-icon>
+          </div>
+        </a>
       </ng-container>
     </div>
     <div class="help-report-error" *ngIf="!isAdmin()" class="bottom-left-icon">
