@@ -57,7 +57,7 @@ export class AskeminenceComponent implements OnInit {
         });
         console.error('Not data get', error);
         setTimeout(() => {
-          // window.location.reload();
+          window.location.reload();
         }, 2000);
       }
     );
