@@ -223,6 +223,10 @@ export class InstitutionComponent {
         this.getAllInstituteData();
       },
       (error) => {
+        this.toastr.error(error.error.message, '', {
+          timeOut: 3000,
+        });
+        this.getAllInstituteData();
         console.error('Delete failed', error);
       }
     );
