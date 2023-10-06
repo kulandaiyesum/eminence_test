@@ -6,6 +6,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { SubscriptionService } from '../../service/subscription.service';
 import { UpdateSubscriptionComponent } from '../update-subscription/update-subscription.component';
+import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-subscription',
   templateUrl: './subscription.component.html',
@@ -28,7 +30,8 @@ export class SubscriptionComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private subscriptionService: SubscriptionService
+    private subscriptionService: SubscriptionService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -81,13 +84,29 @@ export class SubscriptionComponent implements OnInit {
   }
 
   deleteSubscription(data: any) {
-    this.subscriptionService.deleteSubscription(data).subscribe(
-      (response) => {
-        console.log(response);
-      },
-      (error) => {
-        console.error('Not delete get', error);
+    Swal.fire({
+      title: 'Delete',
+      text: 'Are you sure you want to Delete?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.subscriptionService.deleteSubscription(data).subscribe(
+          (res: any) => {
+            this.toastr.success(res.message, '', {
+              timeOut: 3000,
+            });
+            this.getAllData();
+          },
+          (err) => {
+            this.toastr.error(err.error.message, '', {
+              timeOut: 3000,
+            });
+          }
+        );
       }
-    );
+    });
   }
 }

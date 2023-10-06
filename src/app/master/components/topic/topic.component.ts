@@ -33,8 +33,7 @@ export class TopicComponent {
     private topicMasterService: TopicService,
     private toastr: ToastrService,
     private dialog: MatDialog
-  ) {
-  }
+  ) {}
 
   displayedColumns: string[] = ['topic', 'status', 'actions'];
 
@@ -120,7 +119,7 @@ export class TopicComponent {
             this.getAllTopicMaster();
           },
           (err: any) => {
-            this.toastr.error(err.message, '', {
+            this.toastr.error(err.error.message, '', {
               timeOut: 3000,
             });
             this.getAllTopicMaster();
