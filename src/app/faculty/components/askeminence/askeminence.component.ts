@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Askeminice } from '../../model/askeminice';
 import { AskEmininceService } from '../../service/ask-eminince.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { delay } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-askeminence',
@@ -21,6 +22,7 @@ export class AskeminenceComponent implements OnInit {
     keyword: '',
     answer: '',
   };
+  isEditing: boolean = false;
   constructor(
     private askEmininveService: AskEmininceService,
     private spinner: NgxSpinnerService,
@@ -35,6 +37,7 @@ export class AskeminenceComponent implements OnInit {
   ngOnInit(): void {
     this.askEminence = new Askeminice();
   }
+
 
   bulid() {
     this.spinner.show();
@@ -68,9 +71,18 @@ export class AskeminenceComponent implements OnInit {
       this.askEminence.result !== undefined &&
       this.askEminence.result !== ''
     ) {
-      this.isEditMode = !this.isEditMode;
       this.isTextareaDisabled = !this.isTextareaDisabled;
+      if (this.isEditing) {
+        this.saveIt();
+      } else {
+        this.editAction();
+      }
+      this.isEditing = !this.isEditing;
     }
+  }
+
+  editAction(){
+    console.log("Edit it");
   }
 
   saveIt() {
