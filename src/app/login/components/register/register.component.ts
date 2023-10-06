@@ -1,9 +1,10 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild,Inject } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { RegisterService } from '../../service/register.service';
 import { Register } from '../../model/register.model';
 import { LoginComponent } from '../login/login.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 
 
@@ -35,7 +36,9 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private registerService: RegisterService
+    private registerService: RegisterService,
+    @Inject(MAT_DIALOG_DATA) private data: any,
+    private dialogRef: MatDialogRef<RegisterComponent>,
   ) {}
 
   ngOnInit() {
@@ -47,6 +50,10 @@ export class RegisterComponent {
       institutionName: ['', Validators.required],
 
     });
+  }
+
+  closeDialog(){
+    this.dialogRef.close();
   }
 
 

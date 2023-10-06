@@ -1,6 +1,10 @@
 <div class="container">
   <div class="form_crud">
-    <mat-icon class="close_btn" mat-icon-button [routerLink]="['/login']"
+    <mat-icon
+      class="close_btn"
+      mat-icon-button
+      [routerLink]="['/login']"
+      (click)="closeDialog()"
       >close</mat-icon
     >
 
@@ -42,7 +46,7 @@
         <div class="form-names">
           <div class="form-group">
             <label for="firstName">First Name</label>
-            <br>
+            <br />
             <input
               type="text"
               id="firstName"
@@ -52,16 +56,18 @@
               #firstName="ngModel"
             />
             <div
-              *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+              *ngIf="
+                firstName.invalid && (firstName.dirty || firstName.touched)
+              "
             >
-              <div *ngIf="firstName.errors?.['required']">
+              <div *ngIf="firstName.errors?.['required']" id="error-message">
                 First Name is required
               </div>
             </div>
           </div>
           <div class="form-group">
             <label for="lastName">Last Name</label>
-            <br>
+            <br />
             <input
               type="text"
               id="lastName"
@@ -70,18 +76,19 @@
               required
               #lastName="ngModel"
             />
-            <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
-              <div *ngIf="lastName.errors?.['required']">
+            <div
+              *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+            >
+              <div *ngIf="lastName.errors?.['required']" id="error-message">
                 Last Name is required
               </div>
             </div>
           </div>
         </div>
 
-
         <div class="form-group">
           <label for="institutionName">Institution Name</label>
-          <br>
+          <br />
           <input
             type="text"
             id="institutionName"
@@ -96,7 +103,10 @@
               (institutionName.dirty || institutionName.touched)
             "
           >
-            <div *ngIf="institutionName.errors?.['required']">
+            <div
+              *ngIf="institutionName.errors?.['required']"
+              id="error-message"
+            >
               Institution Name is required
             </div>
           </div>
@@ -104,7 +114,7 @@
 
         <div class="form-group">
           <label for="email">Email</label>
-          <br>
+          <br />
           <input
             type="email"
             id="email"
@@ -115,14 +125,18 @@
             #email="ngModel"
           />
           <div *ngIf="email.invalid && (email.dirty || email.touched)">
-            <div *ngIf="email.errors?.['required']">Email is required</div>
-            <div *ngIf="email.errors?.['email']">Invalid email format</div>
+            <div *ngIf="email.errors?.['required']" id="error-message">
+              Email is required
+            </div>
+            <div *ngIf="email.errors?.['email']" id="error-message">
+              Invalid email format
+            </div>
           </div>
         </div>
 
         <div class="form-group">
           <label for="password">Password</label>
-          <br>
+          <br />
           <input
             type="password"
             id="password"
@@ -132,9 +146,10 @@
             #password="ngModel"
           />
           <div *ngIf="password.invalid && (password.dirty || password.touched)">
-            <div *ngIf="password.errors?.['required']">
+            <div *ngIf="password.errors?.['required']" id="error-message">
               Password is required
             </div>
+            
           </div>
         </div>
 
@@ -147,7 +162,7 @@
           >
             Continue to Checkout
           </button>
-          <br>
+          <br />
           <button
             type="button"
             class="form_btn_login"
