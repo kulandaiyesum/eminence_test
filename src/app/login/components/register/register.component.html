@@ -1,6 +1,8 @@
 <div class="container">
   <div class="form_crud">
-    <mat-icon class="close_btn" mat-icon-button [routerLink]="['/login']">close</mat-icon>
+    <mat-icon class="close_btn" mat-icon-button [routerLink]="['/login']"
+      >close</mat-icon
+    >
 
     <div class="form_wrap">
       <div class="form_heading">REGISTER ACCOUNT</div>
@@ -25,8 +27,7 @@
             >
           </div>
           <div class="price-options">
-            <label for="price"
-              >
+            <label for="price">
               <input
                 type="radio"
                 name="price"
@@ -37,112 +38,123 @@
         </div>
       </div>
 
-      <form #registrationForm="ngForm">
-        <div class="flex_form">
-          <div class="name-fields-container">
-            <div class="form-group custom_group">
-              <label for="firstName">First Name</label>
-              <input
-                matInput
-                type="text"
-                id="firstName"
-                name="firstName"
-                [(ngModel)]="registerModel.firstName"
-                required
-              />
-              <mat-error *ngIf="registrationForm.controls['firstName'].hasError('required') && registrationForm.controls['firstName'].touched">
-                First Name is required.
-              </mat-error>
-            </div>
-
-            <div class="form-group custom_group">
-              <label for="lastName">Last Name</label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                [(ngModel)]="registerModel.lastName"
-                required
-              />
-              <mat-error *ngIf="registrationForm.controls['lastName'].hasError('required') && registrationForm.controls['lastName'].touched">
-                Last Name is required.
-              </mat-error>
-            </div>
-          </div>
-
-          <div class="form-group custom_group">
-            <div class="name-fields-container1">
-            <label for="institutionName">Institution Name</label><br>
+      <form #registrationForm="ngForm" (ngSubmit)="onRegistrationSubmit()">
+        <div class="form-names">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <br>
             <input
               type="text"
-              id="institutionName"
-              name="institutionName"
-              [(ngModel)]="registerModel.institutionName"
+              id="firstName"
+              name="firstName"
+              [(ngModel)]="registerModel.firstName"
               required
+              #firstName="ngModel"
             />
-            <mat-error *ngIf="registrationForm.controls['institutionName'].hasError('required') && registrationForm.controls['institutionName'].touched">
-              Institution Name is required.
-            </mat-error>
+            <div
+              *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+            >
+              <div *ngIf="firstName.errors?.['required']">
+                First Name is required
+              </div>
+            </div>
           </div>
-
-          <div class="form-group custom_group">
-            <div class="name-fields-container2">
-            <label for="email">Email Address</label><br>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <br>
             <input
-              type="email"
-              id="email"
-              name="email"
-              [(ngModel)]="registerModel.email"
+              type="text"
+              id="lastName"
+              name="lastName"
+              [(ngModel)]="registerModel.lastName"
               required
-              email
+              #lastName="ngModel"
             />
-            <mat-error *ngIf="registrationForm.controls['email'].hasError('required') && registrationForm.controls['email'].touched">
-              Email is required.
-            </mat-error>
-            <mat-error *ngIf="registrationForm.controls['email'].hasError('email') && registrationForm.controls['email'].touched">
-              Invalid email format.
-            </mat-error>
-          </div>
-
-          <div class="form-group custom_group">
-            <div class="name-fields-container3">
-            <label for="password">Password</label><br>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              [(ngModel)]="registerModel.password"
-              required
-              minlength="8"
-            />
-            <mat-error *ngIf="registrationForm.controls['password'].hasError('required') && registrationForm.controls['password'].touched">
-              Password is required.
-            </mat-error>
-            <mat-error *ngIf="registrationForm.controls['password'].hasError('minlength') && registrationForm.controls['password'].touched">
-              Password must be at least 8 characters long.
-            </mat-error>
+            <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+              <div *ngIf="lastName.errors?.['required']">
+                Last Name is required
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    </div>
+
+
+        <div class="form-group">
+          <label for="institutionName">Institution Name</label>
+          <br>
+          <input
+            type="text"
+            id="institutionName"
+            name="institutionName"
+            [(ngModel)]="registerModel.institutionName"
+            required
+            #institutionName="ngModel"
+          />
+          <div
+            *ngIf="
+              institutionName.invalid &&
+              (institutionName.dirty || institutionName.touched)
+            "
+          >
+            <div *ngIf="institutionName.errors?.['required']">
+              Institution Name is required
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <br>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            [(ngModel)]="registerModel.email"
+            required
+            email
+            #email="ngModel"
+          />
+          <div *ngIf="email.invalid && (email.dirty || email.touched)">
+            <div *ngIf="email.errors?.['required']">Email is required</div>
+            <div *ngIf="email.errors?.['email']">Invalid email format</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <br>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            [(ngModel)]="registerModel.password"
+            required
+            #password="ngModel"
+          />
+          <div *ngIf="password.invalid && (password.dirty || password.touched)">
+            <div *ngIf="password.errors?.['required']">
+              Password is required
+            </div>
+          </div>
+        </div>
 
         <div class="form_btns">
-          <div class="form_btn_continue">
-            <button
-              type="submit"
-              (click)="onRegistrationSubmit()"
-              [ngClass]="{
-                'valid-form': registrationForm.valid,
-                'invalid-form': !registrationForm.valid
-              }"
-            >
-              Continue to Checkout
-            </button>
-          </div>
-          <div class="form_btn_login">
-            <button type="button" (click)="openLoginPopUp()">Login</button>
-          </div>
+          <button
+            type="submit"
+            class="form_btn_continue"
+            (click)="onRegistrationSubmit()"
+            [disabled]="!registrationForm.valid"
+          >
+            Continue to Checkout
+          </button>
+          <br>
+          <button
+            type="button"
+            class="form_btn_login"
+            (click)="openLoginPopUp()"
+          >
+            Login
+          </button>
         </div>
       </form>
     </div>

@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { RegisterService } from '../../service/register.service';
 import { Register } from '../../model/register.model';
 import { LoginComponent } from '../login/login.component';
+
+
 
 @Component({
   selector: 'app-register',
@@ -17,8 +19,7 @@ export class RegisterComponent {
   email: string = '';
   password: string = '';
   institutionName: string = '';
-
-  public registerModel: Register = {
+  registerModel: Register = {
     firstName: '',
     lastName: '',
     email: '',
@@ -26,8 +27,9 @@ export class RegisterComponent {
     role: '',
     token: '',
     id: '',
-    institutionName: ''
+    institutionName: '',
   };
+
   dialog: any;
 
   constructor(
@@ -42,8 +44,11 @@ export class RegisterComponent {
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
+      institutionName: ['', Validators.required],
+
     });
   }
+
 
   openLoginPopUp() {
     const dialogRef = this.dialog.open(LoginComponent, {
@@ -64,19 +69,24 @@ export class RegisterComponent {
       lastName: this.lastName,
       email: this.email,
       password: this.password,
-      institutionName: this.institutionName
+      institutionName: this.institutionName,
     };
-
-
-
-
 
     console.log(this.registerModel);
 
     this.registrationForm.controls['email'].setValue(this.registerModel.email);
-    this.registrationForm.controls['lastName'].setValue(this.registerModel.lastName);
-    this.registrationForm.controls['firstName'].setValue(this.registerModel.firstName);
-    this.registrationForm.controls['password'].setValue(this.registerModel.password);
+    this.registrationForm.controls['lastName'].setValue(
+      this.registerModel.lastName
+    );
+    this.registrationForm.controls['firstName'].setValue(
+      this.registerModel.firstName
+    );
+    this.registrationForm.controls['password'].setValue(
+      this.registerModel.password
+    );
+    this.registrationForm.controls['institutionName'].setValue(
+      this.registerModel.institutionName
+    );
     this.registerService.registerUser(this.registrationForm.value).subscribe(
       (response) => {
         console.log(response, 'User Data');
@@ -89,3 +99,6 @@ export class RegisterComponent {
     );
   }
 }
+
+
+
