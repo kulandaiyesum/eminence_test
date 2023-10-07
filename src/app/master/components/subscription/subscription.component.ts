@@ -69,13 +69,15 @@ export class SubscriptionComponent implements OnInit {
   }
 
   updateSubscription(data: any) {
-    console.log(data);
-    const dialogRef = this.dialog.open(UpdateSubscriptionComponent, {
+    const dialogOptios = {
       width: '600px',
-      height: '80vh',
+      margin: '0 auto',
       data: data,
-      // Other MatDialog options
-    });
+    };
+    const dialogRef = this.dialog.open(
+      UpdateSubscriptionComponent,
+      dialogOptios
+    );
     // You can handle dialog events here if needed
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);

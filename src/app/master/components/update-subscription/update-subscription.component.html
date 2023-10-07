@@ -11,9 +11,14 @@
       </div>
     </div>
     <div class="forms">
-      <form #addSubscriptionForm="ngForm">
-        <select name="package" id="packages" (change)="selectedPackage($event)">
-          <option value="package">Select package</option>
+      <form [formGroup]="updateSubscriptionForm">
+        <select
+          id="packages"
+          formControlName="packageId"
+          [(ngModel)]="subscriptionObject.packageId"
+          (change)="selectedPackage($event)"
+        >
+          <option value="package" disabled>Select package</option>
           <option *ngFor="let package of packageList" [value]="package._id">
             {{ package.packageName }} - ${{ package.amount }}
           </option>
@@ -23,19 +28,17 @@
           {{ selectedPackageOption.durationType }}
         </p>
         <div class="dates">
-          <!-- <mat-form-field class="example-full-width"> -->
-
           <label for="startdate">Start date</label>
           <p id="date">
             <input
               matInput
               [matDatepicker]="picker"
-              [(ngModel)]="institutionModel.startdate"
+              [(ngModel)]="subscriptionObject.startDate"
               [min]="minDate"
+              formControlName="startDate"
               name="startdate"
               (dateChange)="calculateEndDate()"
               required
-              [disabled]="isPackageSelected"
             />
             <mat-datepicker-toggle
               matSuffix
@@ -43,28 +46,30 @@
             ></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </p>
-          <!-- </mat-form-field> -->
-          <!-- <label for="datePicker">Start Date:</label>
-          <input
-            type="date"
-            name="startdate"
-            [(ngModel)]="institutionModel.startdate"
-            (change)="calculateEndDate()"
-            [disabled]="isPackageSelected"
-            required
-          /> -->
-          <p><b>End Date :</b>{{ calculatedEndDate }}</p>
-
+          <p>
+            <b>End Date :</b
+            ><span
+              *ngIf="
+                subscriptionObject.endDate !== null &&
+                subscriptionObject.endDate !== ''
+              "
+              >&nbsp;{{ subscriptionObject.endDate | date : "MM/dd/yyy" }}</span
+            >
+          </p>
           <div
-            *ngIf="addSubscriptionForm.controls['startdate']?.errors?.['required'] && addSubscriptionForm.controls['startdate']?.touched"
             class="error-message"
+            *ngIf="
+              updateSubscriptionForm.controls['startDate'].hasError(
+                'required'
+              ) || updateSubscriptionForm.status === 'INVALID'
+            "
           >
-            Start Date is required.
+            Enter Valid information.
           </div>
           <button
             type="submit"
             (click)="onSubscriptionUpdate()"
-            [disabled]="addSubscriptionForm.invalid"
+            [disabled]="updateSubscriptionForm.invalid"
           >
             Update
           </button>

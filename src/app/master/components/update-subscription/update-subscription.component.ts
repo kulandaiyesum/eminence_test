@@ -1,12 +1,18 @@
+import { RsaService } from './../../../shared/service/rsa.service';
 import { Component, Inject } from '@angular/core';
-import { Institution } from '../../model/institution.class';
 import { ToastrService } from 'ngx-toastr';
 import { SubscriptionService } from '../../service/subscription.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { PackageService } from '../../service/package.service';
 import { LogicalfuntionService } from 'src/app/shared/logicalfuntion.service';
 import { AddSubscriptionComponent } from '../add-subscription/add-subscription.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Subscription } from '../../model/subscription.class';
+import { environment } from 'src/environments/environment';
 
 interface MyObject {
   _id: string;
@@ -22,66 +28,54 @@ interface MyObject {
 })
 export class UpdateSubscriptionComponent {
   updateSubscriptionForm: FormGroup;
-
+  subscriptionObject: Subscription;
+  private secretKey: string = environment.secretKey;
   public packageList;
-
   public unqiuePackage = [];
   public Packageid = [];
   isPackageSelected: boolean = true;
   public selectedDurationType: string;
   public calculatedEndDate: string;
   public selectedPackageOption;
-  public institutionModel: Institution = {
-    name: '',
-    email: '',
-    _id: '',
-    address: '',
-    state: '',
-    zip: '',
-    packageName: '',
-    questionsCount: '',
-    packageNameId: '',
-    city: '',
-    startdate: new Date(),
-    enddate: new Date(),
-    durationType: '',
-    country: '',
-    questionsCountResetDate: new Date(),
-  };
   public maxDate = new Date();
-
   public minDate: string = this.calculateMinDate();
-  public myObject: MyObject;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<AddSubscriptionComponent>,
     public logicalService: LogicalfuntionService,
     public packageService: PackageService,
-    private formBuilder: FormBuilder,
     private subscriptionService: SubscriptionService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private rsaService: RsaService
   ) {
-    console.log(data);
-    this.myObject = {
-      _id: '', // Initialize with your desired values
-      institutionId: '', // Initialize with your desired values
-      packageNameId: '',
-      startdate: new Date(), // Initialize with the current date or your desired date
-    };
-    this.myObject.institutionId = data.institutionId._id;
-    this.myObject._id = data._id;
+    console.log(this.data);
   }
 
   ngOnInit(): void {
+    this.subscriptionObject = new Subscription();
     this.getPackageData();
-    this.institutionModel.startdate = new Date();
     this.initForm();
+    this.subscriptionObject._id = this.data._id;
+    this.subscriptionObject.institutionId = this.data.institutionId;
+    this.subscriptionObject.packageId = this.data?.packageId?._id;
+    this.subscriptionObject.startDate = new Date(this.data?.startDate);
+    this.subscriptionObject.createdBy = this.data?.createdBy;
+    this.subscriptionObject.questionsCountResetDate =
+      this.data?.questionsCountResetDate;
+    this.selectedPackageOption = this.data?.packageId;
+    if (this.data?.endDate !== null) {
+      this.subscriptionObject.endDate = new Date(this.data?.endDate);
+    } else {
+      this.calculateEndDate();
+    }
   }
 
   initForm() {
-    this.updateSubscriptionForm = this.formBuilder.group({
-      startdate: [this.institutionModel.startdate, Validators.required],
+    this.updateSubscriptionForm = new FormGroup({
+      packageId: new FormControl(),
+      startDate: new FormControl('', [Validators.required]),
+      endDate: new FormControl(),
     });
   }
 
@@ -94,20 +88,27 @@ export class UpdateSubscriptionComponent {
   }
 
   onSubscriptionUpdate() {
-    this.myObject.startdate = this.institutionModel.startdate;
-    this.subscriptionService.updateSubscription(this.myObject).subscribe(
-      (response: any) => {
-        this.toastr.success(response.message, '', {
-          timeOut: 3000,
-        });
-        this.closeDialog();
-      },
-      (error) => {
-        this.toastr.error(error.error.message, '', {
-          timeOut: 3000,
-        });
-      }
+    const modifierName = localStorage.getItem('3');
+    this.subscriptionObject.modifiedBy = this.rsaService.decryptText(
+      modifierName,
+      this.secretKey
     );
+    console.log(this.subscriptionObject);
+    this.subscriptionService
+      .updateSubscription(this.subscriptionObject)
+      .subscribe(
+        (response: any) => {
+          this.toastr.success(response.message, '', {
+            timeOut: 3000,
+          });
+          this.closeDialog();
+        },
+        (error) => {
+          this.toastr.error(error.error.message, '', {
+            timeOut: 3000,
+          });
+        }
+      );
   }
 
   closeDialog() {
@@ -117,7 +118,6 @@ export class UpdateSubscriptionComponent {
   getPackageData() {
     this.packageService.getAllPackages().subscribe((doc: any) => {
       this.packageList = doc.result.filter((item) => item.type === 'B2B');
-
       this.unqiuePackage = this.logicalService.filteredArrayWithJsonValue(
         this.packageList,
         'packageName'
@@ -125,58 +125,18 @@ export class UpdateSubscriptionComponent {
     });
   }
 
-  getPackgeType(list) {
-    this.isPackageSelected = false;
-    let data = this.packageList.find((x) => x.packageName === list);
-    this.institutionModel.questionsCount = data.questionsCount;
-    this.institutionModel.packageNameId = data._id;
-    this.institutionModel.durationType = data.durationType;
-    this.selectedDurationType = this.institutionModel.durationType;
-  }
-
   selectedPackage(event: Event) {
-    this.institutionModel.startdate = new Date();
+    this.subscriptionObject.startDate = new Date();
     const selectedValue = (event.target as HTMLSelectElement).value;
     if (selectedValue !== 'package') {
-      // Find the selected package object based on the selected value
       const selectedPackage = this.packageList.find(
         (pkg) => pkg._id === selectedValue
       );
-      this.institutionModel.startdate === new Date();
+      this.subscriptionObject.startDate === new Date();
       if (selectedPackage) {
-        this.isPackageSelected = false;
         this.selectedPackageOption = selectedPackage;
-        console.log(this.selectedPackageOption);
-        this.myObject.packageNameId = this.selectedPackageOption._id;
-        this.institutionModel.packageNameId = this.selectedPackageOption._id;
-        this.institutionModel.packageName =
-          this.selectedPackageOption.packageName;
-        this.institutionModel.questionsCount =
-          this.selectedPackageOption.questionsCount;
-        this.institutionModel.durationType =
-          this.selectedPackageOption.durationType;
+        this.subscriptionObject.packageId = this.selectedPackageOption._id;
         this.calculateEndDate();
-        this.subscriptionService
-          .createSubscriptionAuto(this.institutionModel)
-          .subscribe(
-            (response: any) => {
-              console.log(response);
-              this.institutionModel.startdate = new Date(
-                response.result.startDate
-              );
-              this.institutionModel.enddate = new Date(response.result.endDate);
-              // this.institutionModel.questionsCountResetDate = '';
-              console.log(this.institutionModel.enddate);
-              const inputDate = this.institutionModel.enddate;
-              const day = String(inputDate.getDate()).padStart(2, '0'); // Add leading zero if needed
-              const month = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-              const year = inputDate.getFullYear();
-              this.calculatedEndDate = `${day}/${month}/${year}`;
-            },
-            (error) => {
-              console.error('Not data get', error);
-            }
-          );
       } else {
         console.log('No package selected');
       }
@@ -184,10 +144,12 @@ export class UpdateSubscriptionComponent {
   }
 
   calculateEndDate() {
-    const startDate = new Date(this.institutionModel.startdate);
+    const startDate = this.subscriptionObject.startDate;
+    if (startDate === '' || startDate === undefined) {
+      return;
+    }
     let endDate: Date;
-    this.selectedDurationType = this.selectedPackageOption.durationType;
-
+    this.selectedDurationType = this.data?.packageId?.durationType;
     switch (this.selectedDurationType) {
       case 'monthly':
         endDate = new Date(startDate);
@@ -208,16 +170,6 @@ export class UpdateSubscriptionComponent {
       default:
         endDate = null;
     }
-    this.institutionModel.enddate = new Date(
-      endDate ? endDate.toISOString().substring(0, 10) : ''
-    );
-    if (endDate) {
-      const year = endDate.getFullYear();
-      const month = String(endDate.getMonth() + 1).padStart(2, '0');
-      const day = String(endDate.getDate()).padStart(2, '0');
-      this.calculatedEndDate = `${month}/${day}/${year}`;
-    } else {
-      this.calculatedEndDate = '';
-    }
+    this.subscriptionObject.endDate = endDate;
   }
 }
