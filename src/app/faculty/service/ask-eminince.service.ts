@@ -7,9 +7,18 @@ import { environment } from 'src/environments/environment';
 })
 export class AskEmininceService {
   public baseUrl = environment.localdomain + 'askEminence/';
+  public updateUrl = environment.localdomain + 'askEminence/update';
 
   constructor(private http: HttpClient) {}
   getAskeminice = (askEminence) => {
     return this.http.post(this.baseUrl + 'saveAskEminence', askEminence);
   };
+
+  sampleResponse() {
+    return this.http.get('assets/json/askeminence.json');
+  }
+
+  askEminenceUpdate(data) {
+    return this.http.put(this.updateUrl, data);
+  }
 }

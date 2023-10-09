@@ -27,16 +27,36 @@
 
   <div class="ask_eminence_response_container mt-3 mt-sm-2">
     <div class="ask_emi_options pt-2 ps-2 pe-2">
-      <mat-icon matTooltip="{{ isEditing ? 'Save' : 'Edit' }}" *ngIf="askEminence.result" (click)="editResult()">{{ isEditing ? 'save' : 'edit' }}</mat-icon>
-      <mat-icon matTooltip="Save" *ngIf="!isEditMode" (click)="saveIt()">save</mat-icon>
-      <mat-icon matTooltip="Delete" *ngIf="askEminence.result" (click)="deleteItem()">delete</mat-icon>
-      <mat-icon matTooltip="Mail" *ngIf="askEminence.result" (click)="showFileFormatDialog()">mail</mat-icon>
+      <mat-icon
+        matTooltip="Edit"
+        *ngIf="editIconVisibility && askEminence.result"
+        (click)="editResult()"
+        >edit</mat-icon
+      >
+      <mat-icon
+        matTooltip="Save"
+        *ngIf="saveIconVisibility && askEminence.result"
+        (click)="saveIt()"
+        >save</mat-icon
+      >
+      <mat-icon
+        matTooltip="Delete"
+        *ngIf="askEminence.result"
+        (click)="deleteItem()"
+        >delete</mat-icon
+      >
+      <mat-icon
+        matTooltip="Mail"
+        *ngIf="askEminence.result"
+        (click)="showFileFormatDialog()"
+        >mail</mat-icon
+      >
       <!-- <div class="img_icon">
         <img matTooltip="Download now" src="../../../../assets/images/icons8-download-30.png" alt=""  />
       </div> -->
     </div>
     <form class="response_qgen">
-      <div class="form-group mb-3">
+      <div class="form-group mb-3" id="result-text-area" #scrollContainer>
         <textarea
           class="form-control"
           name=""
@@ -57,6 +77,7 @@
   color="#1459cd"
   type="ball-spin-clockwise"
   [fullScreen]="true"
+  *ngIf="loading"
 >
   <img
     *ngIf="loading"

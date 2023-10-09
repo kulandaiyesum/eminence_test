@@ -4,8 +4,8 @@ import { AskEmininceService } from '../../service/ask-eminince.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { delay } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import Scrollbar from 'smooth-scrollbar';
 import { ToastrService } from 'ngx-toastr';
-
 
 @Component({
   selector: 'app-askeminence',
@@ -23,6 +23,10 @@ export class AskeminenceComponent implements OnInit {
     answer: '',
   };
   isEditing: boolean = false;
+  sampleData: any;
+  editIconVisibility: boolean = true;
+  saveIconVisibility: boolean = false;
+  @ViewChild('scrollContainer') scrollContainer: ElementRef;
   constructor(
     private askEmininveService: AskEmininceService,
     private spinner: NgxSpinnerService,
@@ -36,31 +40,50 @@ export class AskeminenceComponent implements OnInit {
   ];
   ngOnInit(): void {
     this.askEminence = new Askeminice();
+    this.askEmininveService.sampleResponse().subscribe((data: any) => {
+      this.sampleData = data;
+      console.log(this.sampleData);
+    });
   }
 
+  ngAfterViewInit() {
+    const scrollbar = Scrollbar.init(this.scrollContainer.nativeElement, {
+      // Smooth Scrollbar options go here
+    });
+  }
 
   bulid() {
     this.spinner.show();
     this.loading = true;
+    this.askEminence.result = this.sampleData.answer;
+    this.resultObject.keyword = this.sampleData.keyword;
+    this.resultObject._id = this.sampleData._id;
+    const scrollbar = Scrollbar.init(this.scrollContainer.nativeElement, {
+      // Smooth Scrollbar options go here
+    });
+    this.toastr.success('Content generated !', '', {
+      timeOut: 3000,
+    });
     this.askEmininveService.getAskeminice(this.askEminence).subscribe(
       (doc: any) => {
         if (doc.result.answer.length > 0) {
           this.spinner.hide();
           this.loading = false;
-          this.askEminence.result = doc.result.answer;
+          this.askEminence.result = this.sampleData.answer;
           this.resultObject.answer = this.askEminence.result;
-          this.resultObject.keyword = doc.result.keyword;
-          this.resultObject._id = doc.result._id;
+          this.resultObject.keyword = this.sampleData.keyword;
+          this.resultObject._id = this.sampleData._id;
           console.log(doc.statuscode);
         }
       },
       (error) => {
-        this.toastr.error('Something went wrong', '', {
-          timeOut: 3000,
-        });
+        // this.toastr.error('Something went wrong', '', {
+        //   timeOut: 3000,
+        // });
         console.error('Not data get', error);
         setTimeout(() => {
-          window.location.reload();
+          this.loading = false;
+          // window.location.reload();
         }, 2000);
       }
     );
@@ -72,17 +95,14 @@ export class AskeminenceComponent implements OnInit {
       this.askEminence.result !== ''
     ) {
       this.isTextareaDisabled = !this.isTextareaDisabled;
-      if (this.isEditing) {
-        this.saveIt();
-      } else {
-        this.editAction();
-      }
-      this.isEditing = !this.isEditing;
+      this.saveIconVisibility = true;
+      this.editIconVisibility = false;
+      // this.isEditing = !this.isEditing;
     }
   }
 
-  editAction(){
-    console.log("Edit it");
+  editAction() {
+    console.log('Edit it');
   }
 
   saveIt() {
@@ -97,17 +117,22 @@ export class AskeminenceComponent implements OnInit {
         // User clicked "Yes", trigger the save method
         this.saveChanges();
       } else {
-        // User clicked "No" or closed the dialog
-        // Do nothing or handle as needed
       }
     });
   }
   saveChanges() {
-    this.isEditMode = !this.isEditMode;
     this.resultObject.answer = this.askEminence.result;
     console.log(this.resultObject);
     this.askEminence.question = '';
     this.askEminence.result = '';
+    this.askEmininveService.askEminenceUpdate(this.resultObject).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.error('Error updating data:', error);
+      }
+    );
   }
 
   deleteItem() {

@@ -28,11 +28,11 @@
         resize: none;
       }
     }
-    .spinner{
+    .spinner {
       display: flex;
       justify-content: center;
       align-items: center;
-      img{
+      img {
         width: 75px;
         height: 75px;
       }
@@ -61,16 +61,22 @@
         height: 30px;
         cursor: pointer;
       }
-      img{
+      img {
         cursor: pointer;
       }
     }
     .response_qgen {
+      #result-text-area {
+        overflow: auto;
+        overflow-x: hidden;
+      }
       textarea {
         padding: 0 20px;
         border: none;
         box-shadow: none;
         resize: none;
+        overflow: auto;
+        overflow-x: hidden;
       }
       textarea[disabled] {
         background-color: transparent; /* or any other background color you prefer */
@@ -79,13 +85,12 @@
     }
   }
 }
-ngx-spinner{
-
-  img{
+ngx-spinner {
+  img {
     width: 100px;
     height: 100px;
   }
-  p{
+  p {
     text-align: center;
   }
 }
@@ -94,7 +99,7 @@ ngx-spinner{
   .ask_eminence {
     .prompt_section {
       .prompts_wrap {
-        grid-template-columns:  repeat(2,1fr);
+        grid-template-columns: repeat(2, 1fr);
         grid-template-rows: auto;
       }
     }
