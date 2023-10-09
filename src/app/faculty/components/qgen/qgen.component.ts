@@ -49,19 +49,18 @@ export class QgenComponent implements OnInit {
   submitQgen() {
     this.qGenObject.keywords = this.gGenForm.value.keywords;
     this.qGenObject.questionsCount = this.gGenForm.value.questionsCount;
-    this.qGenObject.topicId = this.topicId;
+    this.qGenObject.topic = this.topicId;
     this.qGenObject.userId = this.userId;
     this.qGenObject.createdBy = this.userFirstName;
 
-    this.gGenService.submitQgen(this.qGenObject);
-    // .subscribe(
-    //   (response: any) => {
-    //     console.log(response);
-    //   },
-    //   (error: any) => {
-    //     console.log(error);
-    //   }
-    // );
+    this.gGenService.submitQgen(this.qGenObject).subscribe(
+      (response: any) => {
+        console.log(response);
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
     this.gGenForm.reset();
   }
 }

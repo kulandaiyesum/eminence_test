@@ -5,4 +5,5 @@ export class Qgen {
   topicId: string;
   userId: string;
   createdBy: string;
+  topic: string;
 }
