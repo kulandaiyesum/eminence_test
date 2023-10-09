@@ -26,7 +26,7 @@ export class AskeminenceComponent implements OnInit {
   sampleData: any;
   editIconVisibility: boolean = true;
   saveIconVisibility: boolean = false;
-  @ViewChild('scrollContainer') scrollContainer: ElementRef;
+  @ViewChild('resultTextarea') resultTextarea: ElementRef;
   constructor(
     private askEmininveService: AskEmininceService,
     private spinner: NgxSpinnerService,
@@ -47,9 +47,10 @@ export class AskeminenceComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    const scrollbar = Scrollbar.init(this.scrollContainer.nativeElement, {
-      // Smooth Scrollbar options go here
-    });
+    const textarea = this.resultTextarea?.nativeElement;
+    if (textarea) {
+      Scrollbar.init(textarea, { damping: 0.1 });
+    }
   }
 
   bulid() {
@@ -58,9 +59,7 @@ export class AskeminenceComponent implements OnInit {
     this.askEminence.result = this.sampleData.answer;
     this.resultObject.keyword = this.sampleData.keyword;
     this.resultObject._id = this.sampleData._id;
-    const scrollbar = Scrollbar.init(this.scrollContainer.nativeElement, {
-      // Smooth Scrollbar options go here
-    });
+
     this.toastr.success('Content generated !', '', {
       timeOut: 3000,
     });
@@ -136,7 +135,32 @@ export class AskeminenceComponent implements OnInit {
   }
 
   deleteItem() {
-    console.log('Item deleted');
+    Swal.fire({
+      title: 'Are you sure you want to delete this content?',
+      text: 'The content should not be retrieved again.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // User confirmed, trigger the delete method
+        this.deleteData();
+      }
+    });
+  }
+
+  deleteData() {
+    this.askEminence.question = '';
+    this.askEminence.result = '';
+    this.askEmininveService.askEminencedelete(this.resultObject).subscribe(
+      (response) => {
+        console.log('Data deleted successfully:', response);
+      },
+      (error) => {
+        console.error('Error deleting data:', error);
+      }
+    );
   }
 
   showFileFormatDialog() {

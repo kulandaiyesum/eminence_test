@@ -33,7 +33,7 @@ export class EditorComponent implements OnInit {
   }
 
   getAllQuestions() {
-    let data = { reqId: '6523aa6fa6ebf5653e6f3022' };
+    let data = { reqId: '6523c234a78c02ccfaf49ea1' };
     this.questionService.getAllQuestions(data).subscribe((doc: any) => {
       console.log(doc.result);
 
