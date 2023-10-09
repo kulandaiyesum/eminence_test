@@ -1,12 +1,20 @@
 export class Question {
-  id: string;
+  _id: string;
+  reqId: string;
+  userId: string;
   options: QgenOption[];
   title: string;
+  isEdited?: boolean;
+  isDeleted?: boolean;
+  createdBy?: string;
+  modifiedBy?: string;
+  createdAt?: string;
+  modifiedAt?: string;
 }
 export class QgenOption {
   id: string;
   text: string;
-  correct_answer: boolean;
+  correctAnswer: string;
   explanation: string;
 }
 
