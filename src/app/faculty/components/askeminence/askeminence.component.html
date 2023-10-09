@@ -56,16 +56,15 @@
       </div> -->
     </div>
     <form class="response_qgen">
-      <div class="form-group mb-3" id="result-text-area" #scrollContainer>
+      <div class="form-group mb-3" id="result-text-area">
         <textarea
           class="form-control"
-          name=""
-          id=""
           rows="6"
           name="result"
           id="resultextarea"
           [(ngModel)]="askEminence.result"
           [disabled]="isTextareaDisabled"
+          #resultTextarea
         ></textarea>
       </div>
     </form>

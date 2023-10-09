@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 export class AskEmininceService {
   public baseUrl = environment.localdomain + 'askEminence/';
   public updateUrl = environment.localdomain + 'askEminence/update';
+  public deleteUrl = environment.localdomain + 'askEminence/delete';
 
   constructor(private http: HttpClient) {}
   getAskeminice = (askEminence) => {
@@ -20,5 +21,9 @@ export class AskEmininceService {
 
   askEminenceUpdate(data) {
     return this.http.put(this.updateUrl, data);
+  }
+
+  askEminencedelete(data){
+    return this.http.delete(this.deleteUrl, data);
   }
 }
