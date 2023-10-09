@@ -12,7 +12,7 @@ export class Question {
   modifiedAt?: string;
 }
 export class QgenOption {
-  id: string;
+  _id: string;
   text: string;
   correctAnswer: string;
   explanation: string;

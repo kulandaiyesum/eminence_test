@@ -8,19 +8,19 @@
           <input
             *ngIf="isEditMode"
             type="radio"
-            id="{{ option.id }}"
-            [checked]="option.id === selectedAnswer"
-            [value]="option.id"
+            id="{{ option._id }}"
+            [checked]="option._id === selectedAnswer"
+            [value]="option._id"
             [(ngModel)]="selectedAnswer"
-            (change)="selectAnswer(option.id); updateExplanation(option.id)"
+            (change)="selectAnswer(option._id); updateExplanation(option._id)"
             class="form-check-input me-2"
           />
           <li
             class="list-item"
             [ngClass]="{ 'correct-option': option.correctAnswer }"
           >
-            <label [for]="option.id"
-              ><div>{{ option.text }} {{option.id}}</div></label
+            <label [for]="option._id"
+              ><div>{{ option.text }}</div></label
             >
           </li>
         </div>

@@ -8,6 +8,8 @@ import {
 } from '@angular/core';
 import { Question, TempQuestion } from '../../model/question';
 import { Observable, Subscription } from 'rxjs';
+import { QuerstionService } from '../../service/querstion.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-question',
@@ -31,14 +33,18 @@ export class QuestionComponent implements OnInit, OnDestroy {
 
   @Input() events: Observable<void>;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private toastr: ToastrService,
+    private questionService: QuerstionService
+  ) {}
 
   ngOnInit(): void {
     const correctAnswer = this.tempQuestion.question?.options.find(
       (option) => option.correctAnswer === 'true'
     );
     if (correctAnswer) {
-      this.selectedAnswer = correctAnswer.id;
+      this.selectedAnswer = correctAnswer._id;
     }
     this.eventsSubscription = this.events.subscribe(() => {
       console.log('advjdjv', this.isEditMode);
@@ -59,7 +65,7 @@ export class QuestionComponent implements OnInit, OnDestroy {
     );
     console.log(selectedOption);
     if (selectedOption) {
-      this.selectedAnswer = selectedOption.id;
+      this.selectedAnswer = selectedOption._id;
       console.log(this.selectedAnswer);
       this.selectedOptionExplanation = selectedOption.explanation;
     }
@@ -75,10 +81,10 @@ export class QuestionComponent implements OnInit, OnDestroy {
 
   updateExplanation(optionid: string) {
     const correctAnswer = this.tempQuestion.question?.options.find(
-      (option) => option.id === optionid
+      (option) => option._id === optionid
     );
     if (correctAnswer) {
-      this.selectedAnswer = correctAnswer.id;
+      this.selectedAnswer = correctAnswer._id;
       this.selectedOptionExplanation = correctAnswer.explanation;
     }
   }
@@ -86,12 +92,17 @@ export class QuestionComponent implements OnInit, OnDestroy {
   saveChanges() {
     this.isEditMode = false;
     this.cdr.detectChanges();
-
-    console.log(
-      'child selected',
-      this.selectedOptionExplanation,
-      this.selectedAnswer
-    );
+    let data = {
+      selectAnswer: this.selectedAnswer,
+      option: this.selectedOptionExplanation,
+      temp: this.tempQuestion,
+    };
+    this.questionService.UpdateOption(data).subscribe((doc: any) => {
+      this.toastr.success(doc.message, '', {
+        timeOut: 3000,
+      });
+      window.location.reload();
+    });
   }
 
   deleteQuestion(reason: string) {
