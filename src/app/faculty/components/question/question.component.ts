@@ -35,7 +35,7 @@ export class QuestionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const correctAnswer = this.tempQuestion.question?.options.find(
-      (option) => option.correct_answer === true
+      (option) => option.correctAnswer === 'true'
     );
     if (correctAnswer) {
       this.selectedAnswer = correctAnswer.id;
@@ -55,10 +55,12 @@ export class QuestionComponent implements OnInit, OnDestroy {
   editQuestion(question: Question) {
     this.isEditMode = true;
     const selectedOption = this.tempQuestion.question.options.find(
-      (option) => option.correct_answer === true
+      (option) => option.correctAnswer === 'true'
     );
+    console.log(selectedOption);
     if (selectedOption) {
       this.selectedAnswer = selectedOption.id;
+      console.log(this.selectedAnswer);
       this.selectedOptionExplanation = selectedOption.explanation;
     }
   }
@@ -84,7 +86,21 @@ export class QuestionComponent implements OnInit, OnDestroy {
   saveChanges() {
     this.isEditMode = false;
     this.cdr.detectChanges();
-    console.log('child selected', this.isEditMode);
+
+    console.log(
+      'child selected',
+      this.selectedOptionExplanation,
+      this.selectedAnswer
+    );
+  }
+
+  deleteQuestion(reason: string) {
+    console.log(
+      this.tempQuestion.question._id,
+      this.tempQuestion.question.reqId,
+      reason
+    );
+    this.showDiv = false;
   }
 
   ngOnDestroy() {
