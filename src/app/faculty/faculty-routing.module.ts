@@ -7,19 +7,14 @@ import { AskeminenceComponent } from './components/askeminence/askeminence.compo
 import { EditorComponent } from './components/editor/editor.component';
 import { HistoryComponent } from './components/history/history.component';
 
-
 const routes: Routes = [
-  // {
-  //   path: ':role',
-  //   component: SidenavComponent,
-  //   canActivate: [AuthGuard],
-  // },
+
   { path: '', redirectTo: 'qgen', pathMatch: 'full' },
   { path: 'qgen', component: QgenComponent },
   { path: 'askeminence', component: AskeminenceComponent },
   { path: 'editor', component: EditorComponent },
+  { path: 'editor/:reqId', component: EditorComponent },
   { path: 'history', component: HistoryComponent },
-
 ];
 
 @NgModule({

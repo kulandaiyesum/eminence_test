@@ -3,6 +3,7 @@ import { Question, TempQuestion } from '../../model/question';
 import { QgenService } from './../../service/qgen.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { QuerstionService } from '../../service/querstion.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-editor',
@@ -16,6 +17,7 @@ export class EditorComponent implements OnInit {
   // public questions1;
   questions: Question[];
   tempQuestion: TempQuestion;
+  reqId: string;
   // requet_id: string;
   reasons: string[] = [
     "Simply didn't need it",
@@ -25,17 +27,21 @@ export class EditorComponent implements OnInit {
   ];
   constructor(
     private qgenService: QgenService,
-    private questionService: QuerstionService
+    private questionService: QuerstionService,
+    private activatedRoute: ActivatedRoute
   ) {}
   ngOnInit(): void {
-    this.getAllQuestions();
+    this.reqId = this.activatedRoute.snapshot.params['reqId'];
+    if(this.reqId) {
+      this.getAllQuestions(this.reqId);
+    }
+    console.log(this.reqId);
   }
 
-  getAllQuestions() {
-    let data = { reqId: '6523aa6fa6ebf5653e6f3022' };
+  getAllQuestions(reqId: string) {
+    let data = { reqId };
     this.questionService.getAllQuestions(data).subscribe((doc: any) => {
       console.log(doc.result);
-
       this.questLength = doc.result.length;
       this.questions = doc.result;
       this.getQuestion(this.questions[0]._id, 0);

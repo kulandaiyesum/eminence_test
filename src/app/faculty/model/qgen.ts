@@ -2,8 +2,8 @@ export class Qgen {
   _id: string;
   keywords: string;
   questionsCount: number;
-  topicId: string;
+  topicId?: string;
   userId: string;
   createdBy: string;
-  topic: string;
+  topic?: string;
 }

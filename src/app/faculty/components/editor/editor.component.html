@@ -3,7 +3,7 @@
     <strong style="color: var(--qgen-red)">Editor</strong> allows you to review
     and tweak the questions to your specific needs.
   </p>
-  <div class="editor_question_wrap">
+  <div class="editor_question_wrap" *ngIf="reqId !== undefined">
     <!-- Question Optons section -->
     <div class="question_info mb-3">
       <div class="question_inputs">
@@ -35,48 +35,5 @@
       [tempQuestion]="tempQuestion"
       [events]="eventsSubject.asObservable()"
     ></app-question>
-    <!-- Questions section -->
-    <!-- </div>
-</div>
-
-<div class="question_container">
-      <div class="question_no">{{ tempQuestion?.index + 1 }}.</div>
-      <div class="question_content">
-        <div class="question_q">{{ tempQuestion?.question.title }}</div>
-        <ol class="answer_options">
-          <ng-container *ngFor="let option of tempQuestion?.question?.options">
-            <div>
-              <input type="radio"  />
-              <li
-                class="list-item"
-                [ngClass]="option?.correct_answer ? 'correct_option' : ''"
-              >
-                <div>{{ option?.text }}</div>
-              </li>
-            </div>
-          </ng-container>
-        </ol>
-        <div
-          class="question_explanation"
-          *ngFor="let option of tempQuestion?.question.options"
-        >
-          <ng-container *ngIf="option.correct_answer">
-            <strong>Explanation: </strong>{{ option?.explanation }}
-          </ng-container>
-        </div>
-      </div>
-      <div class="question_action">
-        <div class="delete_option">
-          <mat-icon class="mb-2" (click)="toggleDivSection()">delete</mat-icon>
-          <div *ngIf="showDiv" class="why_delete">
-            <div class="why_q mb-1">Why?</div>
-            <div class="reason" *ngFor="let reason of reasons">
-              {{ reason }}
-            </div>
-          </div>
-        </div>
-        <mat-icon (click)="editQuestion(tempQuestion.question)">edit</mat-icon>
-      </div>
-    </div> -->
   </div>
 </div>

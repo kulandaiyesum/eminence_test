@@ -16,6 +16,7 @@ export class QgenComponent implements OnInit {
   userId: string = '';
   topicId: string = '';
   userFirstName: string = '';
+  qgenObjectList: Qgen[];
 
   secretKey: string = environment.secretKey;
   constructor(
@@ -44,6 +45,19 @@ export class QgenComponent implements OnInit {
       localStorage.getItem('3'),
       this.secretKey
     );
+    this.getPendingQuestions();
+  }
+
+  getPendingQuestions() {
+    this.gGenService.getQGen(this.userId).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.qgenObjectList = res.result;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   submitQgen() {
@@ -62,5 +76,9 @@ export class QgenComponent implements OnInit {
       }
     );
     this.gGenForm.reset();
+  }
+
+  routeEditor(reqId: string){
+    console.log(reqId);
   }
 }
