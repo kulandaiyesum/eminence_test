@@ -30,6 +30,10 @@ export class PackageService {
   updatePackage(data: any): Observable<any> {
     return this.http.put(`${this.updatePackageUrl}`, data);
   }
+  getB2CPackages(): Observable<Package[]> {
+    return this.http.get<Package[]>(`${this.getAllPackagesUrl}?type=B2C`);
+  }
+
 
   deletePackage(data: any): Observable<any> {
     return this.http.delete(this.deletePackageUrl, {

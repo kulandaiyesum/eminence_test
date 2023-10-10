@@ -1,11 +1,12 @@
-import { Component, ElementRef, ViewChild,Inject } from '@angular/core';
+import { Component, ElementRef, ViewChild, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { RegisterService } from '../../service/register.service';
 import { Register } from '../../model/register.model';
 import { LoginComponent } from '../login/login.component';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
+import { PackageService } from 'src/app/master/service/package.service';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -25,37 +26,54 @@ export class RegisterComponent {
     lastName: '',
     email: '',
     password: '',
-    role: '',
+    role: 'student',
     token: '',
     id: '',
     institutionName: '',
   };
 
   dialog: any;
+  b2cPackages: any[] = [];
+  packageType: string = '';
+  priceOption: string = '';
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private registerService: RegisterService,
+    private httpClient: HttpClient,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<RegisterComponent>,
+    private packageService: PackageService
   ) {}
 
   ngOnInit() {
     this.registrationForm = this.fb.group({
       firstName: ['', Validators.required],
+      role: ['student'],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       institutionName: ['', Validators.required],
-
     });
+    this.fetchB2CPackages();
   }
 
-  closeDialog(){
+  closeDialog() {
     this.dialogRef.close();
   }
+  fetchB2CPackages() {
+    this.packageService.getB2CPackages().subscribe((packages:any) => {
 
+      this.b2cPackages = packages.result;
+
+      console.log(this.b2cPackages,"rqstydfy")
+      if (this.b2cPackages.length > 0) {
+        this.packageType = this.b2cPackages[0].packageName;
+        this.priceOption = `$${this.b2cPackages[0].rate}/quarter`;
+      }
+    });
+  }
 
   openLoginPopUp() {
     const dialogRef = this.dialog.open(LoginComponent, {
@@ -71,30 +89,18 @@ export class RegisterComponent {
   }
 
   onRegistrationSubmit() {
+    // Construct the user data object from the form values
     const userData = {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      email: this.email,
-      password: this.password,
-      institutionName: this.institutionName,
+      firstName: this.registerModel.firstName,
+      lastName: this.registerModel.lastName,
+      email: this.registerModel.email,
+      password: this.registerModel.password,
+      institutionName: this.registerModel.institutionName,
+      role: 'student',
     };
 
-    console.log(this.registerModel);
-
-    this.registrationForm.controls['email'].setValue(this.registerModel.email);
-    this.registrationForm.controls['lastName'].setValue(
-      this.registerModel.lastName
-    );
-    this.registrationForm.controls['firstName'].setValue(
-      this.registerModel.firstName
-    );
-    this.registrationForm.controls['password'].setValue(
-      this.registerModel.password
-    );
-    this.registrationForm.controls['institutionName'].setValue(
-      this.registerModel.institutionName
-    );
-    this.registerService.registerUser(this.registrationForm.value).subscribe(
+    // Send the POST request to the API using the updated service
+    this.registerService.registerUser(userData).subscribe(
       (response) => {
         console.log(response, 'User Data');
         this.toastr.success('Registration successful!', 'Success');
@@ -105,7 +111,5 @@ export class RegisterComponent {
       }
     );
   }
+
 }
-
-
-
