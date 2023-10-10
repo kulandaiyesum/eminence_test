@@ -143,6 +143,7 @@ export class AskeminenceComponent implements OnInit {
         this.toastr.success('Data saved successfully', '', {
           timeOut: 3000,
         });
+        this.isTextareaDisabled = !this.isTextareaDisabled;
       },
       (error) => {
         this.toastr.success('Something went wrong', '', {
@@ -178,6 +179,7 @@ export class AskeminenceComponent implements OnInit {
         this.toastr.success('Data deleted successfully', '', {
           timeOut: 3000,
         });
+        this.isTextareaDisabled = !this.isTextareaDisabled;
       },
       (error) => {
         this.toastr.error('Something went wrong', '', {
@@ -226,6 +228,7 @@ export class AskeminenceComponent implements OnInit {
           this.toastr.success('Email sent successfully', '', {
             timeOut: 3000,
           });
+          this.isTextareaDisabled = !this.isTextareaDisabled;
         },
         (error) => {
           this.toastr.error('Something went wrong', '', {
