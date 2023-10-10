@@ -22,6 +22,12 @@ export class AskeminenceComponent implements OnInit {
     keyword: '',
     answer: '',
   };
+  resultObjectForEmail = {
+    _id: '',
+    keyword: '',
+    answer: '',
+    type: '',
+  };
   isEditing: boolean = false;
   sampleData: any;
   editIconVisibility: boolean = true;
@@ -59,10 +65,16 @@ export class AskeminenceComponent implements OnInit {
     this.askEminence.result = this.sampleData.answer;
     this.resultObject.keyword = this.sampleData.keyword;
     this.resultObject._id = this.sampleData._id;
+    this.resultObjectForEmail.keyword = this.sampleData.keyword;
+    this.resultObjectForEmail._id = this.sampleData._id;
 
     this.toastr.success('Content generated !', '', {
       timeOut: 3000,
     });
+    setTimeout(() => {
+      this.loading = false;
+      // window.location.reload();
+    }, 1000);
     this.askEmininveService.getAskeminice(this.askEminence).subscribe(
       (doc: any) => {
         if (doc.result.answer.length > 0) {
@@ -80,10 +92,10 @@ export class AskeminenceComponent implements OnInit {
         //   timeOut: 3000,
         // });
         console.error('Not data get', error);
-        setTimeout(() => {
-          this.loading = false;
-          // window.location.reload();
-        }, 2000);
+        // setTimeout(() => {
+        //   this.loading = false;
+        //   // window.location.reload();
+        // }, 2000);
       }
     );
   }
@@ -121,14 +133,21 @@ export class AskeminenceComponent implements OnInit {
   }
   saveChanges() {
     this.resultObject.answer = this.askEminence.result;
+    this.resultObjectForEmail.answer = this.askEminence.result;
     console.log(this.resultObject);
     this.askEminence.question = '';
     this.askEminence.result = '';
     this.askEmininveService.askEminenceUpdate(this.resultObject).subscribe(
       (response) => {
         console.log(response);
+        this.toastr.success('Data saved successfully', '', {
+          timeOut: 3000,
+        });
       },
       (error) => {
+        this.toastr.success('Something went wrong', '', {
+          timeOut: 3000,
+        });
         console.error('Error updating data:', error);
       }
     );
@@ -156,8 +175,14 @@ export class AskeminenceComponent implements OnInit {
     this.askEmininveService.askEminencedelete(this.resultObject).subscribe(
       (response) => {
         console.log('Data deleted successfully:', response);
+        this.toastr.success('Data deleted successfully', '', {
+          timeOut: 3000,
+        });
       },
       (error) => {
+        this.toastr.error('Something went wrong', '', {
+          timeOut: 3000,
+        });
         console.error('Error deleting data:', error);
       }
     );
@@ -178,11 +203,8 @@ export class AskeminenceComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         const selectedFormat = result.value;
-        if (selectedFormat === 'text') {
-          this.textFormat();
-        } else if (selectedFormat === 'PDF') {
-          this.pdfFormat();
-        }
+        this.resultObjectForEmail.type = result.value;
+        this.emailSending();
       } else {
         // User clicked "Cancel" or closed the dialog
         // Do nothing or handle as needed
@@ -190,11 +212,27 @@ export class AskeminenceComponent implements OnInit {
     });
   }
 
-  textFormat() {
-    console.log('Text format selected');
-  }
-
-  pdfFormat() {
-    console.log('PDF format selected');
+  emailSending() {
+    console.log('email http call');
+    this.resultObjectForEmail.answer = this.askEminence.result;
+    this.askEminence.question = '';
+    this.askEminence.result = '';
+    console.log(this.resultObjectForEmail);
+    this.askEmininveService
+      .askEminenceEmail(this.resultObjectForEmail)
+      .subscribe(
+        (response: any) => {
+          console.log(response);
+          this.toastr.success('Email sent successfully', '', {
+            timeOut: 3000,
+          });
+        },
+        (error) => {
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
+          console.error('Error deleting data:', error);
+        }
+      );
   }
 }

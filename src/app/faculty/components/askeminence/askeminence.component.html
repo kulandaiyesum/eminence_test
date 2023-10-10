@@ -11,14 +11,31 @@
       </div>
     </div>
   </div>
-  <form class="mb-3">
+  <form class="mb-3" #myForm="ngForm">
     <div class="form-group mb-3">
       <textarea
         class="form-control"
         name="question"
         [(ngModel)]="askEminence.question"
         placeholder="Enter Input..."
+        #questionField="ngModel"
+        required
+        minlength="5"
       ></textarea>
+      <div
+        *ngIf="
+          questionField.invalid &&
+          (questionField.dirty || questionField.touched)
+        "
+        class="text-danger"
+      >
+        <div *ngIf="questionField.errors?.['required']">
+          Some input is required.
+        </div>
+        <div *ngIf="questionField.errors?.['minlength']">
+          Minimum 5 characters are required.
+        </div>
+      </div>
     </div>
     <div class="text-center">
       <button class="btn" type="button" (click)="bulid()">Build</button>
@@ -61,10 +78,8 @@
           class="form-control"
           rows="6"
           name="result"
-          id="resultextarea"
           [(ngModel)]="askEminence.result"
           [disabled]="isTextareaDisabled"
-          #resultTextarea
         ></textarea>
       </div>
     </form>

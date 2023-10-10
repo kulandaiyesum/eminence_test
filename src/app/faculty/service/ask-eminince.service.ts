@@ -9,6 +9,7 @@ export class AskEmininceService {
   public baseUrl = environment.localdomain + 'askEminence/';
   public updateUrl = environment.localdomain + 'askEminence/update';
   public deleteUrl = environment.localdomain + 'askEminence/delete';
+  public emailUrl = environment.localdomain + 'askEminence/email';
 
   constructor(private http: HttpClient) {}
   getAskeminice = (askEminence) => {
@@ -23,7 +24,10 @@ export class AskEmininceService {
     return this.http.put(this.updateUrl, data);
   }
 
-  askEminencedelete(data){
+  askEminencedelete(data) {
     return this.http.delete(this.deleteUrl, data);
+  }
+  askEminenceEmail(data) {
+    return this.http.post(this.emailUrl, data);
   }
 }

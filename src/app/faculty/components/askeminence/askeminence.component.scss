@@ -28,6 +28,10 @@
         resize: none;
       }
     }
+    .error-message {
+      display: block;
+      color: red;
+    }
     .spinner {
       display: flex;
       justify-content: center;
