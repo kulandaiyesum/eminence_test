@@ -6,12 +6,11 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class RegisterService {
-  private userUrl = environment.localdomain + 'user/';
+  private userUrl = environment.localdomain + 'user/register';
 
   constructor(private http: HttpClient) {}
 
   registerUser(user) {
-    console.log(user)
-    return this.http.post(this.userUrl + 'save', user);
+    return this.http.post(this.userUrl, user);
   }
 }

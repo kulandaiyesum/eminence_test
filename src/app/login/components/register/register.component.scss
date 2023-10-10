@@ -5,6 +5,12 @@
   height: auto;
   background-color: white;
   overflow: hidden;
+
+  /* Responsive styles for smaller screens */
+  @media (max-width: 768px) {
+    padding: 20px; /* Adjust padding as needed */
+    height: auto;
+  }
 }
 
 .form_crud {
@@ -19,6 +25,7 @@
     transform: translateY(-50%);
     right: 25px;
     cursor: pointer;
+
     &:hover {
       color: #555;
     }
@@ -30,6 +37,7 @@
       color: #4b5056;
       margin-bottom: 10px;
     }
+
     .tier_info_section {
       margin-bottom: 20px;
       padding: 20px;
@@ -72,21 +80,25 @@
       border: 1px solid #ccc;
       border-radius: 4px;
       height: auto;
-      .form-names{
+
+      .form-names {
         width: 100%;
         display: flex;
         justify-content: space-between;
-        .form-group{
-          width: 50%;
-          input{
+
+        .form-group {
+          width: 48%; /* Adjust the width as needed */
+          input {
             width: 95%;
           }
         }
       }
+
       label {
         font-weight: bold;
         margin-top: 20px;
       }
+
       input {
         width: 100%;
         margin-top: 5px;
@@ -101,16 +113,19 @@
         font-style: normal;
         padding: 6px 8px;
         min-height: 36px;
+
         &::placeholder {
           font-weight: 600;
           color: #bcbcbc;
         }
       }
-      #error-message{
+
+      #error-message {
         color: red;
       }
-      .form_btns{
-        button{
+
+      .form_btns {
+        button {
           width: 100%;
           padding: 8px 16px;
           margin-top: 20px;
@@ -123,7 +138,6 @@
         }
       }
 
-
       .flex_form {
         flex-wrap: wrap;
         justify-content: space-between;
@@ -134,7 +148,6 @@
           display: flex;
           justify-content: space-between;
           margin-right: 2%;
-
 
           .form-group {
             flex: 1;
@@ -176,13 +189,15 @@
 
         .form-group.custom_group {
           flex: 1;
+
           .name-fields-container1 {
-            // border: 1px solid red;
             width: 100%;
             padding: 11px;
+
             label {
               width: 100%;
             }
+
             input {
               border: 1px solid #c6c9cd;
               width: 100%;
@@ -203,13 +218,15 @@
               }
             }
           }
+
           .name-fields-container2 {
-            // border: 1px solid red;
             width: 100%;
             padding: 11px;
+
             label {
               width: 100%;
             }
+
             input {
               border: 1px solid #c6c9cd;
               width: 100%;
@@ -230,13 +247,15 @@
               }
             }
           }
+
           .name-fields-container3 {
-            // border: 1px solid red;
             width: 100%;
             padding: 11px;
+
             label {
               width: 100%;
             }
+
             input {
               border: 1px solid #c6c9cd;
               width: 100%;
@@ -262,6 +281,7 @@
 
       .form_btns {
         width: 100%;
+
         .form_btn_continue {
           button {
             width: 100%;
@@ -290,6 +310,7 @@
             }
           }
         }
+
         .form_btn_login {
           button {
             width: 100%;

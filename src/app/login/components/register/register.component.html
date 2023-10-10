@@ -12,25 +12,26 @@
       <div class="form_heading">REGISTER ACCOUNT</div>
 
       <div class="tier_info_section">
-        <div class="form-Group ratio_group">
-          <label for="premium" class="label_flex">
+        <div class="form-Group ratio_group" *ngFor="let package of b2cPackages">
+          <label
+            for="premium"
+            class="label_flex"
+
+          >
             <input type="radio" id="premium" checked />
-            <span class="tier_info">Premium</span>
+            <span class="tier_info">{{ package.packageName }}</span>
           </label>
           <div class="description">
             Enjoy unlimited question generation with the premium membership!
           </div>
-          <div class="price-options">
+          <div class="price-options" >
             <label for="price"
-              ><input
-                type="radio"
-                name="price"
-                id="price"
-                checked
-              />$8.00/month</label
+              ><input type="radio" name="price" id="price" checked />{{
+                package.amount
+              }}{{ package.durationType }}</label
             >
           </div>
-          <div class="price-options">
+          <!-- <div class="price-options">
             <label for="price">
               <input
                 type="radio"
@@ -38,7 +39,7 @@
                 id="price"
               />$20.00/quarter</label
             >
-          </div>
+          </div> -->
         </div>
       </div>
 
@@ -149,7 +150,6 @@
             <div *ngIf="password.errors?.['required']" id="error-message">
               Password is required
             </div>
-            
           </div>
         </div>
 
