@@ -8,7 +8,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { PackageService } from 'src/app/master/service/package.service';
 import { HttpClient } from '@angular/common/http';
 
-
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -63,11 +62,8 @@ export class RegisterComponent {
     this.dialogRef.close();
   }
   fetchB2CPackages() {
-    this.packageService.getB2CPackages().subscribe((packages:any) => {
-
+    this.packageService.getB2CPackages().subscribe((packages: any) => {
       this.b2cPackages = packages.result;
-
-      console.log(this.b2cPackages,"rqstydfy")
       if (this.b2cPackages.length > 0) {
         this.packageType = this.b2cPackages[0].packageName;
         this.priceOption = `$${this.b2cPackages[0].rate}/quarter`;
@@ -80,16 +76,14 @@ export class RegisterComponent {
       width: '400px',
       height: 'auto',
       data: 'Message from header',
-      // Other MatDialog options
     });
-    // You can handle dialog events here if needed
+
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
   }
 
   onRegistrationSubmit() {
-    // Construct the user data object from the form values
     const userData = {
       firstName: this.registerModel.firstName,
       lastName: this.registerModel.lastName,
@@ -98,11 +92,8 @@ export class RegisterComponent {
       institutionName: this.registerModel.institutionName,
       role: 'student',
     };
-
-    // Send the POST request to the API using the updated service
     this.registerService.registerUser(userData).subscribe(
       (response) => {
-        console.log(response, 'User Data');
         this.toastr.success('Registration successful!', 'Success');
       },
       (error) => {
@@ -111,5 +102,4 @@ export class RegisterComponent {
       }
     );
   }
-
 }
