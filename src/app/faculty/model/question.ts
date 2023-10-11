@@ -1,11 +1,12 @@
 export class Question {
   _id: string;
   reqId: string;
-  userId: string;
+  userId?: string; // need to ask
   options: QgenOption[];
   title: string;
-  isEdited?: boolean;
-  isDeleted?: boolean;
+  status?: number;
+  isEdited: boolean;
+  isDeleted: boolean;
   createdBy?: string;
   modifiedBy?: string;
   createdAt?: string;
@@ -16,6 +17,10 @@ export class QgenOption {
   text: string;
   correctAnswer: string;
   explanation: string;
+  createdBy?: string;
+  modifiedBy?: string;
+  createdAt?: string;
+  modifiedAt?: string;
 }
 
 export class TempQuestion {

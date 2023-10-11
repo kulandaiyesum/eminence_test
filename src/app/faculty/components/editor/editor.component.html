@@ -53,10 +53,10 @@
               />
               <li
                 class="list-item"
-                [ngClass]="{ 'correct-option': option.correctAnswer }"
+                [ngClass]="{ 'correct-option': option.correctAnswer === 'true' }"
               >
                 <label [for]="option._id"
-                  ><div>{{ option.text }}</div></label
+                  ><div>{{ option.text }} {{option._id === selectedAnswer}}</div></label
                 >
               </li>
             </div>
@@ -66,7 +66,7 @@
           class="explanation"
           *ngFor="let option of tempQuestion?.question.options"
         >
-          <ng-container *ngIf="option.correctAnswer">
+          <ng-container *ngIf="option.correctAnswer === 'true'">
             <div class="mb-2" *ngIf="!isEditMode">
               <strong>Explanation: </strong>{{ option.explanation }}
             </div>
