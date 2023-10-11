@@ -17,7 +17,7 @@ export class QgenService {
   // }
 
   submitQgen(qgen: Qgen) {
-    return this.http.post(this.baseUrl + 'saveQgen', qgen);
+    return this.http.post(this.baseUrl + 'qgenRequest', qgen);
   }
 
   getQGen(userId: string) {
