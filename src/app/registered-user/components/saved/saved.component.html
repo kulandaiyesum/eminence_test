@@ -1,1 +1,49 @@
-<p>saved works!</p>
+<div class="saved-container">
+  <div class="main">
+    <div class="table-container">
+      <h6>Past exams</h6>
+      <div class="table-area" #scrollContainer>
+        <table class="exam-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Mode</th>
+              <th>Question</th>
+              <th>Subject</th>
+              <th>System</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let exam of examDetails">
+              <td>{{ exam.date }}</td>
+              <td>{{ exam.mode }}</td>
+              <td>{{ exam.question }}</td>
+              <td>{{ exam.subject }}</td>
+              <td>{{ exam.system }}</td>
+              <td>{{ exam.score }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
+    </div>
+    <div class="room-history">
+      <h6>Exam Room History</h6>
+      <!-- <div class="history-container">
+        <div class="room-history-data">
+          <div *ngFor="let item of roomHistory; let i = index" [ngClass]="{'active': i === currentIndex}">
+            <div>
+              <h3>{{ item.title }}</h3>
+              <p>{{ item.subtitle }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="slide-navigation">
+          <button (click)="moveSlide(-1)" [disabled]="currentIndex === 0">←</button>
+          <button (click)="moveSlide(1)" [disabled]="currentIndex === roomHistory.length - 1">→</button>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</div>
