@@ -1,9 +1,17 @@
 import { Subject } from 'rxjs';
 import { Question, TempQuestion } from '../../model/question';
 import { QgenService } from './../../service/qgen.service';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { QuerstionService } from '../../service/querstion.service';
 import { ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-editor',
@@ -11,28 +19,34 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./editor.component.scss'],
 })
 export class EditorComponent implements OnInit {
-  eventsSubject: Subject<void> = new Subject<void>();
-  // public questionList;
   public questLength: number;
-  // public questions1;
+
   questions: Question[];
   tempQuestion: TempQuestion;
   reqId: string;
-  // requet_id: string;
   reasons: string[] = [
     "Simply didn't need it",
     'Inaccuracy in question/answer choices',
     'Inaccuracy in explanation',
     'Question was too easy',
   ];
+  showDiv = false;
+  selectedAnswer: string = '';
+  isEditMode: boolean = false;
+  selectedOptionExplanation: string = '';
+
+  previousStateInEditMode: TempQuestion;
+  currentStateInEditMode: TempQuestion;
   constructor(
     private qgenService: QgenService,
     private questionService: QuerstionService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
+    private toastr: ToastrService
   ) {}
   ngOnInit(): void {
     this.reqId = this.activatedRoute.snapshot.params['reqId'];
-    if(this.reqId) {
+    if (this.reqId) {
       this.getAllQuestions(this.reqId);
     }
     console.log(this.reqId);
@@ -47,14 +61,6 @@ export class EditorComponent implements OnInit {
       this.getQuestion(this.questions[0]._id, 0);
     });
   }
-  // getdata() {
-  //   this.qgenService.getQgenQuestionData().subscribe((res: any) => {
-  //     console.log(res);
-
-  //     this.questions = res[0]?.questions;
-  //     this.requet_id = res[0]?.request_id;
-  //   });
-  // }
   getQuestion(question_id: string, index: number) {
     const findQuestion = this.questions.find((q) => q._id === question_id);
     this.tempQuestion = {
@@ -64,7 +70,96 @@ export class EditorComponent implements OnInit {
   }
 
   saveChange() {
-    console.log('save called in parent');
-    this.eventsSubject.next();
+    this.isEditMode = false;
+    this.cdr.detectChanges();
+
+    this.tempQuestion.question.options.forEach((option) => {
+      if (option._id === this.selectedAnswer) {
+        option.correctAnswer = 'true';
+        option.explanation = this.selectedOptionExplanation;
+      } else {
+        option.correctAnswer = 'false';
+        option.explanation = '';
+      }
+    });
+    let data = {
+      selectAnswer: this.selectedAnswer,
+      option: this.selectedOptionExplanation,
+      temp: this.tempQuestion,
+    };
+    this.questionService.UpdateOption(data).subscribe((doc: any) => {
+      this.toastr.success(doc.message, '', {
+        timeOut: 3000,
+      });
+      this.getAllQuestions(this.reqId);
+    });
+  }
+  toggleDivSection() {
+    this.showDiv = !this.showDiv;
+  }
+
+  editQuestion(question: Question) {
+    this.isEditMode = true;
+    const selectedOption = this.tempQuestion.question.options.find(
+      (option) => option.correctAnswer === 'true'
+    );
+    console.log(selectedOption);
+    if (selectedOption) {
+      this.selectedAnswer = selectedOption._id;
+      console.log(this.selectedAnswer);
+      this.selectedOptionExplanation = selectedOption.explanation;
+    }
+  }
+
+  cancelEdit() {
+    this.isEditMode = false;
+  }
+
+  selectAnswer(answerId: string) {
+    this.selectedAnswer = answerId;
+  }
+
+  updateExplanation(optionid: string) {
+    const correctAnswer = this.tempQuestion.question?.options.find(
+      (option) => option._id === optionid
+    );
+    if (correctAnswer) {
+      this.selectedAnswer = correctAnswer._id;
+      this.selectedOptionExplanation = correctAnswer.explanation;
+    }
+  }
+  deleteQuestion(reason: string) {
+    const payload = {
+      _id: this.tempQuestion.question._id,
+      reqId: this.tempQuestion.question.reqId,
+      reason,
+    };
+    this.showDiv = false;
+    Swal.fire({
+      title: 'Delete',
+      text: 'Are you sure you want to Delete?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.questionService.daleteQuestion(payload).subscribe(
+          (response: any) => {
+            console.log(response);
+            this.toastr.success(response.message, '', {
+              timeOut: 3000,
+            });
+            this.getAllQuestions(this.reqId);
+          },
+          (err) => {
+            console.log(err);
+            this.toastr.error(err.error.message, '', {
+              timeOut: 3000,
+            });
+          }
+        );
+      }
+    });
   }
 }

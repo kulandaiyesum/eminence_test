@@ -38,81 +38,90 @@
       }
     }
     /* Question Links section */
+
+    /* Questions section*/
+    .question-container {
+      display: flex;
+      .question-no {
+        padding: 0 10px 10px 10px;
+        width: fit-content;
+        font-weight: 600;
+      }
+      .question-content {
+        width: max-content;
+        .question-q {
+          margin-bottom: 10px;
+        }
+        ol.options {
+          width: fit-content;
+          counter-reset: my-counter;
+          list-style: none;
+          padding: 6px;
+          li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 30px;
+            padding-right: 10px;
+            display: inline-block;
+            &::before {
+              content: counter(my-counter, upper-alpha) ".";
+              counter-increment: my-counter;
+              position: absolute;
+              left: 10px;
+              top: 50%;
+              transform: translateY(-50%);
+            }
+          }
+          .correct-option {
+            width: fit-content;
+            border: 2px solid var(--qgen-green);
+          }
+        }
+        .explanation {
+        }
+      }
+      .question-action {
+        width: fit-content;
+        padding-left: 10px;
+        mat-icon {
+          font-size: 36px;
+          width: 36px;
+          height: 36px;
+          cursor: pointer;
+        }
+        .delete-option {
+          position: relative;
+          .why-delete {
+            position: absolute;
+            top: 0;
+            right: 50px;
+            background-color: #fff;
+            border-radius: 20px;
+            min-width: 320px;
+            padding: 4px;
+            border: 2px solid #0e0d0d;
+            font-size: 14px;
+            .why-q {
+              background-color: #e2e8f0;
+              text-align: center;
+              font-weight: bold;
+              padding: 6px;
+              border-radius: 20px;
+            }
+            .reason {
+              padding: 10px;
+              font-weight: 700;
+              cursor: pointer;
+              border-radius: 16px;
+              &:hover {
+                background-color: #f2f2f2;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    /* Questions section*/
   }
 }
-
-/* Questions section */
-// .question_container {
-//   display: flex;
-//   .question_no {
-//     padding: 0 10px 10px 10px;
-//     width: fit-content;
-//     font-weight: 600;
-//   }
-//   .question_content {
-//     width: max-content;
-//     .question_q {
-//       margin-bottom: 10px;
-//     }
-//     ol.answer_options {
-//       width: fit-content;
-//       counter-reset: my-counter;
-//       list-style: none;
-//       padding: 6px;
-//       li {
-//         margin-bottom: 10px;
-//         position: relative;
-//         padding-left: 30px;
-//         padding-right: 10px;
-//         display: inline-block;
-//         &::before {
-//           content: counter(my-counter, upper-alpha) ".";
-//           counter-increment: my-counter;
-//           position: absolute;
-//           left: 10px;
-//           top: 50%;
-//           transform: translateY(-50%);
-//         }
-//       }
-//       .correct_option {
-//         width: fit-content;
-//         border: 2px solid var(--qgen-green);
-//       }
-//     }
-//   }
-//   .question_action {
-//     width: fit-content;
-//     padding-left: 10px;
-//     mat-icon {
-//       font-size: 36px;
-//       width: 36px;
-//       height: 36px;
-//     }
-//     .delete_option {
-//       position: relative;
-//       .why_delete {
-//         position: absolute;
-//         top: 0;
-//         right: 50px;
-//         background-color: #fff;
-//         border-radius: 20px;
-//         min-width: 320px;
-//         padding: 4px;
-//         border: 2px solid #0e0d0d;
-//         font-size: 14px;
-//         .why_q {
-//           background-color: #e2e8f0;
-//           text-align: center;
-//           font-weight: bold;
-//           padding: 6px;
-//           border-radius: 20px;
-//         }
-//         .reason {
-//           padding: 10px;
-//           font-weight: 700;
-//         }
-//       }
-//     }
-//   }
-// }
-/* Questions section */
