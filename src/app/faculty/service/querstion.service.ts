@@ -14,4 +14,8 @@ export class QuerstionService {
   UpdateOption(data) {
     return this.http.put(this.baseUrl + 'updateOption', data);
   }
+
+  daleteQuestion(data) {
+    return this.http.delete(this.baseUrl + 'delete', { body: data });
+  }
 }
