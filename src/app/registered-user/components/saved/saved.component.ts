@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import Scrollbar from 'smooth-scrollbar';
+import { AnimationBuilder, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-saved',
@@ -106,11 +107,49 @@ export class SavedComponent {
     },
   ];
 
-  currentIndex = 0;
+  translateValue = 0; // Initial translation value
+  // slideWidth = 300; // Adjust this based on your slide width
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
+  currentSlideIndex = 0;
+  slidesData = [
+    {
+      title: 'Anatomy, Cardiovascular',
+      description: 'Lorem ipsum dolor sit amet consectetur.'
+    },
+    {
+      title: 'Another Title',
+      description: 'Lorem ipsum dolor sit amet consectetur.'
+    },
+    {
+      title: 'Another Title 3',
+      description: 'Lorem ipsum dolor sit amet consectetur.'
+    },
+    {
+      title: 'Another Title 4',
+      description: 'Lorem ipsum dolor sit amet consectetur.'
+    },
+    {
+      title: 'Another Title 5',
+      description: 'Lorem ipsum dolor sit amet consectetur.'
+    },
+    {
+      title: 'Another Title 6',
+      description: 'Lorem ipsum dolor sit amet consectetur.'
+    },
+    {
+      title: 'Another Title 7',
+      description: 'Lorem ipsum dolor sit amet consectetur.'
+    },
+    {
+      title: 'Another Title 8',
+      description: 'Lorem ipsum dolor sit amet consectetur.'
+    },
+
+  ];
+  constructor(private animationBuilder: AnimationBuilder){}
 
   ngAfterViewInit() {
     this.dataSource = new MatTableDataSource(this.examDetails);
@@ -120,12 +159,32 @@ export class SavedComponent {
       // Smooth Scrollbar options go here
     });
   }
-
-  moveSlide(direction: number) {
-    if (direction === 1 && this.currentIndex < this.roomHistory.length - 1) {
-      this.currentIndex++;
-    } else if (direction === -1 && this.currentIndex > 0) {
-      this.currentIndex--;
+  prevSlide() {
+    if (this.currentSlideIndex > 0) {
+      this.currentSlideIndex--;
+      this.animateSlider(-this.currentSlideIndex * this.slideWidth);
     }
   }
+
+  nextSlide() {
+    if (this.currentSlideIndex < this.slidesData.length - 1) {
+      this.currentSlideIndex++;
+      this.animateSlider(-this.currentSlideIndex * this.slideWidth);
+    }
+  }
+
+  animateSlider(value: number) {
+    const factory = this.animationBuilder.build([
+      animate('300ms', style({ transform: `translateX(${value}px)` }))
+    ]);
+    const player = factory.create(document.querySelector('.slider'));
+    player.play();
+  }
+
+  get slideWidth() {
+    // Calculate the slide width based on your design
+    return window.innerWidth <= 767 ? window.innerWidth : 600;
+  }
+
+
 }

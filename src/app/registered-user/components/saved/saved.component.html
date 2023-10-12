@@ -30,20 +30,32 @@
     </div>
     <div class="room-history">
       <h6>Exam Room History</h6>
-      <!-- <div class="history-container">
-        <div class="room-history-data">
-          <div *ngFor="let item of roomHistory; let i = index" [ngClass]="{'active': i === currentIndex}">
-            <div>
-              <h3>{{ item.title }}</h3>
-              <p>{{ item.subtitle }}</p>
+      <div class="history-area">
+        <div class="arrow-icon">
+          <mat-icon (click)="prevSlide()">keyboard_arrow_left</mat-icon>
+        </div>
+        <div class="history">
+          <div class="slider" [style.transform]="'translateX(' + (-currentSlideIndex * slideWidth) + 'px)'">
+            <!-- Content for the slider -->
+            <div class="slide" *ngFor="let slide of slidesData; let i = index" [style.width.px]="slideWidth">
+              <div class="help-icon">
+                <mat-icon>help</mat-icon>
+              </div>
+              <div class="content">
+                <h6>{{ slide.title }}</h6>
+                <p>{{ slide.description }}</p>
+              </div>
+              <div class="button">
+                <button>View</button>
+              </div>
             </div>
           </div>
         </div>
-        <div class="slide-navigation">
-          <button (click)="moveSlide(-1)" [disabled]="currentIndex === 0">←</button>
-          <button (click)="moveSlide(1)" [disabled]="currentIndex === roomHistory.length - 1">→</button>
+
+        <div class="arrow-icon">
+          <mat-icon (click)="nextSlide()">keyboard_arrow_right</mat-icon>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </div>

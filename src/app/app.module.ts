@@ -15,6 +15,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { AuthHttpInterceptorService } from './shared/service/auth-http-interceptor..service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,7 +34,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    MatCheckboxModule,
+    MatCheckboxModule,NgbCarouselModule,
   ],
   providers: [
     {
