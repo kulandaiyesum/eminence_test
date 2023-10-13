@@ -65,16 +65,19 @@ export class QgenComponent implements OnInit {
     this.qGenObject.topic = this.topicId;
     this.qGenObject.userId = this.userId;
     this.qGenObject.createdBy = this.userFirstName;
+    this.qGenObject.keywords = this.stringToArray(this.gGenForm.value.keywords);
     this.gGenService.submitQgen(this.qGenObject).subscribe(
       (response: any) => {
-        console.log(response);
-        this.getPendingQuestions;
+        this.getPendingQuestions();
       },
       (error: any) => {
-        console.log(error);
       }
     );
     this.gGenForm.reset();
+  }
+
+  private stringToArray(inputKeyword: string) {
+    return inputKeyword.split(',').map((item) => item.trim());
   }
 
   routeEditor(reqId: string) {
