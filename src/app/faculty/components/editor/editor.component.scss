@@ -29,6 +29,10 @@
       gap: 1rem;
       button {
         background-color: var(--qgen-logo-yellow);
+        &.edited-button {
+          background-color: green;
+          color: #fff;
+        }
         border-radius: 50%;
         border: none;
         font-weight: 600;

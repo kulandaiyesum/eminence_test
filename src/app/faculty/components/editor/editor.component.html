@@ -25,6 +25,7 @@
       <button
         *ngFor="let question of questions; let i = index"
         (click)="getQuestion(question._id, i)"
+        [ngClass]="{'edited-button': question.isEdited}"
       >
         {{ i + 1 }}
       </button>
