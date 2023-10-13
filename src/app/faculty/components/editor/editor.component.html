@@ -39,6 +39,7 @@
         <div
           [contentEditable]="isEditMode"
           [ngClass]="{ 'edit-mode': isEditMode, 'question-q': !isEditMode }"
+          #editableDiv
         >
           {{ tempQuestion?.question.title }}
         </div>
