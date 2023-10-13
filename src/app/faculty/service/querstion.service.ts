@@ -9,7 +9,7 @@ export class QuerstionService {
   public baseUrl = environment.localdomain + 'question/';
   constructor(private http: HttpClient) {}
   getAllQuestions(data) {
-    return this.http.put(this.baseUrl + 'getQuestions', data);
+    return this.http.put(this.baseUrl + data.reqId, data);
   }
   UpdateOption(data) {
     return this.http.put(this.baseUrl + 'updateOption', data);
