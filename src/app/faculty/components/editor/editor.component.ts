@@ -4,9 +4,9 @@ import { QgenService } from './../../service/qgen.service';
 import {
   ChangeDetectorRef,
   Component,
-  EventEmitter,
+  ElementRef,
   OnInit,
-  Output,
+  ViewChild,
 } from '@angular/core';
 import { QuerstionService } from '../../service/querstion.service';
 import { ActivatedRoute } from '@angular/router';
@@ -34,6 +34,7 @@ export class EditorComponent implements OnInit {
   selectedAnswer: string = '';
   isEditMode: boolean = false;
   selectedOptionExplanation: string = '';
+  @ViewChild('editableDiv') editableDiv: ElementRef;
   constructor(
     private qgenService: QgenService,
     private questionService: QuerstionService,
@@ -64,6 +65,8 @@ export class EditorComponent implements OnInit {
       index: index,
       question: findQuestion,
     };
+    this.editableDiv.nativeElement.textContent =
+      this.tempQuestion.question.title;
   }
 
   saveChange() {
@@ -79,6 +82,8 @@ export class EditorComponent implements OnInit {
         option.explanation = '';
       }
     });
+    this.tempQuestion.question.title =
+      this.editableDiv.nativeElement.textContent;
     let data = {
       selectAnswer: this.selectedAnswer,
       option: this.selectedOptionExplanation,
