@@ -19,6 +19,24 @@ export class SavedComponent {
     'system',
     'score',
   ];
+  images = [
+    [
+      { title: 'Slide 1', content: 'Content for Slide 1' },
+      { title: 'Slide 2', content: 'Content for Slide 2' },
+      { title: 'Slide 3', content: 'Content for Slide 3' },
+    ],
+    [
+      { title: 'Slide 4', content: 'Content for Slide 4' },
+      { title: 'Slide 5', content: 'Content for Slide 5' },
+      { title: 'Slide 6', content: 'Content for Slide 6' },
+    ],
+    [
+      { title: 'Slide 7', content: 'Content for Slide 7' },
+      { title: 'Slide 8', content: 'Content for Slide 8' },
+      { title: 'Slide 9', content: 'Content for Slide 9' },
+    ],
+  ];
+
   dataSource: MatTableDataSource<any>;
   examDetails = [
     {
@@ -117,39 +135,38 @@ export class SavedComponent {
   slidesData = [
     {
       title: 'Anatomy, Cardiovascular',
-      description: 'Lorem ipsum dolor sit amet consectetur.'
+      description: 'Lorem ipsum dolor sit amet consectetur.',
     },
     {
       title: 'Another Title',
-      description: 'Lorem ipsum dolor sit amet consectetur.'
+      description: 'Lorem ipsum dolor sit amet consectetur.',
     },
     {
       title: 'Another Title 3',
-      description: 'Lorem ipsum dolor sit amet consectetur.'
+      description: 'Lorem ipsum dolor sit amet consectetur.',
     },
     {
       title: 'Another Title 4',
-      description: 'Lorem ipsum dolor sit amet consectetur.'
+      description: 'Lorem ipsum dolor sit amet consectetur.',
     },
     {
       title: 'Another Title 5',
-      description: 'Lorem ipsum dolor sit amet consectetur.'
+      description: 'Lorem ipsum dolor sit amet consectetur.',
     },
     {
       title: 'Another Title 6',
-      description: 'Lorem ipsum dolor sit amet consectetur.'
+      description: 'Lorem ipsum dolor sit amet consectetur.',
     },
     {
       title: 'Another Title 7',
-      description: 'Lorem ipsum dolor sit amet consectetur.'
+      description: 'Lorem ipsum dolor sit amet consectetur.',
     },
     {
       title: 'Another Title 8',
-      description: 'Lorem ipsum dolor sit amet consectetur.'
+      description: 'Lorem ipsum dolor sit amet consectetur.',
     },
-
   ];
-  constructor(private animationBuilder: AnimationBuilder){}
+  constructor(private animationBuilder: AnimationBuilder) {}
 
   ngAfterViewInit() {
     this.dataSource = new MatTableDataSource(this.examDetails);
@@ -175,7 +192,7 @@ export class SavedComponent {
 
   animateSlider(value: number) {
     const factory = this.animationBuilder.build([
-      animate('300ms', style({ transform: `translateX(${value}px)` }))
+      animate('300ms', style({ transform: `translateX(${value}px)` })),
     ]);
     const player = factory.create(document.querySelector('.slider'));
     player.play();
@@ -185,6 +202,4 @@ export class SavedComponent {
     // Calculate the slide width based on your design
     return window.innerWidth <= 767 ? window.innerWidth : 600;
   }
-
-
 }
