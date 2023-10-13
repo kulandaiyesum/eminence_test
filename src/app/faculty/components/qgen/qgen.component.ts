@@ -51,7 +51,6 @@ export class QgenComponent implements OnInit {
   getPendingQuestions() {
     this.gGenService.getQGen(this.userId).subscribe(
       (res: any) => {
-        console.log(res);
         this.qgenObjectList = res.result;
       },
       (err) => {
@@ -61,15 +60,15 @@ export class QgenComponent implements OnInit {
   }
 
   submitQgen() {
-    this.qGenObject.keywords = this.gGenForm.value.keywords;
+    // this.qGenObject.keywords = this.gGenForm.value.keywords;
     this.qGenObject.questionsCount = this.gGenForm.value.questionsCount;
     this.qGenObject.topic = this.topicId;
     this.qGenObject.userId = this.userId;
     this.qGenObject.createdBy = this.userFirstName;
-
     this.gGenService.submitQgen(this.qGenObject).subscribe(
       (response: any) => {
         console.log(response);
+        this.getPendingQuestions;
       },
       (error: any) => {
         console.log(error);
@@ -78,7 +77,7 @@ export class QgenComponent implements OnInit {
     this.gGenForm.reset();
   }
 
-  routeEditor(reqId: string){
+  routeEditor(reqId: string) {
     console.log(reqId);
   }
 }

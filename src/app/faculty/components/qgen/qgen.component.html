@@ -21,6 +21,7 @@
         name=""
         id=""
         rows="6"
+        [(ngModel)]="qGenObject.keywords"
         formControlName="keywords"
         placeholder="Enter Input..."
       >
@@ -94,8 +95,8 @@
       <div
         class="response"
         *ngFor="let qgenObject of qgenObjectList"
-        [routerLink]="['/eminence/faculty/editor',qgenObject._id]"
-        >
+        [routerLink]="['/eminence/faculty/editor', qgenObject._id]"
+      >
         <!-- (click)="routeEditor(qgenObject._id)" -->
         <div class="input_wrap">
           <strong>Input: </strong>{{ qgenObject.keywords }}
