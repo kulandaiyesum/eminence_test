@@ -52,6 +52,14 @@
         .question-q {
           margin-bottom: 10px;
         }
+        .edit-mode {
+          margin-bottom: 10px;
+          background-color: #fff;
+          border-radius: 10px;
+          padding: 8px;
+          border: 1px solid #000;
+        }
+
         ol.options {
           width: fit-content;
           counter-reset: my-counter;
@@ -123,5 +131,10 @@
     }
 
     /* Questions section*/
+  }
+}
+@media (max-width: 576px) {
+  .editor_container{
+    padding: 10px;
   }
 }

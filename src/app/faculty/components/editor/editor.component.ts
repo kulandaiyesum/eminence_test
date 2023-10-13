@@ -34,9 +34,6 @@ export class EditorComponent implements OnInit {
   selectedAnswer: string = '';
   isEditMode: boolean = false;
   selectedOptionExplanation: string = '';
-
-  previousStateInEditMode: TempQuestion;
-  currentStateInEditMode: TempQuestion;
   constructor(
     private qgenService: QgenService,
     private questionService: QuerstionService,

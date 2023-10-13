@@ -1,6 +1,6 @@
 export class Qgen {
   _id: string;
-  keywords: [];
+  keywords: string[];
   questionsCount: number;
   topicId?: string;
   userId: string;

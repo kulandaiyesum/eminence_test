@@ -35,7 +35,12 @@
     <div class="question-container">
       <div class="questioeditQuestionn-no">{{ tempQuestion?.index + 1 }}.</div>
       <div class="question-content">
-        <div class="question-q">{{ tempQuestion?.question.title }}</div>
+        <div
+          [contentEditable]="isEditMode"
+          [ngClass]="{ 'edit-mode': isEditMode, 'question-q': !isEditMode }"
+        >
+          {{ tempQuestion?.question.title }}
+        </div>
         <ol class="options">
           <ng-container *ngFor="let option of tempQuestion?.question?.options">
             <div>
@@ -53,11 +58,16 @@
               />
               <li
                 class="list-item"
-                [ngClass]="{ 'correct-option': option.correctAnswer === 'true' }"
+                [ngClass]="{
+                  'correct-option': option.correctAnswer === 'true'
+                }"
               >
-                <label [for]="option._id"
-                  ><div>{{ option.text }} {{option._id === selectedAnswer}}</div></label
-                >
+                <span *ngIf="isEditMode">
+                  <input type="text" name="text" [(ngModel)]="option.text" />
+                </span>
+                <label *ngIf="!isEditMode" [for]="option._id">
+                  <div>{{ option.text }}</div>
+                </label>
               </li>
             </div>
           </ng-container>
