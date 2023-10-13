@@ -32,28 +32,43 @@
       <h6>Exam Room History</h6>
       <div class="history-area">
         <div class="arrow-icon">
-          <mat-icon (click)="prevSlide()">keyboard_arrow_left</mat-icon>
+          <!-- <mat-icon (click)="prevSlide()">keyboard_arrow_left</mat-icon> -->
         </div>
         <div class="history">
-          <div class="slider" [style.transform]="'translateX(' + (-currentSlideIndex * slideWidth) + 'px)'">
-            <!-- Content for the slider -->
-            <div class="slide" *ngFor="let slide of slidesData; let i = index" [style.width.px]="slideWidth">
-              <div class="help-icon">
-                <mat-icon>help</mat-icon>
+          <ngb-carousel #carousel="ngbCarousel" *ngIf="images">
+            <ng-template ngbSlide *ngFor="let group of images; let i = index">
+              <div class="carousel-content">
+                <!-- Your content for each group of slides -->
+                <div class="slide-content">
+                  <div class="slide-row">
+                    <!-- Iterate through the images in the current group -->
+                    <div class="slide" *ngFor="let image of group">
+                      <div class="help-icon">
+                        <mat-icon>help</mat-icon>
+                      </div>
+                      <div class="content">
+                        <h6>{{ image.title }}</h6>
+                        <p>{{ image.content }}</p>
+                      </div>
+                      <div class="button">
+                        <button>View</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Navigation icons -->
+                <button class="carousel-control-prev" (click)="carousel.prev()">
+                  <i class="fas fa-chevron-left custom-icon"></i>
+                </button>
+                <button class="carousel-control-next" (click)="carousel.next()">
+                  <i class="fas fa-chevron-right custom-icon"></i>
+                </button>
               </div>
-              <div class="content">
-                <h6>{{ slide.title }}</h6>
-                <p>{{ slide.description }}</p>
-              </div>
-              <div class="button">
-                <button>View</button>
-              </div>
-            </div>
-          </div>
+            </ng-template>
+          </ngb-carousel>
         </div>
-
         <div class="arrow-icon">
-          <mat-icon (click)="nextSlide()">keyboard_arrow_right</mat-icon>
+          <!-- <mat-icon (click)="nextSlide()">keyboard_arrow_right</mat-icon> -->
         </div>
       </div>
     </div>
