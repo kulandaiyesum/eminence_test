@@ -51,7 +51,9 @@ export class QgenComponent implements OnInit {
   getPendingQuestions() {
     this.gGenService.getQGen(this.userId).subscribe(
       (res: any) => {
-        this.qgenObjectList = res.result;
+        const tempHolder = res.result;
+        // console.log(res);
+        this.qgenObjectList = tempHolder.slice(0, 3);
       },
       (err) => {
         console.log(err);
@@ -70,8 +72,7 @@ export class QgenComponent implements OnInit {
       (response: any) => {
         this.getPendingQuestions();
       },
-      (error: any) => {
-      }
+      (error: any) => {}
     );
     this.gGenForm.reset();
   }
