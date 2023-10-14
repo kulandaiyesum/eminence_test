@@ -11,8 +11,8 @@ export class QuerstionService {
   getAllQuestions(data) {
     return this.http.put(this.baseUrl + data.reqId, data);
   }
-  UpdateOption(data) {
-    return this.http.put(this.baseUrl + 'updateOption', data);
+  UpdateOption(reqId, data) {
+    return this.http.put(this.baseUrl + reqId, data);
   }
 
   daleteQuestion(data) {

@@ -89,12 +89,14 @@ export class EditorComponent implements OnInit {
       option: this.selectedOptionExplanation,
       temp: this.tempQuestion,
     };
-    this.questionService.UpdateOption(data).subscribe((doc: any) => {
-      this.toastr.success(doc.message, '', {
-        timeOut: 3000,
+    this.questionService
+      .UpdateOption(this.reqId, data)
+      .subscribe((doc: any) => {
+        this.toastr.success(doc.message, '', {
+          timeOut: 3000,
+        });
+        this.getAllQuestions(this.reqId);
       });
-      this.getAllQuestions(this.reqId);
-    });
   }
   toggleDivSection() {
     this.showDiv = !this.showDiv;
