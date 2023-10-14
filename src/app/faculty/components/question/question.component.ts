@@ -90,19 +90,19 @@ export class QuestionComponent implements OnInit, OnDestroy {
   }
 
   saveChanges() {
-    this.isEditMode = false;
-    this.cdr.detectChanges();
-    let data = {
-      selectAnswer: this.selectedAnswer,
-      option: this.selectedOptionExplanation,
-      temp: this.tempQuestion,
-    };
-    this.questionService.UpdateOption(data).subscribe((doc: any) => {
-      this.toastr.success(doc.message, '', {
-        timeOut: 3000,
-      });
-      window.location.reload();
-    });
+    // this.isEditMode = false;
+    // this.cdr.detectChanges();
+    // let data = {
+    //   selectAnswer: this.selectedAnswer,
+    //   option: this.selectedOptionExplanation,
+    //   temp: this.tempQuestion,
+    // };
+    // this.questionService.UpdateOption(data).subscribe((doc: any) => {
+    //   this.toastr.success(doc.message, '', {
+    //     timeOut: 3000,
+    //   });
+    //   window.location.reload();
+    // });
   }
 
   deleteQuestion(reason: string) {
