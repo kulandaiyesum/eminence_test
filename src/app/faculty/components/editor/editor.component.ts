@@ -148,21 +148,23 @@ export class EditorComponent implements OnInit {
       cancelButtonText: 'Cancel',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.questionService.daleteQuestion(payload).subscribe(
-          (response: any) => {
-            console.log(response);
-            this.toastr.success(response.message, '', {
-              timeOut: 3000,
-            });
-            this.getAllQuestions(this.reqId);
-          },
-          (err) => {
-            console.log(err);
-            this.toastr.error(err.error.message, '', {
-              timeOut: 3000,
-            });
-          }
-        );
+        this.questionService
+          .daleteQuestion(this.tempQuestion.question._id)
+          .subscribe(
+            (response: any) => {
+              console.log(response);
+              this.toastr.success(response.message, '', {
+                timeOut: 3000,
+              });
+              this.getAllQuestions(this.reqId);
+            },
+            (err) => {
+              console.log(err);
+              this.toastr.error(err.error.message, '', {
+                timeOut: 3000,
+              });
+            }
+          );
       }
     });
   }
