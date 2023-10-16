@@ -3,9 +3,12 @@
     <div class="data-area">
       <div class="data">
         <div class="control">
+          <div class="h2 mb-5 text-center">Institution Master</div>
           <div class="button">
             <input placeholder="Search here" (keyup)="applyFilter($event)" />
-            <button mat-raised-button (click)="addData()">Add Data</button>
+            <button mat-raised-button (click)="addData()">
+              Add Institution
+            </button>
           </div>
         </div>
         <div class="table">
@@ -21,72 +24,108 @@
                 *matHeaderCellDef
                 mat-sort-header
                 id="first-header"
-                >Name</mat-header-cell
+                >INSTITUTION NAME</mat-header-cell
               >
-              <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+              <mat-cell
+                *matCellDef="let element; let i = index"
+                [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+                >{{ element.institutionName || element.name }}</mat-cell
+              >
             </ng-container>
 
             <!-- Email Column -->
             <ng-container matColumnDef="email">
               <mat-header-cell *matHeaderCellDef mat-sort-header
-                >Email</mat-header-cell
+                >EMAIL</mat-header-cell
               >
-              <mat-cell *matCellDef="let element">{{ element.email }}</mat-cell>
+              <mat-cell
+                *matCellDef="let element; let i = index"
+                [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+                >{{ element.email }}</mat-cell
+              >
             </ng-container>
             <!-- address Column -->
-            <ng-container matColumnDef="address">
+            <!-- <ng-container matColumnDef="address">
               <mat-header-cell *matHeaderCellDef mat-sort-header
                 >Address</mat-header-cell
               >
               <mat-cell *matCellDef="let element">{{
                 element.address
               }}</mat-cell>
-            </ng-container>
+            </ng-container> -->
             <!-- state Column -->
-            <ng-container matColumnDef="state">
+            <!-- <ng-container matColumnDef="state">
               <mat-header-cell *matHeaderCellDef mat-sort-header
                 >State</mat-header-cell
               >
               <mat-cell *matCellDef="let element">{{ element.state }}</mat-cell>
-            </ng-container>
+            </ng-container> -->
             <!-- zip Column -->
-            <ng-container matColumnDef="zip">
+            <!-- <ng-container matColumnDef="zip">
               <mat-header-cell *matHeaderCellDef mat-sort-header
-                >Zip</mat-header-cell
+                >SUBSCRIPTION</mat-header-cell
               >
-              <mat-cell *matCellDef="let element">{{ element.zip }}</mat-cell>
-            </ng-container>
+              <mat-cell *matCellDef="let element"
+                >${{ element.packageNameId.amount }}/{{
+                  element.packageNameId.packageName
+                }}</mat-cell
+              >
+            </ng-container> -->
             <!-- Update Column -->
-            <ng-container matColumnDef="update">
+            <ng-container matColumnDef="city">
               <mat-header-cell *matHeaderCellDef mat-sort-header
-                >Modified</mat-header-cell
+                >CITY</mat-header-cell
               >
-              <mat-cell *matCellDef="let element">{{
-                element.modifiedAt
-              }}</mat-cell>
+              <mat-cell
+                *matCellDef="let element; let i = index"
+                [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+                >{{ element.city }}</mat-cell
+              >
             </ng-container>
 
             <!-- status Column -->
             <ng-container matColumnDef="status">
               <mat-header-cell *matHeaderCellDef mat-sort-header
-                >Status</mat-header-cell
+                >STATUS</mat-header-cell
               >
-              <mat-cell *matCellDef="let element">
-                <mat-slide-toggle></mat-slide-toggle>
+              <mat-cell
+                *matCellDef="let element; let i = index"
+                [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+              >
+                <mat-slide-toggle
+                  class="example-margin"
+                  color="primary"
+                  [checked]="element.status == 1"
+                >
+                </mat-slide-toggle>
               </mat-cell>
             </ng-container>
 
             <!-- Action -->
             <ng-container matColumnDef="action">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >ACTION</mat-header-cell
+              >
+              <mat-cell
+                *matCellDef="let element; let i = index"
+                [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+              >
+                <mat-icon (click)="updateInstitute(element)">edit</mat-icon>
+                <mat-icon (click)="deleteInstitute(element)">delete</mat-icon>
+              </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="add">
               <mat-header-cell
                 *matHeaderCellDef
                 mat-sort-header
                 id="last-header"
-                >Action</mat-header-cell
+                >Package</mat-header-cell
               >
-              <mat-cell *matCellDef="let element">
-                <mat-icon (click)="updateInstitute(element)">edit</mat-icon>
-                <mat-icon (click)="deleteInstitute(element)">delete</mat-icon>
+              <mat-cell
+                *matCellDef="let element; let i = index"
+                [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+              >
+                <mat-icon (click)="addSubscription(element)">add</mat-icon>
               </mat-cell>
             </ng-container>
 

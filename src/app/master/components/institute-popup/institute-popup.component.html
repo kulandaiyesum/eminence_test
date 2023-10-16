@@ -1,19 +1,22 @@
 <div class="main">
   <div class="data">
     <div class="heading">
-      <div class="head">
-        <h2 *ngIf="items === null">Add Institution</h2>
-        <h2 *ngIf="items !== null">Update Institution</h2>
-      </div>
       <div class="icon">
         <mat-icon class="close_btn" mat-icon-button (click)="closeDialog()"
           >close</mat-icon
         >
       </div>
+      <div class="head">
+        <h2 *ngIf="items === null">Add Institution</h2>
+        <h2 *ngIf="items !== null">Update Institution</h2>
+      </div>
     </div>
     <div class="forms">
       <form #instituteForm="ngForm">
-        <div class="row_group" [ngClass]="{'highlight': institutionModel.packageName}">
+        <!-- <div
+          class="row_group"
+          [ngClass]="{ highlight: institutionModel.packageName }"
+        >
           <div class="form-group custom_group">
             <label for="type">Subscription</label>
             <select
@@ -37,92 +40,158 @@
             </select>
           </div>
           <label for="name" *ngIf="institutionModel.packageName"
-          >package Details</label
-        >
-        <div *ngIf="institutionModel.packageName" class="package-details">
-          {{ institutionModel.questionsCount }} Questions Per Package
+            >package Details</label
+          >
+          <div *ngIf="institutionModel.packageName" class="package-details">
+            {{ institutionModel.questionsCount }} Questions Per Package
+            {{ institutionModel.durationType }}
+          </div>
+        </div> -->
+        <!-- <div class="dates">
+          <label for="datePicker">Start Date:</label>
+          <input
+            type="date"
+            name="startdate"
+            [(ngModel)]="institutionModel.startdate"
+            [min]="minDate"
+            (change)="calculateEndDate()"
+            [disabled]="isPackageSelected"
+            required
+          />
+          <p><b>End Date :</b>{{ calculatedEndDate }}</p>
+          <div
+            *ngIf="instituteForm.controls['startdate']?.errors?.['required'] && instituteForm.controls['startdate']?.touched"
+            class="error-message"
+          >
+            Start Date is required.
+          </div>
+        </div> -->
+        <div class="part-input">
+          <div class="sub-part-input">
+            <label for="name">Institution Name</label><br />
+            <input
+              type="text"
+              placeholder="Name"
+              name="name"
+              [(ngModel)]="institutionModel.name"
+              required
+            />
+            <div
+              *ngIf="instituteForm.controls['name']?.errors?.['required'] && instituteForm.controls['name']?.touched"
+              class="error-message"
+            >
+              Institute name is required.
+            </div>
+          </div>
+          <div class="sub-part-input">
+            <label for="address">Address</label><br />
+            <input
+              type="text"
+              placeholder="Address"
+              name="address"
+              [(ngModel)]="institutionModel.address"
+              required
+            />
+            <div
+              *ngIf="instituteForm.controls['address']?.errors?.['required'] && instituteForm.controls['address']?.touched"
+              class="error-message"
+            >
+              Address is required.
+            </div>
+          </div>
         </div>
+        <div class="part-input">
+          <div class="sub-part-input">
+            <label for="city">City</label>
+            <input
+              type="text"
+              placeholder="City"
+              name="city"
+              [(ngModel)]="institutionModel.city"
+              required
+            />
+            <div
+              *ngIf="instituteForm.controls['city']?.errors?.['required'] && instituteForm.controls['city']?.touched"
+              class="error-message"
+            >
+              City is required.
+            </div>
+          </div>
+          <div class="sub-part-input">
+            <label for="state">State</label>
+            <input
+              type="text"
+              placeholder="State"
+              name="state"
+              [(ngModel)]="institutionModel.state"
+              required
+            />
+            <div
+              *ngIf="instituteForm.controls['state']?.errors?.['required'] && instituteForm.controls['state']?.touched"
+              class="error-message"
+            >
+              State is required.
+            </div>
+          </div>
         </div>
-
-
-        <label for="name">Institute Name</label>
-        <input
-          type="text"
-          placeholder="Name"
-          name="name"
-          [(ngModel)]="institutionModel.name"
-          required
-        />
-        <div
-          *ngIf="instituteForm.controls['name']?.errors?.['required'] && instituteForm.controls['name']?.touched"
-          class="error-message"
-        >
-          Name is required.
+        <div class="part-input">
+          <div class="sub-part-input">
+            <label for="zip">Zip</label>
+            <input
+              type="number"
+              placeholder="Zip"
+              name="zip"
+              [(ngModel)]="institutionModel.zip"
+              required
+            />
+            <div
+              *ngIf="instituteForm.controls['zip']?.errors?.['required'] && instituteForm.controls['zip']?.touched"
+              class="error-message"
+            >
+              Zip code is required.
+            </div>
+          </div>
+          <div class="sub-part-input">
+            <label for="country">Country</label>
+            <input
+              type="text"
+              placeholder="Country"
+              name="country"
+              [(ngModel)]="institutionModel.country"
+              required
+            />
+            <div
+              *ngIf="instituteForm.controls['country']?.errors?.['required'] && instituteForm.controls['country']?.touched"
+              class="error-message"
+            >
+              Country is required.
+            </div>
+          </div>
         </div>
-        <label for="address">Address</label>
-        <input
-          type="text"
-          placeholder="Address"
-          name="address"
-          [(ngModel)]="institutionModel.address"
-          required
-        />
-        <div
-          *ngIf="instituteForm.controls['address']?.errors?.['required'] && instituteForm.controls['address']?.touched"
-          class="error-message"
-        >
-          Address is required.
+        <div class="email">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            placeholder="Email"
+            name="email"
+            [(ngModel)]="institutionModel.email"
+            [value]="minDate"
+            required
+            email
+          />
+          <div
+            *ngIf="instituteForm.controls['email']?.errors?.['required'] && instituteForm.controls['email']?.touched"
+            class="error-message"
+          >
+            Email is required.
+          </div>
+          <div
+            *ngIf="instituteForm.controls['email']?.errors?.['email'] && instituteForm.controls['email']?.touched"
+            class="error-message"
+          >
+            Invalid email format.
+          </div>
         </div>
-        <label for="state">State</label>
-        <input
-          type="text"
-          placeholder="State"
-          name="state"
-          [(ngModel)]="institutionModel.state"
-          required
-        />
-        <div
-          *ngIf="instituteForm.controls['state']?.errors?.['required'] && instituteForm.controls['state']?.touched"
-          class="error-message"
-        >
-          State is required.
-        </div>
-        <label for="zip">Zip</label>
-        <input
-          type="number"
-          placeholder="Zip"
-          name="zip"
-          [(ngModel)]="institutionModel.zip"
-          required
-        />
-        <div
-          *ngIf="instituteForm.controls['zip']?.errors?.['required'] && instituteForm.controls['zip']?.touched"
-          class="error-message"
-        >
-          Zip code is required.
-        </div>
-        <label for="email">Email</label>
-        <input
-          type="text"
-          placeholder="Email"
-          name="email"
-          [(ngModel)]="institutionModel.email"
-          required
-          email
-        />
-        <div
-          *ngIf="instituteForm.controls['email']?.errors?.['required'] && instituteForm.controls['email']?.touched"
-          class="error-message"
-        >
-          Email is required.
-        </div>
-        <div
-          *ngIf="instituteForm.controls['email']?.errors?.['email'] && instituteForm.controls['email']?.touched"
-          class="error-message"
-        >
-          Invalid email format.
-        </div>
-
         <button
           type="submit"
           (click)="onInstituteSubmit()"

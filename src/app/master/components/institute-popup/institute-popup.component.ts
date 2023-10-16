@@ -23,6 +23,9 @@ export class InstitutePopupComponent {
   public items;
   public packageList;
   public unqiuePackage = [];
+  isPackageSelected: boolean = true;
+  public selectedDurationType: string;
+  public calculatedEndDate: string;
 
   public institutionModel: Institution = {
     name: '',
@@ -34,7 +37,14 @@ export class InstitutePopupComponent {
     packageName: '',
     questionsCount: '',
     packageNameId: '',
+    city: '',
+    startdate: new Date(),
+    enddate: new Date(),
+    durationType: '',
+    country: '',
+    questionsCountResetDate: new Date(),
   };
+  public minDate: string = this.calculateMinDate();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -48,14 +58,15 @@ export class InstitutePopupComponent {
   ) {
     this.items = data;
     if (data != null) {
-      console.log(data);
       this.visibleUpdate = true;
-      this.institutionModel.name = data.name;
+      this.institutionModel.name = data.name || data.institutionName;
       this.institutionModel.email = data.email;
       this.institutionModel._id = data._id;
       this.institutionModel.address = data.address;
       this.institutionModel.state = data.state;
       this.institutionModel.zip = data.zip;
+      this.institutionModel.city = data.city;
+      this.institutionModel.country = data.country;
     }
   }
 
@@ -72,16 +83,67 @@ export class InstitutePopupComponent {
       address: ['', Validators.required],
       state: ['', Validators.required],
       zip: ['', Validators.required],
+      city: ['', Validators.required],
+      country: ['', Validators.required],
+      startdate: [new Date(), Validators.required],
+      enddate: [new Date(), Validators.required],
     });
   }
+  private calculateMinDate(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    const day = today.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
   getPackageData() {
     this.packageService.getAllPackages().subscribe((doc: any) => {
-      this.packageList = doc.result;
+      this.packageList = doc.result.filter((item) => item.type === 'B2B');
+      console.log(this.packageList);
       this.unqiuePackage = this.logicalService.filteredArrayWithJsonValue(
         this.packageList,
         'packageName'
       );
     });
+  }
+
+  calculateEndDate() {
+    const startDate = new Date(this.institutionModel.startdate);
+    let endDate: Date;
+
+    switch (this.selectedDurationType) {
+      case 'monthly':
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 29);
+        break;
+      case 'quarterly':
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 89);
+        break;
+      case 'half-yearly':
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 179);
+        break;
+      case 'annually':
+        endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 364);
+        break;
+      default:
+        endDate = null;
+    }
+    this.institutionModel.enddate = new Date(
+      endDate ? endDate.toISOString().substring(0, 10) : ''
+    );
+
+    if (endDate) {
+      const year = endDate.getFullYear();
+      const month = String(endDate.getMonth() + 1).padStart(2, '0');
+      const day = String(endDate.getDate()).padStart(2, '0');
+      this.calculatedEndDate = `${day}/${month}/${year}`;
+    } else {
+      this.calculatedEndDate = '';
+    }
   }
 
   togglePasswordVisibility(event: Event) {
@@ -92,12 +154,15 @@ export class InstitutePopupComponent {
     this.dialogRef.close();
   }
   getPackgeType(list) {
+    this.isPackageSelected = false;
     let data = this.packageList.find((x) => x.packageName === list);
     this.institutionModel.questionsCount = data.questionsCount;
     this.institutionModel.packageNameId = data._id;
+    this.institutionModel.durationType = data.durationType;
+    this.selectedDurationType = this.institutionModel.durationType;
   }
+
   onInstituteSubmit() {
-    console.log('submitted');
     this.instituteForm.controls['email'].setValue(this.institutionModel.email);
     this.instituteForm.controls['name'].setValue(this.institutionModel.name);
     this.instituteForm.controls['address'].setValue(
@@ -105,15 +170,30 @@ export class InstitutePopupComponent {
     );
     this.instituteForm.controls['state'].setValue(this.institutionModel.state);
     this.instituteForm.controls['zip'].setValue(this.institutionModel.zip);
+    this.instituteForm.controls['city'].setValue(this.institutionModel.city);
+    this.instituteForm.controls['country'].setValue(
+      this.institutionModel.country
+    );
+    this.instituteForm.controls['startdate'].setValue(
+      this.institutionModel.startdate
+    );
+    this.instituteForm.controls['enddate'].setValue(
+      this.institutionModel.enddate
+    );
 
     if (this.instituteForm.valid) {
-      console.log(this.instituteForm.value);
       this.closeDialog();
       this.instituteService.createInstitute(this.institutionModel).subscribe(
         (response: any) => {
           console.log(response);
+          this.toastr.success(response.message, '', {
+            timeOut: 3000,
+          });
         },
         (error) => {
+          this.toastr.error(error.error.message, '', {
+            timeOut: 3000,
+          });
           console.error('Not data get', error);
         }
       );
@@ -121,7 +201,6 @@ export class InstitutePopupComponent {
   }
 
   updateInstitute() {
-    console.log('submitted');
     this.instituteForm.controls['email'].setValue(this.institutionModel.email);
     this.instituteForm.controls['name'].setValue(this.institutionModel.name);
     this.instituteForm.controls['address'].setValue(
@@ -129,23 +208,34 @@ export class InstitutePopupComponent {
     );
     this.instituteForm.controls['state'].setValue(this.institutionModel.state);
     this.instituteForm.controls['zip'].setValue(this.institutionModel.zip);
+    this.instituteForm.controls['city'].setValue(this.institutionModel.city);
+    this.instituteForm.controls['country'].setValue(
+      this.institutionModel.country
+    );
+    this.instituteForm.controls['startdate'].setValue(
+      this.institutionModel.startdate
+    );
+    this.instituteForm.controls['enddate'].setValue(
+      this.institutionModel.enddate
+    );
     this.instituteForm.controls['_id'].setValue(this.institutionModel._id);
 
     if (this.instituteForm.valid) {
-      console.log('form valid for update');
-      console.log(this.instituteForm.value._id);
-
-      this.instituteService
-        .updateInstitution(this.instituteForm.value)
-        .subscribe(
-          (response: any) => {
-            console.log(response);
-            this.closeDialog();
-          },
-          (error) => {
-            console.error('Not data get', error);
-          }
-        );
+      this.instituteService.updateInstitution(this.institutionModel).subscribe(
+        (response: any) => {
+          console.log(response);
+          this.toastr.success(response.message, '', {
+            timeOut: 3000,
+          });
+          this.closeDialog();
+        },
+        (error) => {
+          this.toastr.error(error.error.message, '', {
+            timeOut: 3000,
+          });
+          console.error('Not data get', error);
+        }
+      );
     }
   }
 }

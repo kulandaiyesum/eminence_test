@@ -1,8 +1,9 @@
-import { Component, Inject, Renderer2, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, Inject } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Package } from '../../model/package.class';
 import { PackageService } from '../../service/package.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-package-popup',
@@ -14,34 +15,53 @@ export class PackagePopupComponent {
   visibleUpdate: boolean = false;
   public package: Package;
 
-  @ViewChild('packageForm', { static: false }) packageFormDirective: any;
-
   constructor(
-    private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<PackagePopupComponent>,
     private packageService: PackageService,
-    private renderer: Renderer2,
-    @Inject(MAT_DIALOG_DATA) private data: any
+    private toastr: ToastrService,
+    @Inject(MAT_DIALOG_DATA) private data: any,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
-    if (this.data && this.data.packageData) {
-      this.package = { ...this.data.packageData };
+    this.package = new Package();
+    if (this.data !== null) {
+      this.package._id = this.data._id;
+      this.package.amount = this.data.amount; //
+      this.package.durationType = this.data.durationType; //
+      this.package.packageName = this.data.packageName; //
+      this.package.questionsCount = this.data.questionsCount; //
+      this.package.rate = this.data.rate; //
+      this.package.type = this.data.type;
       this.visibleUpdate = true;
     } else {
       this.package = new Package();
     }
     this.initForm();
+    this.packageForm.get('type').valueChanges.subscribe((selectType) => {
+      if (selectType === 'B2C') {
+        this.packageForm.get('questionsCount').disable();
+        this.packageForm.get('rate').disable();
+        this.package.questionsCount = '';
+        this.package.rate = '-';
+        this.package.questionsCount = "UNLIMITED"
+      } else {
+        this.packageForm.get('questionsCount').enable();
+        this.packageForm.get('rate').enable();
+
+      }
+      this.cdr.detectChanges();
+    });
   }
 
   initForm() {
-    this.packageForm = this.formBuilder.group({
-      packageName: ['', Validators.required],
-      questionsCount: [0, Validators.required],
-      amount: [0, Validators.required],
-      rate: [0, Validators.required],
-      durationType: ['', Validators.required],
-      durationCount: [0, Validators.required],
+    this.packageForm = new FormGroup({
+      packageName: new FormControl('', Validators.required),
+      questionsCount: new FormControl(0, Validators.required),
+      amount: new FormControl(0, Validators.required),
+      rate: new FormControl(0, Validators.required),
+      durationType: new FormControl('', Validators.required),
+      type: new FormControl('', Validators.required),
     });
   }
 
@@ -49,56 +69,55 @@ export class PackagePopupComponent {
     this.dialogRef.close();
   }
 
-  typeChanged() {
-    console.log('run');
-  }
-
   onPackageSubmit() {
-    console.log(this.package, 'dddddddddddddddddddddd');
-
-    this.packageService.createPackage(this.package).subscribe((data: any) => {
-      this.dialogRef.close();
-      console.log(data);
-      this.resetForm();
-    });
+    this.packageService.createPackage(this.package).subscribe(
+      (data: any) => {
+        this.toastr.success(data.message, '', {
+          timeOut: 3000,
+        });
+        this.dialogRef.close(data);
+      },
+      (err: any) => {
+        console.log(err);
+        this.toastr.error(err.error.message, '', { timeOut: 3000 });
+      }
+    );
   }
 
   resetForm() {
     this.packageForm.reset();
-    this.packageFormDirective.resetForm();
   }
 
+  // edit
   updatePackage() {
-    console.log('submitted');
-    this.packageForm.controls['packageName'].setValue(this.package.packageName);
-    this.packageForm.controls['questionsCount'].setValue(
-      this.package.questionsCount
+    this.packageService.updatePackage(this.package).subscribe(
+      (res: any) => {
+        this.toastr.success(res.message, '', {
+          timeOut: 3000,
+        });
+        this.dialogRef.close(res);
+        this.visibleUpdate = true;
+      },
+      (err: any) => {
+        this.toastr.error(err.message, '', {
+          timeOut: 3000,
+        });
+      }
     );
-    this.packageForm.controls['amount'].setValue(this.package.amount);
-    this.packageForm.controls['rate'].setValue(this.package.rate);
-    this.packageForm.controls['durationType'].setValue(
-      this.package.durationType
-    );
-    this.packageForm.controls['durationCount'].setValue(
-      this.package.durationCount
-    );
-    this.packageForm.controls['_id'].setValue(this.package._id);
-
-    if (this.packageForm.valid) {
-      console.log('form valid for update');
-      console.log(this.packageForm.value._id);
-
-      this.packageService.updatePackage(this.packageForm.value).subscribe(
-        (response: any) => {
-          console.log(response);
-        },
-        (error) => {
-          console.error('Failed to update package', error);
-        }
-      );
-    }
   }
   onNoClick(): void {
     this.dialogRef.close();
+  }
+  restrictInput(event: KeyboardEvent) {
+    const input = event.target as HTMLInputElement;
+    if (
+      /[^0-9]/.test(event.key) &&
+      event.key !== 'Backspace' &&
+      event.key !== 'Delete' &&
+      event.key !== 'ArrowLeft' &&
+      event.key !== 'ArrowRight'
+    ) {
+      event.preventDefault();
+    }
   }
 }

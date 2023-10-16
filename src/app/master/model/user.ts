@@ -5,9 +5,9 @@ export class User {
   email: string;
   password: string;
   role: any;
-  institutionId: any;
-  subscriptionId: any;
-  topicId: any;
+  institutionId?: any;
+  subscriptionId?: any;
+  topicId?: any;
   createdBy?: any;
   createdOn?: Date;
 }

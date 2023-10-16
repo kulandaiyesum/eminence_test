@@ -98,7 +98,6 @@
         <div class="col_group">
           <div class="form-group custom_group">
             <label for="role">Role</label>
-            <!-- <input type="text" id="role" class="form-control" /> -->
             <select
               id="role"
               class="form-select"
@@ -125,13 +124,9 @@
         </div>
       </div>
       <div class="flex_group">
-        <div
-          class="col_group"
-          *ngIf="userObject.role === '65014b97f85f27c0258567af'"
-        >
+        <div class="col_group" *ngIf="selectedRole === 'FACULTY'">
           <div class="form-group custom_group">
             <label for="institution">Institution</label>
-            <!-- <input type="text" class="form-control" /> -->
             <select
               id="institution"
               class="form-select"
@@ -142,10 +137,10 @@
             >
               <option disabled selected value="">select Institution</option>
               <option
-                *ngFor="let intitution of intitutions"
-                [value]="intitution._id"
+                *ngFor="let institution of intitutions"
+                [value]="institution._id"
               >
-                {{ intitution.name }}
+                {{ institution.name }}
               </option>
             </select>
             <div class="error">
@@ -154,20 +149,18 @@
                   userForm.controls['institutionId'].hasError('required') &&
                   userForm.controls['institutionId'].touched
                 "
-                >Role is required</mat-error
+                >Institution is required</mat-error
               >
             </div>
           </div>
         </div>
         <div
           class="col_group"
-          [style.width]="
-            userObject.role !== '65014b97f85f27c0258567af' ? '100%' : ''
-          "
+          [style.width]="selectedRole !== 'FACULTY' ? '100%' : ''"
+          *ngIf="showTopic"
         >
           <div class="form-group custom_group">
             <label for="topic">Topic</label>
-            <!-- <input type="text" id="subscription" class="form-control" /> -->
             <select
               id="topic"
               class="form-select"
@@ -254,7 +247,7 @@
           Save
         </button>
         <button
-          [disabled]="userForm.invalid"
+          [disabled]="userForm.invalid || !isFormValueChanged"
           class=""
           *ngIf="data !== null"
           (click)="updateUserMaster()"

@@ -1,6 +1,6 @@
 <div class="login-container">
   <header>
-    <h2>MEMBER LOGIN</h2>
+    <h2>LOGIN</h2>
     <p (click)="closeDialog()">X</p>
   </header>
   <div class="login-fields">
@@ -48,8 +48,8 @@
 
       <button id="login" type="submit" (click)="onLoginSubmit()">LOG IN</button>
       <br />
-      <button id="register" type="button">REGISTER</button>
-      <a href="" routerLink="/forgotpassword/email" (click)="closeDialog()">Forgot password</a>
+      <button id="register" type="button" (click)="registerPop()">REGISTER</button>
+      <p (click)="forgotPassword()">Forgot password</p>
     </form>
   </div>
 </div>

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +14,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { AuthHttpInterceptorService } from './shared/service/auth-http-interceptor..service';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,12 +27,14 @@ import { AuthHttpInterceptorService } from './shared/service/auth-http-intercept
     BrowserAnimationsModule,
     NgbModule,
     FormsModule,
+    ReactiveFormsModule,
     LoginModule,
     HttpClientModule,
     ToastrModule.forRoot(),
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
+    MatCheckboxModule,NgbCarouselModule,
   ],
   providers: [
     {

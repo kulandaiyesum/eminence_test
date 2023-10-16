@@ -3,22 +3,38 @@
   height: 85vh;
   display: flex;
   justify-content: center;
+
   .main {
     width: 80%;
     height: 85vh;
+
     .data {
       width: 100%;
       height: auto;
+
       .control {
         width: auto;
         height: auto;
+
+        h4 {
+          text-align: center;
+          font-size: 16px;
+        }
+
         .button {
           display: flex;
           justify-content: space-between;
           button {
             background-color: #46b3eb;
             color: #fff;
+            font-size: 16px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            &:hover {
+              background-color: #57c4ff;
+            }
           }
+
           input {
             border: 1px solid #c6c9cd;
             border-radius: 3px;
@@ -37,14 +53,17 @@
             }
           }
         }
+
         #remove {
           margin-left: 20px;
         }
       }
+
       .table {
         width: 100%;
         height: auto;
         margin-top: 20px;
+
         input {
           width: 32%;
           border: 1px solid #46b3eb;
@@ -54,31 +73,34 @@
             width: 100%;
           }
         }
+
         table {
           width: auto;
           height: auto;
           margin-top: 15px;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
           th {
             background-color: #46b3eb;
             color: #fff;
+            font-size: 16px;
           }
+
           mat-icon {
             color: #fabf01;
           }
+
           .odd-row {
-            background-color: #F5F5F5;
+
           }
 
           .even-row {
             background-color: white;
           }
-
         }
+
         mat-paginator {
           z-index: 1;
-          background-color: #fff;
-          border: none;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
       }
@@ -88,8 +110,10 @@
   @media screen and (max-width: 425px) {
     .main {
       width: 100%;
+
       .table {
         width: auto;
+
         input {
           width: 100%;
         }

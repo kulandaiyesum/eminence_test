@@ -25,9 +25,97 @@
       </div>
     </mat-toolbar>
     <div class="navigation_links">
-      <!-- <a routerLink="" routerLinkActive="activelink">Dashboard</a> -->
-      <a routerLink="/q/admin/master" routerLinkActive="activelink">Master</a>
-      <!-- <a mat-list-item  routerLinkActive="activelink">Add User</a> -->
+      <ng-container *ngIf="isAdmin()">
+        <a routerLink="/eminence/admin/package" routerLinkActive="activelink"
+          >Package</a
+        >
+        <a
+          routerLink="/eminence/admin/institution"
+          routerLinkActive="activelink"
+          >Institution</a
+        >
+        <a routerLink="/eminence/admin/subscriber" routerLinkActive="activelink"
+          >Subscription</a
+        >
+        <a routerLink="/eminence/admin/topic" routerLinkActive="activelink"
+          >Topic</a
+        >
+        <a routerLink="/eminence/admin/role" routerLinkActive="activelink"
+          >Role</a
+        >
+        <a routerLink="/eminence/admin/user" routerLinkActive="activelink"
+          >User</a
+        >
+      </ng-container>
+
+      <ng-container *ngIf="isFaculty()">
+        <a routerLink="/eminence/faculty/qgen" routerLinkActive="activelink"
+          >QGen</a
+        >
+        <a routerLink="/eminence/faculty/editor" routerLinkActive="activelink"
+          >Editor</a
+        >
+        <a
+          routerLink="/eminence/faculty/askeminence"
+          routerLinkActive="activelink"
+          >Ask Eminence</a
+        >
+        <a routerLink="/eminence/faculty/history" routerLinkActive="activelink"
+          >History</a
+        >
+      </ng-container>
+
+      <ng-container *ngIf="isVetter()">
+        <a routerLink="/eminence/vetter/questions" routerLinkActive="activelink"
+          >Questions</a
+        >
+        <div class="questions-numbers">
+          <p *ngFor="let number of questionNumbers" class="circle-background">
+            {{ number }}
+          </p>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="isStudent()">
+        <a
+          routerLink="/eminence/student/build-test"
+          routerLinkActive="activelink"
+        >
+          <div class="icon_route">
+            <span>Build Test</span>
+            <mat-icon>build</mat-icon>
+          </div>
+        </a>
+        <a
+          routerLink="/eminence/student/performance"
+          routerLinkActive="activelink"
+        >
+          <div class="icon_route">
+            <span>Performance</span>
+            <mat-icon> bar_chart</mat-icon>
+          </div>
+        </a>
+        <a routerLink="/eminence/student/saved" routerLinkActive="activelink">
+          <div class="icon_route">
+            <span>Saved</span>
+            <mat-icon>insert_drive_file</mat-icon>
+          </div>
+        </a>
+        <a
+          routerLink="/eminence/student/exam-room"
+          routerLinkActive="activelink"
+        >
+          <div class="icon_route">
+            <span>Exam Room</span>
+            <mat-icon>people</mat-icon>
+          </div>
+        </a>
+      </ng-container>
+    </div>
+    <div class="help-report-error" *ngIf="!isAdmin()" class="bottom-left-icon">
+      <mat-icon>help</mat-icon>
+      <span *ngIf="!isVetter()">Help / Report Error</span>
+      <span *ngIf="isVetter()">Help</span>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -42,10 +130,17 @@
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span class="welcome_user">Welcome Admin</span>
-      <mat-icon class="user_account">account_circle</mat-icon>
+      <div class="h2 mb-0">Welcome {{ firstName | titlecase }}</div>
+      <mat-icon class="user_account" (click)="logout()" style="cursor: pointer"
+        >account_circle</mat-icon
+      >
     </mat-toolbar>
     <!-- Child routes for admin, faculty, vetter and Registered User -->
-    <router-outlet></router-outlet>
+    <div *ngIf="!isFaculty()" class="route_container">
+      <router-outlet></router-outlet>
+    </div>
+    <div *ngIf="isFaculty()" class="faculty_route_container">
+      <router-outlet></router-outlet>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

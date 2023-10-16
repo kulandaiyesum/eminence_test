@@ -16,19 +16,20 @@
           <div class="navigation">
             <ul>
               <li
-                (click)="changeBackgroundColor(0)"
-                [ngClass]="{ selected: selectedIndex === 0 }"
-                (click)="institution()"
-              >
-                Institution
-              </li>
-              <li
                 (click)="changeBackgroundColor(1)"
                 [ngClass]="{ selected: selectedIndex === 1 }"
                 (click)="package()"
               >
                 Package
               </li>
+              <li
+                (click)="changeBackgroundColor(0)"
+                [ngClass]="{ selected: selectedIndex === 0 }"
+                (click)="institution()"
+              >
+                Institution
+              </li>
+
               <!-- <li
                 (click)="changeBackgroundColor(2)"
                 [ngClass]="{ selected: selectedIndex === 2 }"

@@ -1,10 +1,9 @@
 export class Package {
   packageName: string;
-  questionsCount: number;
-  amount: number;
-  rate: number;
+  questionsCount: string;
+  amount: string;
+  rate: string;
   durationType: string;
-  durationCount: number;
   type: string;
   _id: string;
 }

@@ -19,13 +19,10 @@ export class UserService {
   }
 
   updateUserMaster(user: User) {
-    return this.http.put(this.userUrl + 'update', user);
+    return this.http.put(this.userUrl + 'update/' + user._id, user);
   }
 
   deleteUserMaster(_id: string) {
-    const params = new HttpParams().set('_id', _id);
-    return this.http.delete(this.userUrl + 'delete', {
-      params,
-    });
+    return this.http.delete(this.userUrl + _id);
   }
 }

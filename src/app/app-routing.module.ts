@@ -6,13 +6,13 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./home/home.module').then((h) => h.HomeModule),
   },
+  // {
+  //   path: 'eminenceai',
+  //   loadChildren: () =>
+  //     import('./faculty/faculty.module').then((h) => h.FacultyModule),
+  // },
   {
-    path: 'eminenceai',
-    loadChildren: () =>
-      import('./faculty/faculty.module').then((h) => h.FacultyModule),
-  },
-  {
-    path: 'q',
+    path: 'eminence',
     loadChildren: () =>
       import('./portal-layout/portal-layout.module').then(
         (h) => h.PortalLayoutModule

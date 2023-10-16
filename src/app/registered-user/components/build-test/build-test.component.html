@@ -1,0 +1,91 @@
+<div class="build-test-container" #scrollContainer>
+  <div class="main">
+    <div class="questons-container">
+      <div class="qbank">
+        <mat-radio-group aria-label="Select an option">
+          <mat-radio-button value="1">Eminence QBank</mat-radio-button>
+        </mat-radio-group>
+        <section class="checkbox">
+          <mat-checkbox class="example-margin">Unused</mat-checkbox>
+          <mat-checkbox class="example-margin">Incorrect</mat-checkbox>
+          <mat-checkbox class="example-margin">Flagged</mat-checkbox>
+          <mat-checkbox class="example-margin" (change)="selectAll($event)"
+            >All</mat-checkbox
+          >
+        </section>
+        <section class="dropdown">
+          <mat-form-field appearance="outline">
+            <mat-label>Subject</mat-label>
+            <mat-select placeholder="Choose subject">
+              <mat-option value="all">All</mat-option>
+              <mat-option value="biochemistry">Biochemistry</mat-option>
+              <mat-option value="biophysics">Biophysics</mat-option>
+              <mat-option value="pathology">Pathology</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" id="system">
+            <mat-label>System</mat-label>
+            <mat-select placeholder="Choose system">
+              <mat-option value="all">All</mat-option>
+              <mat-option value="Microboilogy">Microboilogy</mat-option>
+              <mat-option value="Cardiovascular">Cardiovascular</mat-option>
+              <mat-option value="Dermatology">Dermatology</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Sub System</mat-label>
+            <mat-select placeholder="Choose Sub system">
+              <mat-option value="all">All</mat-option>
+              <mat-option value="Microboilogy">Microboilogy</mat-option>
+              <mat-option value="Cardiovascular">Cardiovascular</mat-option>
+              <mat-option value="Dermatology">Dermatology</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </section>
+        <section class="subsytem-dropdown"></section>
+      </div>
+      <div class="qgen">
+        <mat-radio-group aria-label="Select an option">
+          <mat-radio-button value="1">QGen: Generate your own</mat-radio-button>
+        </mat-radio-group>
+        <div class="recommendations">
+          <div class="recommendations-area" #scrollExplanationContainer>
+            <h6>Recommended for you</h6>
+            <p>Needs more practice</p>
+            <div class="chips">
+              <mat-chip>renal cell carcinoma</mat-chip>
+              <mat-chip>Barrett's esophagus</mat-chip>
+              <mat-chip>pulmonary circulation</mat-chip>
+              <mat-chip>adrenal glands</mat-chip>
+              <mat-chip>Valvular disorder</mat-chip>
+            </div>
+            <p id="while">Haven't seen in a while</p>
+            <div class="chips">
+              <mat-chip>renal cell carcinoma</mat-chip>
+              <mat-chip>Valvular disorder</mat-chip>
+              <mat-chip>Valvular disorder</mat-chip>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="button-area">
+        <div class="toggles">
+          <mat-slide-toggle id="tutor">Tutor</mat-slide-toggle>
+          <mat-slide-toggle id="timed">Timed</mat-slide-toggle>
+        </div>
+        <div class="input-area">
+          <label for="questions" id="main-label">Number of Questions:</label>
+          <input
+            type="text"
+            id="questions"
+            name="questions"
+            placeholder="Max 10"
+          />
+        </div>
+        <button>Build</button>
+      </div>
+    </div>
+  </div>
+</div>

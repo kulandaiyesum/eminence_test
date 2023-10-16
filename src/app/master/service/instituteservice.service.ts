@@ -12,8 +12,8 @@ export class InstituteserviceService {
     .set('Authorization', `Bearer ${this.gettingToken()}`);
   getAllInstituteURL = environment.localdomain + 'institution/getAll';
   createInstituteURL = environment.localdomain + 'institution/save';
-  updateInstituteURL = environment.localdomain + 'institution/update';
-  deleteInstituteURL = environment.localdomain + 'institution/delete';
+  updateInstituteURL = environment.localdomain + 'institution/';
+  deleteInstituteURL = environment.localdomain + 'institution/';
 
   constructor(private http: HttpClient) {}
   gettingToken() {
@@ -29,11 +29,11 @@ export class InstituteserviceService {
   }
 
   updateInstitution(data: any): Observable<any> {
-    return this.http.put(this.updateInstituteURL, data,);
+    return this.http.put(this.updateInstituteURL+data._id, data,);
   }
 
   deleteInstitution(data: any): Observable<any> {
-    return this.http.delete(this.deleteInstituteURL, {
+    return this.http.delete(this.deleteInstituteURL+data._id, {
       body: data,
     });
   }

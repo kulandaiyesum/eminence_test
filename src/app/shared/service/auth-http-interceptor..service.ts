@@ -66,16 +66,16 @@ export class AuthHttpInterceptorService {
     });
     return next.handle(req).pipe(
       catchError((err: any, caught: Observable<HttpEvent<any>>) => {
-        // if (error.status === 400) {
-        //   //localStorage.clear();
-        //   //return this.router.navigateByUrl('/auth/login');
-        // } else {
-        //   return throwError(error);
-        // }
+        if (err.status === 400) {
+          //localStorage.clear();
+          //return this.router.navigateByUrl('/auth/login');
+        } else {
+          return throwError(err);
+        }
         if (err instanceof HttpErrorResponse) {
-          if (err.status === 401) {
-            console.log('this should print your error!', err.error);
-          }
+          // if (err.status === 401) {
+          //   console.log('this should print your error!', err.error);
+          // }
         }
         return new Observable<HttpEvent<any>>();
       })

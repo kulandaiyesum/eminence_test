@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { UserFormComponent } from '../user-form/user-form.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user',
@@ -15,9 +16,10 @@ import { UserFormComponent } from '../user-form/user-form.component';
   styleUrls: ['./user.component.scss'],
 })
 export class UserComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator | any;
-  @ViewChild(MatSort) sort: MatSort | any;
-  dataSource: MatTableDataSource<User>;
+  public userList;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  dataSource;
   displayedColumns: string[] = [
     'sno',
     'name',
@@ -45,13 +47,15 @@ export class UserComponent implements OnInit {
   getAllUserMaster() {
     this.userService.getAllUserMaster().subscribe(
       (res: any) => {
-        console.log('All users', res.result);
+        this.userList = res.result;
         this.dataSource = new MatTableDataSource(res.result);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
-      (err: HttpErrorResponse) => {
-        console.log('Error', err);
+      (err: any) => {
+        this.toastr.error(err.message, '', {
+          timeOut: 3000,
+        });
       }
     );
   }
@@ -64,13 +68,9 @@ export class UserComponent implements OnInit {
     };
     const dialogRef = this.dialog.open(UserFormComponent, dialogBoxSettings);
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('AddRole ', result);
       if (result === undefined) {
         return;
       }
-      this.toastr.success(result.message, '', {
-        timeOut: 3000,
-      });
       this.getAllUserMaster();
     });
   }
@@ -82,20 +82,39 @@ export class UserComponent implements OnInit {
       overflow: 'auto',
     };
     const dialogRef = this.dialog.open(UserFormComponent, dialogBoxSettings);
-
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result);
       if (result === undefined) {
         return;
       }
-      this.toastr.success(result.message, '', {
-        timeOut: 3000,
-      });
       this.getAllUserMaster();
     });
   }
 
   deleteUserMaster(user_id: string) {
-    console.log(user_id, 'delete');
+    Swal.fire({
+      title: 'Delete',
+      text: 'Are you sure you want to Delete?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.deleteUserMaster(user_id).subscribe(
+          (result: any) => {
+            this.toastr.success(result.message, '', {
+              timeOut: 3000,
+            });
+            this.getAllUserMaster();
+          },
+          (err: any) => {
+            this.toastr.error(err.error.message, '', {
+              timeOut: 3000,
+            });
+            this.getAllUserMaster();
+          }
+        );
+      }
+    });
   }
 }

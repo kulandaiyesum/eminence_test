@@ -10,8 +10,10 @@
           type="text"
           placeholder="Email address"
           name="email"
+          [(ngModel)]="email"
           formControlName="email"
           [attr.disabled]="isSendingOTP"
+          id="emailfield"
         />
         <button
           id="sendotp"
@@ -40,7 +42,7 @@
           name="otp"
           id="otp"
           formControlName="otp"
-          minlength="4"
+          minlength="6"
         />
         <span
           *ngIf="
@@ -55,13 +57,14 @@
           *ngIf="otpForgotPasswordForm.controls['otp']?.errors?.['minlength'] && otpForgotPasswordForm.controls['otp']?.touched"
           class="error-message"
         >
-          OTP must be at least 4 characters long.
+          OTP must be at least 6 characters long.
         </span>
         <button
           id="verifyotp"
           type="submit"
           (click)="verifyOTP()"
           mat-raised-button
+          [disabled]="!isSendingOTP"
         >
           Verify Otp
         </button>

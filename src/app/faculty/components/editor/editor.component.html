@@ -1,1 +1,116 @@
-<p>editor works!</p>
+<div class="editor_container">
+  <p>
+    <strong style="color: var(--qgen-red)">Editor</strong> allows you to review
+    and tweak the questions to your specific needs.
+  </p>
+  <div class="editor_question_wrap" *ngIf="reqId !== undefined">
+    <!-- Question Optons section -->
+    <div class="question_info mb-3">
+      <div class="question_inputs">
+        <div>
+          <strong>Input: </strong>hyperkalemia, depolarization, cell membrane
+        </div>
+        <div><strong>Question count: </strong>{{ questLength }}</div>
+      </div>
+      <div class="question_actions">
+        <button *ngIf="isEditMode" class="btn" (click)="saveChange()">
+          Save Changes
+        </button>
+      </div>
+    </div>
+    <!-- Question Optons section -->
+
+    <!-- Question Links section -->
+    <div class="question_links mb-4">
+      <button
+        *ngFor="let question of questions; let i = index"
+        (click)="getQuestion(question._id, i)"
+        [ngClass]="{'edited-button': question.isEdited}"
+      >
+        {{ i + 1 }}
+      </button>
+    </div>
+    <!-- Question Links section -->
+
+    <!-- Questions section -->
+    <div class="question-container">
+      <div class="questioeditQuestionn-no">{{ tempQuestion?.index + 1 }}.</div>
+      <div class="question-content">
+        <div
+          [contentEditable]="isEditMode"
+          [ngClass]="{ 'edit-mode': isEditMode, 'question-q': !isEditMode }"
+          #editableDiv
+        >
+          {{ tempQuestion?.question.title }}
+        </div>
+        <ol class="options">
+          <ng-container *ngFor="let option of tempQuestion?.question?.options">
+            <div>
+              <input
+                *ngIf="isEditMode"
+                type="radio"
+                id="{{ option._id }}"
+                [checked]="option._id === selectedAnswer"
+                [value]="option._id"
+                [(ngModel)]="selectedAnswer"
+                (change)="
+                  selectAnswer(option._id); updateExplanation(option._id)
+                "
+                class="form-check-input me-2"
+              />
+              <li
+                class="list-item"
+                [ngClass]="{
+                  'correct-option': option.correctAnswer === 'true'
+                }"
+              >
+                <span *ngIf="isEditMode">
+                  <input type="text" name="text" [(ngModel)]="option.text" />
+                </span>
+                <label *ngIf="!isEditMode" [for]="option._id">
+                  <div>{{ option.text }}</div>
+                </label>
+              </li>
+            </div>
+          </ng-container>
+        </ol>
+        <div
+          class="explanation"
+          *ngFor="let option of tempQuestion?.question.options"
+        >
+          <ng-container *ngIf="option.correctAnswer === 'true'">
+            <div class="mb-2" *ngIf="!isEditMode">
+              <strong>Explanation: </strong>{{ option.explanation }}
+            </div>
+            <div class="mb-2" *ngIf="isEditMode">
+              <strong>Explanation: </strong>
+              <textarea
+                [(ngModel)]="selectedOptionExplanation"
+                rows="7"
+                class="form-control"
+              ></textarea>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="question-action">
+        <div class="delete-option">
+          <mat-icon class="mb-2" (click)="toggleDivSection()">delete</mat-icon>
+          <div *ngIf="showDiv" class="why-delete">
+            <div class="why-q mb-1">Why?</div>
+            <div
+              class="reason"
+              *ngFor="let reason of reasons"
+              (click)="deleteQuestion(reason)"
+            >
+              {{ reason }}
+            </div>
+          </div>
+        </div>
+        <mat-icon (click)="editQuestion(tempQuestion.question)">edit</mat-icon>
+        <mat-icon *ngIf="isEditMode" (click)="cancelEdit()">close</mat-icon>
+      </div>
+    </div>
+    <!-- Questions section -->
+  </div>
+</div>

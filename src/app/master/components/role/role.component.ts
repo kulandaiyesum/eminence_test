@@ -19,7 +19,7 @@ export class RoleComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort: MatSort | any;
   dataSource: MatTableDataSource<Role>;
-  displayedColumns: string[] = ['sno', 'role', 'actions']; // 'status'
+  displayedColumns: string[] = ['sno', 'role']; // 'status',  'actions'
   constructor(
     private roleService: RoleService,
     private dialog: MatDialog,
@@ -37,13 +37,14 @@ export class RoleComponent implements OnInit {
   getRole() {
     this.roleService.getRole().subscribe(
       (response: any) => {
-        console.log(response);
         this.dataSource = new MatTableDataSource(response.result);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
-      (err: HttpErrorResponse) => {
-        console.log(err);
+      (err: any) => {
+        this.toastr.error(err.message, '', {
+          timeOut: 3000,
+        });
       }
     );
   }
@@ -55,37 +56,27 @@ export class RoleComponent implements OnInit {
     };
     const dialogRef = this.dialog.open(RoleFormComponent, dialogBoxSettings);
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('AddRole ', result);
       if (result === undefined) {
         return;
       }
-      this.toastr.success(result.message, '', {
-        timeOut: 3000,
-      });
       this.getRole();
     });
   }
-  editRole(roleObject: any): void {
+  editRole(roleObject: Role): void {
     let dialogBoxSettings = {
       width: '500px',
       margin: '0 auto',
       data: roleObject,
     };
     const dialogRef = this.dialog.open(RoleFormComponent, dialogBoxSettings);
-
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed', result);
       if (result === undefined) {
         return;
       }
-      this.toastr.success(result.message, '', {
-        timeOut: 3000,
-      });
       this.getRole();
     });
   }
-  deleteRole(role: any) {
-    console.log(role, 'delete method called');
+  deleteRole(role: Role) {
     Swal.fire({
       title: 'Delete',
       text: 'Are you sure you want to Delete?',
@@ -96,11 +87,16 @@ export class RoleComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.roleService.deleteRole(role._id).subscribe(
-          (result) => {
+          (result: any) => {
+            this.toastr.success(result.message, '', {
+              timeOut: 3000,
+            });
             this.getRole();
           },
-          (err: HttpErrorResponse) => {
-            console.log(err);
+          (err: any) => {
+            this.toastr.error(err.message, '', {
+              timeOut: 3000,
+            });
             this.getRole();
           }
         );

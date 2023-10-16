@@ -1,1 +1,187 @@
-<p>history works!</p>
+<!-- <div class="history-container">
+  <p>View your <strong style="color: var(--qgen-red)">export and download history.</strong></p>
+  <div class="history-response">
+    <div class="history-response_1">
+    <div class="response">
+      <div class="input-wrap">
+        <strong>Input:</strong> bacteria, gram-negative, rod-shaped
+      </div>
+      <div class="questions-wrap">
+        <div class="questions"><strong>Questions:</strong> 6</div>
+        <div class="loader me-3">
+        </div>
+      </div>
+      <div class="completion-bar">
+        <div class="red-bg">
+          <div class="green-bg" style="width: 100%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="response">
+      <div class="input-wrap">
+        <strong>Input:</strong> voltage-gated calcium channels, sarcoplasmic recticulum
+      </div>
+      <div class="questions-wrap">
+        <div class="questions"><strong>Questions:</strong> 11</div>
+        <div class="loader me-3">
+        </div>
+      </div>
+      <div class="completion-bar">
+        <div class="red-bg">
+          <div class="green-bg" style="width: 100%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="response">
+      <div class="input-wrap">
+        <strong>Input:</strong>  voltage-gated calcium channels, sarcoplasmic recticulum
+      </div>
+      <div class="questions-wrap">
+        <div class="questions"><strong>Questions:</strong> 11</div>
+        <div class="loader me-3">
+        </div>
+      </div>
+      <div class="completion-bar">
+        <div class="red-bg">
+          <div class="green-bg" style="width: 100%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="history-response_2">
+    <div class="response">
+      <div class="input-wrap">
+        <strong>Input:</strong>  bacteria, gram-negative, rod-shaped.
+      </div>
+      <div class="questions-wrap">
+        <div class="questions"><strong>Ask Eminence:</strong> Downloaded</div>
+        <div class="loader me-3">
+        </div>
+      </div>
+      <div class="completion-bar">
+        <div class="red-bg">
+          <div class="green-bg" style="width: 100%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="response">
+      <div class="input-wrap">
+        <strong>Input:</strong>  voltage-gated calcium channels, sarcoplasmic recticulum
+      </div>
+      <div class="questions-wrap">
+        <div class="questions"><strong>Questions:</strong> 11</div>
+        <div class="loader me-3">
+        </div>
+      </div>
+      <div class="completion-bar">
+        <div class="red-bg">
+          <div class="green-bg" style="width: 100%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="response">
+      <div class="input-wrap">
+        <strong>Input:</strong>  voltage-gated calcium channels, sarcoplasmic recticulum
+      </div>
+      <div class="questions-wrap">
+        <div class="questions"><strong>Ask Eminence:</strong> Downloaded</div>
+        <div class="loader me-3">
+        </div>
+      </div>
+      <div class="completion-bar">
+        <div class="red-bg">
+          <div class="green-bg" style="width: 100%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+</div> -->
+<div class="history-container">
+  <div class="heading">
+    <p>View your <b>saved and download history.</b></p>
+  </div>
+  <div class="search">
+    <input
+      matInput
+      (keyup)="applyFilter($event)"
+      placeholder="Search here..."
+      #input
+    />
+  </div>
+  <div class="table">
+    <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <!-- Input Column -->
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Created Date</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let row; let i = index"
+          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+          >{{ row.date }}</mat-cell
+        >
+      </ng-container>
+      <!-- Input Column -->
+      <ng-container matColumnDef="input">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Input</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let row; let i = index"
+          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+          >{{ row.input }}</mat-cell
+        >
+      </ng-container>
+
+      <!-- Question Column -->
+      <ng-container matColumnDef="question">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Question</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let row; let i = index"
+          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+          >{{ row.question }}</mat-cell
+        >
+      </ng-container>
+
+      <!-- From Column -->
+      <ng-container matColumnDef="from">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >From</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let row; let i = index"
+          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+          >{{ row.from }}</mat-cell
+        >
+      </ng-container>
+
+      <!-- Action Column -->
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Export</mat-header-cell
+        >
+        <mat-cell
+          *matCellDef="let row; let i = index"
+          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+          ><mat-icon class="export-icon">save_alt</mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </div>
+</div>

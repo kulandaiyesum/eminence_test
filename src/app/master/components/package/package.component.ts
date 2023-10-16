@@ -1,5 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -8,15 +7,16 @@ import { PackageService } from '../../service/package.service';
 import { Package } from '../../model/package.class';
 import { PackagePopupComponent } from '../package-popup/package-popup.component';
 import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
+import { InstituteserviceService } from '../../service/instituteservice.service';
+import { SubscriptionService } from '../../service/subscription.service';
 
 @Component({
   selector: 'app-package',
   templateUrl: './package.component.html',
   styleUrls: ['./package.component.scss'],
 })
-export class PackageComponent {
-  packageForm: FormGroup;
-
+export class PackageComponent implements OnInit {
   displayedColumns: string[] = [
     'packageName',
     'type',
@@ -24,85 +24,84 @@ export class PackageComponent {
     'amount',
     'rate',
     'durationType',
-    'durationCount',
     'action',
   ];
   dataSource: MatTableDataSource<Package>;
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   packageData: any;
+  public instituteDetails = [];
+  public subscriptionList = [];
 
   constructor(
-    private formBuilder: FormBuilder,
     private packageService: PackageService,
-    public dialog: MatDialog
-  ) {
-    this.packageForm = this.formBuilder.group({
-      packageName: ['', Validators.required],
-      questionsCount: ['', Validators.required],
-      amount: ['', Validators.required],
-      rate: ['', Validators.required],
-      topicId: ['', Validators.required],
-      durationType: ['', Validators.required],
-      durationCount: ['', Validators.required],
-    });
-  }
+    public dialog: MatDialog,
+    private toastr: ToastrService,
+    public instituteService: InstituteserviceService,
+    private subscriptionService: SubscriptionService
+  ) {}
 
   ngOnInit(): void {
     this.loadPackageData();
+    this.getAllDataOfSubscription();
   }
 
   loadPackageData() {
     this.packageService.getAllPackages().subscribe(
       (packages: any) => {
         this.packageData = packages.result;
-        console.log(this.packageData);
+
+        this.packageData.forEach((pkg: Package) => {
+          if (pkg.type === 'b2c') {
+            pkg.questionsCount = 'UNLIMITED';
+          }
+        });
+
         this.dataSource = new MatTableDataSource(this.packageData);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
       (error) => {
-        console.error('Failed to load packages', error);
+        this.toastr.error(error.message, '', {
+          timeOut: 3000,
+        });
       }
     );
   }
 
+  getAllInstituteData() {
+    this.instituteService.getAllInstitute().subscribe(
+      (response: any) => {
+        this.instituteDetails = response.result;
+      },
+      (error) => {
+        console.error('Not data get', error);
+      }
+    );
+  }
+
+  getAllDataOfSubscription() {
+    this.subscriptionService.getAllSubscriptions().subscribe((data: any) => {
+      this.subscriptionList = data.result;
+    });
+  }
+
   openAddPackagePopup() {
     let dialogBoxSettings = {
-      width: '500px',
+      width: '600px',
       margin: '0 auto',
-      // height:'80vh',
-      // overflow: 'auto',
     };
     const dialogRef = this.dialog.open(
       PackagePopupComponent,
       dialogBoxSettings
     );
-
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.loadPackageData();
+      if (result === undefined) {
+        return;
       }
+      this.loadPackageData();
     });
   }
-
-  onPackageSubmit() {
-    if (this.packageForm.valid) {
-      const packageData = this.packageForm.value as Package;
-      this.packageService.createPackage(packageData).subscribe(
-        (response) => {
-          console.log('Package created successfully', response);
-          this.packageForm.reset();
-          this.loadPackageData();
-        },
-        (error) => {
-          console.error('Failed to create package', error);
-        }
-      );
-    }
-  }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -110,49 +109,59 @@ export class PackageComponent {
 
   editPackage(element: Package) {
     let dialogBoxSettings = {
-      width: '500px',
+      width: '600px',
       margin: '0 auto',
-      // height:'80vh',
-      // overflow: 'auto',
-
-      data: { packageData: element },
+      data: element,
     };
     const dialogRef = this.dialog.open(
       PackagePopupComponent,
       dialogBoxSettings
     );
-
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.loadPackageData();
+      if (result === undefined) {
+        return;
       }
+      this.loadPackageData();
     });
   }
 
   deletePackage(element: Package) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You are about to delete this package.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, keep it',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // User clicked "Yes, delete it!"
-        this.packageService.deletePackage(element).subscribe(
-          (response) => {
-            console.log('Package deleted successfully', response);
-            this.loadPackageData();
-          },
-          (error) => {
-            console.error('Failed to delete package', error);
-          }
-        );
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        // User clicked "No, keep it" or closed the dialog
-        Swal.fire('Cancelled', 'The package is not deleted.', 'info');
-      }
-    });
+    const isIdInResponse = this.subscriptionList.some(
+      (item) => item.packageId._id === element._id
+    );
+
+    if (isIdInResponse) {
+      Swal.fire({
+        title: 'You cannot delete package in use',
+        icon: 'warning',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK'
+      });
+    } else {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'You are about to delete this package.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.packageService.deletePackage(element).subscribe(
+            (response: any) => {
+              this.toastr.success(response.message, '', {
+                timeOut: 3000,
+              });
+              this.loadPackageData();
+            },
+            (error) => {
+              this.toastr.error(error.message, '', {
+                timeOut: 3000,
+              });
+            }
+          );
+        }
+      });
+    }
   }
 }

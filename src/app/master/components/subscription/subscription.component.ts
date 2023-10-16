@@ -1,40 +1,49 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SubscriptionPopupComponent } from '../subscription-popup/subscription-popup.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { SubscriptionService } from '../../service/subscription.service';
+import { UpdateSubscriptionComponent } from '../update-subscription/update-subscription.component';
+import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-subscription',
   templateUrl: './subscription.component.html',
   styleUrls: ['./subscription.component.scss'],
 })
-export class SubscriptionComponent {
-  displayedColumns: string[] = ['instituteName', 'instituteId', 'packageType', 'packageTypeId'];
-  dataSource: MatTableDataSource<any>;
+export class SubscriptionComponent implements OnInit {
+  displayedColumns: string[] = [
+    'instituteName',
+    'instituteId',
+    'packageType',
+    'packageTypeId',
+    'questionsCountResetDate',
+    'action',
+  ];
+  dataSource;
+  public subscriptionList;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  metaData = [
-    { instituteName: 'Institute A', instituteId: 1, packageType: 'Type 1', packageTypeId: 101 },
-    { instituteName: 'Institute B', instituteId: 2, packageType: 'Type 2', packageTypeId: 102 },
-    { instituteName: 'Institute C', instituteId: 3, packageType: 'Type 1', packageTypeId: 101 },
-    { instituteName: 'Institute D', instituteId: 4, packageType: 'Type 3', packageTypeId: 104 },
-    // Add more data as needed
-  ];
-
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private subscriptionService: SubscriptionService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.metaData);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    this.getAllData();
   }
-  ngAfterViewInit(){
-    this.dataSource = new MatTableDataSource(this.metaData);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+  getAllData() {
+    this.subscriptionService.getAllSubscriptions().subscribe((data: any) => {
+      this.subscriptionList = data.result;
+      this.dataSource = new MatTableDataSource(this.subscriptionList);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   addData() {
@@ -57,5 +66,49 @@ export class SubscriptionComponent {
     }
     // Reset sort to its initial state
     this.dataSource.sort?.sort({ id: '', start: 'asc', disableClear: false });
+  }
+
+  updateSubscription(data: any) {
+    const dialogOptios = {
+      width: '600px',
+      margin: '0 auto',
+      data: data,
+    };
+    const dialogRef = this.dialog.open(
+      UpdateSubscriptionComponent,
+      dialogOptios
+    );
+    // You can handle dialog events here if needed
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+      this.getAllData();
+    });
+  }
+
+  deleteSubscription(data: any) {
+    Swal.fire({
+      title: 'Delete',
+      text: 'Are you sure you want to Delete?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.subscriptionService.deleteSubscription(data).subscribe(
+          (res: any) => {
+            this.toastr.success(res.message, '', {
+              timeOut: 3000,
+            });
+            this.getAllData();
+          },
+          (err) => {
+            this.toastr.error(err.error.message, '', {
+              timeOut: 3000,
+            });
+          }
+        );
+      }
+    });
   }
 }

@@ -1,0 +1,197 @@
+.ask_eminence {
+  padding: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  .prompt_section {
+    .prompts_wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      .sample_prompt {
+        margin: 10px 10px;
+        background-color: #f2f2f2;
+        border: 1px solid #000;
+        border-radius: 20px;
+        padding: 1rem;
+        font-weight: 600;
+      }
+    }
+  }
+  form {
+    textarea {
+      resize: none;
+      border: 1px solid #000;
+      border-radius: 20px;
+      padding: 1rem;
+      &::placeholder {
+        font-size: larger;
+        color: #ccc;
+        resize: none;
+      }
+    }
+    .error-message {
+      display: block;
+      color: red;
+    }
+    .spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 75px;
+        height: 75px;
+      }
+    }
+    button {
+      font-size: 20px;
+      padding: 12px 24px;
+      font-weight: 700;
+      border: 1px solid #000;
+      background-color: var(--qgen-logo-yellow);
+    }
+  }
+  .ask_eminence_response_container {
+    background-color: #fff;
+    // padding: 1rem;
+    border-radius: 20px;
+    border: 1px solid #000;
+    .ask_emi_options {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      mat-icon {
+        font-size: 30px;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+      }
+      img {
+        cursor: pointer;
+      }
+    }
+    .response_qgen {
+      #result-text-area {
+        overflow: auto;
+        overflow-x: hidden;
+      }
+      textarea {
+        padding: 0 20px;
+        border: none;
+        box-shadow: none;
+        resize: none;
+        overflow: auto;
+        overflow-x: hidden;
+      }
+      textarea[disabled] {
+        background-color: transparent; /* or any other background color you prefer */
+        cursor: not-allowed; /* Change the cursor style when disabled */
+      }
+    }
+  }
+}
+ngx-spinner {
+  img {
+    width: 100px;
+    height: 100px;
+  }
+  p {
+    text-align: center;
+  }
+}
+
+@media (max-width: 1120px) {
+  .ask_eminence {
+    .prompt_section {
+      .prompts_wrap {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .ask_eminence {
+    .prompt_section {
+      .prompts_wrap {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+      }
+    }
+  }
+}
+@media (max-width: 830px) {
+  .ask_eminence {
+    .prompt_section {
+      .prompts_wrap {
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 1rem;
+        .sample_prompt {
+          margin: 0;
+        }
+      }
+    }
+    form {
+      textarea {
+      }
+      button {
+      }
+    }
+    .ask_eminence_response_container {
+      .ask_emi_options {
+        mat-icon {
+        }
+      }
+      .response_qgen {
+        textarea {
+        }
+      }
+    }
+  }
+}
+@media (max-width: 599px) {
+  .ask_eminence {
+    padding: 10px;
+    .prompt_section {
+      .prompts_wrap {
+        gap: 12px;
+        justify-content: center;
+        .sample_prompt {
+          width: 90%;
+        }
+      }
+    }
+    form {
+      textarea {
+        padding: 0.5rem;
+        &::placeholder {
+          font-size: 16px;
+        }
+      }
+      button {
+        font-size: 18px;
+        padding: 10px 20px;
+      }
+    }
+    .ask_eminence_response_container {
+      .response_qgen {
+        textarea {
+          column-span: 7;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 576px) {
+  .ask_eminence {
+    .prompt_section {
+      .prompts_wrap {
+        .sample_prompt {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

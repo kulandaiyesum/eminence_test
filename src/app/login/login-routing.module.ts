@@ -4,14 +4,14 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { EmailComponent } from './components/email/email.component';
 
 const routes: Routes = [
-  {
-    path: 'forgotpassword',
-    component: ForgotPasswordComponent,
-  },
-  {
-    path: 'email',
-    component: EmailComponent,
-  },
+  // {
+  //   path: 'forgotpassword',
+  //   component: ForgotPasswordComponent,
+  // },
+  // {
+  //   path: 'email',
+  //   component: EmailComponent,
+  // },
 ];
 
 @NgModule({

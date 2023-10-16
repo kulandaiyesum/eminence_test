@@ -1,0 +1,32 @@
+<div class="questions-container">
+  <div class="main">
+    <div class="questions">
+      <div class="question" #scrollContainer>
+        <p>{{ sampleQuestions }}</p>
+        <p id="options">
+          <mat-checkbox *ngFor="let options of sampleOptions">{{
+            options
+          }}</mat-checkbox>
+          <mat-checkbox *ngFor="let options of sampleOptions">{{
+            options
+          }}</mat-checkbox>
+          <mat-checkbox *ngFor="let options of sampleOptions">{{
+            options
+          }}</mat-checkbox>
+        </p>
+      </div>
+      <div class="explanation" #scrollExplanationContainer>
+        <p>Correct Answer : &#160;A. Deposition of immunoglobulin light chain</p>
+        <p id="explanation">Explanation : &#160;{{sampleExplanation}}</p>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="control-button">
+        <button mat-stroked-button id="edit">Edit</button>
+        <button mat-stroked-button id="accept">Accept</button>
+        <button mat-stroked-button id="reject">Reject</button>
+        <button mat-stroked-button id="end">End</button>
+      </div>
+    </div>
+  </div>
+</div>

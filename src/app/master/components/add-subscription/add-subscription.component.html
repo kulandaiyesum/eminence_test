@@ -1,0 +1,75 @@
+<div class="add-subscription-container">
+  <div class="main">
+    <div class="heading">
+      <div class="icon">
+        <mat-icon class="close_btn" mat-icon-button (click)="closeDialog()"
+          >close</mat-icon
+        >
+      </div>
+      <div class="head">
+        <h2>Add Subscription</h2>
+      </div>
+    </div>
+    <div class="forms">
+      <form #addSubscriptionForm="ngForm">
+        <select name="package" id="packages" (change)="selectedPackage($event)">
+          <option value="package">Select package</option>
+          <option *ngFor="let package of packageList" [value]="package._id">
+            {{ package.packageName }} - ${{ package.amount }}
+          </option>
+        </select>
+        <p *ngIf="selectedPackageOption">
+          {{ selectedPackageOption.questionsCount }} Questions per
+          {{ selectedPackageOption.durationType }}
+        </p>
+        <div class="dates">
+          <!-- <mat-form-field class="example-full-width"> -->
+
+          <label for="startdate">Start date</label>
+          <p id="date">
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [(ngModel)]="institutionModel.startdate"
+              [min]="minDate"
+              name="startdate"
+              (dateChange)="calculateEndDate()"
+              required
+              [disabled]="isPackageSelected"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </p>
+          <!-- </mat-form-field> -->
+          <!-- <label for="datePicker">Start Date:</label>
+          <input
+            type="date"
+            name="startdate"
+            [(ngModel)]="institutionModel.startdate"
+            (change)="calculateEndDate()"
+            [disabled]="isPackageSelected"
+            required
+          /> -->
+          <p><b>End Date :</b>{{ calculatedEndDate }}</p>
+          
+          <div
+            *ngIf="addSubscriptionForm.controls['startdate']?.errors?.['required'] && addSubscriptionForm.controls['startdate']?.touched"
+            class="error-message"
+          >
+            Start Date is required.
+          </div>
+          <button
+            type="submit"
+            (click)="onSubscriptionSubmit()"
+            [disabled]="addSubscriptionForm.invalid"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<div class="update-subscription-container">
+  <div class="main">
+    <div class="heading">
+      <div class="icon">
+        <mat-icon class="close_btn" mat-icon-button (click)="closeDialog()"
+          >close</mat-icon
+        >
+      </div>
+      <div class="head">
+        <h2>Update Subscription</h2>
+      </div>
+    </div>
+    <div class="forms">
+      <form [formGroup]="updateSubscriptionForm">
+        <select
+          id="packages"
+          formControlName="packageId"
+          [(ngModel)]="subscriptionObject.packageId"
+          (change)="selectedPackage($event)"
+        >
+          <option value="package" disabled>Select package</option>
+          <option *ngFor="let package of packageList" [value]="package._id">
+            {{ package.packageName }} - ${{ package.amount }}
+          </option>
+        </select>
+        <p *ngIf="selectedPackageOption">
+          {{ selectedPackageOption.questionsCount }} Questions per
+          {{ selectedPackageOption.durationType }}
+        </p>
+        <div class="dates">
+          <label for="startdate">Start date</label>
+          <p id="date">
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [(ngModel)]="subscriptionObject.startDate"
+              [min]="minDate"
+              formControlName="startDate"
+              name="startdate"
+              (dateChange)="calculateEndDate()"
+              required
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </p>
+          <p>
+            <b>End Date :</b
+            ><span
+              *ngIf="
+                subscriptionObject.endDate !== null &&
+                subscriptionObject.endDate !== ''
+              "
+              >&nbsp;{{ subscriptionObject.endDate | date : "MM/dd/yyy" }}</span
+            >
+          </p>
+          <div
+            class="error-message"
+            *ngIf="
+              updateSubscriptionForm.controls['startDate'].hasError(
+                'required'
+              ) || updateSubscriptionForm.status === 'INVALID'
+            "
+          >
+            Enter Valid information.
+          </div>
+          <button
+            type="submit"
+            (click)="onSubscriptionUpdate()"
+            [disabled]="updateSubscriptionForm.invalid"
+          >
+            Update
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

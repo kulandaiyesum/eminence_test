@@ -12,6 +12,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import Swal from 'sweetalert2';
 import { PackageService } from '../../service/package.service';
+import { AddSubscriptionComponent } from '../add-subscription/add-subscription.component';
+import { SubscriptionService } from '../../service/subscription.service';
 
 @Component({
   selector: 'app-institution',
@@ -28,17 +30,18 @@ export class InstitutionComponent {
   displayedColumns: string[] = [
     'name',
     'email',
-    'update',
-    'address',
-    'state',
-    'zip',
+
+    'city',
     'status',
     'action',
+    'add',
   ];
   public dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   public instituteDetails: any;
+
+  public subscriptionList = [];
 
   public institutionModel: Institution = {
     name: '',
@@ -50,18 +53,26 @@ export class InstitutionComponent {
     packageName: '',
     questionsCount: '',
     packageNameId: '',
+    city: '',
+    startdate: new Date(),
+    enddate: new Date(),
+    durationType: '',
+    country: '',
+    questionsCountResetDate: new Date(),
   };
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private toastr: ToastrService,
     public dialog: MatDialog,
-    public instituteService: InstituteserviceService
+    public instituteService: InstituteserviceService,
+    private subscriptionService: SubscriptionService
   ) {}
 
   ngOnInit(): void {
     this.initForm();
     this.getAllInstituteData();
+    this.getAllDataOfSubscription();
   }
 
   initForm() {
@@ -95,8 +106,8 @@ export class InstitutionComponent {
   }
   addData() {
     const dialogRef = this.dialog.open(InstitutePopupComponent, {
-      width: '500px',
-      height: 'auto',
+      width: '600px',
+      height: '80vh',
       data: null,
       // Other MatDialog options
     });
@@ -110,8 +121,6 @@ export class InstitutionComponent {
   getAllInstituteData() {
     this.instituteService.getAllInstitute().subscribe(
       (response: any) => {
-        console.log(response);
-        console.log(response.result);
         this.instituteDetails = response.result;
         this.dataSource = new MatTableDataSource(this.instituteDetails);
         // Connect the paginator and sort to the data source
@@ -138,8 +147,8 @@ export class InstitutionComponent {
   updateInstitute(data: any) {
     console.log(data);
     const dialogRef = this.dialog.open(InstitutePopupComponent, {
-      width: '500px',
-      height: 'auto',
+      width: '600px',
+      height: '80vh',
       data: data,
       // Other MatDialog options
     });
@@ -149,28 +158,75 @@ export class InstitutionComponent {
       this.getAllInstituteData();
     });
   }
-  deleteInstitute(element: any) {
-    Swal.fire({
-      title: 'Are you sure you want to delete?',
-      text: 'This action cannot be undone!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, cancel',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.performDelete(element);
-      }
+
+  getAllDataOfSubscription() {
+    this.subscriptionService.getAllSubscriptions().subscribe((data: any) => {
+      this.subscriptionList = data.result;
+      console.log(this.subscriptionList);
     });
   }
+
+  deleteInstitute(element: any) {
+    const isIdInResponse = this.subscriptionList.some(
+      (item) => item.institutionId._id === element._id
+    );
+
+    if (isIdInResponse) {
+      Swal.fire({
+        title: 'This institution subscription is still valid',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Proceed anyway',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: 'Are you sure you want to delete?',
+            text: 'It will reflects on user and subscription',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              this.performDelete(element);
+            }
+          });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // The user clicked "Cancel" or closed the alert
+          console.log('Cancel clicked');
+        }
+      });
+    } else {
+      Swal.fire({
+        title: 'Are you sure you want to delete?',
+        text: 'It will reflects on user and subscription',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.performDelete(element);
+        }
+      });
+    }
+  }
+
   performDelete(element: any) {
     console.log(element);
     this.instituteService.deleteInstitution(element).subscribe(
       (response: any) => {
-        console.log(response);
+        this.toastr.success(response.message, '', {
+          timeOut: 3000,
+        });
         this.getAllInstituteData();
       },
       (error) => {
+        this.toastr.error(error.error.message, '', {
+          timeOut: 3000,
+        });
+        this.getAllInstituteData();
         console.error('Delete failed', error);
       }
     );
@@ -179,4 +235,23 @@ export class InstitutionComponent {
   changeCustomerStatus(list) {}
   editCustomer(customer) {}
   deleteCustomer(list) {}
+
+  addSubscription(data) {
+    console.log(data);
+
+    console.log('add subscriptions');
+
+    const dialogRef = this.dialog.open(AddSubscriptionComponent, {
+      width: '600px',
+      height: '80vh',
+      data: data,
+      // Other MatDialog options
+    });
+    // You can handle dialog events here if needed
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: ${result}`);
+      this.getAllInstituteData();
+      this.getAllDataOfSubscription();
+    });
+  }
 }

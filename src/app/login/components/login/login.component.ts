@@ -1,5 +1,9 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../service/login.service';
@@ -8,6 +12,9 @@ import { environment } from 'src/environments/environment';
 import { Register } from '../../model/register.model';
 import { Login } from '../../model/login.model';
 import { ToastrService } from 'ngx-toastr';
+import { EmailComponent } from '../email/email.component';
+import { EmailPopupComponent } from '../email-popup/email-popup.component';
+import { RegisterComponent } from '../register/register.component';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +35,9 @@ export class LoginComponent {
     role: '',
     id: '',
     token: '',
+    email: '',
+    password: '',
+    institutionName: ''
   };
   public loginModel: Login = {
     email: '',
@@ -40,10 +50,10 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private loginService: LoginService,
-    private toastr: ToastrService
-  ) {
+    private toastr: ToastrService,
+    public dialog: MatDialog
+  ) {}
 
-  }
   ngOnInit(): void {
     this.initForm();
   }
@@ -70,10 +80,31 @@ export class LoginComponent {
         (response: any) => {
           if (
             response.result.user.role.role === 'ADMIN' ||
-            response.result.user.role.role === 'FACULTY'
+            response.result.user.role.role === 'FACULTY' ||
+            response.result.user.role.role === 'VETTER' ||
+            response.result.user.role.role === 'STUDENT'
           ) {
+            if (response.result.user.role.role === 'ADMIN') {
+              this.router.navigateByUrl('/eminence/admin');
+            }
+            if (response.result.user.role.role === 'FACULTY') {
+              const topicId = this.encryptText(
+                response.result.user?.topicId.topic,
+                this.secretKey
+              );
+              if (topicId) {
+                localStorage.setItem('6', topicId);
+              }
+              this.router.navigateByUrl('/eminence/faculty');
+            }
+            if (response.result.user.role.role === 'VETTER') {
+              this.router.navigateByUrl('/eminence/vetter');
+            }
+           if (response.result.user.role.role === 'STUDENT') {
+             this.router.navigateByUrl('/eminence/student');
+           }
             const role = response.result.user.role.role.toLowerCase();
-            this.router.navigateByUrl(`/eminenceai/${role}`);
+            // this.router.navigateByUrl(`/eminenceai/${role}`);
             this.closeDialog();
             this.loginUser.role = this.encryptText(
               response.result.user.role.role,
@@ -88,7 +119,7 @@ export class LoginComponent {
               this.secretKey
             );
             this.loginUser.id = this.encryptText(
-              response.result._id,
+              response.result.user._id,
               this.secretKey
             );
             localStorage.setItem('1', response.result.token);
@@ -96,14 +127,12 @@ export class LoginComponent {
             localStorage.setItem('3', this.loginUser.firstName);
             localStorage.setItem('4', this.loginUser.lastName);
             localStorage.setItem('5', this.loginUser.id);
-            this.toastr.success('Login success', '', {
-              timeOut: 3000,
-            });
           } else {
           }
         },
         (error) => {
           this.toastr.error('You are not a registered member', '', {
+            positionClass: 'toast-top-center',
             timeOut: 3000,
           });
           console.log('Error : ', error);
@@ -120,5 +149,32 @@ export class LoginComponent {
     return decrypted.toString(CryptoJS.enc.Utf8);
   }
 
-  
+  registerPop() {
+    this.closeDialog();
+    const dialogRef = this.dialog.open(RegisterComponent, {
+      width: '40%',
+      height: '600px',
+      data: null,
+
+      // Other MatDialog options
+    });
+    // You can handle dialog events here if needed
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: `);
+    });
+  }
+  forgotPassword() {
+    this.closeDialog();
+    const dialogRef = this.dialog.open(EmailComponent, {
+      width: '400px',
+      height: 'auto',
+      data: null,
+
+      // Other MatDialog options
+    });
+    // You can handle dialog events here if needed
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log(`Dialog result: `);
+    });
+  }
 }

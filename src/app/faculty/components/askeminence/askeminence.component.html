@@ -1,1 +1,103 @@
-<p>askeminence works!</p>
+<div class="ask_eminence">
+  <p>
+    <strong style="color: var(--qgen-red)">Ask Eminence</strong> allows you to
+    query our knowledge base of any purpose.
+  </p>
+  <div class="prompt_section mb-sm-2 mb-3">
+    <div class="mb-1 mb-sm-2"><strong>Sample Prompts:</strong></div>
+    <div class="prompts_wrap">
+      <div class="sample_prompt" *ngFor="let prompt of prompts">
+        <q>{{ prompt }}</q>
+      </div>
+    </div>
+  </div>
+  <form class="mb-3" #myForm="ngForm">
+    <div class="form-group mb-3">
+      <textarea
+        class="form-control"
+        name="question"
+        [(ngModel)]="askEminence.question"
+        placeholder="Enter Input..."
+        #questionField="ngModel"
+        required
+        minlength="5"
+      ></textarea>
+      <div
+        *ngIf="
+          questionField.invalid &&
+          (questionField.dirty || questionField.touched)
+        "
+        class="text-danger"
+      >
+        <div *ngIf="questionField.errors?.['required']">
+          Some input is required.
+        </div>
+        <div *ngIf="questionField.errors?.['minlength']">
+          Minimum 5 characters are required.
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <button class="btn" type="button" (click)="bulid()">Build</button>
+    </div>
+  </form>
+
+  <div class="ask_eminence_response_container mt-3 mt-sm-2">
+    <div class="ask_emi_options pt-2 ps-2 pe-2">
+      <mat-icon
+        matTooltip="Edit"
+        *ngIf="editIconVisibility && askEminence.result"
+        (click)="editResult()"
+        >edit</mat-icon
+      >
+      <mat-icon
+        matTooltip="Save"
+        *ngIf="saveIconVisibility && askEminence.result"
+        (click)="saveIt()"
+        >save</mat-icon
+      >
+      <mat-icon
+        matTooltip="Delete"
+        *ngIf="askEminence.result"
+        (click)="deleteItem()"
+        >delete</mat-icon
+      >
+      <mat-icon
+        matTooltip="Mail"
+        *ngIf="askEminence.result"
+        (click)="showFileFormatDialog()"
+        >mail</mat-icon
+      >
+      <!-- <div class="img_icon">
+        <img matTooltip="Download now" src="../../../../assets/images/icons8-download-30.png" alt=""  />
+      </div> -->
+    </div>
+    <form class="response_qgen">
+      <div class="form-group mb-3" id="result-text-area">
+        <textarea
+          class="form-control"
+          rows="6"
+          name="result"
+          [(ngModel)]="askEminence.result"
+          [disabled]="isTextareaDisabled"
+        ></textarea>
+      </div>
+    </form>
+  </div>
+</div>
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#1459cd"
+  type="ball-spin-clockwise"
+  [fullScreen]="true"
+  *ngIf="loading"
+>
+  <img
+    *ngIf="loading"
+    src="../../../../assets/images/loader.gif"
+    alt="loader"
+    id="loader"
+  />
+  <p style="color: white">Loading...</p>
+</ngx-spinner>

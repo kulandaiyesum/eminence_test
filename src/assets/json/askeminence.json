@@ -1,0 +1,11 @@
+{
+  "_id": "651d04caf36fc5f41f0834e2",
+  "keyword": "Summarize the steps of an action potential into a neat table.",
+  "answer": "Sure, I can summarize the steps of an action potential into a table for you. Here it is:\n\n| Step | Phase | Description |\n|------|-------|-------------|\n| 1 | Resting State | The neuron is at rest with a negative membrane potential, typically -70 mV. The Na+ channels are closed, but capable of opening. The K+ channels are closed, but capable of opening. |\n| 2 | Depolarization | A stimulus causes the Na+ channels to open, allowing Na+ ions to rush into the cell. This causes the membrane potential to become more positive, reaching a threshold of typically -55 mV. |\n| 3 | Rising Phase of the Action Potential | If the threshold is reached, more Na+ channels open, causing an influx of Na+ ions and a rapid rise in membrane potential (up to +40 mV). |\n| 4 | Falling Phase of the Action Potential | The Na+ channels become inactivated and the K+ channels open, allowing K+ ions to rush out of the cell. This causes the membrane potential to become more negative again, a process called repolarization. |\n| 5 | Undershoot | The K+ channels remain open for a bit longer, causing an \"undershoot\" where the membrane potential becomes even more negative than the resting state. |\n| 6 | Return to Resting State | The K+ channels close and the Na+ channels reset. The neuron returns to its resting state, ready to transmit another action potential. |\n\nEach of these steps is crucial for the proper transmission of signals through the nervous system.",
+  "downloadStatus": "pending",
+  "status": 1,
+  "isDeleted": false,
+  "createdBy": "Showkath",
+  "createdAt": "2023-10-04 11:53:06",
+  "__v": 0
+}

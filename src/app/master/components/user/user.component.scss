@@ -1,9 +1,15 @@
+.user_container_wrapper {
+  padding: 20px;
+}
+
 .user_container {
   width: 80%;
   margin: 0 auto;
+
   .search_and_add {
     display: flex;
     justify-content: space-between;
+
     .search_box {
       .search_field {
         input {
@@ -25,13 +31,14 @@
         }
       }
     }
+
     .add_btn {
       button {
         background-color: var(--qgen-logo-blue);
         padding: 8px 16px;
         border: none;
         color: #fff;
-        font-weight: 600;
+        font-size: 16px;
         border-radius: 4px;
         transition: background-color 0.3s ease;
         &:hover {
@@ -40,35 +47,40 @@
       }
     }
   }
+
   .table-container {
     margin-top: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
     table {
       width: 100%;
       overflow-x: scroll;
       border-radius: 8px;
+
       tr {
         &:first-child {
-          border-radius: 8px 8px 0 0;
+          // border-radius: 8px 8px 0 0;
         }
+
         th {
           background-color: var(--qgen-logo-blue);
           font-size: 16px;
           font-weight: 500;
           color: #fff;
+
           &:first-child {
-            border-radius: 8px 0 0 0;
+            // border-radius: 8px 0 0 0;
           }
+
           &:last-child {
-            border-radius: 0 8px 0 0;
+            // border-radius: 0 8px 0 0;
           }
         }
+
         td {
-        }
-        &:nth-child(even) {
-          background-color: #f5f5f5;
+          font-size: 14px;
         }
       }
     }
@@ -80,6 +92,7 @@
       display: flex;
       justify-content: flex-end;
       align-items: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
       .mat-select-value {
         font-size: 14px;
@@ -87,9 +100,7 @@
     }
   }
 }
-// ::ng-deep .mat-mdc-table  {
-//   table-layout:fixed !important;
-// }
+
 .set_edit_color_button {
   color: var(--qgen-logo-yellow);
   cursor: pointer;

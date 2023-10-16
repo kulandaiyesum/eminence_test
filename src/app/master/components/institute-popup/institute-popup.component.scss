@@ -1,19 +1,16 @@
 .main {
   width: auto;
-  height: auto;
+  max-height: 80vh;
   padding: 40px;
   .data {
     width: auto;
     height: auto;
-
+    padding-bottom: 20px;
     .heading {
       width: 100%;
-      height: 7vh;
-      // border: 1px solid red;
-      display: flex;
-      justify-content: space-between;
-      .head{
-        width: 95%;
+      height: 10vh;
+      .head {
+        // width: 95%;
         // border: 1px solid red;
         h2 {
           text-align: center;
@@ -22,12 +19,16 @@
           font-weight: bold;
         }
       }
-      .icon{
+      .icon {
+        // border: 1px solid yellow;
+        width: 100%;
+
+        display: flex;
+        justify-content: right;
         mat-icon {
           cursor: pointer;
         }
       }
-
     }
     .forms {
       min-width: 100%;
@@ -36,6 +37,8 @@
       justify-content: center;
       padding: 20px;
       border: 1px solid #ccc;
+      padding-bottom: 20px;
+
       .highlight {
         background-color: #ccc;
         // border: 1px solid #57c4ff; // Border style and color
@@ -50,7 +53,7 @@
             background-color: #f4f6f8;
             // border: 1px solid #b9b9b9;
             // color: #57c4ff;
-             padding:20px;
+            padding: 20px;
           }
           .form-group.custom_group {
             label {
@@ -62,6 +65,20 @@
               }
             }
           }
+        }
+        .part-input {
+          width: 100%;
+          height: auto;
+          display: flex;
+          .sub-part-input {
+            width: 50%;
+            input {
+              width: 100%;
+            }
+          }
+        }
+        .part-input .sub-part-input:nth-child(2) {
+          margin-left: 20px;
         }
         label {
           color: #4b5056;
@@ -86,6 +103,14 @@
             font-weight: 600;
             color: #bcbcbc;
           }
+        }
+        p{
+          margin-top: 10px;
+        }
+        .error-message {
+          color: red;
+          font-size: 14px;
+
         }
         button {
           margin-top: 25px;
@@ -117,11 +142,29 @@
           border: 1px solid #f0f0f0; // Border for package details
           border-radius: 3px;
           color: #333; // Change text color to your preference
-        }      }
+        }
+      }
     }
   }
+  @media (max-width: 768px) {
+    /* Change the maximum width (768px) to suit your breakpoint for tablet view */
+    .data {
+      .forms{
+        .part-input{
+          flex-direction: column;
+
+          .sub-part-input{
+            width: 100% !important;
+
+            input {
+              width: 100% !important;
+            }
+          }
+          .sub-part-input:nth-child(2) {
+            margin-left: 0 !important;
+          }
+        }
       }
-
-
-
-
+    }
+  }
+}

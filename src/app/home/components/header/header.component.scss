@@ -33,12 +33,16 @@ header {
         align-items: center;
         gap: 20px;
         li {
+          button {
+            cursor: pointer;
+          }
           a {
             text-decoration: none;
             color: #fff;
-            font-weight: 700;
-            line-height: 1;
-            font-size: 1rem;
+            font-weight: bold;
+            line-height: 1.2;
+            font-size: 18.72px;
+            cursor:  pointer !important;
             &:hover {
               border-bottom: 1px solid #fff;
             }
@@ -97,12 +101,12 @@ header {
     }
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 820px) {
   header {
-    background: #fff;
     .header_wrapper {
       flex-wrap: wrap;
       width: 100%;
+      background: #fff;
       padding: 5px 0;
       .logo_section {
         width: 100%;

@@ -1,0 +1,178 @@
+.build-test-container {
+  width: 100%;
+  height: 85vh;
+  // border: 1px solid red;
+  overflow: auto;
+  .main {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    .questons-container {
+      width: 100%;
+      height: auto;
+      // border: 1px solid yellow;
+      display: flex;
+      justify-content: space-between;
+      .qbank {
+        width: 49%;
+        height: 85vh;
+        // border: 1px solid red;
+        padding: 15px;
+        .dropdown {
+          margin-top: 20px;
+          margin-left: 10px;
+          mat-label {
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+          }
+          #system {
+            margin-left: 20px;
+          }
+        }
+        .subsytem-dropdown {
+          margin-left: 10px;
+        }
+      }
+      .qgen {
+        width: 49%;
+        height: 85vh;
+        padding: 15px;
+        // border: 1px solid blue;
+        .recommendations {
+          width: 100%;
+          height: 40vh;
+          padding: 10px;
+          .recommendations-area {
+            width: 100%;
+            height: 40vh;
+            border: 2px solid black;
+            border-radius: 20px;
+            overflow: auto;
+            padding: 20px;
+            h6 {
+              font-weight: bold;
+            }
+            p {
+              color: red;
+            }
+            #while {
+              margin-top: 10px;
+            }
+            .chips {
+              width: 100%;
+              height: auto;
+              // border: 1px solid yellow;
+              mat-chip {
+                background-color: #fcbf02;
+                color: #000;
+                margin-left: 5px;
+                margin-top: 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+    .controls {
+      width: 100%;
+      height: auto;
+
+      .button-area {
+        width: auto;
+        height: 17vh;
+        float: right;
+        border-radius: 10px;
+        background-color: #f5f5f5dc;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        padding-left: 15px;
+        padding-right: 15px;
+        .toggles {
+          #timed {
+            margin-left: 10px;
+          }
+        }
+        .input-area {
+          width: 50%;
+          height: auto;
+
+          #main-label {
+            font-size: 15px;
+            font-weight: bold;
+          }
+          input {
+            width: 35%;
+            margin-left: 10px;
+            border: 1px solid #c6c9cd;
+            border-radius: 10px;
+            color: #636972;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+            font-family: "open_sans", "Open Sans", sans-serif;
+            line-height: 1.5;
+            font-weight: normal;
+            font-size: 14px;
+            font-style: normal;
+            padding: 6px 8px;
+            min-height: 36px;
+            &::placeholder {
+              font-weight: 600;
+              color: #bcbcbc;
+            }
+          }
+        }
+        button {
+          background-color: #fcbf02;
+          color: #000;
+          border-radius: 3px;
+          width: 75px;
+          height: 35px;
+          font-weight: bold;
+        }
+        button:hover {
+          background-color: #fff;
+          color: #fcbf02;
+          border: 2px solid #000;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  // Mobile view styles
+  .questons-container {
+    flex-direction: column;
+  }
+  .qbank {
+    width: 100% !important;
+    height: auto !important;
+    #system {
+      margin-left: 0 !important;
+    }
+  }
+  .qgen {
+    height: auto !important;
+    width: 100% !important;
+  }
+  #timed {
+    margin-top: 10px;
+    margin-left: 0px !important;
+  }
+  .button-area {
+    width: 100%;
+    margin-top: 20px !important;
+    input {
+      margin-left: 0px !important;
+      width: 50% !important;
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  // Tablet view styles
+  .qbank {
+    #system {
+      margin-left: 0 !important;
+    }
+  }
+}
