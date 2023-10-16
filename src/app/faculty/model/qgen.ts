@@ -7,4 +7,5 @@ export class Qgen {
   createdBy: string;
   topic?: string;
   recived?: boolean;
+  status?: string;
 }
