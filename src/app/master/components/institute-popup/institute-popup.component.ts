@@ -58,9 +58,8 @@ export class InstitutePopupComponent {
   ) {
     this.items = data;
     if (data != null) {
-      console.log(data);
       this.visibleUpdate = true;
-      this.institutionModel.name = data.name;
+      this.institutionModel.name = data.name || data.institutionName;
       this.institutionModel.email = data.email;
       this.institutionModel._id = data._id;
       this.institutionModel.address = data.address;
