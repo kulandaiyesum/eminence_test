@@ -107,7 +107,7 @@
             </div>
           </div>
         </div>
-        <mat-icon (click)="editQuestion(tempQuestion.question)">edit</mat-icon>
+        <mat-icon *ngIf="editIconVisibility" (click)="editQuestion(tempQuestion.question)">edit</mat-icon>
         <mat-icon *ngIf="isEditMode" (click)="cancelEdit()">close</mat-icon>
       </div>
     </div>

@@ -34,6 +34,7 @@ export class EditorComponent implements OnInit {
   selectedAnswer: string = '';
   isEditMode: boolean = false;
   selectedOptionExplanation: string = '';
+  editIconVisibility: boolean = true;
   @ViewChild('editableDiv') editableDiv: ElementRef;
   constructor(
     private qgenService: QgenService,
@@ -59,8 +60,10 @@ export class EditorComponent implements OnInit {
       this.getQuestion(this.questions[0]._id, 0);
     });
   }
-  getQuestion(question_id: string, index: number) {
+  getQuestion(question_id: string, index: number,) {
     const findQuestion = this.questions.find((q) => q._id === question_id);
+    console.log(findQuestion.isEdited);
+    this.editIconVisibility=!findQuestion.isEdited
     this.tempQuestion = {
       index: index,
       question: findQuestion,
