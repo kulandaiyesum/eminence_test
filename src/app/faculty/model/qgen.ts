@@ -6,4 +6,5 @@ export class Qgen {
   userId: string;
   createdBy: string;
   topic?: string;
+  recived?: boolean;
 }

@@ -52,7 +52,7 @@ export class QgenComponent implements OnInit {
     this.gGenService.getQGen(this.userId).subscribe(
       (res: any) => {
         const tempHolder = res.result;
-        // console.log(res);
+        console.log(res);
         this.qgenObjectList = tempHolder.slice(0, 3);
       },
       (err) => {
