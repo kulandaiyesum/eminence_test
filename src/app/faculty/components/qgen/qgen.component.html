@@ -76,7 +76,7 @@
     <div class="h5 fw-600" style="color: var(--qgen-red)">Pending</div>
     <div class="qgen-response">
       <ng-container *ngFor="let qgenObject of qgenObjectList">
-        <div *ngIf="qgenObject?.recived === false" class="response">
+        <div *ngIf="qgenObject?.status === 'Pending'" class="response">
           <div class="input_wrap">
             <strong>Input: </strong>{{ qgenObject.keywords }}
           </div>
@@ -93,7 +93,7 @@
           </div>
         </div>
         <div
-          *ngIf="qgenObject?.recived !== false"
+          *ngIf="qgenObject?.status !== 'Pending'"
           class="response"
           [routerLink]="['/eminence/faculty/editor', qgenObject._id]"
         >
