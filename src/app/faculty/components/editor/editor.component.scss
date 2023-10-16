@@ -88,6 +88,12 @@
             width: fit-content;
             border: 2px solid var(--qgen-green);
           }
+          #check-answer{
+            color: green;
+            font-weight: bolder;
+            font-size: 22px;
+            margin-left: 5px;
+          }
         }
         .explanation {
         }
@@ -138,7 +144,7 @@
   }
 }
 @media (max-width: 576px) {
-  .editor_container{
+  .editor_container {
     padding: 10px;
   }
 }
