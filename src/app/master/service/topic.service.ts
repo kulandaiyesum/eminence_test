@@ -18,13 +18,10 @@ export class TopicService {
   };
 
   updateTopicMaster(topic: Topic) {
-    return this.http.put(this.loginURL + 'update', topic);
+    return this.http.put(this.loginURL + topic._id, topic);
   }
 
-  deleteTopicMaster(topic_id: string) {
-    const params = new HttpParams().set('_id', topic_id);
-    return this.http.delete(this.loginURL + 'delete', {
-      params,
-    });
+  deleteTopicMaster(topic: string) {
+    return this.http.delete(this.loginURL + topic);
   }
 }
