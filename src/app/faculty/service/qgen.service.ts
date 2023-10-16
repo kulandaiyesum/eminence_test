@@ -17,11 +17,10 @@ export class QgenService {
   // }
 
   submitQgen(qgen: Qgen) {
-    return this.http.post(this.baseUrl , qgen);
+    return this.http.post(this.baseUrl, qgen);
   }
 
   getQGen(userId: string) {
-    const body = { userId };
-    return this.http.put(this.baseUrl + 'users/'+body,body);
+    return this.http.get(this.baseUrl + 'users/' + userId);
   }
 }
