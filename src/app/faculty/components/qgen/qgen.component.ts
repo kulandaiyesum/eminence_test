@@ -70,7 +70,14 @@ export class QgenComponent implements OnInit {
     this.qGenObject.keywords = this.stringToArray(this.gGenForm.value.keywords);
     this.gGenService.submitQgen(this.qGenObject).subscribe(
       (response: any) => {
+        // console.log(response);
         this.getPendingQuestions();
+        const statusCode = response.statusCode;
+        if (statusCode === 200) {
+          setTimeout(() => {
+            this.getPendingQuestions();
+          }, 120000);
+        }
       },
       (error: any) => {}
     );
