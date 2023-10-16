@@ -15,17 +15,21 @@
       .control {
         width: auto;
         height: auto;
-        h2{
-          font-size: 30px;
+        h2 {
+          font-size: 24px; /* Adjust the font size as needed */
           text-align: center;
         }
+
         .button {
           display: flex;
           justify-content: space-between;
+
           button {
             background-color: #46b3eb;
             color: #fff;
+            font-size: 16px;
           }
+
           input {
             border: 1px solid #c6c9cd;
             border-radius: 3px;
@@ -44,23 +48,25 @@
             }
           }
         }
+
         #remove {
           margin-left: 20px;
         }
       }
+
       .table {
         width: 100;
         height: auto;
         margin-top: 20px;
         border-radius: 8px;
-        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        // box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Modify the box shadow as needed */
         background-color: transparent;
 
         mat-table {
           width: auto;
           height: auto;
           margin-top: 15px;
-          // border: 3px solid yellow;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
           mat-header-cell {
             background-color: var(--qgen-logo-blue);
@@ -68,22 +74,28 @@
             font-weight: 500;
             color: #fff;
           }
-          #first-header {
-            border-top-left-radius: 8px;
-          }
-          #last-header {
-            border-top-right-radius: 8px;
-          }
+
+          // #first-header {
+          //   border-top-left-radius: 8px;
+          // }
+
+          // #last-header {
+          //   border-top-right-radius: 8px;
+          // }
+
           mat-icon {
             color: #fabf01;
           }
+
           .odd-row {
-            background-color: #F5F5F5;
+            // background-color: #F5F5F5;
           }
+
           .even-row {
             background-color: #ffffff;
           }
         }
+
         mat-paginator {
           z-index: 1;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
