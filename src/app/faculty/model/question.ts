@@ -21,6 +21,7 @@ export class QgenOption {
   modifiedBy?: string;
   createdAt?: string;
   modifiedAt?: string;
+  coreOptionId?: string;
 }
 
 export class TempQuestion {
