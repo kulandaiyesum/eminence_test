@@ -16,6 +16,6 @@ export class QuerstionService {
   }
 
   daleteQuestion(reqId) {
-    return this.http.delete(this.baseUrl + reqId);
+    return this.http.delete(this.baseUrl + reqId._id, reqId);
   }
 }

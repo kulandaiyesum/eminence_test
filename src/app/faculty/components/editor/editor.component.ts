@@ -56,7 +56,6 @@ export class EditorComponent implements OnInit {
   getAllQuestions(reqId: string) {
     let data = { reqId };
     this.questionService.getAllQuestions(data).subscribe((doc: any) => {
-      console.log(doc.result);
       this.questLength = doc.result.questions.length;
       this.questions = doc.result.questions;
       this.title = doc.result.request.keywords[0];
@@ -147,8 +146,10 @@ export class EditorComponent implements OnInit {
     }
   }
   deleteQuestion(reason: string) {
+    console.log(this.tempQuestion.question.coreQuestionId);
+
     const payload = {
-      _id: this.tempQuestion.question._id,
+      _id: this.tempQuestion.question.coreQuestionId,
       reqId: this.tempQuestion.question.reqId,
       reason,
     };
@@ -162,23 +163,21 @@ export class EditorComponent implements OnInit {
       cancelButtonText: 'Cancel',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.questionService
-          .daleteQuestion(this.tempQuestion.question._id)
-          .subscribe(
-            (response: any) => {
-              console.log(response);
-              this.toastr.success(response.message, '', {
-                timeOut: 3000,
-              });
-              this.getAllQuestions(this.reqId);
-            },
-            (err) => {
-              console.log(err);
-              this.toastr.error(err.error.message, '', {
-                timeOut: 3000,
-              });
-            }
-          );
+        this.questionService.daleteQuestion(payload).subscribe(
+          (response: any) => {
+            console.log(response);
+            this.toastr.success(response.message, '', {
+              timeOut: 3000,
+            });
+            this.getAllQuestions(this.reqId);
+          },
+          (err) => {
+            console.log(err);
+            this.toastr.error(err.error.message, '', {
+              timeOut: 3000,
+            });
+          }
+        );
       }
     });
   }
