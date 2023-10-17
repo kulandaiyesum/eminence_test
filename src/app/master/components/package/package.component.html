@@ -29,7 +29,7 @@
             class="mat-elevation-z8"
           >
             <!-- Questions Count Column -->
-            <ng-container matColumnDef="packageName">
+            <ng-container matColumnDef="packageName" id="first-header">
               <mat-header-cell *matHeaderCellDef mat-sort-header
                 >PACKAGE NAME</mat-header-cell
               >
@@ -81,7 +81,7 @@
             </ng-container>
 
             <!-- Actions Column -->
-            <ng-container matColumnDef="action">
+            <ng-container matColumnDef="action" id="last-header">
               <mat-header-cell *matHeaderCellDef>ACTION</mat-header-cell>
               <mat-cell *matCellDef="let element">
                 <mat-icon (click)="editPackage(element)">edit</mat-icon>
