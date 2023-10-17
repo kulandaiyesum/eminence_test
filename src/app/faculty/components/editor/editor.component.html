@@ -67,14 +67,22 @@
                     type="text"
                     name="text"
                     [(ngModel)]="option.text"
-                  /><span *ngIf="option.explanation !== null" id="check-answer"
+                  /><span
+                    *ngIf="
+                      option.explanation !== null && option.explanation !== ''
+                    "
+                    id="check-answer"
                     >&#10003;</span
                   >
                 </span>
                 <label *ngIf="!isEditMode" [for]="option._id">
                   <div>
                     {{ option.text }}
-                    <span *ngIf="option.explanation !== null" id="check-answer"
+                    <span
+                      *ngIf="
+                        option.explanation !== null && option.explanation !== ''
+                      "
+                      id="check-answer"
                       >&#10003;</span
                     >
                   </div>
