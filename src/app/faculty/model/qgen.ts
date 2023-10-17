@@ -3,6 +3,7 @@ export class Qgen {
   keywords: string[];
   questionsCount: number;
   topicId?: string;
+  type: string;
   userId: string;
   createdBy: string;
   topic?: string;

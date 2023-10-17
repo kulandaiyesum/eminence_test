@@ -85,13 +85,13 @@ export class HistoryComponent implements OnInit {
       localStorage.getItem('5'),
       this.secretKey
     );
-    console.log(this.userId);
+    console.log("sdhbdhcgh",this.userId);
 
     this.getAllHistory();
   }
   getAllHistory() {
-    let data = { userId: this.userId };
-    this.qgenService.GetHistory(data).subscribe((doc: any) => {
+    // let data = { userId: this.userId };
+    this.qgenService.GetHistory(this.userId).subscribe((doc: any) => {
       console.log(doc.result);
       this.qgenList = doc.result;
       this.dataSource = new MatTableDataSource(this.qgenList);
