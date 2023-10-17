@@ -49,14 +49,19 @@ export class HistoryComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   getPdf(row) {
-    this.qgenService.getPdf(row).subscribe((doc: any) => {
-      console.log(doc);
-      this.toastr.success('Pdf generated !', '', {
-        timeOut: 3000,
-      });
-      let file;
-      file = new Blob([doc], { type: 'application/pdf' });
-      saveAs(file, 'Pdf' + '');
-    });
+    this.qgenService.getPdf(row).subscribe(
+      (doc: any) => {
+        console.log(doc);
+        this.toastr.success('Pdf generated !', '', {
+          timeOut: 3000,
+        });
+        let file;
+        file = new Blob([doc], { type: 'application/pdf' });
+        saveAs(file, 'Pdf' + '');
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }
