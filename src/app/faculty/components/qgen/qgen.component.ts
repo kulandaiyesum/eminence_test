@@ -62,18 +62,17 @@ export class QgenComponent implements OnInit {
   }
 
   submitQgen() {
-    // this.qGenObject.keywords = this.gGenForm.value.keywords;
     this.qGenObject.questionsCount = this.gGenForm.value.questionsCount;
     this.qGenObject.topic = this.topicId;
     this.qGenObject.userId = this.userId;
+    this.qGenObject.type = "Qgen";
     this.qGenObject.createdBy = this.userFirstName;
     this.qGenObject.keywords = this.stringToArray(this.gGenForm.value.keywords);
     this.gGenService.submitQgen(this.qGenObject).subscribe(
       (response: any) => {
-        // console.log(response);
-        this.getPendingQuestions();
         const statusCode = response.statusCode;
         if (statusCode === 200) {
+          this.getPendingQuestions();
           setTimeout(() => {
             this.getPendingQuestions();
           }, 120000);
