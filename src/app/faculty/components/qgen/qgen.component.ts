@@ -52,7 +52,7 @@ export class QgenComponent implements OnInit {
     this.gGenService.getQGen(this.userId).subscribe(
       (res: any) => {
         const tempHolder = res.result;
-        // console.log(res);
+        console.log(res);
         this.qgenObjectList = tempHolder.slice(0, 3);
       },
       (err) => {
@@ -62,15 +62,21 @@ export class QgenComponent implements OnInit {
   }
 
   submitQgen() {
-    // this.qGenObject.keywords = this.gGenForm.value.keywords;
     this.qGenObject.questionsCount = this.gGenForm.value.questionsCount;
     this.qGenObject.topic = this.topicId;
     this.qGenObject.userId = this.userId;
+    this.qGenObject.type = "Qgen";
     this.qGenObject.createdBy = this.userFirstName;
     this.qGenObject.keywords = this.stringToArray(this.gGenForm.value.keywords);
     this.gGenService.submitQgen(this.qGenObject).subscribe(
       (response: any) => {
-        this.getPendingQuestions();
+        const statusCode = response.statusCode;
+        if (statusCode === 200) {
+          this.getPendingQuestions();
+          setTimeout(() => {
+            this.getPendingQuestions();
+          }, 120000);
+        }
       },
       (error: any) => {}
     );

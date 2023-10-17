@@ -124,7 +124,7 @@
         <mat-cell
           *matCellDef="let row; let i = index"
           [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
-          >{{ row.date }}</mat-cell
+          >{{ row.createdAt | date : "MM-dd-YYYY" }}</mat-cell
         >
       </ng-container>
       <!-- Input Column -->
@@ -135,7 +135,7 @@
         <mat-cell
           *matCellDef="let row; let i = index"
           [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
-          >{{ row.input }}</mat-cell
+          >{{ row.keywords }}</mat-cell
         >
       </ng-container>
 
@@ -147,7 +147,7 @@
         <mat-cell
           *matCellDef="let row; let i = index"
           [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
-          >{{ row.question }}</mat-cell
+          >Qgen</mat-cell
         >
       </ng-container>
 
@@ -159,7 +159,7 @@
         <mat-cell
           *matCellDef="let row; let i = index"
           [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
-          >{{ row.from }}</mat-cell
+          >{{ row.questionsCount }}</mat-cell
         >
       </ng-container>
 

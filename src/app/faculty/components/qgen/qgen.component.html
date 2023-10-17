@@ -75,56 +75,37 @@
   <div class="qgen_response_container">
     <div class="h5 fw-600" style="color: var(--qgen-red)">Pending</div>
     <div class="qgen-response">
-      <!-- <div class="response">
-        <div class="input_wrap">
-          <strong>Input: </strong>myelin, nodes of Ranvier, sodium channels
-        </div>
-        <div class="questions_wrap">
-          <div class="questions"><strong>Questions:</strong> 14</div>
-          <div class="loader me-3">
-            <img src="../../../../assets/images/loader.gif" />
+      <ng-container *ngFor="let qgenObject of qgenObjectList">
+        <div *ngIf="qgenObject?.status === 'Pending'" class="response">
+          <div class="input_wrap">
+            <strong>Input: </strong>{{ qgenObject.keywords }}
           </div>
-        </div>
-        <div class="completion_bar">
-          <div class="red_bg">
-            <div class="green_bg" style="width: 65%"></div>
-          </div>
-        </div>
-      </div> -->
-
-      <div
-        class="response"
-        *ngFor="let qgenObject of qgenObjectList"
-        [routerLink]="['/eminence/faculty/editor', qgenObject._id]"
-      >
-        <!-- (click)="routeEditor(qgenObject._id)" -->
-        <div class="input_wrap">
-          <strong>Input: </strong>{{ qgenObject.keywords }}
-        </div>
-        <div class="questions_wrap">
-          <div class="questions">
-            <strong>Questions:</strong> {{ qgenObject.questionsCount }}
-          </div>
-          <div class="loader me-3">
-            <!-- <img src="../../../../assets/images/loader.gif" /> -->
-            <mat-icon>check_circle</mat-icon>
-          </div>
-        </div>
-        <div class="completion_bar">
-          <div class="red_bg">
-            <div class="green_bg" style="width: 100%"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- <div class="response">
-        <div class="input_wrap">
-          <strong>Input: </strong>microtubules, dynein, basal body
           <div class="questions_wrap">
-            <div class="questions"><strong>Questions:</strong> 7</div>
+            <div class="questions">
+              <strong>Questions:</strong>{{ qgenObject.questionsCount }}
+            </div>
             <div class="loader me-3">
               <img src="../../../../assets/images/loader.gif" />
-              <mat-icon class="custom_check_icon">check_circle</mat-icon>
+            </div>
+          </div>
+          <div class="completion_bar">
+            <div class="loader_ani"></div>
+          </div>
+        </div>
+        <div
+          *ngIf="qgenObject?.status !== 'Pending'"
+          class="response"
+          [routerLink]="['/eminence/faculty/editor', qgenObject._id]"
+        >
+          <div class="input_wrap">
+            <strong>Input: </strong>{{ qgenObject.keywords }}
+          </div>
+          <div class="questions_wrap">
+            <div class="questions">
+              <strong>Questions:</strong> {{ qgenObject.questionsCount }}
+            </div>
+            <div class="loader me-3">
+              <mat-icon>check_circle</mat-icon>
             </div>
           </div>
           <div class="completion_bar">
@@ -133,7 +114,7 @@
             </div>
           </div>
         </div>
-      </div> -->
+      </ng-container>
     </div>
   </div>
 </div>

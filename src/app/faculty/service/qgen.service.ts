@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Qgen } from '../model/qgen';
 import { environment } from 'src/environments/environment.development';
@@ -17,11 +17,14 @@ export class QgenService {
   // }
 
   submitQgen(qgen: Qgen) {
-    return this.http.post(this.baseUrl , qgen);
+    return this.http.post(this.baseUrl, qgen);
   }
 
   getQGen(userId: string) {
-    const body = { userId };
-    return this.http.put(this.baseUrl + 'users/'+body,body);
+    return this.http.get(this.baseUrl + 'users/' + userId);
+  }
+
+  GetHistory(userId) {
+    return this.http.put(this.baseUrl + 'histroy', { params: { userId } });
   }
 }

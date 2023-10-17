@@ -11,6 +11,7 @@ export class Question {
   modifiedBy?: string;
   createdAt?: string;
   modifiedAt?: string;
+  coreQuestionId?: string;
 }
 export class QgenOption {
   _id: string;
@@ -21,6 +22,7 @@ export class QgenOption {
   modifiedBy?: string;
   createdAt?: string;
   modifiedAt?: string;
+  coreOptionId?: string;
 }
 
 export class TempQuestion {

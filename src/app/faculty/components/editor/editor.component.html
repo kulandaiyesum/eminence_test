@@ -7,9 +7,7 @@
     <!-- Question Optons section -->
     <div class="question_info mb-3">
       <div class="question_inputs">
-        <div>
-          <strong>Input: </strong>hyperkalemia, depolarization, cell membrane
-        </div>
+        <div><strong>Input: </strong>{{ title }}</div>
         <div><strong>Question count: </strong>{{ questLength }}</div>
       </div>
       <div class="question_actions">
@@ -25,7 +23,7 @@
       <button
         *ngFor="let question of questions; let i = index"
         (click)="getQuestion(question._id, i)"
-        [ngClass]="{'edited-button': question.isEdited}"
+        [ngClass]="{ 'edited-button': question.isEdited }"
       >
         {{ i + 1 }}
       </button>
@@ -65,10 +63,29 @@
                 }"
               >
                 <span *ngIf="isEditMode">
-                  <input type="text" name="text" [(ngModel)]="option.text" />
+                  <input
+                    type="text"
+                    name="text"
+                    [(ngModel)]="option.text"
+                  /><span
+                    *ngIf="
+                      option.explanation !== null && option.explanation !== ''
+                    "
+                    id="check-answer"
+                    >&#10003;</span
+                  >
                 </span>
                 <label *ngIf="!isEditMode" [for]="option._id">
-                  <div>{{ option.text }}</div>
+                  <div>
+                    {{ option.text }}
+                    <span
+                      *ngIf="
+                        option.explanation !== null && option.explanation !== ''
+                      "
+                      id="check-answer"
+                      >&#10003;</span
+                    >
+                  </div>
                 </label>
               </li>
             </div>
@@ -107,7 +124,11 @@
             </div>
           </div>
         </div>
-        <mat-icon (click)="editQuestion(tempQuestion.question)">edit</mat-icon>
+        <mat-icon
+          *ngIf="editIconVisibility"
+          (click)="editQuestion(tempQuestion.question)"
+          >edit</mat-icon
+        >
         <mat-icon *ngIf="isEditMode" (click)="cancelEdit()">close</mat-icon>
       </div>
     </div>

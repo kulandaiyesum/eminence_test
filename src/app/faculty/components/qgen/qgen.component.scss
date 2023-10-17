@@ -2,7 +2,14 @@
 //   --qgen-red1: #ff0101;
 //   --qgen-green: #1cee7d;
 // --qgen-logo-yellow: #fbbf02: #fbbf02
-
+@keyframes fillLoader {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
 .qgen_container {
   font-weight: 500;
   font-size: 16px;
@@ -106,6 +113,41 @@
             .green_bg {
               height: inherit;
               background-color: var(--qgen-green);
+            }
+          }
+          .loader_ani {
+            height: inherit;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            background: var(--qgen-green);
+            &::before,
+            &::after {
+              background: var(--qgen-red1);
+              content: "";
+              display: block;
+              height: 10px;
+              left: 0;
+              position: absolute;
+              top: 0;
+              transform: translate3d(-100%, 0, 0);
+              width: 60%;
+            }
+            &::before {
+              animation: loader_animation 3s infinite;
+            }
+
+            &::after {
+              animation: loader_animation 3s  infinite;
+            }
+            @keyframes loader_animation {
+              0% {
+                transform: translate3d(-100%, 0, 0);
+              }
+
+              100% {
+                transform: translate3d(200%, 0, 0);
+              }
             }
           }
         }

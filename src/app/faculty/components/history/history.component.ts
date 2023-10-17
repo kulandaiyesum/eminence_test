@@ -1,15 +1,21 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { QgenService } from '../../service/qgen.service';
+import { environment } from 'src/environments/environment';
+import { RsaService } from 'src/app/shared/service/rsa.service';
 
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss'],
 })
-export class HistoryComponent {
-  displayedColumns: string[] = ['date','input', 'question', 'from', 'action'];
+export class HistoryComponent implements OnInit {
+  displayedColumns: string[] = ['date', 'input', 'question', 'from', 'action'];
+  public userId;
+  public qgenList;
+  secretKey: string = environment.secretKey;
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -68,15 +74,36 @@ export class HistoryComponent {
     // Add more data as needed
   ];
 
-  constructor() {
-    this.dataSource = new MatTableDataSource(this.data);
+  constructor(
+    private qgenService: QgenService,
+    private rsaService: RsaService
+  ) {
+    // this.dataSource = new MatTableDataSource(this.data);
   }
-  ngOnInit() {}
+  ngOnInit() {
+    this.userId = this.rsaService.decryptText(
+      localStorage.getItem('5'),
+      this.secretKey
+    );
+    console.log(this.userId);
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.getAllHistory();
   }
+  getAllHistory() {
+    // let data = { userId: this.userId };
+    this.qgenService.GetHistory(this.userId).subscribe((doc: any) => {
+      console.log(doc.result);
+      this.qgenList = doc.result;
+      this.dataSource = new MatTableDataSource(this.qgenList);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
+  }
+
+  // ngAfterViewInit() {
+  //   this.dataSource.paginator = this.paginator;
+  //   this.dataSource.sort = this.sort;
+  // }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

@@ -20,6 +20,8 @@ import Swal from 'sweetalert2';
 })
 export class EditorComponent implements OnInit {
   public questLength: number;
+  public title;
+  public optionsAttributes = [];
 
   questions: Question[];
   tempQuestion: TempQuestion;
@@ -34,6 +36,7 @@ export class EditorComponent implements OnInit {
   selectedAnswer: string = '';
   isEditMode: boolean = false;
   selectedOptionExplanation: string = '';
+  editIconVisibility: boolean = true;
   @ViewChild('editableDiv') editableDiv: ElementRef;
   constructor(
     private qgenService: QgenService,
@@ -53,14 +56,15 @@ export class EditorComponent implements OnInit {
   getAllQuestions(reqId: string) {
     let data = { reqId };
     this.questionService.getAllQuestions(data).subscribe((doc: any) => {
-      console.log(doc.result);
-      this.questLength = doc.result.length;
-      this.questions = doc.result;
+      this.questLength = doc.result.questions.length;
+      this.questions = doc.result.questions;
+      this.title = doc.result.request.keywords[0];
       this.getQuestion(this.questions[0]._id, 0);
     });
   }
   getQuestion(question_id: string, index: number) {
     const findQuestion = this.questions.find((q) => q._id === question_id);
+    this.editIconVisibility = !findQuestion.isEdited;
     this.tempQuestion = {
       index: index,
       question: findQuestion,
@@ -82,12 +86,21 @@ export class EditorComponent implements OnInit {
         option.explanation = '';
       }
     });
+    this.tempQuestion.question.options.forEach((res) => {
+      this.optionsAttributes.push({
+        id: res.coreOptionId,
+        text: res.text,
+        explanation: res.explanation,
+        correct_answer: res.correctAnswer,
+      });
+    });
     this.tempQuestion.question.title =
       this.editableDiv.nativeElement.textContent;
     let data = {
       selectAnswer: this.selectedAnswer,
       option: this.selectedOptionExplanation,
       temp: this.tempQuestion,
+      Option: this.optionsAttributes,
     };
     this.questionService
       .UpdateOption(this.reqId, data)
@@ -133,8 +146,10 @@ export class EditorComponent implements OnInit {
     }
   }
   deleteQuestion(reason: string) {
+    console.log(this.tempQuestion.question.coreQuestionId);
+
     const payload = {
-      _id: this.tempQuestion.question._id,
+      _id: this.tempQuestion.question.coreQuestionId,
       reqId: this.tempQuestion.question.reqId,
       reason,
     };
@@ -148,23 +163,21 @@ export class EditorComponent implements OnInit {
       cancelButtonText: 'Cancel',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.questionService
-          .daleteQuestion(this.tempQuestion.question._id)
-          .subscribe(
-            (response: any) => {
-              console.log(response);
-              this.toastr.success(response.message, '', {
-                timeOut: 3000,
-              });
-              this.getAllQuestions(this.reqId);
-            },
-            (err) => {
-              console.log(err);
-              this.toastr.error(err.error.message, '', {
-                timeOut: 3000,
-              });
-            }
-          );
+        this.questionService.daleteQuestion(payload).subscribe(
+          (response: any) => {
+            console.log(response);
+            this.toastr.success(response.message, '', {
+              timeOut: 3000,
+            });
+            this.getAllQuestions(this.reqId);
+          },
+          (err) => {
+            console.log(err);
+            this.toastr.error(err.error.message, '', {
+              timeOut: 3000,
+            });
+          }
+        );
       }
     });
   }

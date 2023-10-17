@@ -19,7 +19,7 @@ export class UserService {
   }
 
   updateUserMaster(user: User) {
-    return this.http.put(this.userUrl + 'update/' + user._id, user);
+    return this.http.put(this.userUrl + user._id, user);
   }
 
   deleteUserMaster(_id: string) {

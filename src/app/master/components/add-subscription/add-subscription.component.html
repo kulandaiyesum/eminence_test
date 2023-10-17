@@ -53,8 +53,8 @@
             [disabled]="isPackageSelected"
             required
           /> -->
-          <p><b>End Date :</b>{{ calculatedEndDate }}</p>
-          
+          <p><b>End Date : </b>{{ calculatedEndDate }}</p>
+
           <div
             *ngIf="addSubscriptionForm.controls['startdate']?.errors?.['required'] && addSubscriptionForm.controls['startdate']?.touched"
             class="error-message"
