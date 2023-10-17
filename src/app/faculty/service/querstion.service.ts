@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 })
 export class QuerstionService {
   public baseUrl = environment.localdomain + 'v1/questions/';
+  public updateQuestionStatus=environment.localdomain
   constructor(private http: HttpClient) {}
   getAllQuestions(data) {
     return this.http.put(this.baseUrl + 'requests/' + data.reqId, data);
@@ -17,5 +18,10 @@ export class QuerstionService {
 
   daleteQuestion(reqId) {
     return this.http.delete(this.baseUrl + reqId._id, reqId);
+  }
+
+  updateStatusOfQuestion(id:string){
+    console.log(id);
+    return this.http.put(this.baseUrl+id+"/status",id)
   }
 }
