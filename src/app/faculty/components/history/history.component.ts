@@ -85,7 +85,7 @@ export class HistoryComponent implements OnInit {
       localStorage.getItem('5'),
       this.secretKey
     );
-    console.log("sdhbdhcgh",this.userId);
+    console.log(this.userId);
 
     this.getAllHistory();
   }
