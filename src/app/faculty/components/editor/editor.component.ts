@@ -37,6 +37,7 @@ export class EditorComponent implements OnInit {
   isEditMode: boolean = false;
   selectedOptionExplanation: string = '';
   editIconVisibility: boolean = true;
+  questionId:string;
   @ViewChild('editableDiv') editableDiv: ElementRef;
   constructor(
     private qgenService: QgenService,
@@ -58,10 +59,36 @@ export class EditorComponent implements OnInit {
     this.questionService.getAllQuestions(data).subscribe((doc: any) => {
       this.questLength = doc.result.questions.length;
       this.questions = doc.result.questions;
+      console.log(this.questions);
       this.title = doc.result.request.keywords[0];
       this.getQuestion(this.questions[0]._id, 0);
     });
   }
+
+  showReviewAlert(question_id: string, index: number, question: any) {
+    console.log(question);
+    console.log(question.status);
+
+    this.questionId=this.tempQuestion.question._id
+    console.log(this.questionId);
+    if (index + 1 != this.tempQuestion.index + 1 && question.status !="REVIEWED") {
+      Swal.fire({
+        title: 'Do you reviewed this question?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, reviewed',
+        cancelButtonText: 'No',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.getQuestion(question_id, index); // Call your function when the user clicks "Yes, reviewed"
+          this.changeStatusOfQuestion();
+        } else {
+          // Handle the "No" case (close the popup or perform any other action)
+        }
+      });
+    }
+  }
+
   getQuestion(question_id: string, index: number) {
     const findQuestion = this.questions.find((q) => q._id === question_id);
     this.editIconVisibility = !findQuestion.isEdited;
@@ -71,6 +98,17 @@ export class EditorComponent implements OnInit {
     };
     this.editableDiv.nativeElement.textContent =
       this.tempQuestion.question.title;
+  }
+
+  changeStatusOfQuestion() {
+    this.questionService.updateStatusOfQuestion(this.questionId).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.error('Error updating resource:', error);
+      }
+    );
   }
 
   saveChange() {

@@ -22,7 +22,7 @@
     <div class="question_links mb-4">
       <button
         *ngFor="let question of questions; let i = index"
-        (click)="getQuestion(question._id, i)"
+        (click)="showReviewAlert(question._id, i,question)"
         [ngClass]="{ 'edited-button': question.isEdited }"
       >
         {{ i + 1 }}
