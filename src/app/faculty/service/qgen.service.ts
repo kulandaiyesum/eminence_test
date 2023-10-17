@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Qgen } from '../model/qgen';
 import { environment } from 'src/environments/environment.development';
@@ -25,6 +25,6 @@ export class QgenService {
   }
 
   GetHistory(userId) {
-    return this.http.put(this.baseUrl + 'histroy', userId);
+    return this.http.put(this.baseUrl + 'histroy', { params: { userId } });
   }
 }
