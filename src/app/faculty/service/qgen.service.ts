@@ -25,6 +25,6 @@ export class QgenService {
   }
 
   GetHistory(userId) {
-    return this.http.put(this.baseUrl + 'histroy', { params: { userId } });
+    return this.http.get(this.baseUrl + 'histroy/' + userId);
   }
 }
