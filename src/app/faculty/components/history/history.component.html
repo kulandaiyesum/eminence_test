@@ -171,7 +171,9 @@
         <mat-cell
           *matCellDef="let row; let i = index"
           [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
-          ><mat-icon class="export-icon">save_alt</mat-icon>
+          ><mat-icon class="export-icon" (click)="getPdf(row._id)"
+            >save_alt</mat-icon
+          >
         </mat-cell>
       </ng-container>
 

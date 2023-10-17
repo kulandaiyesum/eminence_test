@@ -27,4 +27,9 @@ export class QgenService {
   GetHistory(userId) {
     return this.http.get(this.baseUrl + 'histroy/' + userId);
   }
+  getPdf(data) {
+    return this.http.post(this.baseUrl + data, {
+      responseType: 'arraybuffer',
+    });
+  }
 }

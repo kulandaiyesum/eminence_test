@@ -67,8 +67,8 @@ export class AuthHttpInterceptorService {
     return next.handle(req).pipe(
       catchError((err: any, caught: Observable<HttpEvent<any>>) => {
         if (err.status === 400) {
-          //localStorage.clear();
-          //return this.router.navigateByUrl('/auth/login');
+          localStorage.clear();
+          return this.router.navigateByUrl('/home');
         } else {
           return throwError(err);
         }

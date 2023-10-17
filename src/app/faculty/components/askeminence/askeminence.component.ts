@@ -48,7 +48,6 @@ export class AskeminenceComponent implements OnInit {
     this.askEminence = new Askeminice();
     this.askEmininveService.sampleResponse().subscribe((data: any) => {
       this.sampleData = data;
-      console.log(this.sampleData);
     });
   }
 
