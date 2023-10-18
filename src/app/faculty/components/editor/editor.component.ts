@@ -41,6 +41,7 @@ export class EditorComponent implements OnInit {
   questionNo: number;
   currentQuestionStatus: any;
   isAllQuestions: boolean = false;
+  shouldShowButton: boolean = false;
   @ViewChild('editableDiv') editableDiv: ElementRef;
   constructor(
     private qgenService: QgenService,
@@ -75,6 +76,19 @@ export class EditorComponent implements OnInit {
       console.log(this.questions);
       this.title = doc.result.request.keywords[0];
       this.getQuestion(this.questions[0]._id, 0);
+      const pendingCount = this.questions.filter(
+        (item: any) => item.status === 'PENDING'
+      ).length;
+
+      console.log(pendingCount);
+      if (pendingCount === 1) {
+        this.shouldShowButton = true;
+        const pendingData=this.questions.filter(
+          (item: any) => item.status === 'PENDING'
+        );
+        console.log(pendingData[0]._id);
+        this.questionId=pendingData[0]._id
+      }
     });
   }
 
@@ -129,11 +143,43 @@ export class EditorComponent implements OnInit {
         console.log(response);
         this.cdr.detectChanges();
         this.getAllQuestions(this.reqId);
+        const pendingCount = this.questions.filter(
+          (item: any) => item.status === 'PENDING'
+        ).length;
+
+        console.log(pendingCount);
+        if (pendingCount === 1) {
+          this.shouldShowButton = true;
+          const pendingData=this.questions.filter(
+            (item: any) => item.status === 'PENDING'
+          );
+          console.log(pendingData[0]._id);
+          this.questionId=pendingData[0]._id
+        }
       },
       (error) => {
         console.error('Error updating resource:', error);
       }
     );
+  }
+
+  completeReview() {
+    console.log(this.questionId);
+    Swal.fire({
+      title: 'Are you sure?',
+      html: 'Do you want complete your review',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, reviewed',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.changeStatusOfQuestion();
+        // this.reviewAll();
+      } else {
+        // Handle the "No" case (close the popup or perform any other action)
+      }
+    });
   }
 
   saveChange() {
