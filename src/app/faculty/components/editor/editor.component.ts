@@ -37,7 +37,9 @@ export class EditorComponent implements OnInit {
   isEditMode: boolean = false;
   selectedOptionExplanation: string = '';
   editIconVisibility: boolean = true;
-  questionId:string;
+  questionId: string;
+  questionNo: number;
+  currentQuestionStatus: any;
   @ViewChild('editableDiv') editableDiv: ElementRef;
   constructor(
     private qgenService: QgenService,
@@ -54,6 +56,16 @@ export class EditorComponent implements OnInit {
     console.log(this.reqId);
   }
 
+  // Helper method to convert to string safely
+  getStatusAsString(question: Question): string {
+    return String(question.status);
+  }
+
+  // Add a method to check if the question is reviewed
+  isReviewed(question: Question): boolean {
+    return this.getStatusAsString(question) === 'REVIEWED';
+  }
+
   getAllQuestions(reqId: string) {
     let data = { reqId };
     this.questionService.getAllQuestions(data).subscribe((doc: any) => {
@@ -66,22 +78,50 @@ export class EditorComponent implements OnInit {
   }
 
   showReviewAlert(question_id: string, index: number, question: any) {
-    console.log(question);
-    console.log(question.status);
-
-    this.questionId=this.tempQuestion.question._id
+    this.questionNo = this.tempQuestion.index + 1;
+    console.log(this.questionNo);
+    this.questionId = this.tempQuestion.question._id;
+    this.currentQuestionStatus = this.tempQuestion.question.status;
+    console.log(this.tempQuestion.question);
+    console.log(' nav butt id ' + question_id);
     console.log(this.questionId);
-    if (index + 1 != this.tempQuestion.index + 1 && question.status !="REVIEWED") {
+    // if (
+    //   index + 1 != this.tempQuestion.index + 1 &&
+    //   question.status != 'REVIEWED'
+    // ) {
+    //   Swal.fire({
+    //     title: 'Are you sure?',
+    //     html: 'Reviewed question no: ' + this.questionNo,
+    //     icon: 'question',
+    //     showCancelButton: true,
+    //     confirmButtonText: 'Yes, reviewed',
+    //     cancelButtonText: 'No',
+    //   }).then((result) => {
+    //     if (result.isConfirmed) {
+    //       this.changeStatusOfQuestion();
+    //     } else {
+    //       // Handle the "No" case (close the popup or perform any other action)
+    //     }
+    //   });
+    // }
+    // this.getQuestion(question_id, index);
+    if (
+      this.currentQuestionStatus === 'REVIEWED' ||
+      this.questionId == question_id
+    ) {
+      this.getQuestion(question_id, index);
+    } else {
       Swal.fire({
-        title: 'Do you reviewed this question?',
+        title: 'Are you sure?',
+        html: 'Reviewed question no: ' + this.questionNo,
         icon: 'question',
         showCancelButton: true,
         confirmButtonText: 'Yes, reviewed',
         cancelButtonText: 'No',
       }).then((result) => {
         if (result.isConfirmed) {
-          this.getQuestion(question_id, index); // Call your function when the user clicks "Yes, reviewed"
           this.changeStatusOfQuestion();
+          this.getQuestion(question_id, index);
         } else {
           // Handle the "No" case (close the popup or perform any other action)
         }
@@ -104,6 +144,8 @@ export class EditorComponent implements OnInit {
     this.questionService.updateStatusOfQuestion(this.questionId).subscribe(
       (response) => {
         console.log(response);
+        this.cdr.detectChanges();
+        this.getAllQuestions(this.reqId);
       },
       (error) => {
         console.error('Error updating resource:', error);
@@ -113,7 +155,7 @@ export class EditorComponent implements OnInit {
 
   saveChange() {
     this.isEditMode = false;
-    this.editIconVisibility=true
+    this.editIconVisibility = true;
     this.cdr.detectChanges();
 
     this.tempQuestion.question.options.forEach((option) => {
@@ -156,7 +198,7 @@ export class EditorComponent implements OnInit {
 
   editQuestion(question: Question) {
     this.isEditMode = true;
-    this.editIconVisibility=false
+    this.editIconVisibility = false;
     const selectedOption = this.tempQuestion.question.options.find(
       (option) => option.correctAnswer === 'true'
     );
