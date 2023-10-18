@@ -40,9 +40,11 @@
       <div class="fw-600">Number of Questions:</div>
       <div class="form-group number_input" style="display: inline-block">
         <input
-          type="number"
+          type="tel"
           class="form-control"
+          placeholder="Max. 5"
           formControlName="questionsCount"
+          (input)="onInput($event)"
         />
         <div class="re_error">
           <mat-error
@@ -53,10 +55,10 @@
             >Enter a valid input.</mat-error
           >
           <mat-error *ngIf="gGenForm.controls['questionsCount'].hasError('max')"
-            >Maximum question count is 10</mat-error
+            >Maximum limit is 5</mat-error
           >
           <mat-error *ngIf="gGenForm.controls['questionsCount'].hasError('min')"
-            >Minimum question count is 1</mat-error
+            >Minimum should be 1</mat-error
           >
         </div>
       </div>
@@ -78,11 +80,14 @@
       <ng-container *ngFor="let qgenObject of qgenObjectList">
         <div *ngIf="qgenObject?.status === 'Pending'" class="response">
           <div class="input_wrap">
-            <strong>Input: </strong>{{ qgenObject.keywords }}
+            <strong>Input:&nbsp;</strong>
+            <span *ngFor="let keyword of qgenObject.keywords; let last = last"
+              >{{ keyword }}{{ last ? "" : ",&nbsp;" }}</span
+            >
           </div>
           <div class="questions_wrap">
             <div class="questions">
-              <strong>Questions:</strong>{{ qgenObject.questionsCount }}
+              <strong>Questions:&nbsp;</strong>{{ qgenObject.questionsCount }}
             </div>
             <div class="loader me-3">
               <img src="../../../../assets/images/loader.gif" />
@@ -98,11 +103,14 @@
           [routerLink]="['/eminence/faculty/editor', qgenObject._id]"
         >
           <div class="input_wrap">
-            <strong>Input: </strong>{{ qgenObject.keywords }}
+            <strong>Input: </strong>
+            <span *ngFor="let keyword of qgenObject.keywords; let last = last"
+              >{{ keyword }}{{ last ? "" : ",&nbsp;" }}</span
+            >
           </div>
           <div class="questions_wrap">
             <div class="questions">
-              <strong>Questions:</strong> {{ qgenObject.questionsCount }}
+              <strong>Questions:&nbsp;</strong> {{ qgenObject.questionsCount }}
             </div>
             <div class="loader me-3">
               <mat-icon>check_circle</mat-icon>
