@@ -29,7 +29,7 @@ export class QgenComponent implements OnInit {
       keywords: new FormControl('', [Validators.required]),
       questionsCount: new FormControl('', [
         Validators.required,
-        Validators.max(10),
+        Validators.max(5),
         Validators.min(1),
       ]),
     });
@@ -51,9 +51,9 @@ export class QgenComponent implements OnInit {
   getPendingQuestions() {
     this.gGenService.getQGen(this.userId).subscribe(
       (res: any) => {
-        const tempHolder = res.result;
-        console.log(res);
-        this.qgenObjectList = tempHolder.slice(0, 3);
+        // const tempHolder = res.result;
+        console.log(res.result);
+        this.qgenObjectList = res.result;
       },
       (err) => {
         console.log(err);
@@ -65,7 +65,7 @@ export class QgenComponent implements OnInit {
     this.qGenObject.questionsCount = this.gGenForm.value.questionsCount;
     this.qGenObject.topic = this.topicId;
     this.qGenObject.userId = this.userId;
-    this.qGenObject.type = "Qgen";
+    this.qGenObject.type = 'Qgen';
     this.qGenObject.createdBy = this.userFirstName;
     this.qGenObject.keywords = this.stringToArray(this.gGenForm.value.keywords);
     this.gGenService.submitQgen(this.qGenObject).subscribe(
@@ -89,5 +89,18 @@ export class QgenComponent implements OnInit {
 
   routeEditor(reqId: string) {
     console.log(reqId);
+  }
+
+  /**
+   * function to prevent enterinf period and letters for input field
+   * @param event 
+   */
+  onInput(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    const inputValue = inputElement.value;
+    const sanitizedValue = inputValue.replace(/[^0-9]/g, '').replace(/^0+/, '');
+    if (sanitizedValue !== '') {
+      inputElement.value = sanitizedValue;
+    }
   }
 }
