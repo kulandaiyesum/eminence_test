@@ -30,8 +30,12 @@
       button {
         background-color: var(--qgen-logo-yellow);
         &.edited-button {
-          background-color: green;
-          color: #fff;
+          background-color: green !important;
+          color: #fff !important;
+        }
+        &.reviewed-button {
+          background-color: lime;
+          color: #000;
         }
         border-radius: 50%;
         border: none;
@@ -88,7 +92,7 @@
             width: fit-content;
             border: 2px solid var(--qgen-green);
           }
-          #check-answer{
+          #check-answer {
             color: green;
             font-weight: bolder;
             font-size: 22px;

@@ -23,7 +23,10 @@
       <button
         *ngFor="let question of questions; let i = index"
         (click)="showReviewAlert(question._id, i, question)"
-        [ngClass]="{ 'edited-button': question.isEdited }"
+        [ngClass]="{
+          'edited-button': question.isEdited,
+          'reviewed-button': isReviewed(question)
+        }"
       >
         {{ i + 1 }}
       </button>
