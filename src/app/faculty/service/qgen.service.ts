@@ -44,6 +44,6 @@ export class QgenService {
 
   reviewQuestionSet(id: string) {
     console.log(id);
-    return this.http.put(this.baseUrl + 'qgen/' + id, id);
+    return this.http.put(this.baseUrl + id + '/status', id);
   }
 }
