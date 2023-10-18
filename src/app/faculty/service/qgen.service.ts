@@ -26,14 +26,11 @@ export class QgenService {
 
   /**
    * Get function used to get Qgen data
-   * @param userId 
-   * @param InstitutionId 
+   * @param InstitutionId
    * @returns Qgen[]
    */
-  getQgenwithInstitution(userId: string, InstitutionId: string) {
-    return this.http.get(
-      this.baseUrl + 'institute/' + InstitutionId + '/users/' + userId
-    );
+  getQgenwithInstitution(InstitutionId: string) {
+    return this.http.get(this.baseUrl + 'institute/' + InstitutionId);
   }
 
   GetHistory(userId) {
