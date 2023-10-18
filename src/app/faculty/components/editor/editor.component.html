@@ -11,9 +11,9 @@
         <div><strong>Question count: </strong>{{ questLength }}</div>
       </div>
       <div class="question_actions">
-        <!-- <button *ngIf="isEditMode" class="btn" (click)="saveChange()">
-          Save Changes
-        </button> -->
+        <button  class="btn" *ngIf="shouldShowButton" (click)="completeReview()">
+          Complete your review
+        </button>
       </div>
     </div>
     <!-- Question Optons section -->
