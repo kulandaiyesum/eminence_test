@@ -41,4 +41,9 @@ export class QgenService {
       responseType: 'arraybuffer',
     });
   }
+
+  reviewQuestionSet(id: string) {
+    console.log(id);
+    return this.http.put(this.baseUrl + 'qgen/' + id, id);
+  }
 }

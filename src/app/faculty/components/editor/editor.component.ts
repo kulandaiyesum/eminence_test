@@ -40,6 +40,7 @@ export class EditorComponent implements OnInit {
   questionId: string;
   questionNo: number;
   currentQuestionStatus: any;
+  isAllQuestions: boolean = false;
   @ViewChild('editableDiv') editableDiv: ElementRef;
   constructor(
     private qgenService: QgenService,
@@ -85,26 +86,7 @@ export class EditorComponent implements OnInit {
     console.log(this.tempQuestion.question);
     console.log(' nav butt id ' + question_id);
     console.log(this.questionId);
-    // if (
-    //   index + 1 != this.tempQuestion.index + 1 &&
-    //   question.status != 'REVIEWED'
-    // ) {
-    //   Swal.fire({
-    //     title: 'Are you sure?',
-    //     html: 'Reviewed question no: ' + this.questionNo,
-    //     icon: 'question',
-    //     showCancelButton: true,
-    //     confirmButtonText: 'Yes, reviewed',
-    //     cancelButtonText: 'No',
-    //   }).then((result) => {
-    //     if (result.isConfirmed) {
-    //       this.changeStatusOfQuestion();
-    //     } else {
-    //       // Handle the "No" case (close the popup or perform any other action)
-    //     }
-    //   });
-    // }
-    // this.getQuestion(question_id, index);
+
     if (
       this.currentQuestionStatus === 'REVIEWED' ||
       this.questionId == question_id
@@ -138,6 +120,7 @@ export class EditorComponent implements OnInit {
     };
     this.editableDiv.nativeElement.textContent =
       this.tempQuestion.question.title;
+    this.reviewAll();
   }
 
   changeStatusOfQuestion() {
@@ -190,6 +173,7 @@ export class EditorComponent implements OnInit {
           timeOut: 3000,
         });
         this.getAllQuestions(this.reqId);
+        this.reviewAll();
       });
   }
   toggleDivSection() {
@@ -211,6 +195,7 @@ export class EditorComponent implements OnInit {
   }
 
   cancelEdit() {
+    this.editIconVisibility = true;
     this.isEditMode = false;
   }
 
@@ -252,6 +237,7 @@ export class EditorComponent implements OnInit {
               timeOut: 3000,
             });
             this.getAllQuestions(this.reqId);
+            this.reviewAll();
           },
           (err) => {
             console.log(err);
@@ -262,5 +248,36 @@ export class EditorComponent implements OnInit {
         );
       }
     });
+  }
+
+  reviewAll() {
+    const allReviewed = this.questions.every(
+      (item: any) => item.status === 'REVIEWED'
+    );
+    if (allReviewed && this.isAllQuestions != true) {
+      this.isAllQuestions = true;
+    }
+    console.log(this.isAllQuestions);
+    if (this.isAllQuestions) {
+      Swal.fire({
+        title: 'You reviewed all questions',
+        icon: 'success',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Call the review service to make the HTTP PUT request
+          this.qgenService.reviewQuestionSet(this.reqId).subscribe(
+            (response) => {
+              console.log(response);
+            },
+            (error) => {
+              // Handle the error response
+              console.error('HTTP PUT request failed', error);
+            }
+          );
+        } else {
+          this.isAllQuestions = false;
+        }
+      });
+    }
   }
 }

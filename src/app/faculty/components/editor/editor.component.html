@@ -115,7 +115,12 @@
       </div>
       <div class="question-action">
         <div class="delete-option">
-          <mat-icon class="mb-2" (click)="toggleDivSection()">delete</mat-icon>
+          <mat-icon
+            class="mb-2"
+            *ngIf="editIconVisibility"
+            (click)="toggleDivSection()"
+            >delete</mat-icon
+          >
           <div *ngIf="showDiv" class="why-delete">
             <div class="why-q mb-1">Why?</div>
             <div
