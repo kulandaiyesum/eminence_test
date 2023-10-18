@@ -124,7 +124,7 @@
         <mat-cell
           *matCellDef="let row; let i = index"
           [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
-          >{{ row.createdAt | date : "MM-dd-YYYY" }}</mat-cell
+          >{{ row.modifiedAt | date : "MM-dd-YYYY" }}</mat-cell
         >
       </ng-container>
       <!-- Input Column -->
@@ -171,7 +171,7 @@
         <mat-cell
           *matCellDef="let row; let i = index"
           [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
-          ><mat-icon class="export-icon" (click)="getPdf(row._id)"
+          ><mat-icon class="export-icon" (click)="getPdf(row)"
             >save_alt</mat-icon
           >
         </mat-cell>

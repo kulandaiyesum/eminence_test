@@ -38,6 +38,10 @@ export class HistoryComponent implements OnInit {
   getAllHistory() {
     this.qgenService.GetHistory(this.userId).subscribe((doc: any) => {
       this.qgenList = doc.result;
+      var arr3 = this.qgenList.sort(
+        (a, b) =>
+          new Date(b.modifiedAt).getTime() - new Date(a.modifiedAt).getTime()
+      );
       this.dataSource = new MatTableDataSource(this.qgenList);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
@@ -49,7 +53,7 @@ export class HistoryComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   getPdf(row) {
-    this.qgenService.getPdf(row).subscribe(
+    this.qgenService.getPdf(row._id).subscribe(
       (doc: any) => {
         console.log(doc);
         this.toastr.success('Pdf generated !', '', {
@@ -57,7 +61,7 @@ export class HistoryComponent implements OnInit {
         });
         let file;
         file = new Blob([doc], { type: 'application/pdf' });
-        saveAs(file, 'Pdf' + '');
+        saveAs(file, row.keywords + '');
       },
       (err) => {
         console.log(err);
