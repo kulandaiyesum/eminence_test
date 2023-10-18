@@ -24,6 +24,15 @@ export class QgenService {
     return this.http.get(this.baseUrl + 'users/' + userId);
   }
 
+  /**
+   * Get function used to get Qgen data
+   * @param InstitutionId
+   * @returns Qgen[]
+   */
+  getQgenwithInstitution(InstitutionId: string) {
+    return this.http.get(this.baseUrl + 'institute/' + InstitutionId);
+  }
+
   GetHistory(userId) {
     return this.http.get(this.baseUrl + 'histroy/' + userId);
   }
