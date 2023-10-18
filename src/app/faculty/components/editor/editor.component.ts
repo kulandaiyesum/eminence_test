@@ -113,6 +113,7 @@ export class EditorComponent implements OnInit {
 
   saveChange() {
     this.isEditMode = false;
+    this.editIconVisibility=true
     this.cdr.detectChanges();
 
     this.tempQuestion.question.options.forEach((option) => {
@@ -155,6 +156,7 @@ export class EditorComponent implements OnInit {
 
   editQuestion(question: Question) {
     this.isEditMode = true;
+    this.editIconVisibility=false
     const selectedOption = this.tempQuestion.question.options.find(
       (option) => option.correctAnswer === 'true'
     );

@@ -11,9 +11,9 @@
         <div><strong>Question count: </strong>{{ questLength }}</div>
       </div>
       <div class="question_actions">
-        <button *ngIf="isEditMode" class="btn" (click)="saveChange()">
+        <!-- <button *ngIf="isEditMode" class="btn" (click)="saveChange()">
           Save Changes
-        </button>
+        </button> -->
       </div>
     </div>
     <!-- Question Optons section -->
@@ -22,7 +22,7 @@
     <div class="question_links mb-4">
       <button
         *ngFor="let question of questions; let i = index"
-        (click)="showReviewAlert(question._id, i,question)"
+        (click)="showReviewAlert(question._id, i, question)"
         [ngClass]="{ 'edited-button': question.isEdited }"
       >
         {{ i + 1 }}
@@ -130,6 +130,7 @@
           >edit</mat-icon
         >
         <mat-icon *ngIf="isEditMode" (click)="cancelEdit()">close</mat-icon>
+        <mat-icon *ngIf="isEditMode" (click)="saveChange()">save</mat-icon>
       </div>
     </div>
     <!-- Questions section -->
