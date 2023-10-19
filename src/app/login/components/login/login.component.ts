@@ -37,7 +37,7 @@ export class LoginComponent {
     token: '',
     email: '',
     password: '',
-    institutionName: ''
+    institutionName: '',
   };
   public loginModel: Login = {
     email: '',
@@ -92,17 +92,24 @@ export class LoginComponent {
                 response.result.user?.topicId.topic,
                 this.secretKey
               );
+              const institutionId = this.encryptText(
+                response.result.user?.institutionId._id,
+                this.secretKey
+              );
               if (topicId) {
                 localStorage.setItem('6', topicId);
+              }
+              if (institutionId) {
+                localStorage.setItem('7', institutionId);
               }
               this.router.navigateByUrl('/eminence/faculty');
             }
             if (response.result.user.role.role === 'VETTER') {
               this.router.navigateByUrl('/eminence/vetter');
             }
-           if (response.result.user.role.role === 'STUDENT') {
-             this.router.navigateByUrl('/eminence/student');
-           }
+            if (response.result.user.role.role === 'STUDENT') {
+              this.router.navigateByUrl('/eminence/student');
+            }
             const role = response.result.user.role.role.toLowerCase();
             // this.router.navigateByUrl(`/eminenceai/${role}`);
             this.closeDialog();

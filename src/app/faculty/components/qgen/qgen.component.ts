@@ -62,7 +62,7 @@ export class QgenComponent implements OnInit {
   }
 
   submitQgen() {
-    this.qGenObject.questionsCount = this.gGenForm.value.questionsCount;
+    // this.qGenObject.questionsCount = this.gGenForm.value.questionsCount;
     this.qGenObject.topic = this.topicId;
     this.qGenObject.userId = this.userId;
     this.qGenObject.type = 'Qgen';
@@ -93,7 +93,7 @@ export class QgenComponent implements OnInit {
 
   /**
    * function to prevent enterinf period and letters for input field
-   * @param event 
+   * @param event
    */
   onInput(event: Event) {
     const inputElement = event.target as HTMLInputElement;

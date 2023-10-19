@@ -43,6 +43,7 @@
           type="tel"
           class="form-control"
           placeholder="Max. 5"
+          [(ngModel)]="qGenObject.questionsCount"
           formControlName="questionsCount"
           (input)="onInput($event)"
         />
