@@ -50,6 +50,8 @@ import { UserFormComponent } from './components/user-form/user-form.component';
 import { SubscriptionPopupComponent } from './components/subscription-popup/subscription-popup.component';
 import { AddSubscriptionComponent } from './components/add-subscription/add-subscription.component';
 import { UpdateSubscriptionComponent } from './components/update-subscription/update-subscription.component';
+import { AddVetterComponent } from './components/add-vetter/add-vetter.component';
+import { AddAttributesComponent } from './components/add-attributes/add-attributes.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,8 @@ import { UpdateSubscriptionComponent } from './components/update-subscription/up
     SubscriptionPopupComponent,
     AddSubscriptionComponent,
     UpdateSubscriptionComponent,
+    AddVetterComponent,
+    AddAttributesComponent,
   ],
   imports: [
     CommonModule,

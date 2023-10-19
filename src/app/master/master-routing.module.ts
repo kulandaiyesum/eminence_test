@@ -6,6 +6,8 @@ import { TopicComponent } from './components/topic/topic.component';
 import { RoleComponent } from './components/role/role.component';
 import { UserComponent } from './components/user/user.component';
 import { SubscriptionComponent } from './components/subscription/subscription.component';
+import { AddVetterComponent } from './components/add-vetter/add-vetter.component';
+import { AddAttributesComponent } from './components/add-attributes/add-attributes.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'package', pathMatch: 'full' },
@@ -15,6 +17,8 @@ const routes: Routes = [
   { path: 'role', component: RoleComponent },
   { path: 'user', component: UserComponent },
   { path: 'subscriber', component: SubscriptionComponent },
+  { path: 'addvetter', component: AddVetterComponent },
+  { path: 'addattributes', component: AddAttributesComponent },
 ];
 
 @NgModule({
