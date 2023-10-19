@@ -42,6 +42,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { QuestionComponent } from './components/question/question.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { CarouselModule } from 'primeng/carousel';
 
 @NgModule({
   declarations: [
@@ -90,6 +91,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     FormsModule,
     ReactiveFormsModule,
     NgxSpinnerModule,
+    CarouselModule,
   ],
   exports: [SidenavComponent],
 })
