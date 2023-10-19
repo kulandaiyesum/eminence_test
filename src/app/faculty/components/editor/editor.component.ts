@@ -42,6 +42,8 @@ export class EditorComponent implements OnInit {
   currentQuestionStatus: any;
   isAllQuestions: boolean = false;
   shouldShowButton: boolean = false;
+  nextButtonQuestionId: string;
+  nextButtonQuestionIndex: number;
   @ViewChild('editableDiv') editableDiv: ElementRef;
   constructor(
     private qgenService: QgenService,
@@ -83,16 +85,18 @@ export class EditorComponent implements OnInit {
       console.log(pendingCount);
       if (pendingCount === 1) {
         this.shouldShowButton = true;
-        const pendingData=this.questions.filter(
+        const pendingData = this.questions.filter(
           (item: any) => item.status === 'PENDING'
         );
         console.log(pendingData[0]._id);
-        this.questionId=pendingData[0]._id
+        this.questionId = pendingData[0]._id;
       }
     });
   }
 
   showReviewAlert(question_id: string, index: number, question: any) {
+    this.nextButtonQuestionId = question_id;
+    this.nextButtonQuestionIndex = index;
     this.questionNo = this.tempQuestion.index + 1;
     console.log(this.questionNo);
     this.questionId = this.tempQuestion.question._id;
@@ -143,18 +147,23 @@ export class EditorComponent implements OnInit {
         console.log(response);
         this.cdr.detectChanges();
         this.getAllQuestions(this.reqId);
+        setTimeout(() => {
+          console.log("Navigate acha ?");
+          this.getQuestion(
+            this.nextButtonQuestionId,
+            this.nextButtonQuestionIndex
+          );
+        }, 1500);
         const pendingCount = this.questions.filter(
           (item: any) => item.status === 'PENDING'
         ).length;
-
-        console.log(pendingCount);
         if (pendingCount === 1) {
           this.shouldShowButton = true;
-          const pendingData=this.questions.filter(
+          const pendingData = this.questions.filter(
             (item: any) => item.status === 'PENDING'
           );
           console.log(pendingData[0]._id);
-          this.questionId=pendingData[0]._id
+          this.questionId = pendingData[0]._id;
         }
       },
       (error) => {
@@ -175,7 +184,7 @@ export class EditorComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.changeStatusOfQuestion();
-        // this.reviewAll();
+        this.reviewAll();
       } else {
         // Handle the "No" case (close the popup or perform any other action)
       }
@@ -326,4 +335,6 @@ export class EditorComponent implements OnInit {
       });
     }
   }
+
+  
 }

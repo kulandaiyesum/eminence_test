@@ -1,5 +1,5 @@
 import { RsaService } from './../../../shared/service/rsa.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Qgen } from '../../model/qgen';
 import { environment } from 'src/environments/environment';
@@ -17,8 +17,9 @@ export class QgenComponent implements OnInit {
   topicId: string = '';
   userFirstName: string = '';
   qgenObjectList: Qgen[];
-
+  responsiveOptions: any[];
   secretKey: string = environment.secretKey;
+  @ViewChild('qgenResponse') qgenResponse: ElementRef;
   constructor(
     private rsaService: RsaService,
     private gGenService: QgenService
@@ -45,6 +46,28 @@ export class QgenComponent implements OnInit {
       localStorage.getItem('3'),
       this.secretKey
     );
+    this.responsiveOptions = [
+      {
+        breakpoint: '1660px',
+        numVisible: 3,
+        numScroll: 1,
+      },
+      {
+        breakpoint: '1370px',
+        numVisible: 2,
+        numScroll: 1,
+      },
+      {
+        breakpoint: '991px',
+        numVisible: 2,
+        numScroll: 1,
+      },
+      {
+        breakpoint: '768px',
+        numVisible: 1,
+        numScroll: 1,
+      },
+    ];
     this.getPendingQuestions();
   }
 
@@ -102,5 +125,18 @@ export class QgenComponent implements OnInit {
     if (sanitizedValue !== '') {
       inputElement.value = sanitizedValue;
     }
+  }
+
+  /**
+   * function to scroll the Qgen response element
+   * @param direction
+   */
+  scroll(direction: number) {
+    const scrollAmount = direction * 320;
+    this.qgenResponse.nativeElement.scrollBy({
+      top: 0,
+      left: scrollAmount,
+      behavior: 'smooth',
+    });
   }
 }

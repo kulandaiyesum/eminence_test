@@ -118,12 +118,12 @@
     <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
       <!-- Input Column -->
       <ng-container matColumnDef="date">
-        <mat-header-cell *matHeaderCellDef mat-sort-header
-          >Created Date</mat-header-cell
+        <mat-header-cell *matHeaderCellDef mat-sort-header id="data-table"
+          >Date</mat-header-cell
         >
         <mat-cell
           *matCellDef="let row; let i = index"
-          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'" id="data-table"
           >{{ row.modifiedAt | date : "MM-dd-YYYY" }}</mat-cell
         >
       </ng-container>
@@ -141,36 +141,36 @@
 
       <!-- Question Column -->
       <ng-container matColumnDef="question">
-        <mat-header-cell *matHeaderCellDef mat-sort-header
+        <mat-header-cell *matHeaderCellDef mat-sort-header id="question-table"
           >Question</mat-header-cell
         >
         <mat-cell
           *matCellDef="let row; let i = index"
-          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'" id="question-table"
           >Qgen</mat-cell
         >
       </ng-container>
 
       <!-- From Column -->
       <ng-container matColumnDef="from">
-        <mat-header-cell *matHeaderCellDef mat-sort-header
+        <mat-header-cell *matHeaderCellDef mat-sort-header id="from-table"
           >From</mat-header-cell
         >
         <mat-cell
           *matCellDef="let row; let i = index"
-          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'" id="from-table"
           >{{ row.questionsCount }}</mat-cell
         >
       </ng-container>
 
       <!-- Action Column -->
       <ng-container matColumnDef="action">
-        <mat-header-cell *matHeaderCellDef mat-sort-header
+        <mat-header-cell *matHeaderCellDef mat-sort-header id="export-table"
           >Export</mat-header-cell
         >
         <mat-cell
           *matCellDef="let row; let i = index"
-          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'" id="export-table"
           ><mat-icon class="export-icon" (click)="getPdf(row)"
             >save_alt</mat-icon
           >
