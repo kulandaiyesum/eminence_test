@@ -123,8 +123,9 @@
         >
         <mat-cell
           *matCellDef="let row; let i = index"
-          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'" id="data-table"
-          >{{ row.modifiedAt | date : "MM-dd-YYYY" }}</mat-cell
+          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+          id="data-table"
+          >{{ row.modifiedAt | date : "MM-dd-YYYY" || "-" }}</mat-cell
         >
       </ng-container>
       <!-- Input Column -->
@@ -142,23 +143,25 @@
       <!-- Question Column -->
       <ng-container matColumnDef="question">
         <mat-header-cell *matHeaderCellDef mat-sort-header id="question-table"
-          >Question</mat-header-cell
+          >From</mat-header-cell
         >
         <mat-cell
           *matCellDef="let row; let i = index"
-          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'" id="question-table"
-          >Qgen</mat-cell
+          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+          id="question-table"
+          >{{ row.type }}</mat-cell
         >
       </ng-container>
 
       <!-- From Column -->
       <ng-container matColumnDef="from">
         <mat-header-cell *matHeaderCellDef mat-sort-header id="from-table"
-          >From</mat-header-cell
+          >Question</mat-header-cell
         >
         <mat-cell
           *matCellDef="let row; let i = index"
-          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'" id="from-table"
+          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+          id="from-table"
           >{{ row.questionsCount }}</mat-cell
         >
       </ng-container>
@@ -170,7 +173,8 @@
         >
         <mat-cell
           *matCellDef="let row; let i = index"
-          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'" id="export-table"
+          [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+          id="export-table"
           ><mat-icon class="export-icon" (click)="getPdf(row)"
             >save_alt</mat-icon
           >
