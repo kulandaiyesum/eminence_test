@@ -27,7 +27,7 @@ export class AddAttributesComponent {
   constructor(public dialog: MatDialog){}
   ngOnInit() {
     this.getAllAdminQgen();
-    this.openAddDialog("shek");
+    // this.openAddDialog("shek");
   }
 
   ngAfterViewInit() {
