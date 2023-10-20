@@ -1,0 +1,76 @@
+<div class="add-element-container">
+  <div class="close-bar">
+    <mat-icon (click)="closeDialog()">close</mat-icon>
+  </div>
+  <div class="heading">
+    <p>Add Attributes</p>
+  </div>
+  <div class="details">
+    <p>
+      <b>Input : </b>The basal lamina connects to fibrils of the reticular
+      lamina via Type 7 collagen.
+    </p>
+  </div>
+  <div class="select-area">
+    <form #myForm="ngForm">
+      <label for="system">Select a system</label>
+      <select
+        name="system"
+        [(ngModel)]="attributes.system"
+        #system="ngModel"
+        required
+      >
+        <option [ngValue]="" disabled selected>Select a system</option>
+        <option [ngValue]="'System 1'">System 1</option>
+        <option [ngValue]="'System 2'">System 2</option>
+        <option [ngValue]="'System 3'">System 3</option>
+      </select>
+      <div *ngIf="system.invalid && (system.dirty || system.touched)">
+        <div *ngIf="system.errors?.['required']">System is required.</div>
+      </div>
+
+      <label for="sub-system">Select a sub-system</label>
+      <select
+        name="subsystem"
+        [(ngModel)]="attributes.subsystem"
+        #subsystem="ngModel"
+        id="sub-system"
+        required
+      >
+        <option [ngValue]="" disabled selected>Select a sub-system</option>
+        <option [ngValue]="'Sub-system 1'">Sub-system 1</option>
+        <option [ngValue]="'Sub-system 2'">Sub-system 2</option>
+        <option [ngValue]="'Sub-system 3'">Sub-system 3</option>
+      </select>
+      <div *ngIf="subsystem.invalid && (subsystem.dirty || subsystem.touched)">
+        <div *ngIf="subsystem.errors?.['required']">
+          Sub-system is required.
+        </div>
+      </div>
+
+      <label for="subject">Select a subject</label>
+      <select
+        name="subject"
+        [(ngModel)]="attributes.subject"
+        #subject="ngModel"
+        id="subject"
+        required
+      >
+        <option [ngValue]="" disabled selected>Select a subject</option>
+        <option [ngValue]="'Subject 1'">Subject 1</option>
+        <option [ngValue]="'Subject 2'">Subject 2</option>
+        <option [ngValue]="'Subject 3'">Subject 3</option>
+      </select>
+      <div *ngIf="subject.invalid && (subject.dirty || subject.touched)">
+        <div *ngIf="subject.errors?.['required']">Subject is required.</div>
+      </div>
+      <button
+        type="submit"
+        (click)="submitForm(myForm)"
+        [disabled]="myForm.invalid"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
