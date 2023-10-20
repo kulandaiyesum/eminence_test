@@ -14,4 +14,5 @@ export class Institution {
   city: string;
   startdate: Date;
   enddate: Date;
+  institutionName?: string;
 }
