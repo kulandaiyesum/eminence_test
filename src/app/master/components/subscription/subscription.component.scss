@@ -59,10 +59,12 @@
         }
       }
 
-      .table {
+      .table-container {
         width: 100%;
         height: auto;
         margin-top: 20px;
+        // border-radius: 8px;
+        overflow-x: auto;
 
         input {
           width: 32%;
@@ -77,8 +79,8 @@
         table {
           width: auto;
           height: auto;
-          margin-top: 15px;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+          border-bottom: transparent;
+          // box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
           th {
             background-color: #46b3eb;
@@ -91,7 +93,6 @@
           }
 
           .odd-row {
-
           }
 
           .even-row {
@@ -101,7 +102,7 @@
 
         mat-paginator {
           z-index: 1;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+          // box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
       }
     }
