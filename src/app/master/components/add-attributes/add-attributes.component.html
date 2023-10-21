@@ -1,1 +1,76 @@
-<p>add-attributes works!</p>
+<div class="add-attributes-container">
+  <div class="heading">
+    <p>Attributes Master</p>
+  </div>
+  <div class="main">
+    <div class="table-area">
+      <div class="control-area">
+        <input placeholder="Search here..." (keyup)="applyFilter($event)" />
+      </div>
+      <div class="table">
+        <mat-table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header id="data-table"
+              >Date</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row" id="data-table">{{
+              row.date
+            }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="input">
+            <mat-header-cell *matHeaderCellDef mat-sort-header
+              >Input</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row">{{ row.input }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="question">
+            <mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              id="question-table"
+              >Question</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row" id="question-table">{{
+              row.question
+            }}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="element">
+            <mat-header-cell *matHeaderCellDef mat-sort-header id="small-table"
+              >Element</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row" id="small-table"
+              ><mat-icon
+                (click)="openAddDialog(row)"
+                matTooltip="Add attributes"
+                >add</mat-icon
+              ></mat-cell
+            >
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef mat-sort-header id="action-table"
+              >Action</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row" id="action-table"
+              ><mat-icon (click)="confirmDelete(row)" matTooltip="Delete set"
+                >delete</mat-icon
+              ></mat-cell
+            >
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+
+        <mat-paginator
+          [pageSizeOptions]="[5, 10, 25, 100]"
+          [pageSize]="5"
+          [pageIndex]="0"
+        ></mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

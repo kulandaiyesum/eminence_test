@@ -52,6 +52,7 @@ import { AddSubscriptionComponent } from './components/add-subscription/add-subs
 import { UpdateSubscriptionComponent } from './components/update-subscription/update-subscription.component';
 import { AddVetterComponent } from './components/add-vetter/add-vetter.component';
 import { AddAttributesComponent } from './components/add-attributes/add-attributes.component';
+import { AddElementComponent } from './components/add-element/add-element.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { AddAttributesComponent } from './components/add-attributes/add-attribut
     UpdateSubscriptionComponent,
     AddVetterComponent,
     AddAttributesComponent,
+    AddElementComponent,
   ],
   imports: [
     CommonModule,
