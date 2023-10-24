@@ -53,6 +53,8 @@ import { UpdateSubscriptionComponent } from './components/update-subscription/up
 import { AddVetterComponent } from './components/add-vetter/add-vetter.component';
 import { AddAttributesComponent } from './components/add-attributes/add-attributes.component';
 import { AddElementComponent } from './components/add-element/add-element.component';
+import { SystemComponent } from './components/system/system.component';
+import { SystemCrudComponent } from './components/system-crud/system-crud.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +75,8 @@ import { AddElementComponent } from './components/add-element/add-element.compon
     AddVetterComponent,
     AddAttributesComponent,
     AddElementComponent,
+    SystemComponent,
+    SystemCrudComponent,
   ],
   imports: [
     CommonModule,
