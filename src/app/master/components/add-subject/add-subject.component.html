@@ -1,0 +1,52 @@
+<div class="subject-container">
+  <div class="main">
+    <div class="close-area">
+      <mat-icon (click)="closeDialog()">close</mat-icon>
+    </div>
+    <div class="heading">
+      <p>Subject</p>
+    </div>
+    <div class="form-area">
+      <form #subjectForm="ngForm">
+        <label for="subject">Subject</label><br />
+        <input
+          placeholder="Enter subject here"
+          name="subject"
+          id="subject"
+          [(ngModel)]="subjects.subject"
+          minlength="3"
+          required
+          #subjectInput="ngModel"
+        />
+        <div
+          *ngIf="
+            subjectInput.invalid && (subjectInput.dirty || subjectInput.touched)
+          "
+        >
+          <div *ngIf="subjectInput.errors?.['required']">
+            Subject is required.
+          </div>
+          <div *ngIf="subjectInput.errors?.['minlength']">
+            Subject must be at least 3 characters long.
+          </div>
+        </div>
+        <button
+          type="submit"
+          (click)="submitForm(subjectForm)"
+          [disabled]="subjectForm.invalid"
+          *ngIf="buttonVisibility"
+        >
+          Submit
+        </button>
+        <button
+          type="submit"
+          (click)="update(subjectForm)"
+          [disabled]="subjectForm.invalid"
+          *ngIf="!buttonVisibility"
+        >
+          Update
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
