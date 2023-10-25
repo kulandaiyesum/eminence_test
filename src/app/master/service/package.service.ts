@@ -12,31 +12,28 @@ export class PackageService {
     .set('Content-Type', 'application/json')
     .set('Authorization', `Bearer ${localStorage.getItem('1')}`);
 
-  private getAllPackagesUrl = environment.localdomain + 'package/getAll';
-  private createPackageUrl = environment.localdomain + 'package/save';
-  private updatePackageUrl = environment.localdomain + 'package/update';
-  private deletePackageUrl = environment.localdomain + 'package/delete';
+  private packageBaseUrl = environment.localdomain + 'package';
 
   constructor(private http: HttpClient) {}
 
-  createPackage = (data) => {
-    return this.http.post(this.createPackageUrl, data);
-  };
+  createPackage(data: any): Observable<any> {
+    return this.http.post(`${this.packageBaseUrl}/save`, data);
+  }
 
   getAllPackages(): Observable<Package[]> {
-    return this.http.get<Package[]>(`${this.getAllPackagesUrl}`);
+    return this.http.get<Package[]>(`${this.packageBaseUrl}/getAll`);
   }
 
   updatePackage(data: any): Observable<any> {
-    return this.http.put(`${this.updatePackageUrl}`, data);
-  }
-  getB2CPackages(): Observable<Package[]> {
-    return this.http.get<Package[]>(`${this.getAllPackagesUrl}?type=B2C`);
+    return this.http.put(`${this.packageBaseUrl}/update`, data);
   }
 
+  getB2CPackages(): Observable<Package[]> {
+    return this.http.get<Package[]>(`${this.packageBaseUrl}/getAll?type=B2C`);
+  }
 
   deletePackage(data: any): Observable<any> {
-    return this.http.delete(this.deletePackageUrl, {
+    return this.http.delete(`${this.packageBaseUrl}/delete`, {
       body: data,
     });
   }
