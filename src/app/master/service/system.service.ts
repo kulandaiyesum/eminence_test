@@ -17,4 +17,12 @@ export class SystemService {
   getAllSystems() {
     return this.http.get(this.baseURL + '/getAll');
   }
+
+  updateSystem(sysObj:System) {
+    return this.http.put(`${this.baseURL}/${sysObj._id}`, sysObj);
+  }
+
+  deleteSyatem(id: string) {
+    return this.http.delete(`${this.baseURL}/${id}`);
+  }
 }

@@ -63,7 +63,21 @@ export class SystemCrudComponent implements OnInit {
       }
     );
   }
-  editSystem() {}
+  editSystem() {
+    this.systemService.updateSystem(this.systemObject).subscribe(
+      (res: any) => {
+        this.toastr.success(res.message, '', {
+          timeOut: 3000,
+        });
+        this.dialogRef.close(res);
+      },
+      (err: any) => {
+        this.toastr.error(err.error.message, '', {
+          timeOut: 3000,
+        });
+      }
+    );
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
