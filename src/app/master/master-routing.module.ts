@@ -10,6 +10,8 @@ import { AddVetterComponent } from './components/add-vetter/add-vetter.component
 import { AddAttributesComponent } from './components/add-attributes/add-attributes.component';
 import { SystemComponent } from './components/system/system.component';
 import { SubjectComponent } from './components/subject/subject.component';
+import { SubSystemComponent } from './components/sub-system/sub-system.component';
+
 
 const routes: Routes = [
   { path: '', redirectTo: 'package', pathMatch: 'full' },
@@ -23,6 +25,8 @@ const routes: Routes = [
   { path: 'addattributes', component: AddAttributesComponent },
   { path: 'system', component: SystemComponent },
   { path: 'subject', component: SubjectComponent },
+  { path: 'sub-system', component: SubSystemComponent },
+
 ];
 
 @NgModule({

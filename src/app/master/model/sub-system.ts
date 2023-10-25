@@ -1,10 +1,9 @@
-export class System {
+export class SubSystem {
   _id?: string;
-  system: string;
+  subSystem: string;
   status?: number;
   createdOn?: string;
   createdBy: string;
   modifiedBy?: string;
   modifiedAt?: string;
-  subSystemId?: any;
 }
