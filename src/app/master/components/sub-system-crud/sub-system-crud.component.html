@@ -1,0 +1,49 @@
+<div class="form_crud">
+  <mat-icon class="close_btn" mat-icon-button (click)="onNoClick()"
+    >close</mat-icon
+  >
+  <div class="form_wrap">
+    <div class="form_heading" *ngIf="data === null">Add Subsystem</div>
+    <div class="form_heading" *ngIf="data !== null">Edit Subsystem</div>
+    <form [formGroup]="subSystemForm">
+      <div class="form-group custom_group">
+        <label for="subSystem">Subsystem</label>
+        <input
+          type="text"
+          id="subSystem"
+          class="form-control"
+          formControlName="system"
+          placeholder="{{ data !== null ? 'Edit System' : 'Add System' }}"
+          [(ngModel)]="subSystemObject.subSystem"
+        />
+        <div class="error">
+          <mat-error
+            *ngIf="
+              subSystemForm.controls['subSystem'].hasError('required') &&
+              subSystemForm.touched
+            "
+            >Subsystem is reqiured</mat-error
+          >
+        </div>
+      </div>
+      <div class="form_btns">
+        <button
+          [disabled]="subSystemForm.invalid"
+          class=""
+          *ngIf="data === null"
+          (click)="saveSubSystem()"
+        >
+          Save
+        </button>
+        <button
+          [disabled]="subSystemForm.invalid || !isFormValueChanged"
+          class=""
+          *ngIf="data !== null"
+          (click)="editSubSystem()"
+        >
+          Update
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
