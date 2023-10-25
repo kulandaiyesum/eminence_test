@@ -6,10 +6,7 @@
     <p>Add Attributes</p>
   </div>
   <div class="details">
-    <p>
-      <b>Input : </b>The basal lamina connects to fibrils of the reticular
-      lamina via Type 7 collagen.
-    </p>
+    <p><b>Input : </b>{{ input }}</p>
   </div>
   <div class="select-area">
     <form #myForm="ngForm">
@@ -57,9 +54,12 @@
         required
       >
         <option [ngValue]="" disabled selected>Select a subject</option>
-        <option [ngValue]="'Subject 1'">Subject 1</option>
-        <option [ngValue]="'Subject 2'">Subject 2</option>
-        <option [ngValue]="'Subject 3'">Subject 3</option>
+        <option
+          *ngFor="let subject of subjectsList"
+          [ngValue]="subject.subject"
+        >
+          {{ subject.subject }}
+        </option>
       </select>
       <div *ngIf="subject.invalid && (subject.dirty || subject.touched)">
         <div *ngIf="subject.errors?.['required']">Subject is required.</div>

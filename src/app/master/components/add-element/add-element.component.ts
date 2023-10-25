@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { Attributes } from '../../model/attributes.class';
+import { SubjectService } from '../../service/subject.service';
 
 @Component({
   selector: 'app-add-element',
@@ -13,19 +14,23 @@ import { Attributes } from '../../model/attributes.class';
 })
 export class AddElementComponent {
   attributes: Attributes = new Attributes();
+  input: string;
+  subjectsList=[]
 
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private dialogRef: MatDialogRef<AddElementComponent>
+    private dialogRef: MatDialogRef<AddElementComponent>,
+    private subjectService:SubjectService
   ) {
-    console.log(data);
-
+    this.input = data.keywords[0];
   }
 
-  
+  ngOnInit(): void {
+    this.getAllSubject();
+  }
 
   closeDialog() {
     this.dialogRef.close();
@@ -33,8 +38,21 @@ export class AddElementComponent {
 
   submitForm(form: NgForm) {
     if (form.valid) {
-     console.log(this.attributes);
-
+      console.log(this.attributes);
     }
+  }
+
+  getAllSubject() {
+    this.subjectService.getAllTopicMaster().subscribe(
+      (response: any) => {
+
+        this.subjectsList=response.result
+        console.log(this.subjectsList);
+
+      },
+      (error) => {
+        console.error('Error:', error);
+      }
+    );
   }
 }
