@@ -36,7 +36,7 @@
           Save
         </button>
         <button
-          [disabled]="systemForm.invalid"
+          [disabled]="systemForm.invalid || !isFormValueChanged"
           class=""
           *ngIf="data !== null"
           (click)="editSystem()"

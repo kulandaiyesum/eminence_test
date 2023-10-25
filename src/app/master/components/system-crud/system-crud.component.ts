@@ -18,6 +18,8 @@ export class SystemCrudComponent implements OnInit {
   systemObject: System;
   userFirstName: string;
   secretKey: string = environment.secretKey;
+  initialFormValues: any;
+  isFormValueChanged: boolean = false;
   constructor(
     private systemService: SystemService,
     private toastr: ToastrService,
@@ -42,7 +44,18 @@ export class SystemCrudComponent implements OnInit {
       this.systemObject.createdBy = this.data?.createdBy;
       this.systemObject.createdOn = this.data?.createdOn;
       this.systemObject.status = this.data?.status;
+      this.initialFormValues = this.systemForm.value;
     }
+    this.systemForm.valueChanges.subscribe(() => {
+      const currentFormValues = this.systemForm.value;
+      this.isFormValueChanged = !this.areFormValuesEqual(
+        this.initialFormValues,
+        currentFormValues
+      );
+    });
+  }
+  areFormValuesEqual(obj1: any, obj2: any): boolean {
+    return JSON.stringify(obj1) === JSON.stringify(obj2);
   }
   saveSystem() {
     this.systemObject.createdBy = this.userFirstName;

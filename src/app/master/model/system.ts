@@ -6,4 +6,5 @@ export class System {
   createdBy: string;
   modifiedBy?: string;
   modifiedAt?: string;
+  subSystemId?: any;
 }
