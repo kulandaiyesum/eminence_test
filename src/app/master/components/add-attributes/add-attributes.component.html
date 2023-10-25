@@ -14,7 +14,7 @@
               >Date</mat-header-cell
             >
             <mat-cell *matCellDef="let row" id="data-table">{{
-              row.date
+              row.createdAt
             }}</mat-cell>
           </ng-container>
 
@@ -22,7 +22,7 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header
               >Input</mat-header-cell
             >
-            <mat-cell *matCellDef="let row">{{ row.input }}</mat-cell>
+            <mat-cell *matCellDef="let row">{{ row.keywords?.join(', ') }}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="question">
@@ -33,7 +33,7 @@
               >Question</mat-header-cell
             >
             <mat-cell *matCellDef="let row" id="question-table">{{
-              row.question
+              row.questionsCount
             }}</mat-cell>
           </ng-container>
 
