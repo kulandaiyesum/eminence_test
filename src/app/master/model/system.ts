@@ -4,4 +4,6 @@ export class System {
   status?: number;
   createdOn?: string;
   createdBy: string;
+  modifiedBy?: string;
+  modifiedAt?: string;
 }

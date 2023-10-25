@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { SystemCrudComponent } from '../system-crud/system-crud.component';
 import { SystemService } from '../../service/system.service';
+import { System } from '../../model/system';
 
 @Component({
   selector: 'app-system',
@@ -17,9 +18,13 @@ export class SystemComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort: MatSort | any;
   dataSource: MatTableDataSource<Role>;
-  displayedColumns: string[] = ['sno', 'system'];
+  displayedColumns: string[] = ['sno', 'system', 'actions'];
 
-  constructor(private dialog: MatDialog, private toastr: ToastrService, private systemServeice: SystemService) {}
+  constructor(
+    private dialog: MatDialog,
+    private toastr: ToastrService,
+    private systemServeice: SystemService
+  ) {}
   ngOnInit(): void {
     this.getAllSystem();
   }
@@ -31,15 +36,15 @@ export class SystemComponent implements OnInit {
 
   getAllSystem() {
     this.systemServeice.getAllSystems().subscribe(
-      (data:any) => {
+      (data: any) => {
         this.dataSource = new MatTableDataSource(data.result);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
-      (err:any) => {
+      (err: any) => {
         console.log(err);
-        this.toastr.error(err.error.message,'',{
-          timeOut: 3000
+        this.toastr.error(err.error.message, '', {
+          timeOut: 3000,
         });
       }
     );
@@ -55,14 +60,38 @@ export class SystemComponent implements OnInit {
       if (result === undefined) {
         return;
       }
-       this.getAllSystem();
+      this.getAllSystem();
     });
   }
 
-  editSystem(sysObj: any) {
-    console.log(sysObj);
+  editSystem(sysObj: System) {
+    let dialogBoxSettings = {
+      width: '500px',
+      margin: '0 auto',
+      data: sysObj,
+    };
+    const dialogRef = this.dialog.open(SystemCrudComponent, dialogBoxSettings);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === undefined) {
+        return;
+      }
+      this.getAllSystem();
+    });
   }
-  deleteSystem(sysObj: any) {
-    console.log(sysObj);
+  deleteSystem(_id: string) {
+    console.log(_id);
+    this.systemServeice.deleteSyatem(_id).subscribe(
+      (res: any) => {
+        this.toastr.success(res.message, '', {
+          timeOut: 3000,
+        });
+        this.getAllSystem();
+      },
+      (err: any) => {
+        this.toastr.error(err.error.message, '', {
+          timeOut: 3000,
+        });
+      }
+    );
   }
 }
