@@ -55,6 +55,9 @@ import { AddAttributesComponent } from './components/add-attributes/add-attribut
 import { AddElementComponent } from './components/add-element/add-element.component';
 import { SystemComponent } from './components/system/system.component';
 import { SystemCrudComponent } from './components/system-crud/system-crud.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { SubjectComponent } from './components/subject/subject.component';
+import { AddSubjectComponent } from './components/add-subject/add-subject.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +80,8 @@ import { SystemCrudComponent } from './components/system-crud/system-crud.compon
     AddElementComponent,
     SystemComponent,
     SystemCrudComponent,
+    SubjectComponent,
+    AddSubjectComponent
   ],
   imports: [
     CommonModule,

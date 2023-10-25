@@ -16,6 +16,9 @@ import { MatTableModule } from '@angular/material/table';
 import { AuthHttpInterceptorService } from './shared/service/auth-http-interceptor..service';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { MasterModule } from './master/master.module';
+import { MatIconModule } from '@angular/material/icon';
+
 
 
 
@@ -34,7 +37,7 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    MatCheckboxModule,NgbCarouselModule,
+    MatCheckboxModule,NgbCarouselModule,MatIconModule,MatPaginatorModule,MasterModule
   ],
   providers: [
     {

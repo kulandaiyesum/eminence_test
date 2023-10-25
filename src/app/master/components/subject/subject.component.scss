@@ -1,0 +1,106 @@
+.subject-container {
+  width: 100%;
+  height: 85vh;
+  // border: 1px solid red;
+  .heading {
+    width: 100%;
+    height: auto;
+    // border: 1px solid yellow;
+    text-align: center;
+    p {
+      font-size: 32px;
+      font-weight: 600;
+    }
+  }
+  .main {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    .table-area {
+      width: 80%;
+      height: auto;
+
+      // border: 1px solid red;
+      .control-area {
+        width: 100%;
+        height: auto;
+        // border: 1px solid yellow;
+        display: flex;
+        justify-content: space-between;
+        button {
+          background-color: #46b3eb;
+          color: #fff;
+          font-size: 16px;
+          border: none;
+        }
+        input {
+          border: 1px solid #c6c9cd;
+          border-radius: 3px;
+          color: #636972;
+          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+          font-family: "open_sans", "Open Sans", sans-serif;
+          line-height: 1.5;
+          font-weight: normal;
+          font-size: 14px;
+          font-style: normal;
+          padding: 6px 8px;
+          min-height: 36px;
+          &::placeholder {
+            font-weight: 600;
+            color: #bcbcbc;
+          }
+        }
+      }
+      .table {
+        width: 100%;
+        height: auto;
+        // border: 1px solid blue;
+        margin-top: 20px;
+        table {
+          width: 100%;
+          height: auto;
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+          th {
+            background-color: var(--qgen-logo-blue);
+            font-size: 16px;
+            font-weight: 500;
+            color: #fff;
+            // border: 1px solid red;
+            // border: 1px solid red;
+          }
+          // td{
+          //   // border: 1px solid red;
+          // }
+
+          // mat-cell{
+          //   // border: 1px solid red;
+          // }
+          #subject-table {
+            flex: 10 !important;
+          }
+          #status-table {
+            flex: 0.5;
+            // border: 1px solid blue;
+          }
+          #action-table {
+            flex: 0.5;
+          }
+          mat-icon {
+            color: #fabf01;
+            cursor: pointer;
+          }
+        }
+        mat-paginator {
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+          border: none;
+        }
+      }
+    }
+    @media (max-width: 768px) {
+      .table-area {
+        width: 95% !important;
+      }
+    }
+  }
+}
