@@ -9,6 +9,7 @@ import { SubscriptionComponent } from './components/subscription/subscription.co
 import { AddVetterComponent } from './components/add-vetter/add-vetter.component';
 import { AddAttributesComponent } from './components/add-attributes/add-attributes.component';
 import { SystemComponent } from './components/system/system.component';
+import { SubSystemComponent } from './components/sub-system/sub-system.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'package', pathMatch: 'full' },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'addvetter', component: AddVetterComponent },
   { path: 'addattributes', component: AddAttributesComponent },
   { path: 'system', component: SystemComponent },
+  { path: 'sub-system', component: SubSystemComponent },
 ];
 
 @NgModule({
