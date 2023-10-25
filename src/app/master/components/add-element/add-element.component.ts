@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { Attributes } from '../../model/attributes.class';
 import { SubjectService } from '../../service/subject.service';
+import { SystemService } from '../../service/system.service';
 
 @Component({
   selector: 'app-add-element',
@@ -15,7 +16,8 @@ import { SubjectService } from '../../service/subject.service';
 export class AddElementComponent {
   attributes: Attributes = new Attributes();
   input: string;
-  subjectsList=[]
+  public subjectsList;
+  public systemList;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -23,17 +25,24 @@ export class AddElementComponent {
     private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<AddElementComponent>,
-    private subjectService:SubjectService
+    private subjectService: SubjectService,
+    private systemservice: SystemService
   ) {
     this.input = data.keywords[0];
   }
 
   ngOnInit(): void {
     this.getAllSubject();
+    this.getAllSystem();
   }
 
   closeDialog() {
     this.dialogRef.close();
+  }
+  getAllSystem() {
+    this.systemservice.getAllSystems().subscribe((doc: any) => {
+      this.systemList = doc.result;
+    });
   }
 
   submitForm(form: NgForm) {
@@ -45,10 +54,7 @@ export class AddElementComponent {
   getAllSubject() {
     this.subjectService.getAllTopicMaster().subscribe(
       (response: any) => {
-
-        this.subjectsList=response.result
-        console.log(this.subjectsList);
-
+        this.subjectsList = response.result;
       },
       (error) => {
         console.error('Error:', error);

@@ -18,9 +18,9 @@
         required
       >
         <option [ngValue]="" disabled selected>Select a system</option>
-        <option [ngValue]="'System 1'">System 1</option>
-        <option [ngValue]="'System 2'">System 2</option>
-        <option [ngValue]="'System 3'">System 3</option>
+        <option *ngFor="let system of systemList" [ngValue]="system.system">
+          {{ system.system }}
+        </option>
       </select>
       <div *ngIf="system.invalid && (system.dirty || system.touched)">
         <div *ngIf="system.errors?.['required']">System is required.</div>
