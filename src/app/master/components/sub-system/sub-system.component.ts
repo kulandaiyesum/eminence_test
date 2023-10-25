@@ -1,90 +1,91 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { SystemCrudComponent } from '../system-crud/system-crud.component';
-import { SystemService } from '../../service/system.service';
-import { System } from '../../model/system';
+import { SubSystem } from '../../model/sub-system';
+import { SubSystemService } from '../../service/sub-system.service';
+import { SubSystemCrudComponent } from '../sub-system-crud/sub-system-crud.component';
 
 @Component({
-  selector: 'app-system',
-  templateUrl: './system.component.html',
-  styleUrls: ['./system.component.scss'],
+  selector: 'app-sub-system',
+  templateUrl: './sub-system.component.html',
+  styleUrls: ['./sub-system.component.scss'],
 })
-export class SystemComponent implements OnInit {
+export class SubSystemComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort: MatSort | any;
-  dataSource: MatTableDataSource<System>;
-  displayedColumns: string[] = ['sno', 'system', 'actions'];
+  dataSource: MatTableDataSource<SubSystem>;
+  displayedColumns: string[] = ['sno', 'subSystem', 'actions'];
 
   constructor(
     private dialog: MatDialog,
     private toastr: ToastrService,
-    private systemServeice: SystemService
+    private subSystemServeice: SubSystemService
   ) {}
   ngOnInit(): void {
-    this.getAllSystem();
+    this.getAllsubSystems();
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
-  getAllSystem() {
-    this.systemServeice.getAllSystems().subscribe(
+  getAllsubSystems() {
+    this.subSystemServeice.getAllsubSystems().subscribe(
       (data: any) => {
         this.dataSource = new MatTableDataSource(data.result);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
       (err: any) => {
-        console.log(err);
         this.toastr.error(err.error.message, '', {
           timeOut: 3000,
         });
       }
     );
   }
-
-  addSystem() {
+  addsubSystem() {
     let dialogBoxSettings = {
       width: '500px',
       margin: '0 auto',
     };
-    const dialogRef = this.dialog.open(SystemCrudComponent, dialogBoxSettings);
+    const dialogRef = this.dialog.open(
+      SubSystemCrudComponent,
+      dialogBoxSettings
+    );
     dialogRef.afterClosed().subscribe((result) => {
       if (result === undefined) {
         return;
       }
-      this.getAllSystem();
+      this.getAllsubSystems();
     });
   }
-
-  editSystem(sysObj: System) {
+  editsubSystem(subSysObj: SubSystem) {
     let dialogBoxSettings = {
       width: '500px',
       margin: '0 auto',
-      data: sysObj,
+      data: subSysObj,
     };
-    const dialogRef = this.dialog.open(SystemCrudComponent, dialogBoxSettings);
+    const dialogRef = this.dialog.open(
+      SubSystemCrudComponent,
+      dialogBoxSettings
+    );
     dialogRef.afterClosed().subscribe((result) => {
       if (result === undefined) {
         return;
       }
-      this.getAllSystem();
+      this.getAllsubSystems();
     });
   }
-  deleteSystem(_id: string) {
-    console.log(_id);
-    this.systemServeice.deleteSyatem(_id).subscribe(
+  deletesubSystem(_id: string) {
+    this.subSystemServeice.deleteSubSystem(_id).subscribe(
       (res: any) => {
         this.toastr.success(res.message, '', {
           timeOut: 3000,
         });
-        this.getAllSystem();
+        this.getAllsubSystems();
       },
       (err: any) => {
         this.toastr.error(err.error.message, '', {

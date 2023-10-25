@@ -55,6 +55,8 @@ import { AddAttributesComponent } from './components/add-attributes/add-attribut
 import { AddElementComponent } from './components/add-element/add-element.component';
 import { SystemComponent } from './components/system/system.component';
 import { SystemCrudComponent } from './components/system-crud/system-crud.component';
+import { SubSystemComponent } from './components/sub-system/sub-system.component';
+import { SubSystemCrudComponent } from './components/sub-system-crud/sub-system-crud.component';
 
 @NgModule({
   declarations: [
@@ -77,6 +79,8 @@ import { SystemCrudComponent } from './components/system-crud/system-crud.compon
     AddElementComponent,
     SystemComponent,
     SystemCrudComponent,
+    SubSystemComponent,
+    SubSystemCrudComponent,
   ],
   imports: [
     CommonModule,

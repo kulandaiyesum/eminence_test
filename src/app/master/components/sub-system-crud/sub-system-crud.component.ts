@@ -1,36 +1,35 @@
-import { SystemService } from './../../service/system.service';
-import { System } from './../../model/system';
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { environment } from 'src/environments/environment';
+import { SubSystem } from '../../model/sub-system';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { RoleService } from '../../service/role.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RsaService } from 'src/app/shared/service/rsa.service';
-import { environment } from 'src/environments/environment';
+import { SubSystemService } from '../../service/sub-system.service';
 
 @Component({
-  selector: 'app-system-crud',
-  templateUrl: './system-crud.component.html',
-  styleUrls: ['./system-crud.component.scss'],
+  selector: 'app-sub-system-crud',
+  templateUrl: './sub-system-crud.component.html',
+  styleUrls: ['./sub-system-crud.component.scss'],
 })
-export class SystemCrudComponent implements OnInit {
-  systemForm: FormGroup;
-  systemObject: System;
+export class SubSystemCrudComponent implements OnInit {
+  subSystemForm: FormGroup;
+  subSystemObject: SubSystem;
   userFirstName: string;
   secretKey: string = environment.secretKey;
   initialFormValues: any;
   isFormValueChanged: boolean = false;
   constructor(
-    private systemService: SystemService,
+    private subSystemService: SubSystemService,
     private toastr: ToastrService,
-    public dialogRef: MatDialogRef<SystemCrudComponent>,
+    public dialogRef: MatDialogRef<SubSystemCrudComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private rsaService: RsaService
   ) {
-    this.systemObject = new System();
-    this.systemForm = new FormGroup({
+    this.subSystemObject = new SubSystem();
+    this.subSystemForm = new FormGroup({
       _id: new FormControl(data?._id || ''),
-      system: new FormControl(data?.system || '', Validators.required),
+      subSystem: new FormControl(data?.subSystem || '', Validators.required),
     });
   }
   ngOnInit(): void {
@@ -39,15 +38,15 @@ export class SystemCrudComponent implements OnInit {
       this.secretKey
     );
     if (this.data !== null) {
-      this.systemObject._id = this.data?._id;
-      this.systemObject.system = this.data?.system;
-      this.systemObject.createdBy = this.data?.createdBy;
-      this.systemObject.createdOn = this.data?.createdOn;
-      this.systemObject.status = this.data?.status;
-      this.initialFormValues = this.systemForm.value;
+      this.subSystemObject._id = this.data?._id;
+      this.subSystemObject.subSystem = this.data?.subSystem;
+      this.subSystemObject.createdBy = this.data?.createdBy;
+      this.subSystemObject.createdOn = this.data?.createdOn;
+      this.subSystemObject.status = this.data?.status;
+      this.initialFormValues = this.subSystemForm.value;
     }
-    this.systemForm.valueChanges.subscribe(() => {
-      const currentFormValues = this.systemForm.value;
+    this.subSystemForm.valueChanges.subscribe(() => {
+      const currentFormValues = this.subSystemForm.value;
       this.isFormValueChanged = !this.areFormValuesEqual(
         this.initialFormValues,
         currentFormValues
@@ -57,10 +56,9 @@ export class SystemCrudComponent implements OnInit {
   areFormValuesEqual(obj1: any, obj2: any): boolean {
     return JSON.stringify(obj1) === JSON.stringify(obj2);
   }
-  saveSystem() {
-    this.systemObject.createdBy = this.userFirstName;
-    console.log(this.systemObject);
-    this.systemService.saveSystem(this.systemObject).subscribe(
+  saveSubSystem() {
+    this.subSystemObject.createdBy = this.userFirstName;
+    this.subSystemService.savesubSystem(this.subSystemObject).subscribe(
       (data: any) => {
         console.log(data);
         this.toastr.success(data.message, '', {
@@ -76,8 +74,8 @@ export class SystemCrudComponent implements OnInit {
       }
     );
   }
-  editSystem() {
-    this.systemService.updateSystem(this.systemObject).subscribe(
+  editSubSystem() {
+    this.subSystemService.updatesubSystem(this.subSystemObject).subscribe(
       (res: any) => {
         this.toastr.success(res.message, '', {
           timeOut: 3000,

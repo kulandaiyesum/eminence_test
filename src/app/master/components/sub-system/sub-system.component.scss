@@ -1,0 +1,93 @@
+.subSystem_container {
+  padding: 20px;
+}
+.subSystem_table_container {
+  width: 80%;
+  margin: 0 auto;
+  .search_and_add {
+    display: flex;
+    justify-content: space-between;
+    .search_box {
+      .search_field {
+        input {
+          border: 1px solid #c6c9cd;
+          border-radius: 3px;
+          color: #636972;
+          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+          font-family: "open_sans", "Open Sans", sans-serif;
+          line-height: 1.5;
+          font-weight: normal;
+          font-size: 14px;
+          font-style: normal;
+          padding: 6px 8px;
+          min-height: 36px;
+          &::placeholder {
+            font-weight: 600;
+            color: #bcbcbc;
+          }
+        }
+      }
+    }
+    .add_btn {
+      button {
+        background-color: var(--qgen-logo-blue);
+        padding: 8px 16px;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        &:hover {
+          background-color: #57c4ff;
+        }
+      }
+    }
+  }
+  .table-container {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    table {
+      width: 100%;
+      border-radius: 8px;
+      tr {
+        &:first-child {
+          border-radius: 8px 8px 0 0;
+        }
+        th {
+          background-color: var(--qgen-logo-blue);
+          font-size: 16px;
+          font-weight: 500;
+          color: #fff;
+        }
+      }
+    }
+
+    .mat-paginator {
+      border-radius: 0 0 8px 8px;
+      width: 100% !important;
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+      .mat-select-value {
+        font-size: 14px;
+      }
+    }
+  }
+}
+.set_edit_color_button {
+  color: var(--qgen-logo-yellow);
+  cursor: pointer;
+  &:hover {
+    color: #ffd43b;
+  }
+}
+@media (max-width: 768px) {
+  .subSystem_table_container {
+    width: 90%;
+  }
+}
