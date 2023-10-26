@@ -41,6 +41,14 @@
           </td>
         </ng-container>
 
+        <!-- systemId column -->
+        <ng-container matColumnDef="systemId">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>System</th>
+          <td mat-cell *matCellDef="let row">
+            <div class="description-cell">{{ row.systemId.system }}</div>
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>ACTION</th>
           <td mat-cell *matCellDef="let row">
