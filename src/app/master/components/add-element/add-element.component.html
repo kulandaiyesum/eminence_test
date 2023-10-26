@@ -10,17 +10,39 @@
   </div>
   <div class="select-area">
     <form #myForm="ngForm">
+      <label for="subject">Select a subject</label>
+      <select
+        name="subject"
+        [(ngModel)]="attributes.subjectId"
+        #subject="ngModel"
+        id="subject"
+        required
+      >
+        <option [ngValue]="" disabled selected>Select a subject</option>
+        <option
+          *ngFor="let subject of subjectsList"
+          [ngValue]="subject._id"
+        >
+          {{ subject.subject }}
+        </option>
+      </select>
+      <div *ngIf="subject.invalid && (subject.dirty || subject.touched)">
+        <div *ngIf="subject.errors?.['required']">Subject is required.</div>
+      </div>
+
       <label for="system">Select a system</label>
       <select
         name="system"
         [(ngModel)]="attributes.system"
         #system="ngModel"
         required
+        (change)="onSystemChange()"
       >
         <option [ngValue]="" disabled selected>Select a system</option>
-        <option *ngFor="let system of systemList" [ngValue]="system.system">
+        <!-- <option *ngFor="let system of systemList" [ngValue]="system.system">
           {{ system.system }}
-        </option>
+        </option> -->
+        <option *ngFor="let system of systemList" [ngValue]="system._id">{{ system.system }}</option>
       </select>
       <div *ngIf="system.invalid && (system.dirty || system.touched)">
         <div *ngIf="system.errors?.['required']">System is required.</div>
@@ -29,15 +51,13 @@
       <label for="sub-system">Select a sub-system</label>
       <select
         name="subsystem"
-        [(ngModel)]="attributes.subsystem"
+        [(ngModel)]="attributes.subSystemId"
         #subsystem="ngModel"
         id="sub-system"
         required
       >
         <option [ngValue]="" disabled selected>Select a sub-system</option>
-        <option [ngValue]="'Sub-system 1'">Sub-system 1</option>
-        <option [ngValue]="'Sub-system 2'">Sub-system 2</option>
-        <option [ngValue]="'Sub-system 3'">Sub-system 3</option>
+        <option *ngFor="let subsystem of subsystemOptions" [ngValue]="subsystem._id">{{ subsystem.subSystem }}</option>
       </select>
       <div *ngIf="subsystem.invalid && (subsystem.dirty || subsystem.touched)">
         <div *ngIf="subsystem.errors?.['required']">
@@ -45,25 +65,6 @@
         </div>
       </div>
 
-      <label for="subject">Select a subject</label>
-      <select
-        name="subject"
-        [(ngModel)]="attributes.subject"
-        #subject="ngModel"
-        id="subject"
-        required
-      >
-        <option [ngValue]="" disabled selected>Select a subject</option>
-        <option
-          *ngFor="let subject of subjectsList"
-          [ngValue]="subject.subject"
-        >
-          {{ subject.subject }}
-        </option>
-      </select>
-      <div *ngIf="subject.invalid && (subject.dirty || subject.touched)">
-        <div *ngIf="subject.errors?.['required']">Subject is required.</div>
-      </div>
       <button
         type="submit"
         (click)="submitForm(myForm)"

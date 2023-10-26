@@ -1,6 +1,6 @@
 <div class="add-attributes-container">
   <div class="heading">
-    <p>Attributes Master</p>
+    <p>Attr/Vetter Master</p>
   </div>
   <div class="main">
     <div class="table-area">
@@ -39,13 +39,25 @@
 
           <ng-container matColumnDef="element">
             <mat-header-cell *matHeaderCellDef mat-sort-header id="small-table"
-              >Element</mat-header-cell
+              >Attributes</mat-header-cell
             >
             <mat-cell *matCellDef="let row" id="small-table"
               ><mat-icon
                 (click)="openAddDialog(row)"
                 matTooltip="Add attributes"
                 >add</mat-icon
+              ></mat-cell
+            >
+          </ng-container>
+          <ng-container matColumnDef="vetter">
+            <mat-header-cell *matHeaderCellDef mat-sort-header id="small-table"
+              >Vetter</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row" id="small-table"
+              ><mat-icon
+                (click)="openAddDialog(row)"
+                matTooltip="Add attributes"
+                >touch_app</mat-icon
               ></mat-cell
             >
           </ng-container>

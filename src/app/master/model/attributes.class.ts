@@ -1,6 +1,7 @@
 export class Attributes {
   system: string;
-  subsystem: string;
-  subject: string;
+  subSystemId: string;
+  subjectId: string;
   input: string;
+  qgenid: string;
 }
