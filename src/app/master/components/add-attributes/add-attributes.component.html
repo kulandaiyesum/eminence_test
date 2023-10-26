@@ -22,7 +22,9 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header
               >Input</mat-header-cell
             >
-            <mat-cell *matCellDef="let row">{{ row.keywords?.join(', ') }}</mat-cell>
+            <mat-cell *matCellDef="let row">{{
+              row.keywords?.join(", ")
+            }}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="question">
@@ -45,10 +47,16 @@
               ><mat-icon
                 (click)="openAddDialog(row)"
                 matTooltip="Add attributes"
-                [style.color]="row.subSystemId ? 'green' : '#fabf01'"
+                *ngIf="!row.subSystemId"
                 >add</mat-icon
-              ></mat-cell
-            >
+              >
+              <mat-icon
+                *ngIf="row.subSystemId"
+                [style.color]="'green'"
+                [style.cursor]="'not-allowed'"
+                >check_circle_outline</mat-icon
+              >
+            </mat-cell>
           </ng-container>
           <ng-container matColumnDef="vetter">
             <mat-header-cell *matHeaderCellDef mat-sort-header id="small-table"
@@ -57,7 +65,7 @@
             <mat-cell *matCellDef="let row" id="small-table"
               ><mat-icon
                 (click)="openAddDialog(row)"
-                matTooltip="Add attributes"
+                matTooltip="Assign vetter"
                 >touch_app</mat-icon
               ></mat-cell
             >
