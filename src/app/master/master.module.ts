@@ -55,11 +55,16 @@ import { AddAttributesComponent } from './components/add-attributes/add-attribut
 import { AddElementComponent } from './components/add-element/add-element.component';
 import { SystemComponent } from './components/system/system.component';
 import { SystemCrudComponent } from './components/system-crud/system-crud.component';
+<<<<<<< Updated upstream
 import { MatTableDataSource } from '@angular/material/table';
 import { SubjectComponent } from './components/subject/subject.component';
 import { AddSubjectComponent } from './components/add-subject/add-subject.component';
 import { SubSystemComponent } from './components/sub-system/sub-system.component';
 import { SubSystemCrudComponent } from './components/sub-system-crud/sub-system-crud.component';
+=======
+import { SubjectComponent } from './components/subject/subject.component';
+import { AddSubjectComponent } from './components/add-subject/add-subject.component';
+>>>>>>> Stashed changes
 
 @NgModule({
   declarations: [
@@ -84,8 +89,6 @@ import { SubSystemCrudComponent } from './components/sub-system-crud/sub-system-
     SystemCrudComponent,
     SubjectComponent,
     AddSubjectComponent,
-    SubSystemComponent,
-    SubSystemCrudComponent,
   ],
   imports: [
     CommonModule,

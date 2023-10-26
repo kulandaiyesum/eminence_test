@@ -12,6 +12,7 @@ import { SystemComponent } from './components/system/system.component';
 import { SubjectComponent } from './components/subject/subject.component';
 import { SubSystemComponent } from './components/sub-system/sub-system.component';
 
+import { SubjectComponent } from './components/subject/subject.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'package', pathMatch: 'full' },
@@ -27,6 +28,7 @@ const routes: Routes = [
   { path: 'subject', component: SubjectComponent },
   { path: 'sub-system', component: SubSystemComponent },
 
+  { path: 'subject', component: SubjectComponent },
 ];
 
 @NgModule({
