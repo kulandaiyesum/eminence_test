@@ -181,6 +181,7 @@ export class AddAttributesComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      this.getQuestionsList();
       if (result) {
         // Handle any actions after the dialog is closed
       }

@@ -63,6 +63,7 @@ export class AddElementComponent {
       this.qgenService.addAttributes(this.attributes).subscribe(
         (response: any) => {
           console.log(response);
+          this.closeDialog();
         },
         (error) => {
           console.error('Error:', error);
