@@ -45,6 +45,7 @@
               ><mat-icon
                 (click)="openAddDialog(row)"
                 matTooltip="Add attributes"
+                [style.color]="row.subSystemId ? 'green' : '#fabf01'"
                 >add</mat-icon
               ></mat-cell
             >

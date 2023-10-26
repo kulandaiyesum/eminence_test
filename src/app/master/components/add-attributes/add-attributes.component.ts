@@ -139,11 +139,15 @@ export class AddAttributesComponent {
   getQuestionsList() {
     this.qGenService.getQGen(this.userId).subscribe(
       (res: any) => {
+
+        const filteredResult = res.result.filter((item: any) => item.status === "RECEIVED");
+        console.log(filteredResult);
+
         // const tempHolder = res.result;
-        res.result.forEach((item: any) => {
+        filteredResult.forEach((item: any) => {
           item.createdAt = this.formatDate(item.createdAt);
         });
-        this.qgenObjectList = res.result;
+        this.qgenObjectList = filteredResult;
         // console.log(this.qgenObjectList);
         this.dataSource.data = this.qgenObjectList;
       },
@@ -177,6 +181,7 @@ export class AddAttributesComponent {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      this.getQuestionsList();
       if (result) {
         // Handle any actions after the dialog is closed
       }
