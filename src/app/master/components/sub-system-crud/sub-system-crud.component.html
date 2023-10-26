@@ -12,7 +12,7 @@
           type="text"
           id="subSystem"
           class="form-control"
-          formControlName="system"
+          formControlName="subSystem"
           placeholder="{{ data !== null ? 'Edit System' : 'Add System' }}"
           [(ngModel)]="subSystemObject.subSystem"
         />
@@ -23,6 +23,31 @@
               subSystemForm.touched
             "
             >Subsystem is reqiured</mat-error
+          >
+        </div>
+      </div>
+      <div class="form-group custom_group">
+        <label for="systemId">System</label>
+        <select
+          id="systemId"
+          class="form-select"
+          aria-label="Default select example"
+          name="systemId"
+          formControlName="systemId"
+          [(ngModel)]="subSystemObject.systemId"
+        >
+          <option disabled selected value="">select system</option>
+          <option *ngFor="let system of systems" [value]="system?._id">
+            {{ system?.system }}
+          </option>
+        </select>
+        <div class="error">
+          <mat-error
+            *ngIf="
+              subSystemForm.controls['systemId'].hasError('required') &&
+              subSystemForm.controls['systemId'].touched
+            "
+            >System is required</mat-error
           >
         </div>
       </div>
