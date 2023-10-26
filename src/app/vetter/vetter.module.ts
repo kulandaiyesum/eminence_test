@@ -32,12 +32,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { VetterRoutingModule } from './vetter-routing.module';
 import { QuestionsComponent } from './components/questions/questions.component';
-
+import { OpenItemsComponent } from './components/open-items/open-items.component';
 
 @NgModule({
-  declarations: [
-    QuestionsComponent
-  ],
+  declarations: [QuestionsComponent, OpenItemsComponent],
   imports: [
     CommonModule,
     VetterRoutingModule,
@@ -71,6 +69,6 @@ import { QuestionsComponent } from './components/questions/questions.component';
     MatTableModule,
     MatSortModule,
     MatPaginatorModule,
-  ]
+  ],
 })
-export class VetterModule { }
+export class VetterModule {}
