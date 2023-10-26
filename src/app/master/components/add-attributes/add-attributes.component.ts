@@ -24,6 +24,7 @@ export class AddAttributesComponent {
     'input',
     'question',
     'element',
+    'vetter',
     'action',
   ];
   userId: string = '';
@@ -143,7 +144,7 @@ export class AddAttributesComponent {
           item.createdAt = this.formatDate(item.createdAt);
         });
         this.qgenObjectList = res.result;
-        console.log(this.qgenObjectList);
+        // console.log(this.qgenObjectList);
         this.dataSource.data = this.qgenObjectList;
       },
       (err) => {

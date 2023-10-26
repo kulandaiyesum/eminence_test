@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Qgen } from '../model/qgen';
 import { environment } from 'src/environments/environment.development';
+import { Attributes } from 'src/app/master/model/attributes.class';
 
 @Injectable({
   providedIn: 'root',
@@ -45,5 +46,9 @@ export class QgenService {
   reviewQuestionSet(id: string) {
     console.log(id);
     return this.http.put(this.baseUrl + id + '/status', id);
+  }
+
+  addAttributes(attributes:Attributes){
+    return this.http.patch(this.baseUrl+attributes.qgenid,attributes);
   }
 }

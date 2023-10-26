@@ -36,6 +36,7 @@ export class SubSystemComponent implements OnInit {
     this.subSystemServeice.getAllsubSystems().subscribe(
       (data: any) => {
         this.dataSource = new MatTableDataSource(data.result);
+        console.log(data.result);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
