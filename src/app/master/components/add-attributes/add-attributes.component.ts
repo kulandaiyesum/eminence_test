@@ -10,6 +10,7 @@ import { QgenService } from 'src/app/faculty/service/qgen.service';
 import { RsaService } from 'src/app/shared/service/rsa.service';
 import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
+import { AddVetterComponent } from '../add-vetter/add-vetter.component';
 
 @Component({
   selector: 'app-add-attributes',
@@ -139,8 +140,9 @@ export class AddAttributesComponent {
   getQuestionsList() {
     this.qGenService.getQGen(this.userId).subscribe(
       (res: any) => {
-
-        const filteredResult = res.result.filter((item: any) => item.status === "RECEIVED");
+        const filteredResult = res.result.filter(
+          (item: any) => item.status === 'RECEIVED'
+        );
         console.log(filteredResult);
 
         // const tempHolder = res.result;
@@ -178,6 +180,20 @@ export class AddAttributesComponent {
       width: 'auto', // Customize the width
       height: 'auto', // Customize the height
       data: rowDetails, // Pass row details as a parameter
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.getQuestionsList();
+      if (result) {
+        // Handle any actions after the dialog is closed
+      }
+    });
+  }
+  openAddDialog1(row) {
+    const dialogRef = this.dialog.open(AddVetterComponent, {
+      width: 'auto', // Customize the width
+      height: 'auto', // Customize the height
+      data: row, // Pass row details as a parameter
     });
 
     dialogRef.afterClosed().subscribe((result) => {

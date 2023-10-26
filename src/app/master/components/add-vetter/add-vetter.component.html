@@ -1,1 +1,40 @@
-<p>add-vetter works!</p>
+<div class="add-element-container">
+  <div class="close-bar">
+    <mat-icon (click)="closeDialog()">close</mat-icon>
+  </div>
+  <div class="heading">
+    <p>Add Vetter</p>
+  </div>
+  <div class="details">
+    <p><b>Input : </b>{{ input }}</p>
+  </div>
+  <div class="select-area">
+    <form #myForm="ngForm">
+      <label for="subject">Select a vetter </label>
+      <select
+        name="subject"
+        [(ngModel)]="attributes.vetterId"
+        (ngModelChange)="getDetails(attributes.vetterId)"
+        #subject="ngModel"
+        id="subject"
+        required
+      >
+        <option [ngValue]="" disabled selected>Select a vetter</option>
+        <option *ngFor="let subject of vettorList" [ngValue]="subject._id">
+          {{ subject.firstName }}
+        </option>
+      </select>
+      <div *ngIf="subject.invalid && (subject.dirty || subject.touched)">
+        <div *ngIf="subject.errors?.['required']">Subject is required.</div>
+      </div>
+
+      <button
+        type="submit"
+        (click)="submitForm(myForm)"
+        [disabled]="myForm.invalid"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>

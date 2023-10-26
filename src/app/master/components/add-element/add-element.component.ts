@@ -53,7 +53,6 @@ export class AddElementComponent {
   getAllSystem() {
     this.systemservice.getAllSystems().subscribe((doc: any) => {
       this.systemList = doc.result;
-      console.log(this.systemList);
     });
   }
 

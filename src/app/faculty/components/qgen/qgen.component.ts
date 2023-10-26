@@ -12,6 +12,7 @@ import { QgenService } from '../../service/qgen.service';
 })
 export class QgenComponent implements OnInit {
   qGenObject: Qgen;
+  public user;
   gGenForm: FormGroup;
   userId: string = '';
   topicId: string = '';
@@ -34,8 +35,8 @@ export class QgenComponent implements OnInit {
         Validators.min(1),
       ]),
     });
-    this.topicId = this.rsaService.decryptText(
-      localStorage.getItem('6'),
+    this.user = this.rsaService.decryptText(
+      localStorage.getItem('2'),
       this.secretKey
     );
     this.userId = this.rsaService.decryptText(
@@ -46,6 +47,14 @@ export class QgenComponent implements OnInit {
       localStorage.getItem('3'),
       this.secretKey
     );
+    if (this.topicId) {
+      this.topicId = this.rsaService.decryptText(
+        localStorage.getItem('6'),
+        this.secretKey
+      );
+    } else {
+      this.topicId = 'USMLE';
+    }
     this.responsiveOptions = [
       {
         breakpoint: '1660px',
@@ -74,9 +83,14 @@ export class QgenComponent implements OnInit {
   getPendingQuestions() {
     this.gGenService.getQGen(this.userId).subscribe(
       (res: any) => {
-        // const tempHolder = res.result;
-        console.log(res.result);
-        this.qgenObjectList = res.result;
+        const tempHolder = res.result;
+        if (this.user === 'ADMIN') {
+          this.qgenObjectList = tempHolder.filter(
+            (pendingItem) => pendingItem.status === 'Pending'
+          );
+        } else {
+          this.qgenObjectList = res.result;
+        }
       },
       (err) => {
         console.log(err);

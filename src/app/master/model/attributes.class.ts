@@ -4,4 +4,6 @@ export class Attributes {
   subjectId: string;
   input: string;
   qgenid: string;
+  vetterId: string;
+  vetterName: string;
 }

@@ -25,4 +25,7 @@ export class UserService {
   deleteUserMaster(_id: string) {
     return this.http.delete(this.userUrl + _id);
   }
+  getAllVetter() {
+    return this.http.get(this.userUrl + 'getVettor');
+  }
 }

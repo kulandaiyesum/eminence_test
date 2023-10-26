@@ -64,11 +64,13 @@
             >
             <mat-cell *matCellDef="let row" id="small-table"
               ><mat-icon
-                (click)="openAddDialog(row)"
+                (click)="openAddDialog1(row)"
                 matTooltip="Assign vetter"
+                *ngIf="!row.vetterId"
                 >touch_app</mat-icon
-              ></mat-cell
-            >
+              >
+              {{ row.vetterName }}
+            </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="action">
