@@ -14,31 +14,62 @@
           >
         </section>
         <section class="dropdown">
-          <mat-form-field appearance="outline">
+          <!-- <mat-form-field appearance="outline">
             <mat-label>Subject</mat-label>
             <mat-select placeholder="Choose subject">
-              <mat-option value="all">All</mat-option>
-              <mat-option value="biochemistry">Biochemistry</mat-option>
-              <mat-option value="biophysics">Biophysics</mat-option>
-              <mat-option value="pathology">Pathology</mat-option>
+              <mat-option
+                *ngFor="let subject of subjects"
+                [value]="subject._id"
+                >{{ subject.subject }}</mat-option
+              >
             </mat-select>
+          </mat-form-field> -->
+          <mat-form-field appearance="outline">
+            <mat-label>Subject</mat-label>
+            <input
+              matInput
+              placeholder="Choose subject"
+              [matAutocomplete]="auto"
+              (input)="filterSubjects($event)"
+            />
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option
+                *ngFor="let subject of filteredSubjectss"
+                [value]="subject"
+                (onSelectionChange)="onSubjectSelected($event)"
+              >
+                {{ subject.subject }}
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field>
-          <mat-form-field appearance="outline" id="system">
+
+          <mat-form-field appearance="outline">
             <mat-label>System</mat-label>
-            <mat-select placeholder="Choose system">
-              <mat-option value="all">All</mat-option>
-              <mat-option value="Microboilogy">Microboilogy</mat-option>
-              <mat-option value="Cardiovascular">Cardiovascular</mat-option>
-              <mat-option value="Dermatology">Dermatology</mat-option>
-            </mat-select>
+            <input
+              matInput
+              placeholder="Choose system"
+              [matAutocomplete]="auto1"
+              formControl="selectedSystemControl"
+            />
+            <mat-autocomplete #auto1="matAutocomplete">
+              <mat-option
+                *ngFor="let system of filteredSystems | async"
+                [value]="system.system"
+              >
+                {{ system.system }}
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field>
+
           <mat-form-field appearance="outline">
             <mat-label>Sub System</mat-label>
             <mat-select placeholder="Choose Sub system">
               <mat-option value="all">All</mat-option>
-              <mat-option value="Microboilogy">Microboilogy</mat-option>
-              <mat-option value="Cardiovascular">Cardiovascular</mat-option>
-              <mat-option value="Dermatology">Dermatology</mat-option>
+              <mat-option
+                *ngFor="let system of subsystemOptions"
+                [value]="system._id"
+                >{{ system.subSystem }}</mat-option
+              >
             </mat-select>
           </mat-form-field>
         </section>
