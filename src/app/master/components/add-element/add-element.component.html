@@ -3,7 +3,8 @@
     <mat-icon (click)="closeDialog()">close</mat-icon>
   </div>
   <div class="heading">
-    <p>Add Attributes</p>
+    <p *ngIf="!updateValueMappingIDForSubsystem" >Add Attributes</p>
+    <p *ngIf="updateValueMappingIDForSubsystem">Update Attributes</p>
   </div>
   <div class="details">
     <p><b>Input : </b>{{ input }}</p>
@@ -39,9 +40,7 @@
         (change)="onSystemChange()"
       >
         <option [ngValue]="" disabled selected>Select a system</option>
-        <!-- <option *ngFor="let system of systemList" [ngValue]="system.system">
-          {{ system.system }}
-        </option> -->
+        
         <option *ngFor="let system of systemList" [ngValue]="system._id">{{ system.system }}</option>
       </select>
       <div *ngIf="system.invalid && (system.dirty || system.touched)">
@@ -69,8 +68,17 @@
         type="submit"
         (click)="submitForm(myForm)"
         [disabled]="myForm.invalid"
+        *ngIf="!updateValueMappingIDForSubsystem"
       >
         Submit
+      </button>
+      <button
+        type="submit"
+        (click)="submitForm(myForm)"
+        [disabled]="myForm.invalid"
+        *ngIf="updateValueMappingIDForSubsystem"
+      >
+        Update
       </button>
     </form>
   </div>

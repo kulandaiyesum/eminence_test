@@ -23,6 +23,8 @@ export class AddElementComponent {
   public subsystemOptions: any[] = [];
   subsystemList: any[] = [];
   systemOptions: string[] = [];
+  updateValueMappingIDForSubsystem: string;
+  updateValueMappingIDForSubject: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,6 +41,13 @@ export class AddElementComponent {
     this.input = data.keywords[0];
     this.attributes.input = this.input;
     this.attributes.qgenid = data._id;
+    if (data.subSystemId) {
+      this.updateValueMappingIDForSubsystem = data.subSystemId;
+      // console.log(this.updateValueMappingIDForSubsystem);
+    }
+    if (data.subjectId) {
+      this.updateValueMappingIDForSubject = data.subjectId;
+    }
   }
 
   ngOnInit(): void {
@@ -75,6 +84,15 @@ export class AddElementComponent {
     this.subjectService.getAllTopicMaster().subscribe(
       (response: any) => {
         this.subjectsList = response.result;
+        if (this.updateValueMappingIDForSubject) {
+          const foundObject = this.subjectsList.find(
+            (item) => item._id === this.updateValueMappingIDForSubject
+          );
+          // console.log(foundObject.subject);
+          if (foundObject) {
+            this.attributes.subjectId = foundObject._id; // Set the subject ID
+          }
+        }
       },
       (error) => {
         console.error('Error:', error);
@@ -87,6 +105,21 @@ export class AddElementComponent {
       (data: any) => {
         this.subsystemList = data.result;
         console.log(this.subsystemList);
+        if (this.updateValueMappingIDForSubsystem) {
+          const foundObject = this.subsystemList.find(
+            (item) => item._id === this.updateValueMappingIDForSubsystem
+          );
+          // console.log(foundObject);
+          // console.log(foundObject.subSystem);
+          // console.log(foundObject.systemId.system);
+          if (foundObject.systemId._id) {
+            this.attributes.system = foundObject.systemId._id;
+          }
+          if (foundObject._id) {
+
+            this.attributes.subSystemId = foundObject._id;
+          }
+        }
       },
       (err: any) => {
         this.toastr.error(err.error.message, '', {
@@ -103,10 +136,8 @@ export class AddElementComponent {
     const matchingItems = this.subsystemList.filter(
       (item) => item.systemId._id === this.attributes.system
     );
-
     this.subsystemOptions = matchingItems;
     console.log(this.subsystemOptions);
-
     // Check if matchingItems were found and log them
     if (matchingItems.length > 0) {
       console.log(matchingItems);
@@ -121,22 +152,5 @@ export class AddElementComponent {
       (subsystem) => subsystem.systemId.system === this.attributes.system
     );
   }
-  // getSubSystemsBySystem(): string[] {
-  //   // Implement a function to filter sub-systems based on the selected system.
-  //   if (this.attributes.system === 'History') {
-  //     return this.subsystemList
-  //       .filter((subsystem) => subsystem.systemId.system === 'History')
-  //       .map((subsystem) => subsystem.subSystem);
-  //   } else if (this.attributes.system === 'Science') {
-  //     return this.subsystemList
-  //       .filter((subsystem) => subsystem.systemId.system === 'Science')
-  //       .map((subsystem) => subsystem.subSystem);
-  //   } else if (this.attributes.system === 'Maths') {
-  //     return this.subsystemList
-  //       .filter((subsystem) => subsystem.systemId.system === 'Maths')
-  //       .map((subsystem) => subsystem.subSystem);
-  //   } else {
-  //     return []; // Return an empty array if no system is selected or not found.
-  //   }
-  // }
+
 }
