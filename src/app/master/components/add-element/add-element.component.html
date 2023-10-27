@@ -3,7 +3,7 @@
     <mat-icon (click)="closeDialog()">close</mat-icon>
   </div>
   <div class="heading">
-    <p *ngIf="!updateValueMappingIDForSubsystem" >Add Attributes</p>
+    <p *ngIf="!updateValueMappingIDForSubsystem">Add Attributes</p>
     <p *ngIf="updateValueMappingIDForSubsystem">Update Attributes</p>
   </div>
   <div class="details">
@@ -20,10 +20,7 @@
         required
       >
         <option [ngValue]="" disabled selected>Select a subject</option>
-        <option
-          *ngFor="let subject of subjectsList"
-          [ngValue]="subject._id"
-        >
+        <option *ngFor="let subject of subjectsList" [ngValue]="subject._id">
           {{ subject.subject }}
         </option>
       </select>
@@ -40,8 +37,10 @@
         (change)="onSystemChange()"
       >
         <option [ngValue]="" disabled selected>Select a system</option>
-        
-        <option *ngFor="let system of systemList" [ngValue]="system._id">{{ system.system }}</option>
+
+        <option *ngFor="let system of systemList" [ngValue]="system._id">
+          {{ system.system }}
+        </option>
       </select>
       <div *ngIf="system.invalid && (system.dirty || system.touched)">
         <div *ngIf="system.errors?.['required']">System is required.</div>
@@ -56,7 +55,12 @@
         required
       >
         <option [ngValue]="" disabled selected>Select a sub-system</option>
-        <option *ngFor="let subsystem of subsystemOptions" [ngValue]="subsystem._id">{{ subsystem.subSystem }}</option>
+        <option
+          *ngFor="let subsystem of subsystemOptions"
+          [ngValue]="subsystem._id"
+        >
+          {{ subsystem.subSystem }}
+        </option>
       </select>
       <div *ngIf="subsystem.invalid && (subsystem.dirty || subsystem.touched)">
         <div *ngIf="subsystem.errors?.['required']">

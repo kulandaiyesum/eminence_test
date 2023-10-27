@@ -42,7 +42,6 @@ export class AddAttributesComponent {
     private datePipe: DatePipe
   ) {}
   ngOnInit() {
-    this.getAllAdminQgen();
     this.userId = this.rsaService.decryptText(
       localStorage.getItem('5'),
       this.secretKey
@@ -56,101 +55,17 @@ export class AddAttributesComponent {
     this.dataSource.sort = this.sort;
   }
 
-  getAllAdminQgen() {
-    const data = [
-      {
-        date: '10-20-2023',
-        input:
-          'The basal lamina connects to fibrils of the reticular lamina via Type 7 collagen',
-        question: '4',
-        element: 'Element 1',
-        action: 'shek 1',
-      },
-      {
-        date: '10-22-2023',
-        input: 'antiphospholipid syndrome,anticardiolipin,SLE',
-        question: '5',
-        element: 'Element 2',
-        action: 'Action 2',
-      },
-      {
-        date: '10-20-2023',
-        input:
-          'The basal lamina connects to fibrils of the reticular lamina via Type 7 collagen',
-        question: '4',
-        element: 'Element 1',
-        action: 'Action 1',
-      },
-      {
-        date: '10-22-2023',
-        input: 'antiphospholipid syndrome,anticardiolipin,SLE',
-        question: '5',
-        element: 'Element 2',
-        action: 'Action 2',
-      },
-      {
-        date: '10-20-2023',
-        input:
-          'The basal lamina connects to fibrils of the reticular lamina via Type 7 collagen',
-        question: '4',
-        element: 'Element 1',
-        action: 'Action 1',
-      },
-      {
-        date: '10-22-2023',
-        input: 'antiphospholipid syndrome,anticardiolipin,SLE',
-        question: '5',
-        element: 'Element 2',
-        action: 'Action 2',
-      },
-      {
-        date: '10-20-2023',
-        input:
-          'The basal lamina connects to fibrils of the reticular lamina via Type 7 collagen',
-        question: '4',
-        element: 'Element 1',
-        action: 'Action 1',
-      },
-      {
-        date: '10-22-2023',
-        input: 'antiphospholipid syndrome,anticardiolipin,SLE',
-        question: '5',
-        element: 'Element 2',
-        action: 'Action 2',
-      },
-      {
-        date: '10-20-2023',
-        input:
-          'The basal lamina connects to fibrils of the reticular lamina via Type 7 collagen',
-        question: '4',
-        element: 'Element 1',
-        action: 'Action 1',
-      },
-      {
-        date: '10-22-2023',
-        input: 'antiphospholipid syndrome,anticardiolipin,SLE',
-        question: '5',
-        element: 'Element 2',
-        action: 'Action 2',
-      },
-    ];
-    this.dataSource.data = data;
-  }
-
   getQuestionsList() {
     this.qGenService.getQGen(this.userId).subscribe(
       (res: any) => {
         const filteredResult = res.result.filter(
           (item: any) => item.status === 'RECEIVED'
         );
-        console.log(filteredResult);
-
-        // const tempHolder = res.result;
-        filteredResult.forEach((item: any) => {
-          item.createdAt = this.formatDate(item.createdAt);
-        });
+        const tempHolder = res.result;
+        // filteredResult.forEach((item: any) => {
+        //   item.createdAt = this.formatDate(item.createdAt);
+        // });
         this.qgenObjectList = filteredResult;
-        // console.log(this.qgenObjectList);
         this.dataSource.data = this.qgenObjectList;
       },
       (err) => {
@@ -249,7 +164,6 @@ export class AddAttributesComponent {
     });
   }
   deleteItem(data: any) {
-    console.log(data);
     this.qGenService.deleteAttributes(data).subscribe(
       (response: any) => {
         console.log();

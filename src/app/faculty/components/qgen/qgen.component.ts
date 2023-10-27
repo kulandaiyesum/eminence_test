@@ -27,7 +27,7 @@ export class QgenComponent implements OnInit {
   constructor(
     private rsaService: RsaService,
     private gGenService: QgenService,
-    private subscriptionService:SubscriptionService
+    private subscriptionService: SubscriptionService
   ) {
     this.checkValidity = {
       institutionId: '', // Corrected property name
@@ -48,10 +48,7 @@ export class QgenComponent implements OnInit {
       localStorage.getItem('2'),
       this.secretKey
     );
-    this.insititutionId = this.rsaService.decryptText(
-      localStorage.getItem('7'),
-      this.secretKey
-    );
+
     this.checkValidity.institutionId = this.insititutionId;
     console.log(this.insititutionId);
 
@@ -64,6 +61,12 @@ export class QgenComponent implements OnInit {
       localStorage.getItem('3'),
       this.secretKey
     );
+    if (this.topicId) {
+      this.insititutionId = this.rsaService.decryptText(
+        localStorage.getItem('7'),
+        this.secretKey
+      );
+    }
     if (this.topicId) {
       this.topicId = this.rsaService.decryptText(
         localStorage.getItem('6'),
@@ -96,7 +99,6 @@ export class QgenComponent implements OnInit {
     ];
 
     if (this.user === 'FACULTY') {
-
       console.log(this.checkValidity);
       this.subscriptionService
         .checkValidityOfInsititution(this.checkValidity)
@@ -110,7 +112,6 @@ export class QgenComponent implements OnInit {
           }
         );
     } else {
-      
       this.getPendingQuestions();
     }
   }

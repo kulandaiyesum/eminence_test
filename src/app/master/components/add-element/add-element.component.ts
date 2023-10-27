@@ -37,7 +37,6 @@ export class AddElementComponent {
     private subSystemServeice: SubSystemService,
     private qgenService: QgenService
   ) {
-    console.log(data);
     this.input = data.keywords[0];
     this.attributes.input = this.input;
     this.attributes.qgenid = data._id;
@@ -67,10 +66,8 @@ export class AddElementComponent {
 
   submitForm(form: NgForm) {
     if (form.valid) {
-      console.log(this.attributes);
       this.qgenService.addAttributes(this.attributes).subscribe(
         (response: any) => {
-          console.log(response);
           this.closeDialog();
         },
         (error) => {
@@ -116,7 +113,6 @@ export class AddElementComponent {
             this.attributes.system = foundObject.systemId._id;
           }
           if (foundObject._id) {
-
             this.attributes.subSystemId = foundObject._id;
           }
         }
@@ -132,12 +128,10 @@ export class AddElementComponent {
   onSystemChange() {
     // When the system selection changes, reset the sub-system selection.
 
-    console.log('System selected  ' + this.attributes.system);
     const matchingItems = this.subsystemList.filter(
       (item) => item.systemId._id === this.attributes.system
     );
     this.subsystemOptions = matchingItems;
-    console.log(this.subsystemOptions);
     // Check if matchingItems were found and log them
     if (matchingItems.length > 0) {
       console.log(matchingItems);
@@ -152,5 +146,4 @@ export class AddElementComponent {
       (subsystem) => subsystem.systemId.system === this.attributes.system
     );
   }
-
 }

@@ -14,7 +14,7 @@
               >Date</mat-header-cell
             >
             <mat-cell *matCellDef="let row" id="data-table">{{
-              row.createdAt
+              row.createdAt | date : "MM-dd-YYYY"
             }}</mat-cell>
           </ng-container>
 
@@ -66,7 +66,12 @@
                 *ngIf="!row.vetterId"
                 >touch_app</mat-icon
               >
-              <mat-icon *ngIf="row.vetterId" [matTooltip]="row.vetterName" (click)="openAddDialogForUpdateVetter(row)">edit</mat-icon>
+              <mat-icon
+                *ngIf="row.vetterId"
+                [matTooltip]="row.vetterName"
+                (click)="openAddDialogForUpdateVetter(row)"
+                >edit</mat-icon
+              >
             </mat-cell>
           </ng-container>
 
