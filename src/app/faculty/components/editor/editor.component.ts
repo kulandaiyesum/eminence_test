@@ -1,15 +1,16 @@
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { Question, TempQuestion } from '../../model/question';
 import { QgenService } from './../../service/qgen.service';
 import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { QuerstionService } from '../../service/querstion.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 
@@ -18,7 +19,7 @@ import Swal from 'sweetalert2';
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.scss'],
 })
-export class EditorComponent implements OnInit {
+export class EditorComponent implements OnInit, OnDestroy {
   public questLength: number;
   public title;
   public optionsAttributes = [];
@@ -44,20 +45,33 @@ export class EditorComponent implements OnInit {
   shouldShowButton: boolean = false;
   nextButtonQuestionId: string;
   nextButtonQuestionIndex: number;
+  private pathSubcriber: Subscription;
+  pathMatch: boolean = false;
   @ViewChild('editableDiv') editableDiv: ElementRef;
   constructor(
     private qgenService: QgenService,
     private questionService: QuerstionService,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
+  ngOnDestroy(): void {
+    this.pathSubcriber.unsubscribe();
+  }
   ngOnInit(): void {
     this.reqId = this.activatedRoute.snapshot.params['reqId'];
     if (this.reqId) {
       this.getAllQuestions(this.reqId);
     }
-    console.log(this.reqId);
+
+    this.pathSubcriber = this.router.events.subscribe((event: any) => {
+      if (event?.routerEvent?.url.match(/\/eminence\/vetter\/questions\//)) {
+        this.pathMatch = true;
+      } else {
+        this.pathMatch = false;
+      }
+    });
   }
 
   // Helper method to convert to string safely
@@ -81,8 +95,6 @@ export class EditorComponent implements OnInit {
       const pendingCount = this.questions.filter(
         (item: any) => item.status === 'PENDING'
       ).length;
-
-      console.log(pendingCount);
       if (pendingCount === 1) {
         this.shouldShowButton = true;
         const pendingData = this.questions.filter(
@@ -148,7 +160,7 @@ export class EditorComponent implements OnInit {
         this.cdr.detectChanges();
         this.getAllQuestions(this.reqId);
         setTimeout(() => {
-          console.log("Navigate acha ?");
+          console.log('Navigate acha ?');
           this.getQuestion(
             this.nextButtonQuestionId,
             this.nextButtonQuestionIndex
@@ -312,7 +324,6 @@ export class EditorComponent implements OnInit {
     if (allReviewed && this.isAllQuestions != true) {
       this.isAllQuestions = true;
     }
-    console.log(this.isAllQuestions);
     if (this.isAllQuestions) {
       Swal.fire({
         title: 'You reviewed all questions',
@@ -335,6 +346,4 @@ export class EditorComponent implements OnInit {
       });
     }
   }
-
-  
 }

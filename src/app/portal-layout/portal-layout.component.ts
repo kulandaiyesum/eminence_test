@@ -1,8 +1,8 @@
 import { RsaService } from './../shared/service/rsa.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, inject, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable, map, shareReplay } from 'rxjs';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Router, NavigationEnd, Scroll } from '@angular/router';
+import { Observable, Subscription, map, shareReplay } from 'rxjs';
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
 
@@ -11,21 +11,32 @@ import { environment } from 'src/environments/environment';
   templateUrl: './portal-layout.component.html',
   styleUrls: ['./portal-layout.component.scss'],
 })
-export class PortalLayoutComponent implements OnInit {
+export class PortalLayoutComponent implements OnInit, OnDestroy {
   secretKey: string = environment.secretKey;
   public role: string = '';
-  questionNumbers = [1, 2, 3, 4, 5, 6, 7];
+  // questionNumbers = [1, 2, 3, 4, 5, 6, 7];
+  pathMatch: boolean = false;
+  private pathSubcriber: Subscription;
   constructor(private router: Router, private rsaService: RsaService) {}
   firstName: string = '';
+  ngOnDestroy(): void {
+    this.pathSubcriber.unsubscribe();
+  }
   ngOnInit(): void {
     const encrptedRole = localStorage.getItem('2');
     this.role = this.rsaService.decryptText(encrptedRole, this.secretKey);
-    console.log(this.role);
     const storedFirstName: string = localStorage.getItem('3');
     this.firstName = this.rsaService.decryptText(
       storedFirstName,
       this.secretKey
     );
+    this.pathSubcriber = this.router.events.subscribe((event: Scroll) => {
+      if (event?.routerEvent?.url.match(/\/eminence\/vetter\/questions\//)) {
+        this.pathMatch = true;
+      } else {
+        this.pathMatch = false;
+      }
+    });
   }
   private breakpointObserver = inject(BreakpointObserver);
 

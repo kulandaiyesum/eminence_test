@@ -93,6 +93,6 @@ import { CarouselModule } from 'primeng/carousel';
     NgxSpinnerModule,
     CarouselModule,
   ],
-  exports: [SidenavComponent],
+  exports: [SidenavComponent,EditorComponent],
 })
 export class FacultyModule {}

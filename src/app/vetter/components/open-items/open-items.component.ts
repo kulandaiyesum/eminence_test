@@ -20,10 +20,10 @@ export class OpenItemsComponent implements OnInit {
     'date',
     'input',
     'questionsCount',
-    'assignedBy',
-    // 'subject',
-    // 'system',
-    // 'subsystem',
+    // 'assignedBy',
+    'subject',
+    'system',
+    'subsystem',
     'open',
   ];
   vetterId: string = '';

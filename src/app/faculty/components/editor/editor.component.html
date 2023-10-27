@@ -1,7 +1,9 @@
 <div class="editor_container">
   <p>
-    <strong style="color: var(--qgen-red)">Editor</strong> allows you to review
-    and tweak the questions to your specific needs.
+    <strong style="color: var(--qgen-red)">{{
+      pathMatch ? "Review Q" : "Editor"
+    }}</strong>
+    allows you to review and tweak the questions to your specific needs.
   </p>
   <div class="editor_question_wrap" *ngIf="reqId !== undefined">
     <!-- Question Optons section -->
@@ -11,7 +13,7 @@
         <div><strong>Question count: </strong>{{ questLength }}</div>
       </div>
       <div class="question_actions">
-        <button  class="btn" *ngIf="shouldShowButton" (click)="completeReview()">
+        <button class="btn" *ngIf="shouldShowButton" (click)="completeReview()">
           Complete your review
         </button>
       </div>
