@@ -51,4 +51,7 @@ export class QgenService {
   addAttributes(attributes:Attributes){
     return this.http.patch(this.baseUrl+attributes.qgenid,attributes);
   }
+  deleteAttributes(attributes){
+    return this.http.delete(this.baseUrl+attributes._id);
+  }
 }

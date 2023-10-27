@@ -13,6 +13,8 @@ export class AddVetterComponent implements OnInit {
   public input;
   public attributes: Attributes;
   public vettorList = [];
+  public updateValueMappingIDForVetter: string;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<AddVetterComponent>,
@@ -20,6 +22,10 @@ export class AddVetterComponent implements OnInit {
     private qgenService: QgenService
   ) {
     console.log(data);
+    if(data.vetterId){
+      console.log("Update pannu pa");
+      this.updateValueMappingIDForVetter=data.vetterId
+    }
   }
   ngOnInit(): void {
     this.attributes = new Attributes();
@@ -32,6 +38,17 @@ export class AddVetterComponent implements OnInit {
     this.userService.getAllVetter().subscribe((doc: any) => {
       this.vettorList = doc.result;
       console.log(this.vettorList, 'ppppppppp');
+      if (this.updateValueMappingIDForVetter) {
+        console.log(this.updateValueMappingIDForVetter);
+        const foundObject = this.vettorList.find(
+          (item) => item._id === this.updateValueMappingIDForVetter
+        );
+        console.log(foundObject);
+        if (foundObject) {
+          this.attributes.vetterId=foundObject._id
+        }
+      }
+
     });
   }
   closeDialog() {

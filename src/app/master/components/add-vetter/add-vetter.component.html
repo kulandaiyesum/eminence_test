@@ -3,7 +3,8 @@
     <mat-icon (click)="closeDialog()">close</mat-icon>
   </div>
   <div class="heading">
-    <p>Add Vetter</p>
+    <p *ngIf="!updateValueMappingIDForVetter" >Add Vetter</p>
+    <p *ngIf="updateValueMappingIDForVetter" >Update Vetter</p>
   </div>
   <div class="details">
     <p><b>Input : </b>{{ input }}</p>
@@ -32,8 +33,17 @@
         type="submit"
         (click)="submitForm(myForm)"
         [disabled]="myForm.invalid"
+        *ngIf="!updateValueMappingIDForVetter"
       >
         Submit
+      </button>
+      <button
+        type="submit"
+        (click)="submitForm(myForm)"
+        [disabled]="myForm.invalid"
+        *ngIf="updateValueMappingIDForVetter"
+      >
+        Update
       </button>
     </form>
   </div>

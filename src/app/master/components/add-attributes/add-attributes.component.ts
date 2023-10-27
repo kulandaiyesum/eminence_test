@@ -181,7 +181,6 @@ export class AddAttributesComponent {
       height: 'auto', // Customize the height
       data: rowDetails, // Pass row details as a parameter
     });
-
     dialogRef.afterClosed().subscribe((result) => {
       this.getQuestionsList();
       if (result) {
@@ -196,6 +195,35 @@ export class AddAttributesComponent {
       data: row, // Pass row details as a parameter
     });
 
+    dialogRef.afterClosed().subscribe((result) => {
+      this.getQuestionsList();
+      if (result) {
+        // Handle any actions after the dialog is closed
+      }
+    });
+  }
+
+  openAddDialogForUpdateVetter(row) {
+    const dialogRef = this.dialog.open(AddVetterComponent, {
+      width: 'auto', // Customize the width
+      height: 'auto', // Customize the height
+      data: row, // Pass row details as a parameter
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.getQuestionsList();
+      if (result) {
+        // Handle any actions after the dialog is closed
+      }
+    });
+  }
+
+  updateAttributes(row) {
+    const dialogRef = this.dialog.open(AddElementComponent, {
+      width: 'auto', // Customize the width
+      height: 'auto', // Customize the height
+      data: row, // Pass row details as a parameter
+    });
     dialogRef.afterClosed().subscribe((result) => {
       this.getQuestionsList();
       if (result) {
@@ -222,5 +250,13 @@ export class AddAttributesComponent {
   }
   deleteItem(data: any) {
     console.log(data);
+    this.qGenService.deleteAttributes(data).subscribe(
+      (response: any) => {
+        console.log();
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }
