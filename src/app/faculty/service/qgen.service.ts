@@ -54,4 +54,8 @@ export class QgenService {
   deleteAttributes(attributes){
     return this.http.delete(this.baseUrl+attributes._id);
   }
+
+  checkValidityOfInsititution(check){
+   return this.http.put(this.baseUrl+check.userID,check);
+  }
 }

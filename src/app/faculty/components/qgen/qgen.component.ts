@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Qgen } from '../../model/qgen';
 import { environment } from 'src/environments/environment';
 import { QgenService } from '../../service/qgen.service';
+import { SubscriptionService } from 'src/app/master/service/subscription.service';
 
 @Component({
   selector: 'app-qgen',
@@ -16,15 +17,23 @@ export class QgenComponent implements OnInit {
   gGenForm: FormGroup;
   userId: string = '';
   topicId: string = '';
+  insititutionId: string = '';
   userFirstName: string = '';
   qgenObjectList: Qgen[];
   responsiveOptions: any[];
   secretKey: string = environment.secretKey;
   @ViewChild('qgenResponse') qgenResponse: ElementRef;
+  public checkValidity;
   constructor(
     private rsaService: RsaService,
-    private gGenService: QgenService
-  ) {}
+    private gGenService: QgenService,
+    private subscriptionService:SubscriptionService
+  ) {
+    this.checkValidity = {
+      institutionId: '', // Corrected property name
+      userID: '', // Corrected property name
+    };
+  }
   ngOnInit(): void {
     this.qGenObject = new Qgen();
     this.gGenForm = new FormGroup({
@@ -39,10 +48,18 @@ export class QgenComponent implements OnInit {
       localStorage.getItem('2'),
       this.secretKey
     );
+    this.insititutionId = this.rsaService.decryptText(
+      localStorage.getItem('7'),
+      this.secretKey
+    );
+    this.checkValidity.institutionId = this.insititutionId;
+    console.log(this.insititutionId);
+
     this.userId = this.rsaService.decryptText(
       localStorage.getItem('5'),
       this.secretKey
     );
+    this.checkValidity.userID = this.userId;
     this.userFirstName = this.rsaService.decryptText(
       localStorage.getItem('3'),
       this.secretKey
@@ -77,7 +94,25 @@ export class QgenComponent implements OnInit {
         numScroll: 1,
       },
     ];
-    this.getPendingQuestions();
+
+    if (this.user === 'FACULTY') {
+
+      console.log(this.checkValidity);
+      this.subscriptionService
+        .checkValidityOfInsititution(this.checkValidity)
+        .subscribe(
+          (response: any) => {
+            console.log(response);
+            this.getPendingQuestions();
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+    } else {
+      
+      this.getPendingQuestions();
+    }
   }
 
   getPendingQuestions() {
