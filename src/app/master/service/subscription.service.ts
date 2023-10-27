@@ -34,4 +34,8 @@ export class SubscriptionService {
       body: data,
     });
   }
+
+  checkValidityOfInsititution(check){
+    return this.http.put(this.baseUrl+"/"+check.institutionId,check);
+   }
 }
