@@ -83,17 +83,19 @@
       </ng-container>
 
       <ng-container *ngIf="isVetter()">
-        <a routerLink="/eminence/vetter/open-items" routerLinkActive="activelink"
-          >Show-items</a
+        <a
+          routerLink="/eminence/vetter/open-items"
+          routerLinkActive="activelink"
+          >Review Q</a
         >
         <a routerLink="/eminence/vetter/questions" routerLinkActive="activelink"
           >Questions</a
         >
-        <div class="questions-numbers">
+        <!-- <div class="questions-numbers">
           <p *ngFor="let number of questionNumbers" class="circle-background">
             {{ number }}
           </p>
-        </div>
+        </div> -->
       </ng-container>
 
       <ng-container *ngIf="isStudent()">
@@ -156,7 +158,13 @@
       >
     </mat-toolbar>
     <!-- Child routes for admin, faculty, vetter and Registered User -->
-    <div *ngIf="!isFaculty()" class="route_container">
+    <div
+      *ngIf="!isFaculty()"
+      [ngClass]="{
+        route_container: !pathMatch,
+        faculty_route_container: pathMatch
+      }"
+    >
       <router-outlet></router-outlet>
     </div>
     <div *ngIf="isFaculty()" class="faculty_route_container">
