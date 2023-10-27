@@ -50,9 +50,7 @@
                 *ngIf="!row.subSystemId"
                 >add</mat-icon
               >
-              <mat-icon
-                *ngIf="row.subSystemId"
-                (click)="updateAttributes(row)"
+              <mat-icon *ngIf="row.subSystemId" (click)="updateAttributes(row)"
                 >edit</mat-icon
               >
             </mat-cell>
@@ -68,7 +66,7 @@
                 *ngIf="!row.vetterId"
                 >touch_app</mat-icon
               >
-              {{ row.vetterName }}
+              <mat-icon *ngIf="row.vetterId" [matTooltip]="row.vetterName" (click)="openAddDialogForUpdateVetter(row)">edit</mat-icon>
             </mat-cell>
           </ng-container>
 
