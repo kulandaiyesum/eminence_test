@@ -1,55 +1,50 @@
-import { VetterService } from './../../services/vetter.service';
-import { RsaService } from './../../../shared/service/rsa.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { RsaService } from 'src/app/shared/service/rsa.service';
+import { VetterService } from '../../services/vetter.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-show-items',
-  templateUrl: './open-items.component.html',
-  styleUrls: ['./open-items.component.scss'],
+  selector: 'app-vetted-history',
+  templateUrl: './vetted-history.component.html',
+  styleUrls: ['./vetted-history.component.scss'],
 })
-export class OpenItemsComponent implements OnInit {
+export class VettedHistoryComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort: MatSort | any;
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = [
     'date',
     'input',
-    'questionsCount',
-    // 'assignedBy',
     'subject',
     'system',
     'subsystem',
-    'open',
+    'questionsCount',
   ];
   vetterId: string = '';
   secrtkey: string = environment.secretKey;
+  questionSet: any[];
   constructor(
     private rsaService: RsaService,
     private vetterService: VetterService,
     private toastr: ToastrService
-  ) {
+  ) {}
+  ngOnInit(): void {
     this.vetterId = this.rsaService.decryptText(
       localStorage.getItem('5'),
       this.secrtkey
     );
-  }
-  ngOnInit(): void {
-    this.getVetQuestions(this.vetterId);
+    this.getVettedQuestionSet();
   }
 
-  getVetQuestions(vetterId: string) {
-    this.vetterService.getVetQuestions(vetterId).subscribe(
+  getVettedQuestionSet() {
+    this.vetterService.getVettedQuestionSet(this.vetterId).subscribe(
       (res: any) => {
-        const tempArr = res.result;
-        const tempFinalArr = tempArr.filter(
-          (qSet) => qSet.status === 'RECEIVED'
-        );
-        this.dataSource = new MatTableDataSource(tempFinalArr);
+        this.questionSet = res.result;
+        this.dataSource = new MatTableDataSource(res.result);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
