@@ -33,9 +33,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { VetterRoutingModule } from './vetter-routing.module';
 import { QuestionsComponent } from './components/questions/questions.component';
 import { OpenItemsComponent } from './components/open-items/open-items.component';
+import { VettedHistoryComponent } from './components/vetted-history/vetted-history.component';
 
 @NgModule({
-  declarations: [QuestionsComponent, OpenItemsComponent],
+  declarations: [QuestionsComponent, OpenItemsComponent, VettedHistoryComponent],
   imports: [
     CommonModule,
     VetterRoutingModule,

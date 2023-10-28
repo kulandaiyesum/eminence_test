@@ -1,0 +1,74 @@
+<section class="open_items_container container">
+  <p class="px-lg-4 mb-lg-5">
+    <strong style="color: var(--qgen-red)">History</strong> page is where you
+    can view your reviewed questions efficiently.
+  </p>
+  <div class="table-container mat-elevation-z8">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      aria-label="Complaints Table"
+    >
+      <ng-container matColumnDef="date">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="description-cell">
+            {{ row?.modifiedAt | date : "MM-dd-yyyy" }}
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="input">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Input</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="description-cell">
+            <span *ngFor="let word of row.keywords; let last = last"
+              >{{ word }}{{ last ? "" : ", " }}</span
+            >
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="subject">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Subject</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="description-cell">{{ row.subjectId?.subject }}</div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="system">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>System</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="description-cell">
+            {{ row?.systemId?.system }}
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="subsystem">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Subsystem</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="description-cell">{{ row.subSystemId?.subSystem }}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="questionsCount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Count</th>
+        <td mat-cell *matCellDef="let row">
+          <div class="description-cell">{{ row.questionsCount }}</div>
+        </td>
+      </ng-container>
+      <!-- Header and row definitions -->
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <!-- Paginator -->
+    <mat-paginator
+      #paginator
+      [length]="dataSource?.data?.length"
+      [pageIndex]="0"
+      [pageSize]="5"
+      [pageSizeOptions]="[5, 10, 20]"
+      aria-label="Select page"
+    >
+    </mat-paginator>
+  </div>
+</section>
