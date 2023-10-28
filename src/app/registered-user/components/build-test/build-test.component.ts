@@ -29,6 +29,9 @@ export class BuildTestComponent {
   subSystems: string[] = [];
   selectedSubSystem: string = 'all';
   public subsystemOptions: any[] = [];
+  public systemList;
+
+
 
   selectedSubjectControl = new FormControl();
   selectedSystemControl = new FormControl();
@@ -37,6 +40,12 @@ export class BuildTestComponent {
   filteredSystems: Observable<System[]>;
   filteredSubjectss: Subject[];
   selectedSubject: any;
+  systemControl = new FormControl();
+  filteredSystemList: Observable<any[]>;
+
+
+  subSystemControl = new FormControl();
+  filteredSubSystemOptions: Observable<any[]>;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -44,6 +53,18 @@ export class BuildTestComponent {
     private systemService: SystemService,
     private subSystemService: SubSystemService
   ) {}
+
+  ngOnInit(): void {
+    this.getAllSystem();
+    this.filteredSystemList = this.systemControl.valueChanges.pipe(
+      startWith(''), // Start with an empty string
+      map(value => this._filterUniques(value))
+    );
+    this.filteredSubSystemOptions = this.subSystemControl.valueChanges.pipe(
+      startWith(''),
+      map((value) => this._filterSubSystemOptions(value))
+    );
+  }
 
   ngAfterViewInit() {
     const scrollbar = Scrollbar.init(this.scrollContainer.nativeElement, {
@@ -122,12 +143,77 @@ export class BuildTestComponent {
     }
   }
 
+
+  // methods for system
+
+  getAllSystem() {
+    this.systemService.getAllSystems().subscribe((doc: any) => {
+      this.systemList = doc.result;
+      console.log(this.systemList);
+    });
+  }
+
+  private _filterUniques(value: string): any[] {
+    const filterValue = value.toLowerCase();
+    if (this.systemList) {
+      console.log("Filtering...");
+      console.log("Filter value: " + filterValue);
+      console.log(this.systemList);
+      const filteredItems = this.systemList.filter(item => item.system.toLowerCase().includes(filterValue));
+      console.log(filteredItems);
+      return filteredItems;
+    } else {
+      console.log("systemList is not available.");
+      return [];
+    }
+  }
+
+  onOptionSelected(event: any) {
+    // You can access the selected value and perform your desired action here
+    const selectedValue = event.option.value;
+    console.log(selectedValue);
+    console.log(this.subsystemList);
+    const matchingItems = this.subsystemList.filter(
+      (item) => item.systemId.system === selectedValue
+    );
+    this.subsystemOptions = matchingItems;
+    console.log(this.subsystemOptions);
+  }
+
   getSubSystemsBySystem(systemId: string): string[] {
     const matchingSubSystems = this.systems.find(
       (system) => system._id === systemId
     );
     return matchingSubSystems ? matchingSubSystems.subSystemId : [];
   }
+
+
+
+
+  // filtering for subsystem
+
+  private _filterSubSystemOptions(value: string): any[] {
+    const filterValue = value.toLowerCase();
+
+    return this.subsystemOptions.filter(
+      (system) => system.subSystem.toLowerCase().includes(filterValue)
+    );
+  }
+
+  onSubSystemSelected(event: any) {
+    // Handle the selection of a subsystem here
+    this.selectedSubSystem = event.option.value;
+    // Call your method or perform any other action you need here
+    this.onSubSystemSelectionChange(this.selectedSubSystem);
+  }
+
+  onSubSystemSelectionChange(selectedValue: string) {
+    // Implement the method to be triggered when a subsystem is selected
+    console.log('Selected Subsystem: ', selectedValue);
+    // Add your custom logic here
+  }
+
+
 
   getAllSubSystems() {
     this.subSystemService.getAllsubSystems().subscribe(

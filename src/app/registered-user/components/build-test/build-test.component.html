@@ -43,7 +43,7 @@
             </mat-autocomplete>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
+          <!-- <mat-form-field appearance="outline">
             <mat-label>System</mat-label>
             <input
               matInput
@@ -59,9 +59,24 @@
                 {{ system.system }}
               </mat-option>
             </mat-autocomplete>
-          </mat-form-field>
+          </mat-form-field> -->
+
+
 
           <mat-form-field appearance="outline">
+            <mat-label>Choose a subject</mat-label>
+            <input type="text" matInput [formControl]="systemControl" [matAutocomplete]="auto1">
+            <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+              <mat-option *ngFor="let item of filteredSystemList | async" [value]="item.system">
+                {{ item.system }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+
+
+
+          <!-- <mat-form-field appearance="outline">
             <mat-label>Sub System</mat-label>
             <mat-select placeholder="Choose Sub system">
               <mat-option value="all">All</mat-option>
@@ -71,7 +86,21 @@
                 >{{ system.subSystem }}</mat-option
               >
             </mat-select>
+          </mat-form-field> -->
+
+          <mat-form-field appearance="outline">
+            <mat-label>Sub System</mat-label>
+            <input type="text" matInput placeholder="Choose Sub system" [matAutocomplete]="autoSubSystem" [formControl]="subSystemControl">
+            <mat-autocomplete #autoSubSystem="matAutocomplete" (optionSelected)="onSubSystemSelected($event)">
+
+              <mat-option *ngFor="let system of filteredSubSystemOptions | async" [value]="system.subSystem">
+                {{ system.subSystem }}
+              </mat-option>
+            </mat-autocomplete>
           </mat-form-field>
+
+
+
         </section>
         <section class="subsytem-dropdown"></section>
       </div>
