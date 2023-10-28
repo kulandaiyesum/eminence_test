@@ -48,14 +48,17 @@ export class QgenService {
     return this.http.put(this.baseUrl + id + '/status', id);
   }
 
-  addAttributes(attributes:Attributes){
-    return this.http.patch(this.baseUrl+attributes.qgenid,attributes);
+  addAttributes(attributes: Attributes) {
+    return this.http.patch(this.baseUrl + attributes.qgenid, attributes);
   }
-  deleteAttributes(attributes){
-    return this.http.delete(this.baseUrl+attributes._id);
+  deleteAttributes(attributes) {
+    return this.http.delete(this.baseUrl + attributes._id);
   }
 
-  checkValidityOfInsititution(check){
-   return this.http.put(this.baseUrl+check.userID,check);
+  checkValidityOfInsititution(check) {
+    return this.http.put(this.baseUrl + check.userID, check);
+  }
+  getVettedQuestionSet(vetterId) {
+    return this.http.put(this.baseUrl + vetterId._id + '/qgenstatus', vetterId);
   }
 }

@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { RsaService } from 'src/app/shared/service/rsa.service';
 import { VetterService } from '../../services/vetter.service';
 import { environment } from 'src/environments/environment';
+import { QgenService } from 'src/app/faculty/service/qgen.service';
 
 @Component({
   selector: 'app-vetted-history',
@@ -30,6 +31,7 @@ export class VettedHistoryComponent implements OnInit {
   constructor(
     private rsaService: RsaService,
     private vetterService: VetterService,
+    private qgenService: QgenService,
     private toastr: ToastrService
   ) {}
   ngOnInit(): void {
@@ -41,7 +43,8 @@ export class VettedHistoryComponent implements OnInit {
   }
 
   getVettedQuestionSet() {
-    this.vetterService.getVettedQuestionSet(this.vetterId).subscribe(
+    let data = { _id: this.vetterId, status: 'REVIEWED' };
+    this.qgenService.getVettedQuestionSet(data).subscribe(
       (res: any) => {
         this.questionSet = res.result;
         this.dataSource = new MatTableDataSource(res.result);

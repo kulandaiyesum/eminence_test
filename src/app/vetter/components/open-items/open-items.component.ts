@@ -6,6 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { environment } from 'src/environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { QgenService } from 'src/app/faculty/service/qgen.service';
 
 @Component({
   selector: 'app-show-items',
@@ -30,6 +31,7 @@ export class OpenItemsComponent implements OnInit {
   secrtkey: string = environment.secretKey;
   constructor(
     private rsaService: RsaService,
+    private qgenService: QgenService,
     private vetterService: VetterService,
     private toastr: ToastrService
   ) {
@@ -43,13 +45,10 @@ export class OpenItemsComponent implements OnInit {
   }
 
   getVetQuestions(vetterId: string) {
-    this.vetterService.getVetQuestions(vetterId).subscribe(
+    let data = { _id: this.vetterId, status: 'RECEIVED' };
+    this.qgenService.getVettedQuestionSet(data).subscribe(
       (res: any) => {
-        const tempArr = res.result;
-        const tempFinalArr = tempArr.filter(
-          (qSet) => qSet.status === 'RECEIVED'
-        );
-        this.dataSource = new MatTableDataSource(tempFinalArr);
+        this.dataSource = new MatTableDataSource(res.result);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
@@ -59,5 +58,21 @@ export class OpenItemsComponent implements OnInit {
         });
       }
     );
+    // this.vetterService.getVetQuestions(vetterId).subscribe(
+    //   (res: any) => {
+    //     const tempArr = res.result;
+    //     const tempFinalArr = tempArr.filter(
+    //       (qSet) => qSet.status === 'RECEIVED'
+    //     );
+    //     this.dataSource = new MatTableDataSource(tempFinalArr);
+    //     this.dataSource.paginator = this.paginator;
+    //     this.dataSource.sort = this.sort;
+    //   },
+    //   (err: any) => {
+    //     this.toastr.error(err.error.message, '', {
+    //       timeOut: 3000,
+    //     });
+    //   }
+    // );
   }
 }
