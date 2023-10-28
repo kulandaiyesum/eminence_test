@@ -58,6 +58,7 @@ export class HistoryComponent implements OnInit {
         this.toastr.success(doc.message, '', {
           timeOut: 3000,
         });
+        this.getAllHistory();
         // let file;
         // file = new Blob([doc], { type: 'application/pdf' });
         // saveAs(file, row.keywords + '');

@@ -5,6 +5,7 @@ import { Qgen } from '../../model/qgen';
 import { environment } from 'src/environments/environment';
 import { QgenService } from '../../service/qgen.service';
 import { SubscriptionService } from 'src/app/master/service/subscription.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-qgen',
@@ -27,10 +28,11 @@ export class QgenComponent implements OnInit {
   constructor(
     private rsaService: RsaService,
     private gGenService: QgenService,
+    private toastr: ToastrService,
     private subscriptionService: SubscriptionService
   ) {
     this.checkValidity = {
-      institutionId: '', // Corrected property name
+      insititutionId: '', // Corrected property name
       userID: '', // Corrected property name
     };
   }
@@ -49,9 +51,6 @@ export class QgenComponent implements OnInit {
       this.secretKey
     );
 
-    this.checkValidity.institutionId = this.insititutionId;
-    console.log(this.insititutionId);
-
     this.userId = this.rsaService.decryptText(
       localStorage.getItem('5'),
       this.secretKey
@@ -61,12 +60,13 @@ export class QgenComponent implements OnInit {
       localStorage.getItem('3'),
       this.secretKey
     );
-    if (this.topicId) {
-      this.insititutionId = this.rsaService.decryptText(
-        localStorage.getItem('7'),
-        this.secretKey
-      );
-    }
+    // if (this.insititutionId) {
+    this.insititutionId = this.rsaService.decryptText(
+      localStorage.getItem('7'),
+      this.secretKey
+    );
+    // }
+    this.checkValidity.insititutionId = this.insititutionId;
     if (this.topicId) {
       this.topicId = this.rsaService.decryptText(
         localStorage.getItem('6'),
@@ -99,7 +99,6 @@ export class QgenComponent implements OnInit {
     ];
 
     if (this.user === 'FACULTY') {
-      console.log(this.checkValidity);
       this.subscriptionService
         .checkValidityOfInsititution(this.checkValidity)
         .subscribe(
@@ -109,6 +108,9 @@ export class QgenComponent implements OnInit {
           },
           (err) => {
             console.log(err);
+            this.toastr.warning(err.error.message, '', {
+              timeOut: 5000,
+            });
           }
         );
     } else {
