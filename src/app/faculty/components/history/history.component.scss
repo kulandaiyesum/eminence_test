@@ -152,6 +152,10 @@
       .export-icon {
         transform: rotate(-90deg);
         color: #fabf01;
+        cursor: pointer;
+      }
+      .export-icon-sucess {
+        color: lime;
       }
       .odd-row {
         background-color: #f5f5f5; /* Grey color */

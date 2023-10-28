@@ -175,8 +175,18 @@
           *matCellDef="let row; let i = index"
           [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
           id="export-table"
-          ><mat-icon class="export-icon" (click)="getPdf(row)"
+        >
+          <mat-icon
+            *ngIf="row.pdfStatus !== 'completed'"
+            class="export-icon"
+            (click)="getPdf(row)"
             >save_alt</mat-icon
+          >
+          <mat-icon
+            *ngIf="row.pdfStatus === 'completed'"
+            class="export-icon-sucess"
+            matTooltip="Exported"
+            >check_circle</mat-icon
           >
         </mat-cell>
       </ng-container>

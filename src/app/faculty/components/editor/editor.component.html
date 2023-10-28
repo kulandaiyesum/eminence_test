@@ -116,10 +116,17 @@
         </div>
       </div>
       <div class="question-action">
+        <mat-icon
+          *ngIf="editIconVisibility"
+          matTooltip="Edit"
+          (click)="editQuestion(tempQuestion.question)"
+          >edit</mat-icon
+        >
         <div class="delete-option">
           <mat-icon
             class="mb-2"
             *ngIf="editIconVisibility"
+            matTooltip="Reject"
             (click)="toggleDivSection()"
             >delete</mat-icon
           >
@@ -134,13 +141,8 @@
             </div>
           </div>
         </div>
-        <mat-icon
-          *ngIf="editIconVisibility"
-          (click)="editQuestion(tempQuestion.question)"
-          >edit</mat-icon
-        >
-        <mat-icon *ngIf="isEditMode" (click)="cancelEdit()">close</mat-icon>
-        <mat-icon *ngIf="isEditMode" (click)="saveChange()">save</mat-icon>
+        <mat-icon matTooltip="Cancel" *ngIf="isEditMode" (click)="cancelEdit()">close</mat-icon>
+        <mat-icon matTooltip="Save" *ngIf="isEditMode" (click)="saveChange()">save</mat-icon>
       </div>
     </div>
     <!-- Questions section -->
