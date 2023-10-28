@@ -55,13 +55,12 @@ export class HistoryComponent implements OnInit {
   getPdf(row) {
     this.qgenService.getPdf(row._id).subscribe(
       (doc: any) => {
-        console.log(doc);
-        this.toastr.success('Pdf generated !', '', {
+        this.toastr.success(doc.message, '', {
           timeOut: 3000,
         });
-        let file;
-        file = new Blob([doc], { type: 'application/pdf' });
-        saveAs(file, row.keywords + '');
+        // let file;
+        // file = new Blob([doc], { type: 'application/pdf' });
+        // saveAs(file, row.keywords + '');
       },
       (err) => {
         console.log(err);

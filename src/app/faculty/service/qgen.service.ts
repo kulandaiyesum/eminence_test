@@ -38,9 +38,7 @@ export class QgenService {
     return this.http.get(this.baseUrl + 'histroy/' + userId);
   }
   getPdf(data) {
-    return this.http.post(this.baseUrl + data, data, {
-      responseType: 'arraybuffer',
-    });
+    return this.http.post(this.baseUrl + data, data);
   }
 
   reviewQuestionSet(id: string) {
