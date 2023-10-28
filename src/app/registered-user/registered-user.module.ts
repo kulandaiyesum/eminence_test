@@ -38,6 +38,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatSortModule,
     MatPaginatorModule,
     NgbCarouselModule,
-    NgbModule,
+    NgbModule,FormsModule,ReactiveFormsModule
   ],
 })
 export class RegisteredUserModule {}
