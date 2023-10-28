@@ -11,6 +11,7 @@ import { RsaService } from 'src/app/shared/service/rsa.service';
 import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
 import { AddVetterComponent } from '../add-vetter/add-vetter.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-attributes',
@@ -39,7 +40,8 @@ export class AddAttributesComponent {
     public dialog: MatDialog,
     private qGenService: QgenService,
     private rsaService: RsaService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private toastr: ToastrService,
   ) {}
   ngOnInit() {
     this.userId = this.rsaService.decryptText(
@@ -166,10 +168,14 @@ export class AddAttributesComponent {
   deleteItem(data: any) {
     this.qGenService.deleteAttributes(data).subscribe(
       (response: any) => {
-        console.log();
+        console.log(response);
+        this.getQuestionsList();
       },
       (err) => {
         console.log(err);
+        this.toastr.error(err.error.message, '', {
+          timeOut: 3000,
+        });
       }
     );
   }
