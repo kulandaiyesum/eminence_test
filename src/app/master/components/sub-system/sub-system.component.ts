@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SubSystem } from '../../model/sub-system';
 import { SubSystemService } from '../../service/sub-system.service';
 import { SubSystemCrudComponent } from '../sub-system-crud/sub-system-crud.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-sub-system',
@@ -81,18 +82,31 @@ export class SubSystemComponent implements OnInit {
     });
   }
   deletesubSystem(_id: string) {
+    Swal.fire({
+      title: 'Delete Subsystem',
+      text: 'Are you sure you want to delete this subsystem? You cannot retrieve it again!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, proceed',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.performSubSystemDeletion(_id);
+      }
+    });
+  }
+
+  performSubSystemDeletion(_id: string) {
     this.subSystemServeice.deleteSubSystem(_id).subscribe(
       (res: any) => {
-        this.toastr.success(res.message, '', {
-          timeOut: 3000,
-        });
+        Swal.fire('Deleted!', 'The subsystem has been deleted.', 'success');
         this.getAllsubSystems();
       },
       (err: any) => {
-        this.toastr.error(err.error.message, '', {
-          timeOut: 3000,
-        });
+        Swal.fire('Error', err.error.message, 'error');
       }
     );
   }
+
 }
