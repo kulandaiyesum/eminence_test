@@ -1,11 +1,11 @@
 <div class="add-attributes-container">
   <div class="heading">
-    <p>Attr/Vetter Master</p>
+    <p>Attributes / Vetter Master</p>
   </div>
   <div class="main">
     <div class="table-area">
       <div class="control-area">
-        <input placeholder="Search here..." (keyup)="applyFilter($event)" />
+        <input placeholder="Search here" (keyup)="applyFilter($event)" />
       </div>
       <div class="table">
         <mat-table [dataSource]="dataSource" matSort>
@@ -50,7 +50,10 @@
                 *ngIf="!row.subSystemId"
                 >add</mat-icon
               >
-              <mat-icon *ngIf="row.subSystemId" (click)="updateAttributes(row)"
+              <mat-icon
+                *ngIf="row.subSystemId"
+                (click)="updateAttributes(row)"
+                matTooltip="edit"
                 >edit</mat-icon
               >
             </mat-cell>

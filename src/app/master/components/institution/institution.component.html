@@ -110,8 +110,12 @@
                 *matCellDef="let element; let i = index"
                 [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
               >
-                <mat-icon (click)="updateInstitute(element)">edit</mat-icon>
-                <mat-icon (click)="deleteInstitute(element)">delete</mat-icon>
+                <mat-icon (click)="updateInstitute(element)" matTooltip="edit"
+                  >edit</mat-icon
+                >
+                <mat-icon (click)="deleteInstitute(element)" matTooltip="delete"
+                  >delete</mat-icon
+                >
               </mat-cell>
             </ng-container>
             <ng-container matColumnDef="add">
@@ -125,7 +129,11 @@
                 *matCellDef="let element; let i = index"
                 [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
               >
-                <mat-icon (click)="addSubscription(element)">add</mat-icon>
+                <mat-icon
+                  (click)="addSubscription(element)"
+                  matTooltip="add package"
+                  >add</mat-icon
+                >
               </mat-cell>
             </ng-container>
 

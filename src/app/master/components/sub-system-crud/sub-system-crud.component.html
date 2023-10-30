@@ -7,26 +7,6 @@
     <div class="form_heading" *ngIf="data !== null">Edit Subsystem</div>
     <form [formGroup]="subSystemForm">
       <div class="form-group custom_group">
-        <label for="subSystem">Subsystem</label>
-        <input
-          type="text"
-          id="subSystem"
-          class="form-control"
-          formControlName="subSystem"
-          placeholder="{{ data !== null ? 'Edit System' : 'Add System' }}"
-          [(ngModel)]="subSystemObject.subSystem"
-        />
-        <div class="error">
-          <mat-error
-            *ngIf="
-              subSystemForm.controls['subSystem'].hasError('required') &&
-              subSystemForm.touched
-            "
-            >Subsystem is reqiured</mat-error
-          >
-        </div>
-      </div>
-      <div class="form-group custom_group">
         <label for="systemId">System</label>
         <select
           id="systemId"
@@ -51,6 +31,27 @@
           >
         </div>
       </div>
+      <div class="form-group custom_group">
+        <label for="subSystem">Subsystem</label>
+        <input
+          type="text"
+          id="subSystem"
+          class="form-control"
+          formControlName="subSystem"
+          placeholder="{{ data !== null ? 'Edit Subsystem' : 'Add Subsystem' }}"
+          [(ngModel)]="subSystemObject.subSystem"
+        />
+        <div class="error">
+          <mat-error
+            *ngIf="
+              subSystemForm.controls['subSystem'].hasError('required') &&
+              subSystemForm.touched
+            "
+            >Subsystem is reqiured</mat-error
+          >
+        </div>
+      </div>
+
       <div class="form_btns">
         <button
           [disabled]="subSystemForm.invalid"

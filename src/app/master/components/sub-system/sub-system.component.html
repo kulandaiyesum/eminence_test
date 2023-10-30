@@ -7,7 +7,7 @@
           <input
             class="form-control"
             (keyup)="applyFilter($event)"
-            placeholder="Search Subsystem"
+            placeholder="Search here"
             #input
           />
         </div>
@@ -33,19 +33,19 @@
           <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
         </ng-container>
 
-        <!-- subSystem column -->
-        <ng-container matColumnDef="subSystem">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Subsystem</th>
-          <td mat-cell *matCellDef="let row">
-            <div class="description-cell">{{ row.subSystem }}</div>
-          </td>
-        </ng-container>
-
         <!-- systemId column -->
         <ng-container matColumnDef="systemId">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>System</th>
           <td mat-cell *matCellDef="let row">
             <div class="description-cell">{{ row.systemId.system }}</div>
+          </td>
+        </ng-container>
+
+        <!-- subSystem column -->
+        <ng-container matColumnDef="subSystem">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Subsystem</th>
+          <td mat-cell *matCellDef="let row">
+            <div class="description-cell">{{ row.subSystem }}</div>
           </td>
         </ng-container>
 
@@ -78,7 +78,7 @@
         [length]="dataSource?.data?.length"
         [pageIndex]="0"
         [pageSize]="5"
-        [pageSizeOptions]="[5, 10, 20]"
+        [pageSizeOptions]="[5, 10, 25, 100]"
         aria-label="Select page"
       >
       </mat-paginator>

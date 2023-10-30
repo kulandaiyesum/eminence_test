@@ -7,7 +7,7 @@
           <input
             class="form-control"
             (keyup)="applyFilter($event)"
-            placeholder="Search Here"
+            placeholder="Search here"
             #input
           />
         </div>
@@ -84,8 +84,12 @@
             <ng-container matColumnDef="action" id="last-header">
               <mat-header-cell *matHeaderCellDef>ACTION</mat-header-cell>
               <mat-cell *matCellDef="let element">
-                <mat-icon (click)="editPackage(element)">edit</mat-icon>
-                <mat-icon (click)="deletePackage(element)">delete</mat-icon>
+                <mat-icon (click)="editPackage(element)" matTooltip="edit"
+                  >edit</mat-icon
+                >
+                <mat-icon (click)="deletePackage(element)" matTooltip="delete"
+                  >delete</mat-icon
+                >
               </mat-cell>
             </ng-container>
 

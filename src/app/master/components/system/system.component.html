@@ -7,7 +7,7 @@
           <input
             class="form-control"
             (keyup)="applyFilter($event)"
-            placeholder="Search System"
+            placeholder="Search here"
             #input
           />
         </div>
@@ -68,7 +68,7 @@
         [length]="dataSource?.data?.length"
         [pageIndex]="0"
         [pageSize]="5"
-        [pageSizeOptions]="[5, 10, 20]"
+        [pageSizeOptions]="[5, 10, 25, 100]"
         aria-label="Select page"
       >
       </mat-paginator>
