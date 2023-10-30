@@ -7,15 +7,15 @@ import { System } from '../model/system';
   providedIn: 'root',
 })
 export class SystemService {
-  private baseURL: string = environment.localdomain + 'system';
+  private baseURL: string = environment.localdomain + 'systems';
   constructor(private http: HttpClient) {}
 
   saveSystem(sysObj: System) {
-    return this.http.post(this.baseURL + '/save', sysObj);
+    return this.http.post(this.baseURL + '/', sysObj);
   }
 
   getAllSystems() {
-    return this.http.get(this.baseURL + '/getAll');
+    return this.http.get(this.baseURL + '/');
   }
 
   updateSystem(sysObj:System) {

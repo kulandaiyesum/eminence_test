@@ -8,7 +8,7 @@ import { Role } from '../model/role';
   providedIn: 'root',
 })
 export class RoleService {
-  private roleUrl: string = environment.localdomain + 'role';
+  private roleUrl: string = environment.localdomain + 'roles';
   constructor(private http: HttpClient) {}
 
   getToken() {
@@ -20,11 +20,11 @@ export class RoleService {
    * @returns Role[]
    */
   public getRole() {
-    return this.http.get<Role[]>(`${this.roleUrl}/getAll`);
+    return this.http.get<Role[]>(`${this.roleUrl}/`);
   }
   public saveRole(role: string) {
     const body = { role: role };
-    return this.http.post(`${this.roleUrl}/save`, body);
+    return this.http.post(`${this.roleUrl}/`, body);
   }
 
   public editRole(roleObject: any) {

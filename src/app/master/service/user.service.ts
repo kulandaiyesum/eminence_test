@@ -7,25 +7,25 @@ import { User } from '../model/user';
   providedIn: 'root',
 })
 export class UserService {
-  userUrl = environment.localdomain + 'user/';
+  userUrl = environment.localdomain + 'users';
   constructor(private http: HttpClient) {}
 
   getAllUserMaster() {
-    return this.http.get(this.userUrl + 'getAll');
+    return this.http.get(this.userUrl + '/');
   }
 
   saveUserMaster(user: User) {
-    return this.http.post(this.userUrl + 'save', user);
+    return this.http.post(this.userUrl + '/', user);
   }
 
   updateUserMaster(user: User) {
-    return this.http.put(this.userUrl + user._id, user);
+    return this.http.put(this.userUrl + '/'+user._id, user);
   }
 
   deleteUserMaster(_id: string) {
-    return this.http.delete(this.userUrl + _id);
+    return this.http.delete(this.userUrl +'/'+ _id);
   }
   getAllVetter() {
-    return this.http.get(this.userUrl + 'getVettor');
+    return this.http.get(this.userUrl + '/vetterUser');
   }
 }

@@ -7,13 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class InstituteserviceService {
-  headers = new HttpHeaders()
-    .set('Content-Type', 'application/json')
-    .set('Authorization', `Bearer ${this.gettingToken()}`);
-  getAllInstituteURL = environment.localdomain + 'institution/getAll';
-  createInstituteURL = environment.localdomain + 'institution/save';
-  updateInstituteURL = environment.localdomain + 'institution/';
-  deleteInstituteURL = environment.localdomain + 'institution/';
+public baseUrl = environment.localdomain + 'institutions'
+
 
   constructor(private http: HttpClient) {}
   gettingToken() {
@@ -21,19 +16,19 @@ export class InstituteserviceService {
   }
 
   createInstitute(data: any) {
-    return this.http.post(`${this.createInstituteURL}`, data,);
+    return this.http.post(this.baseUrl+'/', data,);
   }
 
   getAllInstitute(): Observable<any[]> {
-    return this.http.get<any[]>(this.getAllInstituteURL,);
+    return this.http.get<any[]>(this.baseUrl+'/',);
   }
 
   updateInstitution(data: any): Observable<any> {
-    return this.http.put(this.updateInstituteURL+data._id, data,);
+    return this.http.put(this.baseUrl+'/'+data._id, data,);
   }
 
   deleteInstitution(data: any): Observable<any> {
-    return this.http.delete(this.deleteInstituteURL+data._id, {
+    return this.http.delete(this.baseUrl+'/'+data._id, {
       body: data,
     });
   }

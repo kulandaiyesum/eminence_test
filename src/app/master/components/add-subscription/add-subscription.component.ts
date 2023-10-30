@@ -208,6 +208,8 @@ export class AddSubscriptionComponent implements OnInit {
         this.institutionModel.durationType =
           this.selectedPackageOption.durationType;
         this.calculateEndDate();
+        console.log(this.institutionModel);
+
         this.subscriptionService
           .createSubscriptionAuto(this.institutionModel)
           .subscribe(
@@ -222,7 +224,7 @@ export class AddSubscriptionComponent implements OnInit {
               const day = String(inputDate.getDate()).padStart(2, '0'); // Add leading zero if needed
               const month = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
               const year = inputDate.getFullYear();
-              this.calculatedEndDate = `${day}/${month}/${year}`;
+              this.calculatedEndDate = `${month}/${day}/${year}`;
             },
             (error) => {
               console.error('Not data get', error);

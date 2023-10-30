@@ -8,23 +8,20 @@ import * as CryptoJS from 'crypto-js';
   providedIn: 'root',
 })
 export class LoginService {
-  loginURL = environment.localdomain + 'logins/';
+  public loginURL = environment.localdomain + 'users';
   forgotPasswordURL = environment.localdomain + 'logins/updateForgotPassword';
-  
-  headers = new HttpHeaders().set('Content-Type', 'application/json');
+
   constructor(private http: HttpClient) {}
 
-  loginAuthenticate(data: any) {
-    return this.http.post(`${this.loginURL}save`, data, {
-      headers: this.headers,
-    });
+  loginAuthenticate(data) {
+    return this.http.post(this.loginURL +"/login", data );
   }
   resetPassword(data) {
-    return this.http.post(`${this.loginURL}forgotPassword`, data);
+    return this.http.post(this.loginURL+'/forgotPassword', data);
   }
 
   updatePassword(data){
-    return this.http.put(this.forgotPasswordURL, data);
+    return this.http.put(this.loginURL+'/'+data._id, data);
   }
 
   encryptText(text: string, secretKey: string): string {
