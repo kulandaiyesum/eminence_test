@@ -24,7 +24,7 @@
         [(ngModel)]="qGenObject.keywords"
         formControlName="keywords"
         placeholder="Enter Input..."
-        [disabled]="inputValidity"
+
       >
       </textarea>
       <div class="error">
@@ -47,7 +47,7 @@
           [(ngModel)]="qGenObject.questionsCount"
           formControlName="questionsCount"
           (input)="onInput($event)"
-          [disabled]="inputValidity"
+
         />
         <div class="re_error">
           <mat-error
@@ -67,7 +67,7 @@
       </div>
       <div class="build_btn">
         <button
-          *ngIf="buildValidity"
+          
           [disabled]="gGenForm.invalid"
           type="button"
           (click)="submitQgen()"
