@@ -26,6 +26,7 @@ export class QgenService {
   }
 
   /**
+   * @name Nithya
    * Get function used to get Qgen data
    * @param InstitutionId
    * @returns Qgen[]
