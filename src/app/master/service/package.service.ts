@@ -8,24 +8,21 @@ import { Package } from '../model/package.class';
   providedIn: 'root',
 })
 export class PackageService {
-  private headers = new HttpHeaders()
-    .set('Content-Type', 'application/json')
-    .set('Authorization', `Bearer ${localStorage.getItem('1')}`);
 
-  private packageBaseUrl = environment.localdomain + 'package';
+  private packageBaseUrl = environment.localdomain + 'packages';
 
   constructor(private http: HttpClient) {}
 
   createPackage(data: any): Observable<any> {
-    return this.http.post(`${this.packageBaseUrl}/save`, data);
+    return this.http.post(`${this.packageBaseUrl}/`, data);
   }
 
   getAllPackages(): Observable<Package[]> {
-    return this.http.get<Package[]>(`${this.packageBaseUrl}/getAll`);
+    return this.http.get<Package[]>(`${this.packageBaseUrl}/`);
   }
 
   updatePackage(data: any): Observable<any> {
-    return this.http.put(`${this.packageBaseUrl}/update`, data);
+    return this.http.put(this.packageBaseUrl+'/'+data._id, data);
   }
 
   getB2CPackages(): Observable<Package[]> {
@@ -33,8 +30,6 @@ export class PackageService {
   }
 
   deletePackage(data: any): Observable<any> {
-    return this.http.delete(`${this.packageBaseUrl}/delete`, {
-      body: data,
-    });
+    return this.http.delete(this.packageBaseUrl+'/'+data._id);
   }
 }

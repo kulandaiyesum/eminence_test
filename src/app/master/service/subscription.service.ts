@@ -6,37 +6,29 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class SubscriptionService {
-  private baseUrl: string = environment.localdomain + 'subscription';
-  private createSubscriptionUrl: string =
-    environment.localdomain + 'subscription/save';
-  private createSubscriptionUrlAutoDate: string =
-    environment.localdomain + 'subscription/getDate';
-  private updateSubscriptionUrl: string =
-    environment.localdomain + 'subscription/update';
-  private deleteSubscriptionUrl: string =
-    environment.localdomain + 'subscription/delete';
+  public baseUrl = environment.localdomain + 'subscriptions'
 
   constructor(private http: HttpClient) {}
 
   getAllSubscriptions() {
-    return this.http.get(this.baseUrl + '/getAll');
+    return this.http.get(this.baseUrl + '/');
   }
 
   createSubscription(data) {
-    return this.http.post(`${this.createSubscriptionUrl}`, data);
+    return this.http.post(this.baseUrl+'/', data);
   }
+
+
+  updateSubscription(data) {
+    return this.http.put(this.baseUrl+'/'+data._id, data);
+  }
+
+  deleteSubscription(data) {
+    return this.http.delete(this.baseUrl+'/'+data._id)
+  }
+//  getDate
   createSubscriptionAuto(data) {
-    return this.http.post(`${this.createSubscriptionUrlAutoDate}`, data);
-  }
-
-  updateSubscription(data: any) {
-    return this.http.put(this.updateSubscriptionUrl, data);
-  }
-
-  deleteSubscription(data: any) {
-    return this.http.delete(this.deleteSubscriptionUrl, {
-      body: data,
-    });
+    return this.http.post(this.baseUrl+'/'+data.packageNameId, data);
   }
 
   checkValidityOfInsititution(check) {

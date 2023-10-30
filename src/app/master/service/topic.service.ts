@@ -7,21 +7,21 @@ import { Topic } from '../model/topic';
   providedIn: 'root',
 })
 export class TopicService {
-  loginURL = environment.localdomain + 'topic/';
+  loginURL = environment.localdomain + 'topics';
   constructor(private http: HttpClient) {}
 
   getAllTopicMaster = () => {
-    return this.http.get(this.loginURL + 'getAll');
+    return this.http.get(this.loginURL + '/');
   };
   saveTopicMaster = (topic: Topic) => {
-    return this.http.post(this.loginURL + 'save', topic);
+    return this.http.post(this.loginURL + '/', topic);
   };
 
   updateTopicMaster(topic: Topic) {
-    return this.http.put(this.loginURL + topic._id, topic);
+    return this.http.put(this.loginURL+'/' + topic._id, topic);
   }
 
   deleteTopicMaster(topic: string) {
-    return this.http.delete(this.loginURL + topic);
+    return this.http.delete(this.loginURL +'/'+ topic);
   }
 }

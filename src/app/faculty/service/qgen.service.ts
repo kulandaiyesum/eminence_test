@@ -9,7 +9,7 @@ import { Attributes } from 'src/app/master/model/attributes.class';
 })
 export class QgenService {
   constructor(private http: HttpClient) {}
-  public baseUrl = environment.localdomain + 'v1/requests/';
+  public baseUrl = environment.localdomain + 'requests/';
 
   // sampleDomain: string = 'http://localhost:5000/additionalQuestions';
 
@@ -26,6 +26,7 @@ export class QgenService {
   }
 
   /**
+   * @name Nithya
    * Get function used to get Qgen data
    * @param InstitutionId
    * @returns Qgen[]

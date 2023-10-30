@@ -169,6 +169,9 @@ export class AddAttributesComponent {
     this.qGenService.deleteAttributes(data).subscribe(
       (response: any) => {
         console.log(response);
+        this.toastr.success('Deleted successfully', '', {
+          timeOut: 3000,
+        });
         this.getQuestionsList();
       },
       (err) => {

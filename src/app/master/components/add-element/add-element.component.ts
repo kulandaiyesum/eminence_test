@@ -35,7 +35,8 @@ export class AddElementComponent {
     private subjectService: SubjectService,
     private systemservice: SystemService,
     private subSystemServeice: SubSystemService,
-    private qgenService: QgenService
+    private qgenService: QgenService,
+
   ) {
     this.input = data.keywords[0];
     this.attributes.input = this.input;
@@ -68,10 +69,16 @@ export class AddElementComponent {
     if (form.valid) {
       this.qgenService.addAttributes(this.attributes).subscribe(
         (response: any) => {
+          this.toastr.success('Attributes assigned', '', {
+            timeOut: 3000,
+          });
           this.closeDialog();
         },
         (error) => {
           console.error('Error:', error);
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
         }
       );
     }

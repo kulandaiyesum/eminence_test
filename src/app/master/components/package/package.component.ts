@@ -147,6 +147,8 @@ export class PackageComponent implements OnInit {
         cancelButtonText: 'Cancel',
       }).then((result) => {
         if (result.isConfirmed) {
+          console.log(element,"ddddddddd");
+
           this.packageService.deletePackage(element).subscribe(
             (response: any) => {
               this.toastr.success(response.message, '', {
