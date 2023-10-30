@@ -60,18 +60,17 @@ export class QgenComponent implements OnInit {
       localStorage.getItem('3'),
       this.secretKey
     );
-    // if (this.insititutionId) {
-    this.insititutionId = this.rsaService.decryptText(
-      localStorage.getItem('7'),
-      this.secretKey
-    );
-    // }
-    this.checkValidity.insititutionId = this.insititutionId;
-    if (this.topicId) {
+
+    if (this.user === 'FACULTY') {
       this.topicId = this.rsaService.decryptText(
         localStorage.getItem('6'),
         this.secretKey
       );
+      this.insititutionId = this.rsaService.decryptText(
+        localStorage.getItem('7'),
+        this.secretKey
+      );
+      this.checkValidity.insititutionId = this.insititutionId;
     } else {
       this.topicId = 'USMLE';
     }
