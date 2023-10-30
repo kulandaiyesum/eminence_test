@@ -25,8 +25,6 @@ export class QgenComponent implements OnInit {
   secretKey: string = environment.secretKey;
   @ViewChild('qgenResponse') qgenResponse: ElementRef;
   public checkValidity;
-  public buildValidity: boolean = true;
-  public inputValidity: boolean = false;
   constructor(
     private rsaService: RsaService,
     private gGenService: QgenService,
@@ -109,13 +107,9 @@ export class QgenComponent implements OnInit {
         .checkValidityOfInsititution(this.checkValidity)
         .subscribe(
           (response: any) => {
-            console.log(response);
             this.getPendingQuestions();
           },
           (err) => {
-            console.log(err);
-            this.buildValidity = false;
-            this.inputValidity = true;
             this.toastr.warning(err.error.message, '', {
               timeOut: 3000,
             });
@@ -127,26 +121,26 @@ export class QgenComponent implements OnInit {
   }
 
   ngAfterContentChecked() {
-    this.initForm();
+    // this.initForm();
   }
 
   initForm() {
-    this.gGenForm = new FormGroup({
-      keywords: new FormControl(
-        {
-          value: '',
-          disabled: this.inputValidity, // Set the 'disabled' property during creation
-        },
-        [Validators.required]
-      ),
-      questionsCount: new FormControl(
-        {
-          value: '',
-          disabled: this.inputValidity, // Set the 'disabled' property during creation
-        },
-        [Validators.required, Validators.max(5), Validators.min(1)]
-      ),
-    });
+    // this.gGenForm = new FormGroup({
+    //   keywords: new FormControl(
+    //     {
+    //       value: '',
+    //       disabled: this.inputValidity, // Set the 'disabled' property during creation
+    //     },
+    //     [Validators.required]
+    //   ),
+    //   questionsCount: new FormControl(
+    //     {
+    //       value: '',
+    //       disabled: this.inputValidity, // Set the 'disabled' property during creation
+    //     },
+    //     [Validators.required, Validators.max(5), Validators.min(1)]
+    //   ),
+    // });
   }
 
   getPendingQuestions() {

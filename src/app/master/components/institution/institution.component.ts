@@ -162,7 +162,6 @@ export class InstitutionComponent {
   getAllDataOfSubscription() {
     this.subscriptionService.getAllSubscriptions().subscribe((data: any) => {
       this.subscriptionList = data.result;
-      console.log(this.subscriptionList);
     });
   }
 
@@ -231,16 +230,8 @@ export class InstitutionComponent {
       }
     );
   }
-  addCustomer() {}
-  changeCustomerStatus(list) {}
-  editCustomer(customer) {}
-  deleteCustomer(list) {}
 
   addSubscription(data) {
-    console.log(data);
-
-    console.log('add subscriptions');
-
     const dialogRef = this.dialog.open(AddSubscriptionComponent, {
       width: '600px',
       height: '80vh',

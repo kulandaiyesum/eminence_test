@@ -2,11 +2,7 @@ import { RsaService } from './../../../shared/service/rsa.service';
 import { Component, Inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { SubscriptionService } from '../../service/subscription.service';
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PackageService } from '../../service/package.service';
 import { LogicalfuntionService } from 'src/app/shared/logicalfuntion.service';
 import { AddSubscriptionComponent } from '../add-subscription/add-subscription.component';
@@ -93,7 +89,6 @@ export class UpdateSubscriptionComponent {
       modifierName,
       this.secretKey
     );
-    console.log(this.subscriptionObject);
     this.subscriptionService
       .updateSubscription(this.subscriptionObject)
       .subscribe(

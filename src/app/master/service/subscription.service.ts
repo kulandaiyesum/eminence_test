@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class SubscriptionService {
-  public baseUrl = environment.localdomain + 'subscriptions'
+  public baseUrl = environment.localdomain + 'subscriptions';
 
   constructor(private http: HttpClient) {}
 
@@ -15,20 +15,19 @@ export class SubscriptionService {
   }
 
   createSubscription(data) {
-    return this.http.post(this.baseUrl+'/', data);
+    return this.http.post(this.baseUrl + '/', data);
   }
 
-
   updateSubscription(data) {
-    return this.http.put(this.baseUrl+'/'+data._id, data);
+    return this.http.patch(this.baseUrl + '/' + data._id, data);
   }
 
   deleteSubscription(data) {
-    return this.http.delete(this.baseUrl+'/'+data._id)
+    return this.http.delete(this.baseUrl + '/' + data._id);
   }
-//  getDate
+  //  getDate
   createSubscriptionAuto(data) {
-    return this.http.post(this.baseUrl+'/'+data.packageNameId, data);
+    return this.http.post(this.baseUrl + '/' + data.packageNameId, data);
   }
 
   checkValidityOfInsititution(check) {
