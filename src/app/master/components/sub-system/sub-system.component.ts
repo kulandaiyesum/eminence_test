@@ -17,7 +17,7 @@ export class SubSystemComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | any;
   @ViewChild(MatSort) sort: MatSort | any;
   dataSource: MatTableDataSource<SubSystem>;
-  displayedColumns: string[] = ['sno', 'subSystem', 'systemId', 'actions'];
+  displayedColumns: string[] = ['sno', 'systemId', 'subSystem', 'actions'];
 
   constructor(
     private dialog: MatDialog,

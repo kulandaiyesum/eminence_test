@@ -54,7 +54,7 @@
         mat-table{
           width: 100%;
           height: auto;
-          box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
           mat-header-cell{
             background-color: var(--qgen-logo-blue);
             font-size: 16px;
@@ -85,8 +85,9 @@
             flex: 0.3;
           }
         }
-        mat-paginator{
-          box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        mat-paginator {
+          z-index: 1;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
       }
     }

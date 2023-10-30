@@ -15,7 +15,9 @@
                 INSTITUTION NAME
               </th>
               <td mat-cell *matCellDef="let row">
-                {{ row.institutionId.name || row.institutionId.institutionName }}
+                {{
+                  row.institutionId.name || row.institutionId.institutionName
+                }}
               </td>
             </ng-container>
 
@@ -54,8 +56,12 @@
             <ng-container matColumnDef="action">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
               <td mat-cell *matCellDef="let row">
-                <mat-icon (click)="updateSubscription(row)">edit</mat-icon>
-                <mat-icon (click)="deleteSubscription(row)">delete</mat-icon>
+                <mat-icon (click)="updateSubscription(row)" matTooltip="edit"
+                  >edit</mat-icon
+                >
+                <mat-icon (click)="deleteSubscription(row)" matTooltip="delete"
+                  >delete</mat-icon
+                >
               </td>
             </ng-container>
 

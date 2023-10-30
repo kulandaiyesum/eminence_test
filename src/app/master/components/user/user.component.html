@@ -7,7 +7,7 @@
           <input
             class="form-control"
             (keyup)="applyFilter($event)"
-            placeholder="Search Here"
+            placeholder="Search here"
             #input
           />
         </div>
@@ -59,7 +59,9 @@
         <ng-container matColumnDef="institution">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>INSTITUTION</th>
           <td mat-cell *matCellDef="let row">
-            <div class="description-cell">{{ row?.institutionId?.institutionName }}</div>
+            <div class="description-cell">
+              {{ row?.institutionId?.institutionName }}
+            </div>
           </td>
         </ng-container>
 
@@ -100,7 +102,7 @@
         [length]="dataSource?.data?.length"
         [pageIndex]="0"
         [pageSize]="5"
-        [pageSizeOptions]="[5, 10, 20]"
+        [pageSizeOptions]="[5, 10, 25, 100]"
         aria-label="Select page"
       >
       </mat-paginator>
