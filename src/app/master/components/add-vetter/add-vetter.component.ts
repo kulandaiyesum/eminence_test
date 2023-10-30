@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Attributes } from '../../model/attributes.class';
 import { UserService } from '../../service/user.service';
 import { QgenService } from 'src/app/faculty/service/qgen.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-add-vetter',
@@ -19,7 +20,8 @@ export class AddVetterComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<AddVetterComponent>,
     public userService: UserService,
-    private qgenService: QgenService
+    private qgenService: QgenService,
+    private toastr: ToastrService,
   ) {
     console.log(data);
     if(data.vetterId){
@@ -60,10 +62,16 @@ export class AddVetterComponent implements OnInit {
       this.qgenService.addAttributes(this.attributes).subscribe(
         (response: any) => {
           console.log(response);
+          this.toastr.success('Vetter assigned', '', {
+            timeOut: 3000,
+          });
           this.closeDialog();
         },
         (error) => {
           console.error('Error:', error);
+          this.toastr.error('Something went wrong', '', {
+            timeOut: 3000,
+          });
         }
       );
     }
