@@ -7,15 +7,15 @@ import { SubSystem } from '../model/sub-system';
   providedIn: 'root',
 })
 export class SubSystemService {
-  private baseURL: string = environment.localdomain + 'subsystem';
+  private baseURL: string = environment.localdomain + 'subsystems';
   constructor(private http: HttpClient) {}
 
   savesubSystem(sysObj: SubSystem) {
-    return this.http.post(this.baseURL + '/save', sysObj);
+    return this.http.post(this.baseURL + '/', sysObj);
   }
 
   getAllsubSystems() {
-    return this.http.get(this.baseURL + '/getAll');
+    return this.http.get(this.baseURL + '/');
   }
 
   updatesubSystem(sysObj: SubSystem) {

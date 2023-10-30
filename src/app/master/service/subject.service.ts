@@ -7,23 +7,23 @@ import { Subject } from '../model/subject.class';
   providedIn: 'root',
 })
 export class SubjectService {
-  basicURL = environment.localdomain + 'subject/';
+  basicURL = environment.localdomain + 'subjects';
 
   constructor(private http: HttpClient) {}
 
   saveSubjectMaster = (subject: Subject) => {
-    return this.http.post(this.basicURL + 'save', subject);
+    return this.http.post(this.basicURL + '/', subject);
   };
 
   getAllTopicMaster = () => {
-    return this.http.get(this.basicURL + 'getAll');
+    return this.http.get(this.basicURL + '/');
   };
 
   updateTopicMaster(subject: Subject) {
-    return this.http.put(this.basicURL + subject._id, subject);
+    return this.http.put(this.basicURL +'/'+ subject._id, subject);
   }
 
   deleteTopicMaster(topic: string) {
-    return this.http.delete(this.basicURL + topic);
+    return this.http.delete(this.basicURL +'/'+ topic);
   }
 }
