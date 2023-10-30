@@ -30,9 +30,7 @@ export class InstitutionComponent {
   displayedColumns: string[] = [
     'name',
     'email',
-
     'city',
-    'status',
     'action',
     'add',
   ];

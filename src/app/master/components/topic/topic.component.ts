@@ -35,7 +35,7 @@ export class TopicComponent {
     private dialog: MatDialog
   ) {}
 
-  displayedColumns: string[] = ['topic', 'status', 'actions'];
+  displayedColumns: string[] = ['topic',  'actions'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

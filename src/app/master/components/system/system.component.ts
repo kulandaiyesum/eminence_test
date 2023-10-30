@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { SystemCrudComponent } from '../system-crud/system-crud.component';
 import { SystemService } from '../../service/system.service';
 import { System } from '../../model/system';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-system',
@@ -78,19 +79,26 @@ export class SystemComponent implements OnInit {
     });
   }
   deleteSystem(_id: string) {
-    console.log(_id);
-    this.systemServeice.deleteSyatem(_id).subscribe(
-      (res: any) => {
-        this.toastr.success(res.message, '', {
-          timeOut: 3000,
-        });
-        this.getAllSystem();
-      },
-      (err: any) => {
-        this.toastr.error(err.error.message, '', {
-          timeOut: 3000,
-        });
+    Swal.fire({
+      title: 'Are you sure you want to delete this system?',
+      text: "You can't retrieve it again!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, proceed',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.systemServeice.deleteSystem(_id).subscribe(
+          (res: any) => {
+            Swal.fire('Deleted!', 'The system has been deleted.', 'success');
+            this.getAllSystem();
+          },
+          (err: any) => {
+            Swal.fire('Error', err.error.message, 'error');
+          }
+        );
       }
-    );
+    });
   }
 }

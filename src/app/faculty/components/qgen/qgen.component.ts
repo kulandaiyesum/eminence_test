@@ -38,19 +38,14 @@ export class QgenComponent implements OnInit {
   }
   ngOnInit(): void {
     this.qGenObject = new Qgen();
-    // this.gGenForm = new FormGroup({
-    //   keywords: new FormControl('', [Validators.required]),
-    //   questionsCount: new FormControl(
-    //     {
-    //       value: '',
-    //       disabled: this.inputValidity // Set the 'disabled' property during creation
-    //     },
-    //     [
-    //     Validators.required,
-    //     Validators.max(5),
-    //     Validators.min(1),
-    //   ]),
-    // });
+    this.gGenForm = new FormGroup({
+      keywords: new FormControl('', [Validators.required]),
+      questionsCount: new FormControl('', [
+        Validators.required,
+        Validators.max(5),
+        Validators.min(1),
+      ]),
+    });
     this.user = this.rsaService.decryptText(
       localStorage.getItem('2'),
       this.secretKey

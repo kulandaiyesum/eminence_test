@@ -22,7 +22,7 @@ export class SystemService {
     return this.http.put(`${this.baseURL}/${sysObj._id}`, sysObj);
   }
 
-  deleteSyatem(id: string) {
+  deleteSystem(id: string) {
     return this.http.delete(`${this.baseURL}/${id}`);
   }
 }
