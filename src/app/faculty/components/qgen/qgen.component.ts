@@ -142,13 +142,9 @@ export class QgenComponent implements OnInit {
     this.gGenService.getQGen(this.userId).subscribe(
       (res: any) => {
         const tempHolder = res.result;
-        if (this.user === 'ADMIN') {
-          this.qgenObjectList = tempHolder.filter(
-            (pendingItem) => pendingItem.status === 'Pending'
-          );
-        } else {
-          this.qgenObjectList = res.result;
-        }
+        this.qgenObjectList = tempHolder.filter(
+          (pendingItem) => pendingItem.status === 'Pending'
+        );
       },
       (err) => {
         console.log(err);
