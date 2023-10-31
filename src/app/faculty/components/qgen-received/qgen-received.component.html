@@ -1,0 +1,72 @@
+<section class="open_items_container container">
+  <p class="px-lg-4 mb-lg-5 pt-2">
+    <strong style="color: var(--qgen-red)">ReviewQ</strong> page is where you
+    can view your received questions efficiently.
+  </p>
+  <div class="table_spacing">
+    <div class="table-container mat-elevation-z8">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        aria-label="Complaints Table"
+      >
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+          <td mat-cell *matCellDef="let row">
+            <div class="description-cell">
+              {{ row?.createdAt | date : "MM-dd-yyyy" }}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="input">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Input</th>
+          <td mat-cell *matCellDef="let row">
+            <div class="description-cell">
+              <span *ngFor="let word of row.keywords; let last = last"
+                >{{ word }}{{ last ? "" : ", " }}</span
+              >
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="questionsCount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Question count
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <div class="description-cell ms-3">{{ row?.questionsCount }}</div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="open">
+          <th mat-header-cell *matHeaderCellDef>open</th>
+          <td mat-cell *matCellDef="let row">
+            <div class="description-cell">
+              <mat-icon
+                [routerLink]="['/eminence/faculty/editor', row._id]"
+                class="set_edit_color_button"
+                matTooltip="View"
+                >remove_red_eye</mat-icon
+              >
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Header and row definitions -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      <!-- Paginator -->
+      <mat-paginator
+        #paginator
+        [length]="dataSource?.data?.length"
+        [pageIndex]="0"
+        [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 20]"
+        aria-label="Select page"
+      >
+      </mat-paginator>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,61 @@
+.open_items_container {
+  min-height: 85vh;
+  width: 100%;
+  .table-container {
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: auto;
+    overflow-x: auto;
+    table {
+      width: auto;
+      border-radius: 8px;
+      tr {
+        &:first-child {
+          border-radius: 8px 8px 0 0;
+        }
+        th {
+          background-color: var(--qgen-logo-blue);
+          font-size: 16px;
+          font-weight: 500;
+          color: #fff;
+        }
+      }
+    }
+
+    .mat-paginator {
+      border-radius: 0 0 8px 8px;
+      width: 100% !important;
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+      .mat-select-value {
+        font-size: 14px;
+      }
+    }
+  }
+}
+.set_edit_color_button {
+  color: var(--qgen-logo-yellow);
+  cursor: pointer;
+  &:hover {
+    color: #ffd43b;
+  }
+}
+.table_spacing {
+  max-width: 80%;
+  margin: 0 auto;
+}
+@media (max-width: 1050px) {
+  .table_spacing {
+    max-width: 90%;
+  }
+}
+@media (max-width: 992px) {
+  .table_spacing {
+    max-width: 100%;
+  }
+}
