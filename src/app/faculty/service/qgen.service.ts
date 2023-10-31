@@ -11,11 +11,6 @@ export class QgenService {
   constructor(private http: HttpClient) {}
   public baseUrl = environment.localdomain + 'requests/';
 
-  // sampleDomain: string = 'http://localhost:5000/additionalQuestions';
-
-  // public getQgenQuestionData() {
-  //   return this.http.get(this.sampleDomain);
-  // }
 
   submitQgen(qgen: Qgen) {
     return this.http.post(this.baseUrl, qgen);
@@ -25,25 +20,19 @@ export class QgenService {
     return this.http.get(this.baseUrl + 'users/' + userId);
   }
 
-  /**
-   * @name Nithya
-   * Get function used to get Qgen data
-   * @param InstitutionId
-   * @returns Qgen[]
-   */
   getQgenwithInstitution(InstitutionId: string) {
     return this.http.get(this.baseUrl + 'institute/' + InstitutionId);
   }
 
   GetHistory(userId) {
-    return this.http.get(this.baseUrl + 'histroy/' + userId);
+    return this.http.get(this.baseUrl  + userId+'/status');
   }
   getPdf(data) {
     return this.http.post(this.baseUrl + data, data);
   }
 
   reviewQuestionSet(data) {
-    console.log(data);
+
     return this.http.put(this.baseUrl + data.reqId + '/status', data);
   }
 
@@ -58,6 +47,6 @@ export class QgenService {
     return this.http.put(this.baseUrl + check.userID, check);
   }
   getVettedQuestionSet(vetterId) {
-    return this.http.put(this.baseUrl + vetterId._id + '/qgenstatus', vetterId);
+    return this.http.put(this.baseUrl  + 'status/' + vetterId._id, vetterId);
   }
 }

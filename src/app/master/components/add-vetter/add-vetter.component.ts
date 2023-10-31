@@ -37,9 +37,9 @@ export class AddVetterComponent implements OnInit {
     this.attributes.qgenid = this.data._id;
   }
   getAllvettors() {
-    this.userService.getAllVetter().subscribe((doc: any) => {
+    let data = {role:"VETTER"}
+    this.userService.getAllVetter(data).subscribe((doc: any) => {
       this.vettorList = doc.result;
-      console.log(this.vettorList, 'ppppppppp');
       if (this.updateValueMappingIDForVetter) {
         console.log(this.updateValueMappingIDForVetter);
         const foundObject = this.vettorList.find(
@@ -77,9 +77,7 @@ export class AddVetterComponent implements OnInit {
     }
   }
   getDetails(row) {
-    console.log(row);
     let data = this.vettorList.find((x) => x._id === row);
-    console.log(data.firstName);
     this.attributes.vetterName = data.firstName;
   }
 }
