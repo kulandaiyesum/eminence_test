@@ -131,7 +131,6 @@
           </div>
         </ng-template>
       </p-carousel>
-      
     </ng-container>
     <!-- for reference -->
     <!-- <div class="qgen-response">
@@ -185,5 +184,24 @@
         </ng-container>
       </div>
     </div> -->
+  </div>
+  <div class="take-exams" *ngIf="user === 'STUDENT'">
+    <p-carousel
+      [value]="itemsreceivedQuestion"
+      [numVisible]="1"
+      [numScroll]="1"
+    >
+      <ng-template let-item pTemplate="item">
+        <div class="card">
+          <div class="card-body">
+            <h6><b>Input : </b>{{ item.keywords }}</h6>
+            <h6><b>No.of.questions : </b>{{ item.questionsCount }}</h6>
+          </div>
+          <div class="controls">
+            <button mat-button (click)="startExam(item)" [routerLink]="['/eminence/student/exam', item._id]">Start exam</button>
+          </div>
+        </div>
+      </ng-template>
+    </p-carousel>
   </div>
 </div>

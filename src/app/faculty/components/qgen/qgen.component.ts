@@ -25,6 +25,8 @@ export class QgenComponent implements OnInit {
   secretKey: string = environment.secretKey;
   @ViewChild('qgenResponse') qgenResponse: ElementRef;
   public checkValidity;
+  public receivedQuestion;
+  itemsreceivedQuestion: any[];
   constructor(
     private rsaService: RsaService,
     private gGenService: QgenService,
@@ -142,9 +144,22 @@ export class QgenComponent implements OnInit {
     this.gGenService.getQGen(this.userId).subscribe(
       (res: any) => {
         const tempHolder = res.result;
+        console.log(tempHolder.length);
         this.qgenObjectList = tempHolder.filter(
           (pendingItem) => pendingItem.status === 'Pending'
         );
+        this.receivedQuestion = tempHolder.filter(
+          (item) => item.status === 'RECEIVED'
+        );
+
+        this.itemsreceivedQuestion = this.receivedQuestion.map((item) => ({
+          keywords: item.keywords.join(', '),
+          topicName: item.topicName,
+          questionsCount: item.questionsCount,
+          _id: item._id,
+        }));
+        console.log(this.itemsreceivedQuestion);
+
       },
       (err) => {
         console.log(err);
@@ -207,4 +222,17 @@ export class QgenComponent implements OnInit {
       behavior: 'smooth',
     });
   }
+
+  /******
+   *
+   *
+   *Method to start exam
+   * render to tutor page
+   *
+   * ******/
+  startExam(item){
+    console.log(item);
+  }
+
+
 }

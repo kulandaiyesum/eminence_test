@@ -4,6 +4,7 @@ import { BuildTestComponent } from './components/build-test/build-test.component
 import { PerformanceComponent } from './components/performance/performance.component';
 import { SavedComponent } from './components/saved/saved.component';
 import { ExamRoomComponent } from './components/exam-room/exam-room.component';
+import { ExamComponent } from './components/exam/exam.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'build-test', pathMatch: 'full' },
@@ -11,6 +12,7 @@ const routes: Routes = [
   { path: 'performance', component: PerformanceComponent },
   { path: 'saved', component: SavedComponent },
   { path: 'exam-room', component: ExamRoomComponent },
+  { path: 'exam/:id', component: ExamComponent },
 ];
 
 @NgModule({
