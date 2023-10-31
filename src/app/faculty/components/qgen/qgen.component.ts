@@ -97,22 +97,22 @@ export class QgenComponent implements OnInit {
       },
     ];
 
-    if (this.user === 'FACULTY') {
-      this.subscriptionService
-        .checkValidityOfInsititution(this.checkValidity)
-        .subscribe(
-          (response: any) => {
-            this.getPendingQuestions();
-          },
-          (err) => {
-            this.toastr.warning(err.error.message, '', {
-              timeOut: 3000,
-            });
-          }
-        );
-    } else {
+    // if (this.user === 'FACULTY') {
+    //   this.subscriptionService
+    //     .checkValidityOfInsititution(this.checkValidity)
+    //     .subscribe(
+    //       (response: any) => {
+    //         this.getPendingQuestions();
+    //       },
+    //       (err) => {
+    //         this.toastr.warning(err.error.message, '', {
+    //           timeOut: 3000,
+    //         });
+    //       }
+    //     );
+    // } else {
       this.getPendingQuestions();
-    }
+    // }
   }
 
   ngAfterContentChecked() {

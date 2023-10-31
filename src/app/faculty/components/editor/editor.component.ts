@@ -170,7 +170,8 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   changeStatusOfQuestion() {
-    this.questionService.updateStatusOfQuestion(this.questionId).subscribe(
+    let data = {questionId:this.questionId,status:this.status}
+    this.questionService.updateStatusOfQuestion(data).subscribe(
       (response) => {
         console.log(response);
         this.cdr.detectChanges();

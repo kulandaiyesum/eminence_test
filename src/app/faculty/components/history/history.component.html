@@ -177,13 +177,13 @@
           id="export-table"
         >
           <mat-icon
-            *ngIf="row.pdfStatus !== 'completed'"
+            *ngIf="row.pdfStatus !== 'COMPLETED'"
             class="export-icon"
             (click)="getPdf(row)"
             >save_alt</mat-icon
           >
           <mat-icon
-            *ngIf="row.pdfStatus === 'completed'"
+            *ngIf="row.pdfStatus === 'COMPLETED'"
             class="export-icon-sucess"
             matTooltip="Exported"
             >check_circle</mat-icon

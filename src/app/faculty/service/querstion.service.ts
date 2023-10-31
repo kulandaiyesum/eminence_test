@@ -20,8 +20,7 @@ export class QuerstionService {
     return this.http.delete(this.baseUrl + reqId._id, reqId);
   }
 
-  updateStatusOfQuestion(id:string){
-    console.log(id);
-    return this.http.put(this.baseUrl+id+"/status",id)
+  updateStatusOfQuestion(data){
+    return this.http.put(this.baseUrl+data.questionId+"/status",data)
   }
 }
