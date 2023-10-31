@@ -42,9 +42,9 @@ export class QgenService {
     return this.http.post(this.baseUrl + data, data);
   }
 
-  reviewQuestionSet(id: string) {
-    console.log(id);
-    return this.http.put(this.baseUrl + id + '/status', id);
+  reviewQuestionSet(data) {
+    console.log(data);
+    return this.http.put(this.baseUrl + data.reqId + '/status', data);
   }
 
   addAttributes(attributes: Attributes) {

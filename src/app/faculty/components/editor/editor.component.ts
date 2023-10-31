@@ -13,6 +13,8 @@ import { QuerstionService } from '../../service/querstion.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import { RsaService } from 'src/app/shared/service/rsa.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-editor',
@@ -27,6 +29,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   questions: Question[];
   tempQuestion: TempQuestion;
   reqId: string;
+  public status
   reasons: string[] = [
     "Simply didn't need it",
     'Inaccuracy in question/answer choices',
@@ -34,6 +37,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     'Question was too easy',
   ];
   showDiv = false;
+  public user
   selectedAnswer: string = '';
   isEditMode: boolean = false;
   selectedOptionExplanation: string = '';
@@ -47,9 +51,10 @@ export class EditorComponent implements OnInit, OnDestroy {
   nextButtonQuestionIndex: number;
   private pathSubcriber: Subscription;
   pathMatch: boolean = false;
+  secretKey: string = environment.secretKey;
   @ViewChild('editableDiv') editableDiv: ElementRef;
   constructor(
-    private qgenService: QgenService,
+    private qgenService: QgenService, private rsaService: RsaService,
     private questionService: QuerstionService,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
@@ -60,6 +65,17 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.pathSubcriber.unsubscribe();
   }
   ngOnInit(): void {
+    this.user = this.rsaService.decryptText(
+      localStorage.getItem('2'),
+      this.secretKey
+    );
+    console.log(this.user);
+    if(this.user === "VETTER"){
+      this.status = "V REVIEWED"
+    }else{
+      this.status = "F REVIEWED"
+    }
+
     this.reqId = this.activatedRoute.snapshot.params['reqId'];
     if (this.reqId) {
       this.getAllQuestions(this.reqId);
@@ -331,7 +347,9 @@ export class EditorComponent implements OnInit, OnDestroy {
       }).then((result) => {
         if (result.isConfirmed) {
           // Call the review service to make the HTTP PUT request
-          this.qgenService.reviewQuestionSet(this.reqId).subscribe(
+          let data = {reqId:this.reqId,status:this.status
+          }
+          this.qgenService.reviewQuestionSet(data).subscribe(
             (response) => {
               console.log(response);
             },
