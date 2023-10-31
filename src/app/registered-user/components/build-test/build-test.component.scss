@@ -1,7 +1,6 @@
 .build-test-container {
   width: 100%;
   height: 85vh;
-  // border: 1px solid red;
   overflow: auto;
   .main {
     width: 100%;
@@ -9,14 +8,12 @@
     padding: 20px;
     .questons-container {
       width: 100%;
-      height: auto;
-      // border: 1px solid yellow;
+      height: 55vh;
       display: flex;
       justify-content: space-between;
       .qbank {
         width: 49%;
         height: 85vh;
-        // border: 1px solid red;
         padding: 15px;
         .dropdown {
           margin-top: 20px;
@@ -34,19 +31,18 @@
       }
       .qgen {
         width: 49%;
-        height: 85vh;
+        height: 60vh;
         padding: 15px;
-        // border: 1px solid blue;
+        margin-bottom: 10px;
         .recommendations {
           width: 100%;
           height: 40vh;
           padding: 10px;
           .recommendations-area {
             width: 100%;
-            height: 40vh;
             border: 2px solid black;
             border-radius: 20px;
-            overflow: auto;
+            // overflow: auto;
             padding: 20px;
             h6 {
               font-weight: bold;
@@ -60,7 +56,6 @@
             .chips {
               width: 100%;
               height: auto;
-              // border: 1px solid yellow;
               mat-chip {
                 background-color: #fcbf02;
                 color: #000;
@@ -77,9 +72,8 @@
       height: auto;
 
       .button-area {
-        width: auto;
+        max-width: 800px;
         height: 17vh;
-        float: right;
         border-radius: 10px;
         background-color: #f5f5f5dc;
         display: flex;
@@ -87,6 +81,7 @@
         justify-content: space-around;
         padding-left: 15px;
         padding-right: 15px;
+        margin-top: 10%;
         .toggles {
           #timed {
             margin-left: 10px;
@@ -137,6 +132,21 @@
     }
   }
 }
+.row_formfield {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.checkbox_section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
 
 @media (max-width: 767px) {
   // Mobile view styles
@@ -169,7 +179,6 @@
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-  // Tablet view styles
   .qbank {
     #system {
       margin-left: 0 !important;
