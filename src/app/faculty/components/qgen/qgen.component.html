@@ -82,56 +82,56 @@
     >
       Pending
     </div>
-    <p-carousel
-      [value]="qgenObjectList"
-      [numVisible]="3"
-      [numScroll]="1"
-      [circular]="false"
-      [responsiveOptions]="responsiveOptions"
-      styleClass="ui-carousel"
-    >
-      <ng-template let-qgenObject pTemplate="item">
-        <div
-          class="response"
-          [routerLink]="
-            qgenObject?.status === 'Pending'
-              ? null
-              : ['/eminence/faculty/editor', qgenObject._id]
-          "
-        >
-          <div class="input_wrap">
-            <strong>Input: </strong>
-            <span *ngFor="let keyword of qgenObject.keywords; let last = last"
-              >{{ keyword }}{{ last ? "" : ", " }}</span
-            >
-          </div>
-          <div class="questions_wrap">
-            <div class="questions">
-              <strong>Questions: </strong>{{ qgenObject.questionsCount }}
-            </div>
-            <div class="loader me-3">
-              <img
-                *ngIf="qgenObject?.status === 'Pending'"
-                src="../../../../assets/images/loader.gif"
-              />
-              <mat-icon *ngIf="qgenObject?.status !== 'Pending'"
-                >check_circle</mat-icon
+    <ng-container *ngIf="qgenObjectList?.length > 0">
+      <p-carousel
+        [value]="qgenObjectList"
+        [numVisible]="3"
+        [numScroll]="1"
+        [circular]="false"
+        [responsiveOptions]="responsiveOptions"
+        styleClass="ui-carousel"
+      >
+        <ng-template let-qgenObject pTemplate="item">
+          <div class="response">
+            <!-- [routerLink]="
+              qgenObject?.status === 'Pending'
+                ? null
+                : ['/eminence/faculty/editor', qgenObject._id]
+            " -->
+            <div class="input_wrap">
+              <strong>Input: </strong>
+              <span *ngFor="let keyword of qgenObject.keywords; let last = last"
+                >{{ keyword }}{{ last ? "" : ", " }}</span
               >
             </div>
-          </div>
-          <div class="completion_bar">
-            <div
-              *ngIf="qgenObject?.status === 'Pending'"
-              class="loader_ani"
-            ></div>
+            <div class="questions_wrap">
+              <div class="questions">
+                <strong>Questions: </strong>{{ qgenObject.questionsCount }}
+              </div>
+              <div class="loader me-3">
+                <img
+                  *ngIf="qgenObject?.status === 'Pending'"
+                  src="../../../../assets/images/loader.gif"
+                />
+                <mat-icon *ngIf="qgenObject?.status !== 'Pending'"
+                  >check_circle</mat-icon
+                >
+              </div>
+            </div>
+            <div class="completion_bar">
+              <div
+                *ngIf="qgenObject?.status === 'Pending'"
+                class="loader_ani"
+              ></div>
 
-            <div *ngIf="qgenObject?.status !== 'Pending'" class="red_bg">
-              <div class="green_bg" style="width: 100%"></div>
+              <div *ngIf="qgenObject?.status !== 'Pending'" class="red_bg">
+                <div class="green_bg" style="width: 100%"></div>
+              </div>
             </div>
           </div>
-        </div>
-      </ng-template>
-    </p-carousel>
+        </ng-template>
+      </p-carousel>
+    </ng-container>
     <!-- for reference -->
     <!-- <div class="qgen-response">
       <mat-icon (click)="scroll(-1)" class="arrow_left"

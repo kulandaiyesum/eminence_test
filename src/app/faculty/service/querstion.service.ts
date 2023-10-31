@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class QuerstionService {
-  public baseUrl = environment.localdomain + 'v1/questions/';
+  public baseUrl = environment.localdomain + 'questions/';
   public updateQuestionStatus=environment.localdomain
   constructor(private http: HttpClient) {}
   getAllQuestions(data) {

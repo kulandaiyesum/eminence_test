@@ -43,6 +43,7 @@ import { QuestionComponent } from './components/question/question.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { CarouselModule } from 'primeng/carousel';
+import { QgenReceivedComponent } from './components/qgen-received/qgen-received.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { CarouselModule } from 'primeng/carousel';
     AskeminenceComponent,
     HistoryComponent,
     QuestionComponent,
+    QgenReceivedComponent,
   ],
   imports: [
     CommonModule,
