@@ -54,6 +54,7 @@ export class BuildTestComponent {
     private subjectService: SubjectService,private questionService:QuerstionService,
     private systemService: SystemService,
     private subSystemService: SubSystemService,
+    private querstionService: QuerstionService,
     private fb: FormBuilder
   ) {
     this.userId = this.rsaService.decryptText(
@@ -73,7 +74,7 @@ export class BuildTestComponent {
       type1: false,
       type2: false,
       type3: false,
-      mode: ['', Validators.required],
+      modes: [],
       questionsCount: [0, [Validators.required, this.maxQuestionsValidator]],
     });
     this.getAllSubject();
@@ -104,12 +105,13 @@ export class BuildTestComponent {
   generateTest() {
     const temp = this.qbankForm.value;
     const typeArray: number[] = [];
+    const selectedModes = temp.modes;
     for (let i = 0; i <= 3; i++) {
       if (temp[`type${i}`]) {
         typeArray.push(i);
       }
     }
-    this.qbankObject.mode = temp.mode;
+    this.qbankObject.mode = selectedModes;
     this.qbankObject.questionsCount = parseInt(temp.questionsCount, 10);
     this.qbankObject.subjectId = temp.subjectId;
     this.qbankObject.subsystemId = temp.subsystemId;

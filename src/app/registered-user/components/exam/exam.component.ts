@@ -16,6 +16,7 @@ export class ExamComponent {
   questions: Question[];
   @ViewChild('scrollExplanationContainer') scrollExplanationContainer: ElementRef;
   @ViewChild('scrollQuestionContainer') scrollQuestionContainer: ElementRef;
+  public indexBasedQuestions;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +39,7 @@ export class ExamComponent {
     const scrollbar = Scrollbar.init(this.scrollQuestionContainer.nativeElement, {
       // Smooth Scrollbar options go here
     });
+
   }
 
   getAllQuestions(reqId: string) {
@@ -46,6 +48,19 @@ export class ExamComponent {
       this.questLength = doc.result.questions.length;
       this.questions = doc.result.questions;
       console.log(this.questions);
+      this.getQuestionsIndexBased(0);
     });
+  }
+
+
+
+  getQuestionsIndexBased(index:number){
+    this.indexBasedQuestions=this.questions[index];
+    console.log(this.indexBasedQuestions);
+  }
+
+  changeQuestions(i:number){
+    console.log(i);
+    this.getQuestionsIndexBased(i);
   }
 }
