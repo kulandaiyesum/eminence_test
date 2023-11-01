@@ -7,4 +7,5 @@ export class Qbank {
   mode: string; //(tutor or timed)
   userId: string;
   questionsCount: number;
+  status:string
 }

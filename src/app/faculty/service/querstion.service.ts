@@ -27,10 +27,10 @@ export class QuerstionService {
 
   /**
    * method to POST request for students to build request
-   * @param qbank 
-   * @returns 
+   * @param qbank
+   * @returns
    */
   postQbankRequest(qbank: Qbank) {
-    return this.http.post(this.baseUrl + qbank.userId + '/questions', qbank);
+    return this.http.put(this.baseUrl  , qbank);
   }
 }

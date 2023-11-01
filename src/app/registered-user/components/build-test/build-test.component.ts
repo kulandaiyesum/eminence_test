@@ -28,6 +28,7 @@ import { System } from 'src/app/master/model/system';
 import { Qbank } from '../../model/qbank';
 import { RsaService } from 'src/app/shared/service/rsa.service';
 import { environment } from 'src/environments/environment';
+import { QuerstionService } from 'src/app/faculty/service/querstion.service';
 
 @Component({
   selector: 'app-build-test',
@@ -50,7 +51,7 @@ export class BuildTestComponent {
   constructor(
     private rsaService: RsaService,
     private cdr: ChangeDetectorRef,
-    private subjectService: SubjectService,
+    private subjectService: SubjectService,private questionService:QuerstionService,
     private systemService: SystemService,
     private subSystemService: SubSystemService,
     private fb: FormBuilder
@@ -115,8 +116,13 @@ export class BuildTestComponent {
     this.qbankObject.systemId = temp.systemId;
     this.qbankObject.type = typeArray;
     this.qbankObject.userId = this.userId;
-
+    this.qbankObject.status = "VREVIEWED"
     console.log(this.qbankObject);
+    this.questionService.postQbankRequest(this.qbankObject).subscribe((doc)=>{
+      console.log(doc);
+
+    })
+
   }
 
   getAllSystem() {
