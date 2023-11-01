@@ -1,64 +1,34 @@
 <div class="exam-container">
   <div class="controls">
-    <div class="button">
-      <p>1</p>
-      <p>2</p>
-      <p>3</p>
-      <p>4</p>
-      <p>5</p>
+    <div class="button" *ngFor="let item of questions; let i = index">
+      <p (click)="changeQuestions(i)">{{ i + 1 }}</p>
     </div>
   </div>
   <div class="main">
     <div class="questions" #scrollQuestionContainer>
       <div class="questions-main">
         <p>
-          A 70-year-old man presents to the clinic with complaints of fatigue,
-          weight loss, and shortness of breath. He also reports that he has been
-          experiencing episodes of dizziness and fainting. On examination, his
-          blood pressure is 110/70 mmHg, pulse is 60 beats per minute, and
-          respiratory rate is 18 breaths per minute. Cardiac auscultation
-          reveals a low-pitched, rumbling diastolic murmur best heard at the
-          apex. His tongue appears enlarged and there is hepatosplenomegaly. His
-          labs show proteinuria and hypoalbuminemia. Which of the following is
-          the most likely cause of this patient's condition?
+          {{ indexBasedQuestions?.title }}
         </p>
         <div class="options">
-          <mat-radio-group aria-label="Select an option">
-            <mat-radio-button value="1"
-              >Deposition of immunoglobulin light chain</mat-radio-button
-            ><br />
-            <mat-radio-button value="2"
-              >Deposition of serum amyloid-associated protein</mat-radio-button
-            ><br />
-            <mat-radio-button value="3"
-              >Deposition of mutated serum transthyretin</mat-radio-button
-            ><br />
-            <mat-radio-button value="4"
-              >Deposition of non-mutated serum transthyretin</mat-radio-button
-            ><br />
-            <mat-radio-button value="4"
-              >Deposition of beta-amyloid precursor protein</mat-radio-button
-            ><br />
+          <mat-radio-group>
+            <mat-radio-button *ngFor="let option of indexBasedQuestions?.options" [value]="option?.text">
+              {{ option?.text }}
+            </mat-radio-button><br>
           </mat-radio-group>
         </div>
       </div>
     </div>
     <div class="explanations" #scrollExplanationContainer>
       <div class="explanations-main">
-        <p>
-          <b>Correct Answer : </b> A. Deposition of immunoglobulin light chain
-        </p>
-        <div class="explanation-paragraph">
-          <p>
-            <b>Explanation : </b> This patient's presentation of fatigue, weight
-            loss, shortness of breath, dizziness, fainting, low-pitched,
-            rumbling diastolic murmur, enlarged tongue, hepatosplenomegaly,
-            proteinuria, and hypoalbuminemia is suggestive of systemic
-            amyloidosis. The most common form of systemic amyloidosis in the
-            elderly is primary amyloidosis (AL amyloidosis), which is caused by
-            deposition of immunoglobulin light chain (Choice A). This form of
-            amyloidosis is often associated with plasma cell dyscrasias such as
-            multiple myeloma.
+        <div *ngFor="let option of indexBasedQuestions?.options">
+          <p *ngIf="option.correctAnswer === 'true'">
+            <b>Correct Answer : </b> {{ option?.text }}
+          </p>
+        </div>
+        <div class="explanation-paragraph" *ngFor="let option of indexBasedQuestions?.options">
+          <p *ngIf="option.correctAnswer === 'true'">
+            <b>Explanation : </b> {{ option?.explanation }}
           </p>
         </div>
       </div>
@@ -66,7 +36,6 @@
     <div class="flag">
       <mat-expansion-panel>
         <mat-expansion-panel-header>
-          
         </mat-expansion-panel-header>
         <div class="content">
           <mat-icon>view_in_ar</mat-icon>
