@@ -13,6 +13,8 @@ export class AskEmininceService {
 
   constructor(private http: HttpClient) {}
   getAskeminice = (askEminence) => {
+    console.log(askEminence);
+
     return this.http.post(this.baseUrl + 'saveAskEminence', askEminence);
   };
 

@@ -1,9 +1,9 @@
 import { ExamDataService } from './../../service/exam-data.service';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Question } from 'src/app/faculty/model/question';
 import { QuerstionService } from 'src/app/faculty/service/querstion.service';
-import Scrollbar from 'smooth-scrollbar'
+import Scrollbar from 'smooth-scrollbar';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 
@@ -12,7 +12,7 @@ import { MatIconRegistry } from '@angular/material/icon';
   templateUrl: './exam.component.html',
   styleUrls: ['./exam.component.scss'],
 })
-export class ExamComponent {
+export class ExamComponent implements OnInit {
   tutorId: string;
   public questLength: number;
   questions: Question[];
@@ -33,7 +33,7 @@ export class ExamComponent {
       'custom-icon',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/images/lab.svg')
     );
-
+  }
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.tutorId = params['id']; // Retrieve the tutor ID from the route parameters

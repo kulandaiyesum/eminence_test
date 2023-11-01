@@ -6,6 +6,10 @@ import { delay } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import Scrollbar from 'smooth-scrollbar';
 import { ToastrService } from 'ngx-toastr';
+import { Qgen } from '../../model/qgen';
+import { environment } from 'src/environments/environment';
+import { RsaService } from 'src/app/shared/service/rsa.service';
+import { QgenService } from '../../service/qgen.service';
 
 @Component({
   selector: 'app-askeminence',
@@ -14,6 +18,10 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AskeminenceComponent implements OnInit {
   public askEminence: Askeminice;
+  public qgen: Qgen;
+  secretKey: string = environment.secretKey;
+  userId: string = '';
+  userFirstName: string = '';
   loading = false;
   isTextareaDisabled = true;
   isEditMode = true;
@@ -35,6 +43,8 @@ export class AskeminenceComponent implements OnInit {
   @ViewChild('resultTextarea') resultTextarea: ElementRef;
   constructor(
     private askEmininveService: AskEmininceService,
+    private rsaService: RsaService,
+    private gGenService: QgenService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService
   ) {}
@@ -46,6 +56,16 @@ export class AskeminenceComponent implements OnInit {
   ];
   ngOnInit(): void {
     this.askEminence = new Askeminice();
+    this.qgen = new Qgen();
+    this.userId = this.rsaService.decryptText(
+      localStorage.getItem('5'),
+      this.secretKey
+    );
+    this.userFirstName = this.rsaService.decryptText(
+      localStorage.getItem('3'),
+      this.secretKey
+    );
+
     this.askEmininveService.sampleResponse().subscribe((data: any) => {
       this.sampleData = data;
     });
@@ -61,20 +81,10 @@ export class AskeminenceComponent implements OnInit {
   bulid() {
     this.spinner.show();
     this.loading = true;
-    this.askEminence.result = this.sampleData.answer;
-    this.resultObject.keyword = this.sampleData.keyword;
-    this.resultObject._id = this.sampleData._id;
-    this.resultObjectForEmail.keyword = this.sampleData.keyword;
-    this.resultObjectForEmail._id = this.sampleData._id;
-
-    this.toastr.success('Content generated !', '', {
-      timeOut: 3000,
-    });
-    setTimeout(() => {
-      this.loading = false;
-      // window.location.reload();
-    }, 1000);
-    this.askEmininveService.getAskeminice(this.askEminence).subscribe(
+    this.qgen.userId = this.userId;
+    this.qgen.type = 'ASKEMINENCE';
+    this.qgen.createdBy = this.userFirstName;
+    this.gGenService.submitQgen(this.qgen).subscribe(
       (doc: any) => {
         if (doc.result.answer.length > 0) {
           this.spinner.hide();
