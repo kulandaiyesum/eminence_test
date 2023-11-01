@@ -1,8 +1,9 @@
+import { ExamDataService } from './../../service/exam-data.service';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Question } from 'src/app/faculty/model/question';
 import { QuerstionService } from 'src/app/faculty/service/querstion.service';
-import Scrollbar from 'smooth-scrollbar';
+import Scrollbar from 'smooth-scrollbar'
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 
@@ -24,6 +25,7 @@ export class ExamComponent {
   constructor(
     private route: ActivatedRoute,
     private questionService: QuerstionService,
+    private examDataService: ExamDataService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer
   ) {
@@ -31,7 +33,6 @@ export class ExamComponent {
       'custom-icon',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/images/lab.svg')
     );
-  }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -39,7 +40,14 @@ export class ExamComponent {
       // Use this.tutorId as needed in your TutorComponent
       console.log(this.tutorId);
     });
-    this.getAllQuestions(this.tutorId);
+    if (this.tutorId) {
+      this.getAllQuestions(this.tutorId);
+    } else {
+      this.questions = this.examDataService.getExamRoomData();
+      this.questLength = this.questions.length;
+      this.getQuestionsIndexBased(0);
+      console.log('this data get from build-test page', this.questions);
+    }
   }
 
   ngAfterViewInit() {
@@ -57,7 +65,7 @@ export class ExamComponent {
     );
   }
 
-  getAllQuestions(reqId: string) {
+  getAllQuestions(reqId?: string) {
     let data = { reqId };
     this.questionService.getAllQuestions(data).subscribe((doc: any) => {
       this.questLength = doc.result.questions.length;
