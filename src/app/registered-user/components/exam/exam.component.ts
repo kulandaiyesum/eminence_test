@@ -3,7 +3,9 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Question } from 'src/app/faculty/model/question';
 import { QuerstionService } from 'src/app/faculty/service/querstion.service';
-import Scrollbar from 'smooth-scrollbar';
+import Scrollbar from 'smooth-scrollbar'
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @Component({
   selector: 'app-exam',
@@ -18,12 +20,19 @@ export class ExamComponent {
   scrollExplanationContainer: ElementRef;
   @ViewChild('scrollQuestionContainer') scrollQuestionContainer: ElementRef;
   public indexBasedQuestions;
+  public showExplanations: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private questionService: QuerstionService,
-    private examDataService: ExamDataService
-  ) {}
+    private examDataService: ExamDataService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      'custom-icon',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/images/lab.svg')
+    );
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -69,10 +78,16 @@ export class ExamComponent {
   getQuestionsIndexBased(index: number) {
     this.indexBasedQuestions = this.questions[index];
     console.log(this.indexBasedQuestions);
+    this.showExplanations = false;
   }
 
   changeQuestions(i: number) {
     console.log(i);
     this.getQuestionsIndexBased(i);
+  }
+
+  optionSelected(event: any) {
+    console.log('Selected option: ', event.value);
+    this.showExplanations = true;
   }
 }
