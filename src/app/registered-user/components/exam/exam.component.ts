@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Question } from 'src/app/faculty/model/question';
 import { QuerstionService } from 'src/app/faculty/service/querstion.service';
 import Scrollbar from 'smooth-scrollbar';
-
+import { DomSanitizer } from '@angular/platform-browser';
+import { MatIconRegistry } from '@angular/material/icon';
 
 @Component({
   selector: 'app-exam',
@@ -14,14 +15,23 @@ export class ExamComponent {
   tutorId: string;
   public questLength: number;
   questions: Question[];
-  @ViewChild('scrollExplanationContainer') scrollExplanationContainer: ElementRef;
+  @ViewChild('scrollExplanationContainer')
+  scrollExplanationContainer: ElementRef;
   @ViewChild('scrollQuestionContainer') scrollQuestionContainer: ElementRef;
   public indexBasedQuestions;
+  public showExplanations: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
-    private questionService: QuerstionService
-  ) {}
+    private questionService: QuerstionService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+  ) {
+    this.matIconRegistry.addSvgIcon(
+      'custom-icon',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/images/lab.svg')
+    );
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -32,14 +42,19 @@ export class ExamComponent {
     this.getAllQuestions(this.tutorId);
   }
 
-  ngAfterViewInit(){
-    const scrollbars = Scrollbar.init(this.scrollExplanationContainer.nativeElement, {
-      // Smooth Scrollbar options go here
-    });
-    const scrollbar = Scrollbar.init(this.scrollQuestionContainer.nativeElement, {
-      // Smooth Scrollbar options go here
-    });
-
+  ngAfterViewInit() {
+    const scrollbars = Scrollbar.init(
+      this.scrollExplanationContainer.nativeElement,
+      {
+        // Smooth Scrollbar options go here
+      }
+    );
+    const scrollbar = Scrollbar.init(
+      this.scrollQuestionContainer.nativeElement,
+      {
+        // Smooth Scrollbar options go here
+      }
+    );
   }
 
   getAllQuestions(reqId: string) {
@@ -52,15 +67,19 @@ export class ExamComponent {
     });
   }
 
-
-
-  getQuestionsIndexBased(index:number){
-    this.indexBasedQuestions=this.questions[index];
+  getQuestionsIndexBased(index: number) {
+    this.indexBasedQuestions = this.questions[index];
     console.log(this.indexBasedQuestions);
+    this.showExplanations = false;
   }
 
-  changeQuestions(i:number){
+  changeQuestions(i: number) {
     console.log(i);
     this.getQuestionsIndexBased(i);
+  }
+
+  optionSelected(event: any) {
+    console.log('Selected option: ', event.value);
+    this.showExplanations = true;
   }
 }
