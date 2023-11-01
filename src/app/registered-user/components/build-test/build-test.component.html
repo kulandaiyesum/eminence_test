@@ -70,9 +70,13 @@
       <div class="controls mt-5">
         <div class="button-area">
           <div class="toggles">
-            <mat-radio-group formControlName="mode">
-              <mat-radio-button value="tutor">Tutor</mat-radio-button>
-              <mat-radio-button value="timid">Timed</mat-radio-button>
+            <mat-radio-group>
+              <mat-slide-toggle id="tutor" formControlName="modes"
+                >Tutor</mat-slide-toggle
+              >
+              <mat-slide-toggle id="timed" formControlName="modes"
+                >Timed</mat-slide-toggle
+              >
             </mat-radio-group>
           </div>
           <div class="input-area">
