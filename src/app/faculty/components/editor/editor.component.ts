@@ -29,7 +29,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   questions: Question[];
   tempQuestion: TempQuestion;
   reqId: string;
-  public status
+  public status;
   reasons: string[] = [
     "Simply didn't need it",
     'Inaccuracy in question/answer choices',
@@ -37,7 +37,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     'Question was too easy',
   ];
   showDiv = false;
-  public user
+  public user;
   selectedAnswer: string = '';
   isEditMode: boolean = false;
   selectedOptionExplanation: string = '';
@@ -54,7 +54,8 @@ export class EditorComponent implements OnInit, OnDestroy {
   secretKey: string = environment.secretKey;
   @ViewChild('editableDiv') editableDiv: ElementRef;
   constructor(
-    private qgenService: QgenService, private rsaService: RsaService,
+    private qgenService: QgenService,
+    private rsaService: RsaService,
     private questionService: QuerstionService,
     private activatedRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
@@ -70,10 +71,10 @@ export class EditorComponent implements OnInit, OnDestroy {
       this.secretKey
     );
     console.log(this.user);
-    if(this.user === "VETTER"){
-      this.status = "V REVIEWED"
-    }else{
-      this.status = "F REVIEWED"
+    if (this.user === 'VETTER') {
+      this.status = 'VREVIEWED';
+    } else {
+      this.status = 'FREVIEWED';
     }
 
     this.reqId = this.activatedRoute.snapshot.params['reqId'];
@@ -97,7 +98,11 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   // Add a method to check if the question is reviewed
   isReviewed(question: Question): boolean {
-    return this.getStatusAsString(question) === 'REVIEWED';
+    if (this.user === 'VETTER') {
+      return this.getStatusAsString(question) === 'VREVIEWED';
+    } else {
+      return this.getStatusAsString(question) === 'FREVIEWED';
+    }
   }
 
   getAllQuestions(reqId: string) {
@@ -111,6 +116,8 @@ export class EditorComponent implements OnInit, OnDestroy {
       const pendingCount = this.questions.filter(
         (item: any) => item.status === 'PENDING'
       ).length;
+      console.log(pendingCount, 'ffffffff');
+
       if (pendingCount === 1) {
         this.shouldShowButton = true;
         const pendingData = this.questions.filter(
@@ -134,7 +141,8 @@ export class EditorComponent implements OnInit, OnDestroy {
     console.log(this.questionId);
 
     if (
-      this.currentQuestionStatus === 'REVIEWED' ||
+      this.currentQuestionStatus === 'FREVIEWED' ||
+      this.currentQuestionStatus === 'RREVIEWED' ||
       this.questionId == question_id
     ) {
       this.getQuestion(question_id, index);
@@ -170,7 +178,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   changeStatusOfQuestion() {
-    let data = {questionId:this.questionId,status:this.status}
+    let data = { questionId: this.questionId, status: this.status };
     this.questionService.updateStatusOfQuestion(data).subscribe(
       (response) => {
         console.log(response);
@@ -335,9 +343,13 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   reviewAll() {
-    const allReviewed = this.questions.every(
-      (item: any) => item.status === 'REVIEWED'
-    );
+    const allReviewed = this.questions.every((item: any) => {
+      if (this.user === 'VETTER') {
+        item.status === 'RREVIEWED';
+      } else {
+        item.status === 'FREVIEWED';
+      }
+    });
     if (allReviewed && this.isAllQuestions != true) {
       this.isAllQuestions = true;
     }
@@ -348,8 +360,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       }).then((result) => {
         if (result.isConfirmed) {
           // Call the review service to make the HTTP PUT request
-          let data = {reqId:this.reqId,status:this.status
-          }
+          let data = { reqId: this.reqId, status: this.status };
           this.qgenService.reviewQuestionSet(data).subscribe(
             (response) => {
               console.log(response);
