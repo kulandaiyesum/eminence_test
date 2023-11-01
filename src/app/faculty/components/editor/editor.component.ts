@@ -107,6 +107,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   getAllQuestions(reqId: string) {
     let data = { reqId };
+    console.log(reqId);
     this.questionService.getAllQuestions(data).subscribe((doc: any) => {
       this.questLength = doc.result.questions.length;
       this.questions = doc.result.questions;
@@ -114,15 +115,16 @@ export class EditorComponent implements OnInit, OnDestroy {
       this.title = doc.result.request.keywords[0];
       this.getQuestion(this.questions[0]._id, 0);
       const pendingCount = this.questions.filter(
-        (item: any) => item.status === 'PENDING'
+        (item: any) => item.status === 'Pending'
       ).length;
       console.log(pendingCount, 'ffffffff');
 
       if (pendingCount === 1) {
         this.shouldShowButton = true;
         const pendingData = this.questions.filter(
-          (item: any) => item.status === 'PENDING'
+          (item: any) => item.status === 'Pending'
         );
+        console.log(pendingData);
         console.log(pendingData[0]._id);
         this.questionId = pendingData[0]._id;
       }
@@ -179,6 +181,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   changeStatusOfQuestion() {
     let data = { questionId: this.questionId, status: this.status };
+    console.log(this.questionId);
     this.questionService.updateStatusOfQuestion(data).subscribe(
       (response) => {
         console.log(response);
@@ -190,7 +193,7 @@ export class EditorComponent implements OnInit, OnDestroy {
             this.nextButtonQuestionId,
             this.nextButtonQuestionIndex
           );
-        }, 1500);
+        }, 500);
         const pendingCount = this.questions.filter(
           (item: any) => item.status === 'PENDING'
         ).length;
@@ -350,9 +353,14 @@ export class EditorComponent implements OnInit, OnDestroy {
         item.status === 'FREVIEWED';
       }
     });
-    if (allReviewed && this.isAllQuestions != true) {
+
+    console.log(allReviewed);
+    const hasPendingStatus = this.questions.some((item:any) => item.status === "Pending");
+    console.log(hasPendingStatus);
+    if (!hasPendingStatus) {
       this.isAllQuestions = true;
     }
+
     if (this.isAllQuestions) {
       Swal.fire({
         title: 'You reviewed all questions',
@@ -364,6 +372,7 @@ export class EditorComponent implements OnInit, OnDestroy {
           this.qgenService.reviewQuestionSet(data).subscribe(
             (response) => {
               console.log(response);
+              this.router.navigate(['/eminence/faculty/history']);
             },
             (error) => {
               // Handle the error response
