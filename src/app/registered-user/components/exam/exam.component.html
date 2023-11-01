@@ -9,9 +9,10 @@
       <div class="questions-main">
         <p>
           {{ indexBasedQuestions?.title }}
+
         </p>
         <div class="options">
-          <mat-radio-group>
+          <mat-radio-group (change)="optionSelected($event)">
             <mat-radio-button *ngFor="let option of indexBasedQuestions?.options" [value]="option?.text">
               {{ option?.text }}
             </mat-radio-button><br>
@@ -20,7 +21,7 @@
       </div>
     </div>
     <div class="explanations" #scrollExplanationContainer>
-      <div class="explanations-main">
+      <div class="explanations-main" *ngIf="showExplanations">
         <div *ngFor="let option of indexBasedQuestions?.options">
           <p *ngIf="option.correctAnswer === 'true'">
             <b>Correct Answer : </b> {{ option?.text }}
@@ -38,7 +39,8 @@
         <mat-expansion-panel-header>
         </mat-expansion-panel-header>
         <div class="content">
-          <mat-icon>view_in_ar</mat-icon>
+          
+          <mat-icon svgIcon="custom-icon"></mat-icon>
           <mat-icon>exposure</mat-icon>
           <mat-icon>assignment</mat-icon>
         </div>
