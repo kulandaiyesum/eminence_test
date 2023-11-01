@@ -8,7 +8,7 @@ import { Attributes } from 'src/app/master/model/attributes.class';
   providedIn: 'root',
 })
 export class QgenService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
   public baseUrl = environment.localdomain + 'requests/';
 
 
@@ -25,7 +25,7 @@ export class QgenService {
   }
 
   GetHistory(userId) {
-    return this.http.get(this.baseUrl  + userId+'/status');
+    return this.http.get(this.baseUrl + userId + '/status');
   }
   getPdf(data) {
     return this.http.post(this.baseUrl + data, data);
@@ -33,7 +33,7 @@ export class QgenService {
 
   reviewQuestionSet(data) {
 
-    return this.http.put(this.baseUrl + data.reqId + '/status', data);
+    return this.http.patch(this.baseUrl + data.reqId + '/status', data);
   }
 
   addAttributes(attributes: Attributes) {
@@ -47,6 +47,6 @@ export class QgenService {
     return this.http.put(this.baseUrl + check.userID, check);
   }
   getVettedQuestionSet(vetterId) {
-    return this.http.put(this.baseUrl  + 'status/' + vetterId._id, vetterId);
+    return this.http.put(this.baseUrl + vetterId._id + '/status', vetterId);
   }
 }
