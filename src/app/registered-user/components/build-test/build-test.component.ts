@@ -1,3 +1,4 @@
+import { ExamDataService } from './../../service/exam-data.service';
 import {
   Component,
   ElementRef,
@@ -29,6 +30,7 @@ import { Qbank } from '../../model/qbank';
 import { RsaService } from 'src/app/shared/service/rsa.service';
 import { environment } from 'src/environments/environment';
 import { QuerstionService } from 'src/app/faculty/service/querstion.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-build-test',
@@ -51,11 +53,14 @@ export class BuildTestComponent {
   constructor(
     private rsaService: RsaService,
     private cdr: ChangeDetectorRef,
-    private subjectService: SubjectService,private questionService:QuerstionService,
+    private subjectService: SubjectService,
+    private questionService: QuerstionService,
     private systemService: SystemService,
     private subSystemService: SubSystemService,
     private querstionService: QuerstionService,
-    private fb: FormBuilder
+    private examDataService: ExamDataService,
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.userId = this.rsaService.decryptText(
       localStorage.getItem('5'),
@@ -118,13 +123,16 @@ export class BuildTestComponent {
     this.qbankObject.systemId = temp.systemId;
     this.qbankObject.type = typeArray;
     this.qbankObject.userId = this.userId;
-    this.qbankObject.status = "VREVIEWED"
+    this.qbankObject.status = 'VREVIEWED';
     console.log(this.qbankObject);
-    this.questionService.postQbankRequest(this.qbankObject).subscribe((doc)=>{
-      console.log(doc);
-
-    })
-
+    this.questionService
+      .postQbankRequest(this.qbankObject)
+      .subscribe((doc: any) => {
+        console.log(doc);
+        const tempData = doc.result;
+        this.examDataService.setExamRoomData(tempData);
+        this.router.navigate(['/eminence/student/exam']);
+      });
   }
 
   getAllSystem() {

@@ -1,9 +1,9 @@
+import { ExamDataService } from './../../service/exam-data.service';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Question } from 'src/app/faculty/model/question';
 import { QuerstionService } from 'src/app/faculty/service/querstion.service';
 import Scrollbar from 'smooth-scrollbar';
-
 
 @Component({
   selector: 'app-exam',
@@ -14,13 +14,15 @@ export class ExamComponent {
   tutorId: string;
   public questLength: number;
   questions: Question[];
-  @ViewChild('scrollExplanationContainer') scrollExplanationContainer: ElementRef;
+  @ViewChild('scrollExplanationContainer')
+  scrollExplanationContainer: ElementRef;
   @ViewChild('scrollQuestionContainer') scrollQuestionContainer: ElementRef;
   public indexBasedQuestions;
 
   constructor(
     private route: ActivatedRoute,
-    private questionService: QuerstionService
+    private questionService: QuerstionService,
+    private examDataService: ExamDataService
   ) {}
 
   ngOnInit(): void {
@@ -29,20 +31,32 @@ export class ExamComponent {
       // Use this.tutorId as needed in your TutorComponent
       console.log(this.tutorId);
     });
-    this.getAllQuestions(this.tutorId);
+    if (this.tutorId) {
+      this.getAllQuestions(this.tutorId);
+    } else {
+      this.questions = this.examDataService.getExamRoomData();
+      this.questLength = this.questions.length;
+      this.getQuestionsIndexBased(0);
+      console.log('this data get from build-test page', this.questions);
+    }
   }
 
-  ngAfterViewInit(){
-    const scrollbars = Scrollbar.init(this.scrollExplanationContainer.nativeElement, {
-      // Smooth Scrollbar options go here
-    });
-    const scrollbar = Scrollbar.init(this.scrollQuestionContainer.nativeElement, {
-      // Smooth Scrollbar options go here
-    });
-
+  ngAfterViewInit() {
+    const scrollbars = Scrollbar.init(
+      this.scrollExplanationContainer.nativeElement,
+      {
+        // Smooth Scrollbar options go here
+      }
+    );
+    const scrollbar = Scrollbar.init(
+      this.scrollQuestionContainer.nativeElement,
+      {
+        // Smooth Scrollbar options go here
+      }
+    );
   }
 
-  getAllQuestions(reqId: string) {
+  getAllQuestions(reqId?: string) {
     let data = { reqId };
     this.questionService.getAllQuestions(data).subscribe((doc: any) => {
       this.questLength = doc.result.questions.length;
@@ -52,14 +66,12 @@ export class ExamComponent {
     });
   }
 
-
-
-  getQuestionsIndexBased(index:number){
-    this.indexBasedQuestions=this.questions[index];
+  getQuestionsIndexBased(index: number) {
+    this.indexBasedQuestions = this.questions[index];
     console.log(this.indexBasedQuestions);
   }
 
-  changeQuestions(i:number){
+  changeQuestions(i: number) {
     console.log(i);
     this.getQuestionsIndexBased(i);
   }

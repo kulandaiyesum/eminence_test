@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'saved', component: SavedComponent },
   { path: 'exam-room', component: ExamRoomComponent },
   { path: 'exam/:id', component: ExamComponent },
+  { path: 'exam', component: ExamComponent },
 ];
 
 @NgModule({
