@@ -67,6 +67,7 @@
       </div>
     </div>
     <div class="flag">
+      <mat-checkbox class="example-margin" (change)="flagChanges()">Flag</mat-checkbox>
       <mat-expansion-panel>
         <mat-expansion-panel-header> </mat-expansion-panel-header>
         <div class="content">
@@ -93,6 +94,7 @@
       >
         Next
       </button>
+      <button mat-button *ngIf="questions?.length ==examArray?.length" (click)="submitExam()">End</button>
     </div>
   </div>
 </div>
