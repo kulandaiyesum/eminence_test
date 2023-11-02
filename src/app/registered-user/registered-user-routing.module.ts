@@ -5,6 +5,7 @@ import { PerformanceComponent } from './components/performance/performance.compo
 import { SavedComponent } from './components/saved/saved.component';
 import { ExamRoomComponent } from './components/exam-room/exam-room.component';
 import { ExamComponent } from './components/exam/exam.component';
+import { AppNotepadEditorComponent } from './components/notepad-editor/notepad-editor.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'build-test', pathMatch: 'full' },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'exam-room', component: ExamRoomComponent },
   { path: 'exam/:id', component: ExamComponent },
   { path: 'exam', component: ExamComponent },
+  { path: 'notepad', component: AppNotepadEditorComponent },
 ];
 
 @NgModule({

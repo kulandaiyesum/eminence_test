@@ -1,0 +1,22 @@
+<div class="notepad" [ngClass]="{ minimized: minimized }">
+  <div class="notepad-header">
+    <h2>Notes</h2>
+    <button (click)="toggleMinimize()" class="minimize-icon">
+      <mat-icon>{{ minimized ? "expand_more" : "minimize" }}</mat-icon>
+    </button>
+    <button (click)="closeNotepad()" class="close-icon">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div *ngIf="!minimized">
+    <textarea
+      [(ngModel)]="note"
+      class="quill-editor"
+      placeholder="Click to edit notes"
+    ></textarea>
+    <div class="button-group">
+      <!-- <button (click)="saveNote()" class="blue-button">Save</button>
+      <button (click)="closeNotepad()" class="red-button">Close</button> -->
+    </div>
+  </div>
+</div>

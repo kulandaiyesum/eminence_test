@@ -1,0 +1,111 @@
+.notepad {
+  width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: move;
+  transition: box-shadow 200ms cubic-bezier(0, 0, 0.2, 1);
+  .notepad-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--qgen-logo-blue);
+    color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 10px;
+
+    h2 {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .close-icon {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+
+      mat-icon {
+        font-size: 20px;
+        color: #fff;
+      }
+    }
+  }
+
+  .quill-editor {
+    width: 100%;
+    height: 300px;
+    padding: 10px;
+    border: none;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-radius: 0;
+    margin: 0;
+    resize: none;
+  }
+
+  .button-group {
+    text-align: right;
+    margin-top: 10px;
+
+    button {
+      padding: 5px 10px;
+      margin: 0 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+
+      &.blue-button {
+        background-color: #007bff;
+        color: #fff;
+      }
+
+      &.red-button {
+        background-color: #ff0000;
+        color: #fff;
+      }
+
+      &:hover {
+        background-color: darken(blue, 10%);
+      }
+    }
+  }
+
+  &.cdk-drag-preview {
+    cursor: grabbing;
+    transform: scale(1.1);
+  }
+
+  &.cdk-drag-animating {
+    transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  &.cdk-drag-placeholder {
+    opacity: 0.5;
+  }
+}
+
+.notepad:active {
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+    0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+&.minimized {
+  height: 50px;
+}
+
+.minimize-icon {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  mat-icon {
+    font-size: 20px;
+    color: #fff;
+  }
+}
+
