@@ -27,13 +27,7 @@ export class InstitutionComponent {
   secretKey = environment.secretKey;
   elementStatus = true;
 
-  displayedColumns: string[] = [
-    'name',
-    'email',
-    'city',
-    'action',
-    'add',
-  ];
+  displayedColumns: string[] = ['name', 'email', 'city', 'action', 'add'];
   public dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

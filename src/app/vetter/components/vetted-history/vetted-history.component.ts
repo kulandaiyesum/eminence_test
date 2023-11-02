@@ -43,7 +43,7 @@ export class VettedHistoryComponent implements OnInit {
   }
 
   getVettedQuestionSet() {
-    let data = { _id: this.vetterId, status: 'V REVIEWED' };
+    let data = { _id: this.vetterId, status: 'VREVIEWED' };
     this.qgenService.getVettedQuestionSet(data).subscribe(
       (res: any) => {
         this.questionSet = res.result;
