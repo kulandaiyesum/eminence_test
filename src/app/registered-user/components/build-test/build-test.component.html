@@ -6,15 +6,28 @@
       [formGroup]="qbankForm"
       (ngSubmit)="generateTest()"
     >
-      <section class="checkbox_section">
-        <mat-checkbox class="" formControlName="type0">Unused</mat-checkbox>
-        <mat-checkbox formControlName="type1">Incorrect</mat-checkbox>
-        <mat-checkbox formControlName="type2">Flagged</mat-checkbox>
-        <mat-checkbox formControlName="type3">All</mat-checkbox>
-        <mat-error *ngIf="qbankForm.hasError('atLeastOneType', 'type')">
+      <div>
+        <section class="checkbox_section">
+          <mat-checkbox formControlName="type3">All</mat-checkbox>
+          <mat-checkbox class="" formControlName="type0">Unused</mat-checkbox>
+          <mat-checkbox formControlName="type1">Incorrect</mat-checkbox>
+          <mat-checkbox formControlName="type2">Flagged</mat-checkbox>
+          <mat-checkbox formControlName="type4">QGen</mat-checkbox>
+        </section>
+        <mat-error
+          class="err"
+          *ngIf="
+            qbankForm.hasError('atLeastOneType') &&
+            (qbankForm.get('type0').touched ||
+              qbankForm.get('type1').touched ||
+              qbankForm.get('type2').touched ||
+              qbankForm.get('type3').touched ||
+              qbankForm.get('type4').touched)
+          "
+        >
           At least one type must be selected
         </mat-error>
-      </section>
+      </div>
 
       <div class="row_formfield mt-5">
         <mat-form-field appearance="outline">
@@ -39,7 +52,11 @@
 
         <mat-form-field appearance="outline">
           <mat-label>System</mat-label>
-          <mat-select placeholder="Choose system" formControlName="systemId">
+          <mat-select
+            placeholder="Choose system"
+            formControlName="systemId"
+          >
+            <mat-option value="ALL">All</mat-option>
             <mat-option *ngFor="let system of systemList" [value]="system._id">
               {{ system.system }}
             </mat-option>
@@ -55,6 +72,7 @@
             placeholder="Choose Sub system"
             formControlName="subsystemId"
           >
+            <mat-option value="ALL">All</mat-option>
             <mat-option
               *ngFor="let system of subsystemList"
               [value]="system._id"
@@ -71,12 +89,30 @@
         <div class="button-area">
           <div class="toggles">
             <mat-radio-group>
-              <mat-slide-toggle id="tutor" formControlName="modes"
+              <mat-slide-toggle
+                id="tutor"
+                (change)="toggleChanged('tutor')"
+                formControlName="mode1"
+                [checked]="examMode === 'tutor'"
                 >Tutor</mat-slide-toggle
               >
-              <mat-slide-toggle id="timed" formControlName="modes"
+              <mat-slide-toggle
+                id="timed"
+                formControlName="mode2"
+                (change)="toggleChanged('timed')"
+                [checked]="examMode === 'timed'"
                 >Timed</mat-slide-toggle
               >
+              <mat-error
+                class="err"
+                *ngIf="
+                  qbankForm.hasError('atLeastOneMode') &&
+                  (qbankForm.get('mode2').touched ||
+                    qbankForm.get('mode1').touched)
+                "
+              >
+                Mode is required
+              </mat-error>
             </mat-radio-group>
           </div>
           <div class="input-area">
@@ -84,19 +120,29 @@
               >Number of Questions:</label
             >
             <input
-              type="text"
+              type="tel"
               id="questionsCount"
               name="questionsCount"
               placeholder="Max 10"
               formControlName="questionsCount"
             />
-            <mat-error
-              *ngIf="qbankForm.get('questionsCount').hasError('required')"
-              >Number of Questions is required</mat-error
-            >
-            <mat-error *ngIf="qbankForm.get('questionsCount').hasError('max')"
-              >Maximum allowed questions is 10</mat-error
-            >
+            <div class="err">
+              <mat-error
+                *ngIf="
+                  qbankForm.get('questionsCount').hasError('required') &&
+                  qbankForm.get('questionsCount').touched
+                "
+                >Number of Questions is required</mat-error
+              >
+              <mat-error
+                *ngIf="qbankForm.controls['questionsCount'].hasError('max')"
+                >Maximum limit is 10</mat-error
+              >
+              <mat-error
+                *ngIf="qbankForm.controls['questionsCount'].hasError('min')"
+                >Minimum should be 1</mat-error
+              >
+            </div>
           </div>
           <button type="submit" [disabled]="qbankForm.invalid">Build</button>
         </div>
@@ -104,128 +150,3 @@
     </form>
   </div>
 </div>
-
-<!-- <mat-radio-group aria-label="Select an option">
-        <mat-radio-button value="1">Eminence QBank</mat-radio-button>
-      </mat-radio-group> -->
-
-<!-- <div class="build-test-container container" #scrollContainer>
-  <div class="main">
-    <h3>Eminence QBank</h3>
-    <form class="qbank" [formGroup]="qbankForm">
-
-      <section class="">
-        <mat-checkbox class="">Unused</mat-checkbox>
-        <mat-checkbox class="">Incorrect</mat-checkbox>
-        <mat-checkbox class="">Flagged</mat-checkbox>
-        <mat-checkbox class="" (change)="selectAll($event)"
-          >All</mat-checkbox
-        >
-      </section>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Subject</mat-label>
-          <mat-icon matSuffix>arrow_drop_down</mat-icon>
-          <input
-            type="text"
-            matInput
-            placeholder="Choose subject"
-            [matAutocomplete]="auto"
-            (input)="filterSubjects($event)"
-          />
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-            <mat-option
-              *ngFor="let subject of filteredSubjectss"
-              [value]="subject"
-              (onSelectionChange)="onSubjectSelected($event)"
-            >
-              {{ subject.subject }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>System</mat-label>
-          <mat-icon matSuffix>arrow_drop_down</mat-icon>
-          <input
-            matInput
-            placeholder="Choose system"
-            [matAutocomplete]="autoSystem"
-            [formControl]="selectedSystemControl"
-            (input)="filterSystems($event)"
-            (optionSelected)="onSystemSelected($event)"
-          />
-          <mat-autocomplete #autoSystem="matAutocomplete">
-            <mat-option
-              *ngFor="let system of filteredSystems | async"
-              [value]="system.system"
-            >
-              {{ system.system }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-
-        <mat-form-field appearance="outline">
-          <mat-label>Sub System</mat-label>
-          <mat-select
-            placeholder="Choose Sub system"
-            [(ngModel)]="selectedSubSystem"
-          >
-            <mat-option
-              *ngFor="let system of subsystemOptions"
-              [value]="system._id"
-              >{{ system.subSystem }}</mat-option
-            >
-          </mat-select>
-        </mat-form-field>
-
-
-      <div class="controls">
-        <div class="button-area">
-          <div class="toggles">
-            <mat-slide-toggle id="tutor">Tutor</mat-slide-toggle>
-            <mat-slide-toggle id="timed">Timed</mat-slide-toggle>
-          </div>
-          <div class="input-area">
-            <label for="questionsCount" id="main-label">Number of Questions:</label>
-            <input
-              type="text"
-              id="questionsCount"
-              name="questions"
-              placeholder="Max 10"
-            />
-          </div>
-          <button (click)="generateTest()">Build</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div> -->
-
-<!--
-        <div class="qgen">
-        <mat-radio-group aria-label="Select an option">
-          <mat-radio-button value="1">QGen: Generate your own</mat-radio-button>
-        </mat-radio-group>
-        <div class="recommendations">
-          <div class="recommendations-area" #scrollExplanationContainer>
-            <h6>Recommended for you</h6>
-            <p>Needs more practice</p>
-            <div class="chips">
-              <mat-chip>renal cell carcinoma</mat-chip>
-              <mat-chip>Barrett's esophagus</mat-chip>
-              <mat-chip>pulmonary circulation</mat-chip>
-              <mat-chip>adrenal glands</mat-chip>
-              <mat-chip>Valvular disorder</mat-chip>
-            </div>
-            <p id="while">Haven't seen in a while</p>
-            <div class="chips">
-              <mat-chip>renal cell carcinoma</mat-chip>
-              <mat-chip>Valvular disorder</mat-chip>
-              <mat-chip>Valvular disorder</mat-chip>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    -->
