@@ -55,6 +55,32 @@
       .explanations-main{
         height: auto;
         width: 100%;
+        #correct-news{
+          // border: 1px solid red;
+          display: flex;
+          p{
+            margin-left: 10px;
+            color: green;
+            font-weight: 500;
+          }
+          mat-icon{
+            color: green;
+            font-weight: 500;
+          }
+        }
+        #incorrect-news{
+          // border: 1px solid red;
+          display: flex;
+          p{
+            margin-left: 10px;
+            color: red;
+            font-weight: 500;
+          }
+          mat-icon{
+            color: red;
+            font-weight: 500;
+          }
+        }
         .explanation-paragraph{
           width: auto;
           height: auto;
@@ -92,4 +118,29 @@
       }
     }
   }
+  .bottom-controls{
+    width: 100%;
+    height: 12vh;
+    // border: 1px solid pink;
+    .bottom-main{
+      width: 100%;
+      height: 12vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      button{
+        color: #000;
+        background-color: var(--qgen-logo-yellow);
+      }
+    }
+  }
+  // @media (max-width: 767px){
+  //   .bottom-controls{
+  //     .bottom-main{
+  //       flex-direction: column !important;
+  //       justify-content: center !important;
+  //     }
+  //   }
+  // }
 }
