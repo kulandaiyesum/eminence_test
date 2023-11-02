@@ -8,10 +8,10 @@
     >
       <div>
         <section class="checkbox_section">
-          <mat-checkbox formControlName="type3">All</mat-checkbox>
-          <mat-checkbox class="" formControlName="type0">Unused</mat-checkbox>
-          <mat-checkbox formControlName="type1">Incorrect</mat-checkbox>
-          <mat-checkbox formControlName="type2">Flagged</mat-checkbox>
+          <mat-checkbox class="" formControlName="type0">All</mat-checkbox>
+          <mat-checkbox formControlName="type1">Unused</mat-checkbox>
+          <mat-checkbox formControlName="type2">Incorrect</mat-checkbox>
+          <mat-checkbox formControlName="type3">Flagged</mat-checkbox>
           <mat-checkbox formControlName="type4">QGen</mat-checkbox>
         </section>
         <mat-error
@@ -25,7 +25,7 @@
               qbankForm.get('type4').touched)
           "
         >
-          At least one type must be selected
+          Required
         </mat-error>
       </div>
 
@@ -52,10 +52,7 @@
 
         <mat-form-field appearance="outline">
           <mat-label>System</mat-label>
-          <mat-select
-            placeholder="Choose system"
-            formControlName="systemId"
-          >
+          <mat-select placeholder="Choose system" formControlName="systemId">
             <mat-option value="ALL">All</mat-option>
             <mat-option *ngFor="let system of systemList" [value]="system._id">
               {{ system.system }}

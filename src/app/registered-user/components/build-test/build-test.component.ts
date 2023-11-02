@@ -50,6 +50,7 @@ export class BuildTestComponent {
   systemList: System[];
   subsystemList: SubSystem[] = [];
   examMode: string = '';
+  type: number;
 
   constructor(
     private rsaService: RsaService,
@@ -104,6 +105,21 @@ export class BuildTestComponent {
     this.getAllSubject();
     this.getAllSystem();
     this.getAllSubsystem();
+
+    this.qbankForm.get('type0').valueChanges.subscribe((typeAll) => {
+      console.log(typeAll);
+      if (typeAll) {
+        this.qbankForm.get('type1').setValue(true);
+        this.qbankForm.get('type2').setValue(true);
+        this.qbankForm.get('type3').setValue(true);
+        this.qbankForm.get('type4').setValue(true);
+      } else {
+        this.qbankForm.get('type1').setValue(false);
+        this.qbankForm.get('type2').setValue(false);
+        this.qbankForm.get('type3').setValue(false);
+        this.qbankForm.get('type4').setValue(false);
+      }
+    });
   }
   toggleChanged(selectedMode: string) {
     this.examMode = '';
@@ -148,10 +164,13 @@ export class BuildTestComponent {
 
   generateTest() {
     const temp = this.qbankForm.value;
-    const typeArray: number[] = [];
+    // const typeArray: number[] = [];
+    let type :number;
     for (let i = 0; i <= 4; i++) {
       if (temp[`type${i}`]) {
-        typeArray.push(i);
+        // typeArray.push(i);
+        type = i;
+        break;
       }
     }
     this.qbankObject.mode = this.examMode;
@@ -159,7 +178,7 @@ export class BuildTestComponent {
     this.qbankObject.subjectId = temp.subjectId;
     this.qbankObject.subsystemId = temp.subsystemId;
     this.qbankObject.systemId = temp.systemId;
-    this.qbankObject.type = typeArray;
+    this.qbankObject.type = type;
     this.qbankObject.userId = this.userId;
     this.qbankObject.status = 'VREVIEWED';
     console.log(this.qbankObject);
