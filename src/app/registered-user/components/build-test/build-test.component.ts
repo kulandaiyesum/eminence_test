@@ -130,7 +130,8 @@ export class BuildTestComponent {
       .subscribe((doc: any) => {
         console.log(doc);
         const tempData = doc.result;
-        this.examDataService.setExamRoomData(tempData);
+        // this.examDataService.setExamRoomData(tempData);
+        localStorage.setItem('emex-td', JSON.stringify(tempData));
         this.router.navigate(['/eminence/student/exam']);
       });
   }
