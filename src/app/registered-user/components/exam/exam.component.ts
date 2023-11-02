@@ -6,6 +6,7 @@ import { QuerstionService } from 'src/app/faculty/service/querstion.service';
 import Scrollbar from 'smooth-scrollbar';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-exam',
@@ -21,6 +22,10 @@ export class ExamComponent implements OnInit {
   @ViewChild('scrollQuestionContainer') scrollQuestionContainer: ElementRef;
   public indexBasedQuestions;
   public showExplanations: boolean = false;
+  public currentQuestionIndex: number = 0;
+  public maximumQuestionLength: number = 0;
+  public correctNews: boolean;
+  public incorrectNews: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -71,7 +76,9 @@ export class ExamComponent implements OnInit {
       this.questLength = doc.result.questions.length;
       this.questions = doc.result.questions;
       console.log(this.questions);
-      this.getQuestionsIndexBased(0);
+      console.log(this.questions.length);
+      this.maximumQuestionLength = this.questions.length - 1;
+      this.getQuestionsIndexBased(this.currentQuestionIndex);
     });
   }
 
@@ -79,15 +86,57 @@ export class ExamComponent implements OnInit {
     this.indexBasedQuestions = this.questions[index];
     console.log(this.indexBasedQuestions);
     this.showExplanations = false;
+    this.incorrectNews = false;
+    this.correctNews = false;
   }
 
   changeQuestions(i: number) {
-    console.log(i);
+    this.currentQuestionIndex = i;
+    console.log(this.currentQuestionIndex);
     this.getQuestionsIndexBased(i);
   }
 
   optionSelected(event: any) {
     console.log('Selected option: ', event.value);
-    this.showExplanations = true;
+
+    console.log(this.indexBasedQuestions.options);
+    const correctOptions = this.indexBasedQuestions.options.filter(
+      (item: any) => item.explanation != null
+    );
+    console.log(correctOptions[0].text);
+    if (correctOptions[0].text === event.value) {
+      console.log('Selected answer is correct ');
+      this.showExplanations = true;
+      this.correctNews = true;
+      this.incorrectNews = false;
+    } else {
+      console.log('Selected answer is incorrect XXX');
+      Swal.fire({
+        title: 'You selected the wrong answer',
+        width: '500px',
+        showConfirmButton: true,
+        confirmButtonText: 'OK',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.showExplanations = true;
+          this.incorrectNews = true;
+          this.correctNews = false;
+        }
+      });
+    }
+  }
+
+  generateAlphabetChar(index: number): string {
+    return String.fromCharCode(65 + index);
+  }
+
+  previous() {
+    this.currentQuestionIndex = this.currentQuestionIndex - 1;
+    this.getQuestionsIndexBased(this.currentQuestionIndex);
+  }
+
+  next() {
+    this.currentQuestionIndex = this.currentQuestionIndex + 1;
+    this.getQuestionsIndexBased(this.currentQuestionIndex);
   }
 }

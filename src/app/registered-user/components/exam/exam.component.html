@@ -9,42 +9,90 @@
       <div class="questions-main">
         <p>
           {{ indexBasedQuestions?.title }}
-
         </p>
         <div class="options">
           <mat-radio-group (change)="optionSelected($event)">
-            <mat-radio-button *ngFor="let option of indexBasedQuestions?.options" [value]="option?.text">
-              {{ option?.text }}
-            </mat-radio-button><br>
+            <mat-list
+              role="list"
+              *ngFor="let option of indexBasedQuestions?.options; let i = index"
+            >
+              <mat-list-item role="listitem">
+                <mat-radio-button [value]="option?.text">
+                  {{ generateAlphabetChar(i) }}.{{ option?.text }}<br />
+                </mat-radio-button>
+              </mat-list-item>
+            </mat-list>
           </mat-radio-group>
         </div>
       </div>
     </div>
     <div class="explanations" #scrollExplanationContainer>
       <div class="explanations-main" *ngIf="showExplanations">
+        <div id="correct-news" *ngIf="correctNews">
+          <b><mat-icon>check_circle_outline</mat-icon></b>
+          <p>You selected right answer</p>
+        </div>
+        <div id="incorrect-news" *ngIf="incorrectNews">
+          <b><mat-icon>cancel</mat-icon></b>
+          <p>You selected wrong answer</p>
+        </div>
         <div *ngFor="let option of indexBasedQuestions?.options">
           <p *ngIf="option.correctAnswer === 'true'">
             <b>Correct Answer : </b> {{ option?.text }}
           </p>
         </div>
-        <div class="explanation-paragraph" *ngFor="let option of indexBasedQuestions?.options">
-          <p *ngIf="option.correctAnswer === 'true'">
+        <div
+          class="explanation-paragraph"
+          *ngFor="let option of indexBasedQuestions?.options"
+        >
+          <!-- <p *ngIf="option.correctAnswer === 'true'">
             <b>Explanation : </b> {{ option?.explanation }}
-          </p>
+          </p> -->
+          <mat-accordion>
+            <mat-expansion-panel
+              *ngIf="
+                option?.explanation !== null &&
+                option?.explanation !== undefined
+              "
+            >
+              <mat-expansion-panel-header>
+                <mat-panel-title> Explanation </mat-panel-title>
+              </mat-expansion-panel-header>
+              <p *ngIf="option.correctAnswer === 'true'">
+                <b>Explanation : </b> {{ option?.explanation }}
+              </p>
+            </mat-expansion-panel>
+          </mat-accordion>
         </div>
       </div>
     </div>
     <div class="flag">
       <mat-expansion-panel>
-        <mat-expansion-panel-header>
-        </mat-expansion-panel-header>
+        <mat-expansion-panel-header> </mat-expansion-panel-header>
         <div class="content">
-          
           <mat-icon svgIcon="custom-icon"></mat-icon>
           <mat-icon>exposure</mat-icon>
           <mat-icon>assignment</mat-icon>
         </div>
       </mat-expansion-panel>
+    </div>
+  </div>
+  <div class="bottom-controls">
+    <div class="bottom-main">
+      <button
+        mat-button
+        (click)="previous()"
+        *ngIf="currentQuestionIndex > 0 && showExplanations"
+      >
+        Prev
+      </button>
+      <button
+        mat-button
+        (click)="next()"
+        *ngIf="currentQuestionIndex < maximumQuestionLength && showExplanations"
+      >
+        Next
+      </button>
     </div>
   </div>
 </div>
