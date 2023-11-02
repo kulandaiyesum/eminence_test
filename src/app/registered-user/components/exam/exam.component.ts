@@ -1,6 +1,6 @@
 import { ExamDataService } from './../../service/exam-data.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from 'src/app/faculty/model/question';
 import { QuerstionService } from 'src/app/faculty/service/querstion.service';
 import Scrollbar from 'smooth-scrollbar';
@@ -35,7 +35,7 @@ export class ExamComponent implements OnInit {
   userId: string = '';
   userFirstName: string = '';
   examArray: string[] = [];
-  toDisplayEnd:number;
+  toDisplayEnd: number;
   flagChecked: boolean = false;
 
   public examObject: {
@@ -59,7 +59,8 @@ export class ExamComponent implements OnInit {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private rsaService: RsaService,
-    private examService:ExamService
+    private examService: ExamService,
+    private router: Router
   ) {
     this.matIconRegistry.addSvgIcon(
       'custom-icon',
@@ -85,16 +86,16 @@ export class ExamComponent implements OnInit {
       this.secretKey
     );
     console.log(this.userId);
-    this.examInstance.studentId=this.userId
-    this.examObject.studentId=this.userId
+    this.examInstance.studentId = this.userId;
+    this.examObject.studentId = this.userId;
     this.userFirstName = this.rsaService.decryptText(
       localStorage.getItem('3'),
       this.secretKey
     );
     console.log(this.userFirstName);
-    this.examInstance.createdBy=this.userFirstName
-    this.examObject.createdBy=this.userFirstName
-    this.examInstance.flag="NO"
+    this.examInstance.createdBy = this.userFirstName;
+    this.examObject.createdBy = this.userFirstName;
+    this.examInstance.flag = 'NO';
   }
 
   ngAfterViewInit() {
@@ -121,7 +122,6 @@ export class ExamComponent implements OnInit {
       console.log(this.questions.length);
       this.maximumQuestionLength = this.questions.length - 1;
       this.getQuestionsIndexBased(this.currentQuestionIndex);
-
     });
   }
 
@@ -132,7 +132,6 @@ export class ExamComponent implements OnInit {
     this.incorrectNews = false;
     this.correctNews = false;
     this.flagChecked = false;
-
   }
 
   changeQuestions(i: number) {
@@ -140,7 +139,6 @@ export class ExamComponent implements OnInit {
     console.log(this.currentQuestionIndex);
     this.getQuestionsIndexBased(i);
   }
-
 
   /******
    *
@@ -155,20 +153,22 @@ export class ExamComponent implements OnInit {
     const correctOptions = this.indexBasedQuestions.options.filter(
       (item: any) => item.explanation != null
     );
-    this.examInstance.questionId=this.indexBasedQuestions._id
-    const selectOptionsIndex=this.indexBasedQuestions.options.findIndex(item => item.text === event.value);
-    const selectedOptions=this.generateAlphabetChar(selectOptionsIndex);
-    console.log("Selected options is : " + selectedOptions);
-    this.examInstance.selectedAnswer=selectedOptions
+    this.examInstance.questionId = this.indexBasedQuestions._id;
+    const selectOptionsIndex = this.indexBasedQuestions.options.findIndex(
+      (item) => item.text === event.value
+    );
+    const selectedOptions = this.generateAlphabetChar(selectOptionsIndex);
+    console.log('Selected options is : ' + selectedOptions);
+    this.examInstance.selectedAnswer = selectedOptions;
     if (correctOptions[0].text === event.value) {
       console.log('Selected answer is correct ');
       this.showExplanations = true;
       this.correctNews = true;
       this.incorrectNews = false;
-      this.examInstance.isCorrectAnswer="YES"
+      this.examInstance.isCorrectAnswer = 'YES';
     } else {
       console.log('Selected answer is incorrect XXX');
-      this.examInstance.isCorrectAnswer="NO"
+      this.examInstance.isCorrectAnswer = 'NO';
       Swal.fire({
         title: 'You selected the wrong answer',
         width: '500px',
@@ -183,7 +183,7 @@ export class ExamComponent implements OnInit {
       });
     }
     console.log(this.examInstance);
-    this.addObjectToExamArray(this.examInstance)
+    this.addObjectToExamArray(this.examInstance);
   }
 
   generateAlphabetChar(index: number): string {
@@ -198,17 +198,15 @@ export class ExamComponent implements OnInit {
   next() {
     this.currentQuestionIndex = this.currentQuestionIndex + 1;
     this.getQuestionsIndexBased(this.currentQuestionIndex);
-
   }
 
-  flagChanges(){
-    if (this.examInstance.flag=="YES") {
-      this.examInstance.flag="NO"
-      this.examObject.flag="NO"
-
+  flagChanges() {
+    if (this.examInstance.flag == 'YES') {
+      this.examInstance.flag = 'NO';
+      this.examObject.flag = 'NO';
     } else {
-      this.examInstance.flag="YES"
-      this.examObject.flag="YES"
+      this.examInstance.flag = 'YES';
+      this.examObject.flag = 'YES';
     }
   }
 
@@ -217,15 +215,23 @@ export class ExamComponent implements OnInit {
     console.log(this.examArray);
   }
 
-  submitExam(){
-    this.examObject.questions=this.examArray
-    this.examService.examSubmit(this.examObject).subscribe((response:any)=>{
-      console.log(response);
-      Swal.fire('Exam finished', 'Have a look on performance board');
-    },
-    (error) => {
-      console.error('An error occurred:', error);
-    }
-    )
+  submitExam() {
+    this.examObject.questions = this.examArray;
+    this.examService.examSubmit(this.examObject).subscribe(
+      (response: any) => {
+        console.log(response);
+        Swal.fire('Exam finished', 'Have a look on performance board').then(
+          (result) => {
+            if(result.isConfirmed) {
+              this.router.navigate(['/eminence/student/build-test']);
+            }
+            this.router.navigate(['/eminence/student/build-test']);
+          }
+        );
+      },
+      (error) => {
+        console.error('An error occurred:', error);
+      }
+    );
   }
 }
