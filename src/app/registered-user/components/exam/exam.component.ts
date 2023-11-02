@@ -43,10 +43,10 @@ export class ExamComponent implements OnInit {
     if (this.tutorId) {
       this.getAllQuestions(this.tutorId);
     } else {
-      this.questions = this.examDataService.getExamRoomData();
+      this.questions = JSON.parse(localStorage.getItem('emex-td'));
+      // this.questions = this.examDataService.getExamRoomData();
       this.questLength = this.questions.length;
       this.getQuestionsIndexBased(0);
-      console.log('this data get from build-test page', this.questions);
     }
   }
 
