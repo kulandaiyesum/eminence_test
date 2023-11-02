@@ -2,8 +2,8 @@ export class Exam {
   studentId: string;
   questionId: string;
   selectedAnswer: string;
-  correctAnswer: string;
-  Flag: string;
+  isCorrectAnswer: string;
+  flag: string;
   createdAt: string;
   createdBy: string;
 }

@@ -36,17 +36,20 @@ export class ExamComponent implements OnInit {
   userFirstName: string = '';
   examArray: string[] = [];
   toDisplayEnd:number;
+  flagChecked: boolean = false;
 
   public examObject: {
     studentId: string;
-    question: any[]; // You can use a specific type for 'question' if needed
+    questions: any[]; // You can use a specific type for 'question' if needed
     createdAt: string;
     createdBy: string;
+    flag: string;
   } = {
     studentId: '',
-    question: [], // Initialize 'question' as an empty array or with data
+    questions: [], // Initialize 'question' as an empty array or with data
     createdAt: '',
     createdBy: '',
+    flag: '',
   };
 
   constructor(
@@ -91,7 +94,7 @@ export class ExamComponent implements OnInit {
     console.log(this.userFirstName);
     this.examInstance.createdBy=this.userFirstName
     this.examObject.createdBy=this.userFirstName
-    this.examInstance.Flag="NO"
+    this.examInstance.flag="NO"
   }
 
   ngAfterViewInit() {
@@ -128,6 +131,7 @@ export class ExamComponent implements OnInit {
     this.showExplanations = false;
     this.incorrectNews = false;
     this.correctNews = false;
+    this.flagChecked = false;
 
   }
 
@@ -161,10 +165,10 @@ export class ExamComponent implements OnInit {
       this.showExplanations = true;
       this.correctNews = true;
       this.incorrectNews = false;
-      this.examInstance.correctAnswer="YES"
+      this.examInstance.isCorrectAnswer="YES"
     } else {
       console.log('Selected answer is incorrect XXX');
-      this.examInstance.correctAnswer="NO"
+      this.examInstance.isCorrectAnswer="NO"
       Swal.fire({
         title: 'You selected the wrong answer',
         width: '500px',
@@ -194,13 +198,17 @@ export class ExamComponent implements OnInit {
   next() {
     this.currentQuestionIndex = this.currentQuestionIndex + 1;
     this.getQuestionsIndexBased(this.currentQuestionIndex);
+
   }
 
   flagChanges(){
-    if (this.examInstance.Flag=="YES") {
-      this.examInstance.Flag="NO"
+    if (this.examInstance.flag=="YES") {
+      this.examInstance.flag="NO"
+      this.examObject.flag="NO"
+
     } else {
-      this.examInstance.Flag="YES"
+      this.examInstance.flag="YES"
+      this.examObject.flag="YES"
     }
   }
 
@@ -210,9 +218,10 @@ export class ExamComponent implements OnInit {
   }
 
   submitExam(){
-    this.examObject.question=this.examArray
+    this.examObject.questions=this.examArray
     this.examService.examSubmit(this.examObject).subscribe((response:any)=>{
       console.log(response);
+      Swal.fire('Exam finished', 'Have a look on performance board');
     },
     (error) => {
       console.error('An error occurred:', error);
