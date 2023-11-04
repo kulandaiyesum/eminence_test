@@ -43,13 +43,21 @@ export class ExamComponent implements OnInit {
     questions: any[]; // You can use a specific type for 'question' if needed
     createdAt: string;
     createdBy: string;
+    mode: string;
+    systemId: string;
+    subSystemId: string;
+    subjectId: string;
     flag: string;
   } = {
     studentId: '',
-    questions: [], // Initialize 'question' as an empty array or with data
+    questions: [],
     createdAt: '',
     createdBy: '',
     flag: '',
+    mode: '',
+    systemId: '',
+    subSystemId: '',
+    subjectId: '',
   };
 
   constructor(
@@ -217,12 +225,16 @@ export class ExamComponent implements OnInit {
 
   submitExam() {
     this.examObject.questions = this.examArray;
+    this.examObject.mode = localStorage.getItem('emm'); //mode
+    this.examObject.systemId = localStorage.getItem('emsm'); //systemId
+    this.examObject.subSystemId = localStorage.getItem('emssm'); //subsystemId
+    this.examObject.subjectId = localStorage.getItem('emsbi'); //subjectId
     this.examService.examSubmit(this.examObject).subscribe(
       (response: any) => {
         console.log(response);
         Swal.fire('Exam finished', 'Have a look on performance board').then(
           (result) => {
-            if(result.isConfirmed) {
+            if (result.isConfirmed) {
               this.router.navigate(['/eminence/student/build-test']);
             }
             this.router.navigate(['/eminence/student/build-test']);
