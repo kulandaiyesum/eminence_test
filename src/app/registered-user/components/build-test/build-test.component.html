@@ -88,16 +88,16 @@
             <mat-radio-group>
               <mat-slide-toggle
                 id="tutor"
-                (change)="toggleChanged('tutor')"
+                (change)="toggleChanged('TUTOR')"
                 formControlName="mode1"
-                [checked]="examMode === 'tutor'"
+                [checked]="examMode === 'TUTOR'"
                 >Tutor</mat-slide-toggle
               >
               <mat-slide-toggle
                 id="timed"
                 formControlName="mode2"
-                (change)="toggleChanged('timed')"
-                [checked]="examMode === 'timed'"
+                (change)="toggleChanged('TIMED')"
+                [checked]="examMode === 'TIMED'"
                 >Timed</mat-slide-toggle
               >
               <mat-error

@@ -165,7 +165,7 @@ export class BuildTestComponent {
   generateTest() {
     const temp = this.qbankForm.value;
     // const typeArray: number[] = [];
-    let type :number;
+    let type: number;
     for (let i = 0; i <= 4; i++) {
       if (temp[`type${i}`]) {
         // typeArray.push(i);
@@ -189,6 +189,10 @@ export class BuildTestComponent {
         const tempData = doc.result;
         // this.examDataService.setExamRoomData(tempData);
         localStorage.setItem('emex-td', JSON.stringify(tempData));
+        localStorage.setItem('emm', this.qbankObject.mode);
+        localStorage.setItem('emsm', this.qbankObject.systemId);
+        localStorage.setItem('emssm', this.qbankObject.subsystemId);
+        localStorage.setItem('emsbi', this.qbankObject.subjectId);
         this.router.navigate(['/eminence/student/exam']);
       });
   }
