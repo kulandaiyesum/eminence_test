@@ -22,7 +22,13 @@
         padding-top: 5px;
         cursor: pointer;
       }
+      .selected{
+        color: #fff;
+        
+        border: 1px solid #000;
+      }
     }
+
   }
   .main{
     width: 100%;
@@ -84,6 +90,9 @@
         .explanation-paragraph{
           width: auto;
           height: auto;
+        }
+        #explanation-panel{
+          margin-top: 20px;
         }
       }
     }

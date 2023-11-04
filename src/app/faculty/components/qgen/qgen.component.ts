@@ -174,6 +174,7 @@ export class QgenComponent implements OnInit {
     this.qGenObject.type = 'Qgen';
     this.qGenObject.createdBy = this.userFirstName;
     this.qGenObject.keywords = this.stringToArray(this.gGenForm.value.keywords);
+    this.qGenObject.mode="TUTOR"
     this.gGenService.submitQgen(this.qGenObject).subscribe(
       (response: any) => {
         const statusCode = response.statusCode;

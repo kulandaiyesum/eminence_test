@@ -9,4 +9,5 @@ export class Qgen {
   topic?: string;
   recived?: boolean;
   status?: string;
+  mode?: string;
 }

@@ -34,7 +34,7 @@ export class ExamComponent implements OnInit {
   secretKey: string = environment.secretKey;
   userId: string = '';
   userFirstName: string = '';
-  examArray: string[] = [];
+  examArray: any[] = [];
   toDisplayEnd: number;
   flagChecked: boolean = false;
 
@@ -58,6 +58,17 @@ export class ExamComponent implements OnInit {
     systemId: '',
     subSystemId: '',
     subjectId: '',
+  };
+  public optionInstance: {
+    questionId: string;
+    selectedAnswer: string;
+    isCorrectAnswer: string;
+    flag: string;
+  } = {
+    flag: '',
+    questionId: '',
+    selectedAnswer: '',
+    isCorrectAnswer: '',
   };
 
   constructor(
@@ -104,6 +115,7 @@ export class ExamComponent implements OnInit {
     this.examInstance.createdBy = this.userFirstName;
     this.examObject.createdBy = this.userFirstName;
     this.examInstance.flag = 'NO';
+    this.optionInstance.flag = 'NO';
   }
 
   ngAfterViewInit() {
@@ -144,7 +156,7 @@ export class ExamComponent implements OnInit {
 
   changeQuestions(i: number) {
     this.currentQuestionIndex = i;
-    console.log(this.currentQuestionIndex);
+    console.log(this.currentQuestionIndex == i);
     this.getQuestionsIndexBased(i);
   }
 
@@ -162,21 +174,28 @@ export class ExamComponent implements OnInit {
       (item: any) => item.explanation != null
     );
     this.examInstance.questionId = this.indexBasedQuestions._id;
+    this.optionInstance.questionId = this.indexBasedQuestions._id;
+    this.examArray = this.examArray.filter(
+      (item: any) => item.questionId !== this.optionInstance.questionId
+    );
     const selectOptionsIndex = this.indexBasedQuestions.options.findIndex(
       (item) => item.text === event.value
     );
     const selectedOptions = this.generateAlphabetChar(selectOptionsIndex);
     console.log('Selected options is : ' + selectedOptions);
     this.examInstance.selectedAnswer = selectedOptions;
+    this.optionInstance.selectedAnswer = selectedOptions;
     if (correctOptions[0].text === event.value) {
       console.log('Selected answer is correct ');
       this.showExplanations = true;
       this.correctNews = true;
       this.incorrectNews = false;
       this.examInstance.isCorrectAnswer = 'YES';
+      this.optionInstance.isCorrectAnswer = 'YES';
     } else {
       console.log('Selected answer is incorrect XXX');
       this.examInstance.isCorrectAnswer = 'NO';
+      this.optionInstance.isCorrectAnswer = 'NO';
       Swal.fire({
         title: 'You selected the wrong answer',
         width: '500px',
@@ -190,8 +209,9 @@ export class ExamComponent implements OnInit {
         }
       });
     }
-    console.log(this.examInstance);
-    this.addObjectToExamArray(this.examInstance);
+
+    this.examArray.push({ ...this.optionInstance });
+    console.log(this.examArray);
   }
 
   generateAlphabetChar(index: number): string {
@@ -209,17 +229,40 @@ export class ExamComponent implements OnInit {
   }
 
   flagChanges() {
-    if (this.examInstance.flag == 'YES') {
-      this.examInstance.flag = 'NO';
-      this.examObject.flag = 'NO';
-    } else {
+    this.optionInstance.questionId = this.indexBasedQuestions._id;
+    console.log(this.flagChecked);
+    if (this.flagChecked == true) {
       this.examInstance.flag = 'YES';
       this.examObject.flag = 'YES';
+      this.optionInstance.flag = 'YES';
+      this.optionInstance.isCorrectAnswer = '';
+      this.optionInstance.selectedAnswer = '';
+    } else {
+      this.examInstance.flag = 'NO';
+      this.examObject.flag = 'NO';
+      this.optionInstance.flag = 'NO';
     }
+
+    // if (this.examInstance.flag == 'YES') {
+    //   this.examInstance.flag = 'NO';
+    //   this.examObject.flag = 'NO';
+    //   this.optionInstance.flag = 'NO';
+    // } else {
+    //   this.examInstance.flag = 'YES';
+    //   this.examObject.flag = 'YES';
+    //   this.optionInstance.flag = 'YES';
+    // }
+    setTimeout(() => {
+      this.next();
+      this.examArray.push({ ...this.optionInstance });
+      console.log(this.examArray);
+      this.optionInstance.flag='NO'
+    }, 500);
   }
 
   addObjectToExamArray(data: any) {
-    this.examArray = [...this.examArray, data];
+    console.log(this.examArray);
+    this.examArray.push(data);
     console.log(this.examArray);
   }
 
