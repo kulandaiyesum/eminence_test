@@ -1,7 +1,7 @@
 <div class="exam-container">
   <div class="controls">
-    <div class="button" *ngFor="let item of questions; let i = index">
-      <p (click)="changeQuestions(i)">{{ i + 1 }}</p>
+    <div class="button" *ngFor="let item of questions; let i = index" >
+      <p (click)="changeQuestions(i)" [ngClass]="{ 'selected': i === currentQuestionIndex }">{{ i + 1 }}</p>
     </div>
   </div>
   <div class="main">
@@ -28,19 +28,26 @@
     </div>
     <div class="explanations" #scrollExplanationContainer>
       <div class="explanations-main" *ngIf="showExplanations">
-        <div id="correct-news" *ngIf="correctNews">
-          <b><mat-icon>check_circle_outline</mat-icon></b>
-          <p>You selected right answer</p>
-        </div>
-        <div id="incorrect-news" *ngIf="incorrectNews">
-          <b><mat-icon>cancel</mat-icon></b>
-          <p>You selected wrong answer</p>
-        </div>
-        <div *ngFor="let option of indexBasedQuestions?.options">
-          <p *ngIf="option.correctAnswer === 'true'">
-            <b>Correct Answer : </b> {{ option?.text }}
-          </p>
-        </div>
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title> View answer </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div id="correct-news" *ngIf="correctNews">
+              <b><mat-icon>check_circle_outline</mat-icon></b>
+              <p>You selected right answer</p>
+            </div>
+            <div id="incorrect-news" *ngIf="incorrectNews">
+              <b><mat-icon>cancel</mat-icon></b>
+              <p>You selected wrong answer</p>
+            </div>
+            <div *ngFor="let option of indexBasedQuestions?.options">
+              <p *ngIf="option.correctAnswer === 'true'">
+                <b>Correct Answer : </b> {{ option?.text }}
+              </p>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
         <div
           class="explanation-paragraph"
           *ngFor="let option of indexBasedQuestions?.options"
@@ -53,7 +60,7 @@
               *ngIf="
                 option?.explanation !== null &&
                 option?.explanation !== undefined
-              "
+              " id="explanation-panel"
             >
               <mat-expansion-panel-header>
                 <mat-panel-title> Explanation </mat-panel-title>
@@ -67,7 +74,12 @@
       </div>
     </div>
     <div class="flag">
-      <mat-checkbox class="example-margin" [(ngModel)]="flagChecked" (change)="flagChanges()">Flag</mat-checkbox>
+      <mat-checkbox
+        class="example-margin"
+        [(ngModel)]="flagChecked"
+        (change)="flagChanges()"
+        >Flag</mat-checkbox
+      >
       <mat-expansion-panel>
         <mat-expansion-panel-header> </mat-expansion-panel-header>
         <div class="content">
@@ -94,7 +106,13 @@
       >
         Next
       </button>
-      <button mat-button *ngIf="questions?.length ==examArray?.length" (click)="submitExam()">End</button>
+      <button
+        mat-button
+        *ngIf="questions?.length == examArray?.length"
+        (click)="submitExam()"
+      >
+        End
+      </button>
     </div>
   </div>
 </div>
