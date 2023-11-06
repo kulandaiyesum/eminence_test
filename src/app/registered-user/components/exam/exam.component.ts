@@ -11,6 +11,8 @@ import { Exam } from '../../model/exam.class';
 import { RsaService } from 'src/app/shared/service/rsa.service';
 import { environment } from 'src/environments/environment';
 import { ExamService } from '../../service/exam.service';
+import { CalculatorComponent } from '../calculator/calculator.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-exam',
@@ -43,6 +45,7 @@ export class ExamComponent implements OnInit {
   flagChecked: boolean = false;
   bindingData: any;
   checked = false;
+  calculatorPopupVisible = false;
 
   public examObject: {
     studentId: string;
@@ -76,6 +79,7 @@ export class ExamComponent implements OnInit {
     selectedAnswer: '',
     isCorrectAnswer: '',
   };
+  // dialog: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -85,7 +89,8 @@ export class ExamComponent implements OnInit {
     private domSanitizer: DomSanitizer,
     private rsaService: RsaService,
     private examService: ExamService,
-    private router: Router
+    private router: Router,
+    public dialog: MatDialog
   ) {
     this.matIconRegistry.addSvgIcon(
       'custom-icon',
@@ -344,5 +349,16 @@ export class ExamComponent implements OnInit {
     // this.answerList.findIndex((val: any, index: number) => i == index);
     console.log(this.answerList);
   }
+  openCalculatorPopup() {
+    const dialogRef = this.dialog.open(CalculatorComponent, {
+      width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
+  }
+  closeCalculatorPopup() {
+    this.calculatorPopupVisible = false;
+  }
+
   getAnsByQnsId(qnsId) {}
 }

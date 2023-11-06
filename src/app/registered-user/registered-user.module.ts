@@ -40,6 +40,7 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExamComponent } from './components/exam/exam.component';
+import { CalculatorComponent } from './components/calculator/calculator.component';
 import { ExamTimedComponent } from './components/exam-timed/exam-timed.component';
 
 @NgModule({
@@ -49,6 +50,7 @@ import { ExamTimedComponent } from './components/exam-timed/exam-timed.component
     SavedComponent,
     ExamRoomComponent,
     ExamComponent,
+    CalculatorComponent,
     ExamTimedComponent,
   ],
   imports: [
