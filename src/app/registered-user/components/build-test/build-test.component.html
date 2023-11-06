@@ -8,11 +8,11 @@
     >
       <div>
         <section class="checkbox_section">
-          <mat-checkbox class="" formControlName="type0">All</mat-checkbox>
-          <mat-checkbox formControlName="type1">Unused</mat-checkbox>
-          <mat-checkbox formControlName="type2">Incorrect</mat-checkbox>
-          <mat-checkbox formControlName="type3">Flagged</mat-checkbox>
-          <mat-checkbox formControlName="type4">QGen</mat-checkbox>
+          <mat-checkbox class="" formControlName="type0" [(ngModel)]="selectAllCheckbox">All</mat-checkbox>
+          <mat-checkbox formControlName="type1" >Unused</mat-checkbox>
+          <mat-checkbox formControlName="type2" >Incorrect</mat-checkbox>
+          <mat-checkbox formControlName="type3" >Flagged</mat-checkbox>
+          <mat-checkbox formControlName="type4" >QGen</mat-checkbox>
         </section>
         <mat-error
           class="err"
