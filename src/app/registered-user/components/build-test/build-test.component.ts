@@ -87,8 +87,8 @@ export class BuildTestComponent {
           '',
           [
             Validators.required,
-            this.maxQuestionsValidator,
-            Validators.max(10),
+            // this.maxQuestionsValidator,
+            Validators.max(40),
             Validators.min(1),
           ],
         ],
@@ -132,7 +132,7 @@ export class BuildTestComponent {
   }
 
   maxQuestionsValidator(control: AbstractControl): ValidationErrors | null {
-    const maxQuestions = 10;
+    const maxQuestions = 40;
     if (control.value > maxQuestions) {
       return { max: true };
     }
@@ -193,9 +193,9 @@ export class BuildTestComponent {
         localStorage.setItem('emsm', this.qbankObject.systemId);
         localStorage.setItem('emssm', this.qbankObject.subsystemId);
         localStorage.setItem('emsbi', this.qbankObject.subjectId);
-        if(this.qbankObject.mode === 'TUTOR' ){
+        if (this.qbankObject.mode === 'TUTOR') {
           this.router.navigate(['/eminence/student/exam']);
-        }else {
+        } else {
           this.router.navigate(['/eminence/student/exam-timed']);
         }
       });
