@@ -54,6 +54,8 @@ export class ExamComponent implements OnInit {
     subSystemId: string;
     subjectId: string;
     flag: string;
+    from: string;
+    qgenid: string;
   } = {
     studentId: '',
     questions: [],
@@ -64,6 +66,9 @@ export class ExamComponent implements OnInit {
     systemId: '',
     subSystemId: '',
     subjectId: '',
+    from: '',
+    qgenid: '',
+
   };
   public optionInstance: {
     questionId: string;
@@ -98,6 +103,7 @@ export class ExamComponent implements OnInit {
       // Use this.tutorId as needed in your TutorComponent
       console.log(this.tutorId);
     });
+    this.examObject.qgenid=this.tutorId
     if (this.tutorId) {
       this.getAllQuestions(this.tutorId);
     } else {
@@ -219,8 +225,8 @@ export class ExamComponent implements OnInit {
 
     const selectedOptions = this.generateAlphabetChar(selectOptionsIndex);
     console.log('Selected options is : ' + selectedOptions);
-    this.examInstance.selectedAnswer = selectedOption?._id;
-    this.optionInstance.selectedAnswer = selectedOption?._id;
+    this.examInstance.selectedAnswer = selectedOptions;
+    this.optionInstance.selectedAnswer = selectedOptions;
     console.log(correctOptions);
     this.value = correctOptions[0].text;
 
@@ -309,6 +315,7 @@ export class ExamComponent implements OnInit {
   submitExam() {
     this.examObject.questions = this.examArray;
     this.examObject.mode = 'TUTOR'; //mode
+    this.examObject.from = 'qgen'; //mode
     this.examObject.systemId = localStorage.getItem('emsm'); //systemId
     this.examObject.subSystemId = localStorage.getItem('emssm'); //subsystemId
     this.examObject.subjectId = localStorage.getItem('emsbi'); //subjectId

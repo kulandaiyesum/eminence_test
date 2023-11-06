@@ -8,11 +8,12 @@
     >
       <div>
         <section class="checkbox_section">
-          <mat-checkbox class="" formControlName="type0" [(ngModel)]="selectAllCheckbox">All</mat-checkbox>
-          <mat-checkbox formControlName="type1" >Unused</mat-checkbox>
-          <mat-checkbox formControlName="type2" >Incorrect</mat-checkbox>
-          <mat-checkbox formControlName="type3" >Flagged</mat-checkbox>
-          <mat-checkbox formControlName="type4" >QGen</mat-checkbox>
+          <mat-checkbox class="" formControlName="type0" [(ngModel)]="selectAllCheckbox" [disabled]="specialCheckboxesChecked">All</mat-checkbox>
+          <mat-checkbox formControlName="type1" [disabled]="specialCheckboxesChecked" (click)="checkboxChanged('unused')">Unused</mat-checkbox>
+          <mat-checkbox formControlName="type2" [disabled]="specialCheckboxesChecked" (click)="checkboxChanged('incorrect')">Incorrect</mat-checkbox>
+          <mat-checkbox formControlName="type3" [disabled]="specialCheckboxesChecked"  (click)="checkboxChanged('flagged')">Flagged</mat-checkbox>
+          <mat-checkbox formControlName="type4" [disabled]="specialCheckboxesChecked" (click)="checkboxChanged('qgen')">QGen</mat-checkbox>
+          <mat-icon *ngIf="specialCheckboxesChecked" (click)="enableCheckbox()">refresh</mat-icon>
         </section>
         <mat-error
           class="err"
