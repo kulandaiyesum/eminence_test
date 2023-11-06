@@ -50,6 +50,7 @@ import { ExamComponent } from './components/exam/exam.component';
     ExamComponent,
   ],
   imports: [
+    FormsModule,
     CommonModule,
     RegisteredUserRoutingModule,
     MatCheckboxModule,
@@ -83,7 +84,9 @@ import { ExamComponent } from './components/exam/exam.component';
     MatSortModule,
     MatPaginatorModule,
     NgbCarouselModule,
-    NgbModule,FormsModule,ReactiveFormsModule
+    NgbModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class RegisteredUserModule {}

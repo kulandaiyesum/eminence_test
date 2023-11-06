@@ -19,7 +19,9 @@ import { ExamService } from '../../service/exam.service';
 })
 export class ExamComponent implements OnInit {
   tutorId: string;
+  value;
   public questLength: number;
+  public answerList: any[] = [];
   questions: Question[];
   examInstance: Exam = new Exam();
   @ViewChild('scrollExplanationContainer')
@@ -31,12 +33,16 @@ export class ExamComponent implements OnInit {
   public maximumQuestionLength: number = 0;
   public correctNews: boolean;
   public incorrectNews: boolean;
+  public answerId;
+  selectedOption: number | null = null;
   secretKey: string = environment.secretKey;
   userId: string = '';
   userFirstName: string = '';
   examArray: any[] = [];
   toDisplayEnd: number;
   flagChecked: boolean = false;
+  bindingData: any;
+  checked = false;
 
   public examObject: {
     studentId: string;
@@ -152,6 +158,21 @@ export class ExamComponent implements OnInit {
     this.incorrectNews = false;
     this.correctNews = false;
     this.flagChecked = false;
+    console.log(this.answerList, index);
+    let data;
+    let data1 = [];
+    this.bindingData = this.answerList.find((x) => x.i === index);
+    console.log(this.bindingData);
+    this.value = this.bindingData?.text;
+
+    // data1.push(data);
+    // data1.forEach((res) => {
+    //   if (this.indexBasedQuestions.options._id.includes(res._id)) {
+    //     this.indexBasedQuestions.options.push(res._id);
+    //   }
+    // });
+
+    // this.answerId = this.answerList[index].ans;
   }
 
   changeQuestions(i: number) {
@@ -166,14 +187,25 @@ export class ExamComponent implements OnInit {
    *
    * ******/
 
-  optionSelected(event: any) {
-    // console.log('Selected option: ', event.value);
+  optionSelected(event: any, i, selectedOption) {
+    console.log('Selected option: ', event);
+    const option = this.indexBasedQuestions.options[i];
+    option.checked = event.checked;
+    this.indexBasedQuestions.options.forEach((option, index) => {
+      if (index !== i) {
+        option.checked = false;
+      }
+    });
+    // if(selectedOption.checked){
+
+    // }
     // console.log(this.indexBasedQuestions.options);
     // console.log(this.indexBasedQuestions);
     const correctOptions = this.indexBasedQuestions.options.filter(
       (item: any) => item.explanation != null
     );
     this.examInstance.questionId = this.indexBasedQuestions._id;
+    // this.answerId = this.indexBasedQuestions.option._id;
     this.optionInstance.questionId = this.indexBasedQuestions._id;
     this.examArray = this.examArray.filter(
       (item: any) => item.questionId !== this.optionInstance.questionId
@@ -185,6 +217,9 @@ export class ExamComponent implements OnInit {
     console.log('Selected options is : ' + selectedOptions);
     this.examInstance.selectedAnswer = selectedOptions;
     this.optionInstance.selectedAnswer = selectedOptions;
+    console.log(correctOptions);
+    this.value = correctOptions[0].text;
+
     if (correctOptions[0].text === event.value) {
       console.log('Selected answer is correct ');
       this.showExplanations = true;
@@ -219,6 +254,8 @@ export class ExamComponent implements OnInit {
   }
 
   previous() {
+    console.log(this.currentQuestionIndex);
+
     this.currentQuestionIndex = this.currentQuestionIndex - 1;
     this.getQuestionsIndexBased(this.currentQuestionIndex);
   }
@@ -256,7 +293,7 @@ export class ExamComponent implements OnInit {
       this.next();
       this.examArray.push({ ...this.optionInstance });
       console.log(this.examArray);
-      this.optionInstance.flag='NO'
+      this.optionInstance.flag = 'NO';
     }, 500);
   }
 
@@ -289,4 +326,20 @@ export class ExamComponent implements OnInit {
       }
     );
   }
+  storeList(event, qnsId, i) {
+    var existValue = this.answerList.find((s) => s.id == qnsId);
+    if (existValue != null) {
+      existValue.ans = event._id;
+    } else {
+      this.answerList.push({
+        i: i,
+        id: qnsId,
+        ans: event._id,
+        txt: event.text,
+      });
+    }
+    // this.answerList.findIndex((val: any, index: number) => i == index);
+    console.log(this.answerList);
+  }
+  getAnsByQnsId(qnsId) {}
 }

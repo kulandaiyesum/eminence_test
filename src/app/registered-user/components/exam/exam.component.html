@@ -1,7 +1,12 @@
 <div class="exam-container">
   <div class="controls">
-    <div class="button" *ngFor="let item of questions; let i = index" >
-      <p (click)="changeQuestions(i)" [ngClass]="{ 'selected': i === currentQuestionIndex }">{{ i + 1 }}</p>
+    <div class="button" *ngFor="let item of questions; let i = index">
+      <p
+        (click)="changeQuestions(i)"
+        [ngClass]="{ selected: i === currentQuestionIndex }"
+      >
+        {{ i + 1 }}
+      </p>
     </div>
   </div>
   <div class="main">
@@ -11,18 +16,42 @@
           {{ indexBasedQuestions?.title }}
         </p>
         <div class="options">
-          <mat-radio-group (change)="optionSelected($event)">
+          <!-- <mat-checkbox> -->
+          <mat-checkbox
+            (change)="optionSelected($event, i, option)"
+            *ngFor="let option of indexBasedQuestions?.options; let i = index"
+            [value]="option?.text"
+            (click)="
+              storeList(option, indexBasedQuestions._id, currentQuestionIndex)
+            "
+            [(ngModel)]="option.checked"
+          >
+            {{ option?.text }}</mat-checkbox
+          >
+          <!-- </mat-checkbox -->
+          <!-- > -->
+          <!-- <mat-radio-group (change)="optionSelected($event,i)">
             <mat-list
               role="list"
               *ngFor="let option of indexBasedQuestions?.options; let i = index"
             >
               <mat-list-item role="listitem">
-                <mat-radio-button [value]="option?.text">
-                  {{ generateAlphabetChar(i) }}.{{ option?.text }}<br />
+                <mat-radio-button
+                  [name]="option.text"
+                  [value]="option?.text"
+                  (click)="
+                    storeList(
+                      option,
+                      indexBasedQuestions._id,
+                      currentQuestionIndex
+                    )
+                  "
+                >
+                  {{ option?.text }}
                 </mat-radio-button>
               </mat-list-item>
             </mat-list>
-          </mat-radio-group>
+          </mat-radio-group> -->
         </div>
       </div>
     </div>
@@ -60,7 +89,8 @@
               *ngIf="
                 option?.explanation !== null &&
                 option?.explanation !== undefined
-              " id="explanation-panel"
+              "
+              id="explanation-panel"
             >
               <mat-expansion-panel-header>
                 <mat-panel-title> Explanation </mat-panel-title>
