@@ -1,0 +1,54 @@
+<div class="calculator">
+  <div class="calculator-header">
+    <span>Calculator</span>
+    <button mat-icon-button (click)="onNoClick()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="display-row">
+    <input type="text" [(ngModel)]="display" readonly />
+    <button class="special-button backspace-button" (click)="backspace()">
+    BS
+    </button>
+     </div>
+
+  <div class="button-row">
+    <button (click)="memoryClear()" class="special-button">MC</button>
+    <button (click)="memoryRecall()" class="special-button">MR</button>
+    <button (click)="memoryAdd()" class="special-button">M+</button>
+    <button class="special-button clear-button" (click)="clearDisplay()">C</button>
+  </div>
+  <div class="button-row">
+    <button (click)="appendToDisplay('+/-')" class="plusmin-button">±</button>
+    <button (click)="appendToDisplay('√(')" class="root-button">√X</button>
+    <button (click)="appendToDisplay('1/')" class="onebyx-button">1/X</button>
+    <button (click)="appendToDisplay('/')" class="division-button">÷</button>
+  </div>
+
+  <div class="button-row">
+    <button (click)="appendToDisplay('7')">7</button>
+    <button (click)="appendToDisplay('8')">8</button>
+    <button (click)="appendToDisplay('9')">9</button>
+    <button (click)="appendToDisplay('*')" class="multiply-button">X</button>
+  </div>
+
+  <div class="button-row">
+    <button (click)="appendToDisplay('4')">4</button>
+    <button (click)="appendToDisplay('5')">5</button>
+    <button (click)="appendToDisplay('6')">6</button>
+    <button (click)="appendToDisplay('-')" class="subtraction-button">-</button>
+  </div>
+
+  <div class="button-row">
+    <button (click)="appendToDisplay('1')">1</button>
+    <button (click)="appendToDisplay('2')">2</button>
+    <button (click)="appendToDisplay('3')">3</button>
+    <button (click)="appendToDisplay('+')" class="operation-button">+</button>
+  </div>
+
+  <div class="button-row special-row">
+    <button (click)="appendToDisplay('0')">0</button>
+    <button (click)="appendToDisplay('.')">.</button>
+    <button (click)="calculateResult()" class="equal-button">=</button>
+  </div>
+</div>

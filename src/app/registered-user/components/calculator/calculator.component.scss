@@ -1,0 +1,151 @@
+.calculator {
+  width: 300px;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  display: inline-block;
+
+  .calculator-header {
+    background-color: #3498db;
+    text-align: center;
+    padding: 3px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+
+    span.Calculator {
+      margin: 0;
+      text-align: center;
+      flex: 1;
+    }
+    #close-icon {
+      margin-left: auto;
+      cursor: pointer;
+      font-size: 20px;
+      color: #fff;
+    }
+  }
+
+  .display-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+
+    input {
+      width: 60%;
+      flex: 1;
+      height: 40px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 5px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 40px;
+      height: 40px;
+      font-size: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #f0f0f0;
+    }
+  }
+
+  .button-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+
+    button {
+      width: 23%;
+      height: 50px;
+      font-size: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .special-button {
+      background-color: purple;
+      color: #fff;
+    }
+    .backspace-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #f0f0f0;
+    }
+
+    .backspace-icon {
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .special-button.backspace-button {
+      margin-right: 10px;
+    }
+    .clear-button {
+      background-color: #f5a623;
+      color: #fff;
+    }
+
+    .operation-button {
+      background-color: #337ab7;
+      color: #fff;
+    }
+
+    .equal-button {
+      flex: 1;
+      background-color: #f5a623;
+      color: #fff;
+    }
+
+    .subtraction-button {
+      background-color: #337ab7;
+      color: #fff;
+    }
+    .division-button {
+      background-color: #337ab7;
+      color: #fff;
+    }
+    .multiply-button {
+      background-color: #337ab7;
+      color: #fff;
+    }
+    .plusmin-button {
+      background-color: #337ab7;
+      color: #fff;
+    }
+    .root-button {
+      background-color: #337ab7;
+      color: #fff;
+    }
+    .onebyx-button {
+      background-color: #337ab7;
+      color: #fff;
+    }
+    .root-button {
+      background-color: #337ab7;
+      color: #fff;
+    }
+  }
+
+  .special-row {
+    justify-content: space-evenly;
+    gap: 5px;
+  }
+}

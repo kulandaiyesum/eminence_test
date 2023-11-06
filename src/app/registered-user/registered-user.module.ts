@@ -40,6 +40,7 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExamComponent } from './components/exam/exam.component';
+import { CalculatorComponent } from './components/calculator/calculator.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { ExamComponent } from './components/exam/exam.component';
     SavedComponent,
     ExamRoomComponent,
     ExamComponent,
+    CalculatorComponent,
   ],
   imports: [
     FormsModule,
