@@ -235,7 +235,7 @@ export class ExamTimedComponent implements OnInit {
     this.stopTimer();
     this.examTimedObject.questions = this.examArray;
     console.log(this.examTimedObject);
-    this.examService.examTimedSubmit(this.examTimedObject).subscribe(
+    this.examService.examSubmit(this.examTimedObject).subscribe(
       (response: any) => {
         console.log(response);
         Swal.fire('Exam finished', 'Have a look on performance board').then(

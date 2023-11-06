@@ -31,6 +31,7 @@ import { RsaService } from 'src/app/shared/service/rsa.service';
 import { environment } from 'src/environments/environment';
 import { QuerstionService } from 'src/app/faculty/service/querstion.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-build-test',
@@ -65,6 +66,7 @@ export class BuildTestComponent {
     private querstionService: QuerstionService,
     private examDataService: ExamDataService,
     private fb: FormBuilder,
+    private toastr: ToastrService,
     private router: Router
   ) {
     this.userId = this.rsaService.decryptText(
@@ -134,7 +136,7 @@ export class BuildTestComponent {
     }
   }
 
-  enableCheckbox(){
+  enableCheckbox() {
     this.specialCheckboxesChecked = !this.specialCheckboxesChecked;
   }
 
@@ -190,30 +192,41 @@ export class BuildTestComponent {
         break;
       }
     }
+    if (temp.systemId === 'ALL') {
+    } else {
+      this.qbankObject.systemId = temp.systemId;
+    }
+    if (temp.subsystemId === 'ALL') {
+    } else {
+      this.qbankObject.subsystemId = temp.subsystemId;
+    }
     this.qbankObject.mode = this.examMode;
     this.qbankObject.questionsCount = parseInt(temp.questionsCount, 10);
     this.qbankObject.subjectId = temp.subjectId;
-    this.qbankObject.subsystemId = temp.subsystemId;
-    this.qbankObject.systemId = temp.systemId;
     this.qbankObject.type = type;
     this.qbankObject.userId = this.userId;
     this.qbankObject.status = 'VREVIEWED';
-    console.log(this.qbankObject);
     this.questionService
       .postQbankRequest(this.qbankObject)
       .subscribe((doc: any) => {
-        console.log(doc);
+        console.log(doc.result);
         const tempData = doc.result;
-        // this.examDataService.setExamRoomData(tempData);
-        localStorage.setItem('emex-td', JSON.stringify(tempData));
-        localStorage.setItem('emm', this.qbankObject.mode);
-        localStorage.setItem('emsm', this.qbankObject.systemId);
-        localStorage.setItem('emssm', this.qbankObject.subsystemId);
-        localStorage.setItem('emsbi', this.qbankObject.subjectId);
-        if (this.qbankObject.mode === 'TUTOR') {
-          this.router.navigate(['/eminence/student/exam']);
+        if (tempData.length === 0) {
+          this.toastr.warning('NO Questions Found !!!', '', {
+            timeOut: 3000,
+          });
         } else {
-          this.router.navigate(['/eminence/student/exam-timed']);
+          // this.examDataService.setExamRoomData(tempData);
+          localStorage.setItem('emex-td', JSON.stringify(tempData));
+          localStorage.setItem('emm', this.qbankObject.mode);
+          localStorage.setItem('emsm', this.qbankObject.systemId);
+          localStorage.setItem('emssm', this.qbankObject.subsystemId);
+          localStorage.setItem('emsbi', this.qbankObject.subjectId);
+          if (this.qbankObject.mode === 'TUTOR') {
+            this.router.navigate(['/eminence/student/exam']);
+          } else {
+            this.router.navigate(['/eminence/student/exam-timed']);
+          }
         }
       });
   }
