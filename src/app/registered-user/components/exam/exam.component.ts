@@ -193,7 +193,10 @@ export class ExamComponent implements OnInit {
    * ******/
 
   optionSelected(event: any, i, selectedOption) {
-    console.log('Selected option: ', event);
+    if (event.checked) {
+      console.log(selectedOption?.text);
+    }
+    console.log('Selected option: ', selectedOption?.text);
     const option = this.indexBasedQuestions.options[i];
     option.checked = event.checked;
     this.indexBasedQuestions.options.forEach((option, index) => {
@@ -216,16 +219,17 @@ export class ExamComponent implements OnInit {
       (item: any) => item.questionId !== this.optionInstance.questionId
     );
     const selectOptionsIndex = this.indexBasedQuestions.options.findIndex(
-      (item) => item.text === event.value
+      (item) => item.text === selectedOption?.text
     );
+
     const selectedOptions = this.generateAlphabetChar(selectOptionsIndex);
     console.log('Selected options is : ' + selectedOptions);
-    this.examInstance.selectedAnswer = selectedOptions;
-    this.optionInstance.selectedAnswer = selectedOptions;
+    this.examInstance.selectedAnswer = selectedOption?._id;
+    this.optionInstance.selectedAnswer = selectedOption?._id;
     console.log(correctOptions);
     this.value = correctOptions[0].text;
 
-    if (correctOptions[0].text === event.value) {
+    if (correctOptions[0].text === selectedOption?.text) {
       console.log('Selected answer is correct ');
       this.showExplanations = true;
       this.correctNews = true;
@@ -249,7 +253,6 @@ export class ExamComponent implements OnInit {
         }
       });
     }
-
     this.examArray.push({ ...this.optionInstance });
     console.log(this.examArray);
   }
@@ -310,7 +313,7 @@ export class ExamComponent implements OnInit {
 
   submitExam() {
     this.examObject.questions = this.examArray;
-    this.examObject.mode = localStorage.getItem('emm'); //mode
+    this.examObject.mode = 'TUTOR'; //mode
     this.examObject.systemId = localStorage.getItem('emsm'); //systemId
     this.examObject.subSystemId = localStorage.getItem('emssm'); //subsystemId
     this.examObject.subjectId = localStorage.getItem('emsbi'); //subjectId

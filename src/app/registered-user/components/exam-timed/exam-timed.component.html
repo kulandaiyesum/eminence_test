@@ -1,0 +1,87 @@
+<section class="container-fluid exam_timed">
+  <div class="container exam_timed_wrap">
+    <div class="flag_section">
+      <label for="{{ selectedQuestion._id }}">
+        <input
+          id="{{ selectedQuestion._id }}"
+          type="checkbox"
+          class="form-check-input"
+          [(ngModel)]="isFlag"
+          (change)="isFlagged($event)"
+        />
+        Flag
+      </label>
+      <div class="exapnsion_div">
+        <img
+          src="../../../../assets/images/triangle_blue.png"
+          alt="triangle_blue"
+          (click)="setHeight = !setHeight"
+        />
+        <img
+          [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
+          src="../../../../assets/images/lab.png"
+          alt="lab"
+        />
+        <img
+          [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
+          style="transform: translateX(2px)"
+          src="../../../../assets/images/notes.png"
+          alt="notes"
+        />
+        <img
+          [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
+          src="../../../../assets/images/calculator.png"
+          alt="calculator"
+        />
+      </div>
+    </div>
+    <div class="item_no mb-3">
+      <span>Item {{ tempQuestionIndex + 1 }} of {{ questions.length }}</span>
+    </div>
+    <div class="question_id_link mb-lg-4 mb-md-4 mb-3">
+      <button
+        class="ms-2"
+        *ngFor="let question of questions; let i = index"
+        (click)="navigateQuestion(question._id, i)"
+      >
+        {{ i + 1 }}
+      </button>
+    </div>
+    <div class="question_ans mb-lg-5 mb-md-5 mb-3">
+      <div class="question mb-4">
+        {{ tempQuestionIndex + 1 }}. {{ selectedQuestion?.title }}
+      </div>
+      <ul class="options">
+        <li *ngFor="let option of selectedQuestion?.options; let i = index">
+          <label
+            class="pointer_cl"
+            for="{{ option._id }}"
+            (click)="selectOptionIndex(i)"
+            ><input
+              id="{{ option._id }}"
+              [(ngModel)]="selectOption"
+              type="radio"
+              class="square_radio"
+              [value]="option?._id"
+            />{{ generateAlphabetChar(i) }}. {{ option?.text }}</label
+          >
+        </li>
+      </ul>
+      <div class="submit_check">
+        <button
+          type="button"
+          class="btn btn-warning"
+          (click)="gotoNext(selectedQuestion, selectOption)"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+    <div class="timed_mode_actions">
+      <button class="btn btn-warning" (click)="submitExam()">End</button>
+      <div class="timer_elapsed">
+        <span>Time Elapsed: {{ displayTimer }} </span>
+      </div>
+    </div>
+  </div>
+</section>

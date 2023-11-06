@@ -41,6 +41,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExamComponent } from './components/exam/exam.component';
 import { CalculatorComponent } from './components/calculator/calculator.component';
+import { ExamTimedComponent } from './components/exam-timed/exam-timed.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { CalculatorComponent } from './components/calculator/calculator.componen
     ExamRoomComponent,
     ExamComponent,
     CalculatorComponent,
+    ExamTimedComponent,
   ],
   imports: [
     FormsModule,

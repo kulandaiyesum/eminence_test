@@ -51,6 +51,8 @@ export class BuildTestComponent {
   subsystemList: SubSystem[] = [];
   examMode: string = '';
   type: number;
+  selectAllCheckbox: boolean = false;
+  unusedCheckbox: boolean = false;
 
   constructor(
     private rsaService: RsaService,
@@ -87,8 +89,8 @@ export class BuildTestComponent {
           '',
           [
             Validators.required,
-            this.maxQuestionsValidator,
-            Validators.max(10),
+            // this.maxQuestionsValidator,
+            Validators.max(40),
             Validators.min(1),
           ],
         ],
@@ -112,12 +114,10 @@ export class BuildTestComponent {
         this.qbankForm.get('type1').setValue(true);
         this.qbankForm.get('type2').setValue(true);
         this.qbankForm.get('type3').setValue(true);
-        this.qbankForm.get('type4').setValue(true);
       } else {
         this.qbankForm.get('type1').setValue(false);
         this.qbankForm.get('type2').setValue(false);
         this.qbankForm.get('type3').setValue(false);
-        this.qbankForm.get('type4').setValue(false);
       }
     });
   }
@@ -132,7 +132,7 @@ export class BuildTestComponent {
   }
 
   maxQuestionsValidator(control: AbstractControl): ValidationErrors | null {
-    const maxQuestions = 10;
+    const maxQuestions = 40;
     if (control.value > maxQuestions) {
       return { max: true };
     }
@@ -193,7 +193,11 @@ export class BuildTestComponent {
         localStorage.setItem('emsm', this.qbankObject.systemId);
         localStorage.setItem('emssm', this.qbankObject.subsystemId);
         localStorage.setItem('emsbi', this.qbankObject.subjectId);
-        this.router.navigate(['/eminence/student/exam']);
+        if (this.qbankObject.mode === 'TUTOR') {
+          this.router.navigate(['/eminence/student/exam']);
+        } else {
+          this.router.navigate(['/eminence/student/exam-timed']);
+        }
       });
   }
 
