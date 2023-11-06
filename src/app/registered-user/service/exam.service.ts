@@ -7,10 +7,18 @@ import { environment } from 'src/environments/environment';
 })
 export class ExamService {
   public baseUrl = environment.localdomain + 'exams/';
+  private apiEndPoint: string = environment.localdomain;
 
   constructor(private http: HttpClient) {}
 
-  examSubmit(data){
-    return this.http.post(this.baseUrl+data.studentId,data)
+  examSubmit(data) {
+    return this.http.post(this.baseUrl + data.studentId, data);
+  }
+
+  examTimedSubmit(examTimedObject) {
+    return this.http.post(
+      this.apiEndPoint + 'exams/' + examTimedObject.studentId,
+      examTimedObject
+    );
   }
 }
