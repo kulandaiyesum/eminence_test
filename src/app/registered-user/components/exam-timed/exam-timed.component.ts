@@ -194,8 +194,10 @@ export class ExamTimedComponent implements OnInit {
       this.displayTimer = `${String(min).padStart(2, '0')}:${String(
         sec
       ).padStart(2, '0')}`;
-      if (this.timer > 90) {
+      if (this.timer >= 90) {
         this.stopTimer();
+        if (this.questions.length === this.tempQuestionIndex + 1) return;
+        this.navigateQuestionByIndex(this.tempQuestionIndex + 1);
       }
     }, 1000);
   }
