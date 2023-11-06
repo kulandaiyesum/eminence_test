@@ -31,6 +31,6 @@ export class QuerstionService {
    * @returns
    */
   postQbankRequest(qbank: Qbank) {
-    return this.http.put(this.baseUrl  , qbank);
+    return this.http.put(this.updateQuestionStatus+ 'exams/', qbank);
   }
 }
