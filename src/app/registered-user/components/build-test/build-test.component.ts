@@ -53,6 +53,7 @@ export class BuildTestComponent {
   type: number;
   selectAllCheckbox: boolean = false;
   unusedCheckbox: boolean = false;
+  specialCheckboxesChecked: boolean = false;
 
   constructor(
     private rsaService: RsaService,
@@ -121,6 +122,22 @@ export class BuildTestComponent {
       }
     });
   }
+
+  checkboxChanged(value: string) {
+    if (
+      value === 'unused' ||
+      value === 'incorrect' ||
+      value === 'flagged' ||
+      value === 'qgen'
+    ) {
+      this.specialCheckboxesChecked = true;
+    }
+  }
+
+  enableCheckbox(){
+    this.specialCheckboxesChecked = !this.specialCheckboxesChecked;
+  }
+
   toggleChanged(selectedMode: string) {
     this.examMode = '';
     if (this.examMode === selectedMode) {

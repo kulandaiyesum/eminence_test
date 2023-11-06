@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class ExamService {
-  public baseUrl = environment.localdomain + 'questions/';
+  public baseUrl = environment.localdomain + 'exams/';
 
   constructor(private http: HttpClient) {}
 
