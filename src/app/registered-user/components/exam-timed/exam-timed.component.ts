@@ -6,11 +6,11 @@ import { ExamService } from '../../service/exam.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
-interface payloadQuestion {
+class payloadQuestion {
   questionId: string;
   selectedAnswer: string;
   isCorrectAnswer: string;
-  flag: string;
+  flag: string = 'NO';
   time: number;
   selectedAnswerId: string;
 }
@@ -205,11 +205,37 @@ export class ExamTimedComponent implements OnInit {
     clearInterval(this.IntevelStoper);
   }
 
+  isflaggedQuestion(questionId: string): boolean {
+    const tempObj = this.examArray.find(
+      (payloadObj) => payloadObj.questionId === questionId
+    );
+    let returnOBj = false;
+    if (tempObj && tempObj.flag === 'YES') {
+      returnOBj = true;
+    }
+    return returnOBj;
+  }
+
+  isQuestionSubmited(questionId: string): boolean {
+    let result = false;
+    const tempObj = this.examArray.find(
+      (payloadObj) => payloadObj.questionId === questionId
+    );
+    if (tempObj && tempObj.selectedAnswerId !== '') {
+      result = true;
+    }
+    return result;
+  }
+
+  isCurrentQuestion(questionId: string): boolean {
+    return questionId === this.selectedQuestion._id;
+  }
+
   submitExam() {
     this.stopTimer();
     this.examTimedObject.questions = this.examArray;
     console.log(this.examTimedObject);
-    this.examService.examSubmit(this.examTimedObject).subscribe(
+    this.examService.examTimedSubmit(this.examTimedObject).subscribe(
       (response: any) => {
         console.log(response);
         Swal.fire('Exam finished', 'Have a look on performance board').then(
