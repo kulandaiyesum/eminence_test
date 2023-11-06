@@ -17,7 +17,30 @@
         </p>
         <div class="options">
           <!-- <mat-checkbox> -->
-          <mat-checkbox
+
+          <mat-list role="list">
+            <mat-list-item
+              role="listitem"
+              *ngFor="let option of indexBasedQuestions?.options; let i = index"
+            >
+              <mat-checkbox
+                (change)="optionSelected($event, i, option)"
+                [value]="option?.text"
+                (click)="
+                  storeList(
+                    option,
+                    indexBasedQuestions._id,
+                    currentQuestionIndex
+                  )
+                "
+                [(ngModel)]="option.checked"
+              >
+                {{ generateAlphabetChar(i) }}.{{ option?.text }}</mat-checkbox
+              >
+            </mat-list-item>
+          </mat-list>
+
+          <!-- <mat-checkbox
             (change)="optionSelected($event, i, option)"
             *ngFor="let option of indexBasedQuestions?.options; let i = index"
             [value]="option?.text"
@@ -26,8 +49,8 @@
             "
             [(ngModel)]="option.checked"
           >
-            {{ option?.text }}</mat-checkbox
-          >
+            {{generateAlphabetChar(i)}}.{{ option?.text }}</mat-checkbox
+          > -->
           <!-- </mat-checkbox -->
           <!-- > -->
           <!-- <mat-radio-group (change)="optionSelected($event,i)">
@@ -122,17 +145,13 @@
   </div>
   <div class="bottom-controls">
     <div class="bottom-main">
-      <button
-        mat-button
-        (click)="previous()"
-        *ngIf="currentQuestionIndex > 0 && showExplanations"
-      >
+      <button mat-button (click)="previous()" *ngIf="currentQuestionIndex > 0">
         Prev
       </button>
       <button
         mat-button
         (click)="next()"
-        *ngIf="currentQuestionIndex < maximumQuestionLength && showExplanations"
+        *ngIf="currentQuestionIndex < maximumQuestionLength"
       >
         Next
       </button>
