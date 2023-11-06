@@ -126,6 +126,8 @@ export class ExamTimedComponent implements OnInit {
       this.isFlag = false;
     } else {
       tempObj.flag === 'YES' ? (this.isFlag = true) : (this.isFlag = false);
+      this.selectOption =
+        tempObj.selectedAnswerId === '' ? '' : tempObj.selectedAnswerId;
     }
   }
   gotoNext(selectedQuestion: Question, selectedOptionId: string) {
@@ -204,6 +206,7 @@ export class ExamTimedComponent implements OnInit {
   submitExam() {
     this.stopTimer();
     this.examTimedObject.questions = this.examArray;
+    console.log(this.examTimedObject);
     this.examService.examSubmit(this.examTimedObject).subscribe(
       (response: any) => {
         console.log(response);
@@ -218,6 +221,14 @@ export class ExamTimedComponent implements OnInit {
       },
       (error) => {
         console.error('An error occurred:', error);
+        Swal.fire('Exam finished', 'Have a look on performance board').then(
+          (result) => {
+            if (result.isConfirmed) {
+              this.router.navigate(['/eminence/student/build-test']);
+            }
+            this.router.navigate(['/eminence/student/build-test']);
+          }
+        );
       }
     );
   }
