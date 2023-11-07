@@ -1,0 +1,12 @@
+.confirm_submission {
+  border: 1px solid #000;
+  .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    button {
+      border: 1px solid #000;
+    }
+  }
+}

@@ -57,7 +57,7 @@
 }
 .flag_section {
   position: absolute;
-  top: 1.5rem;
+  top: 1.25rem;
   right: 5px;
   display: flex;
   flex-direction: column;
@@ -73,7 +73,7 @@
     align-items: center;
     justify-content: flex-start;
     background-color: #ddd;
-    gap: 0.5rem;
+    gap: 1rem;
     border-radius: 1rem;
     padding: 0.5rem;
     transition: all 0.3s ease-in-out;

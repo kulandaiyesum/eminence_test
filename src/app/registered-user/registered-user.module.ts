@@ -42,6 +42,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExamComponent } from './components/exam/exam.component';
 import { CalculatorComponent } from './components/calculator/calculator.component';
 import { ExamTimedComponent } from './components/exam-timed/exam-timed.component';
+import { ExamtimedComfirmationComponent } from './components/examtimed-comfirmation/examtimed-comfirmation.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ExamTimedComponent } from './components/exam-timed/exam-timed.component
     ExamComponent,
     CalculatorComponent,
     ExamTimedComponent,
+    ExamtimedComfirmationComponent,
   ],
   imports: [
     FormsModule,
