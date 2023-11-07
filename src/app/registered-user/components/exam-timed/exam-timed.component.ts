@@ -6,6 +6,8 @@ import { ExamService } from '../../service/exam.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+import { ExamtimedComfirmationComponent } from '../examtimed-comfirmation/examtimed-comfirmation.component';
 
 class payloadQuestion {
   questionId: string;
@@ -21,10 +23,10 @@ class payloadQuestion {
   styleUrls: ['./exam-timed.component.scss'],
 })
 export class ExamTimedComponent implements OnInit {
-  userFirstName: string = '';
-  userId: string = '';
-  secretKey: string = environment.secretKey;
-  examTimedObject: any = {
+  private userFirstName: string = '';
+  private userId: string = '';
+  private secretKey: string = environment.secretKey;
+  private examTimedObject: any = {
     studentId: '',
     questions: [],
     mode: '',
@@ -37,23 +39,26 @@ export class ExamTimedComponent implements OnInit {
   selectedQuestion: Question;
   selectOption = '';
 
-  examArray: payloadQuestion[] = [];
+  private examArray: payloadQuestion[] = [];
   tempQuestionIndex = 0;
-  tempOption = '';
+  private tempOption = '';
   isFlag: boolean;
-  timer: number = 0;
+  private timer: number = 0;
   displayTimer: any;
-  IntevelStoper: any;
+  private IntevelStoper: any;
 
   setHeight: boolean = false;
-  examStoper: any;
-  calcutatedTime: number;
+  private examStoper: any;
+  private calcutatedTime: number;
+  private savedTimer: number = 0;
+  private savedCalculatedTime: number = 0;
 
   constructor(
     private rsaService: RsaService,
     private examService: ExamService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public dialog: MatDialog
   ) {}
   ngOnInit(): void {
     this.questions = JSON.parse(localStorage.getItem('emex-td'));
@@ -183,13 +188,17 @@ export class ExamTimedComponent implements OnInit {
 
   startTimer() {
     this.stopTimer();
-    this.timer = 0;
-    const tempObj = this.examArray.find(
-      (payloadQuestion) =>
-        payloadQuestion.questionId === this.selectedQuestion._id
-    );
-    if (tempObj) {
-      this.timer = tempObj.time;
+    if (this.savedTimer !== 0 && this.timer === this.savedTimer) {
+      this.savedTimer = 0;
+    } else {
+      this.timer = 0;
+      const tempObj = this.examArray.find(
+        (payloadQuestion) =>
+          payloadQuestion.questionId === this.selectedQuestion._id
+      );
+      if (tempObj) {
+        this.timer = tempObj.time;
+      }
     }
     this.IntevelStoper = setInterval(() => {
       this.timer++;
@@ -197,9 +206,15 @@ export class ExamTimedComponent implements OnInit {
   }
 
   displayTimerUI() {
-    clearInterval(this.examStoper);
-    const timePerQuestion = 75;
-    this.calcutatedTime = timePerQuestion * this.questions.length;
+    if (
+      this.savedCalculatedTime !== 0 &&
+      this.calcutatedTime === this.savedCalculatedTime
+    ) {
+      this.savedCalculatedTime = 0;
+    } else {
+      const timePerQuestion = 75;
+      this.calcutatedTime = timePerQuestion * this.questions.length;
+    }
     this.examStoper = setInterval(() => {
       this.calcutatedTime--;
       const min = Math.floor(this.calcutatedTime / 60);
@@ -249,24 +264,44 @@ export class ExamTimedComponent implements OnInit {
   submitExam() {
     this.stopTimer();
     clearInterval(this.examStoper);
-    this.examTimedObject.questions = this.examArray;
-    console.log(this.examTimedObject);
-    this.examService.examSubmit(this.examTimedObject).subscribe(
-      (response: any) => {
-        console.log(response);
-        Swal.fire('Exam finished', 'Have a look on performance board').then(
-          (result) => {
-            if (result.isConfirmed) {
-              this.router.navigate(['/eminence/student/build-test']);
-            }
-            this.router.navigate(['/eminence/student/build-test']);
+    this.savedTimer = this.timer;
+    this.savedCalculatedTime = this.calcutatedTime;
+    let dialogBoxSettings = {
+      width: '500px',
+      margin: '0 auto',
+      border: '1px solid #000',
+    };
+    const dialogRef = this.dialog.open(
+      ExamtimedComfirmationComponent,
+      dialogBoxSettings
+    );
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'YES') {
+        this.examTimedObject.questions = this.examArray;
+        console.log(this.examTimedObject);
+        this.examService.examSubmit(this.examTimedObject).subscribe(
+          (response: any) => {
+            console.log(response);
+            Swal.fire('Exam finished', 'Have a look on performance board').then(
+              (result) => {
+                if (result.isConfirmed) {
+                  this.router.navigate(['/eminence/student/build-test']);
+                }
+                this.router.navigate(['/eminence/student/build-test']);
+              }
+            );
+          },
+          (error) => {
+            console.error('An error occurred:', error);
+            this.toastr.error(error.error.message, '', { timeOut: 3000 });
           }
         );
-      },
-      (error) => {
-        console.error('An error occurred:', error);
-        this.toastr.error(error.error.message, '', { timeOut: 3000 });
+      } else {
+        this.timer = this.savedTimer;
+        this.calcutatedTime = this.savedCalculatedTime;
+        this.startTimer();
+        this.displayTimerUI();
       }
-    );
+    });
   }
 }
