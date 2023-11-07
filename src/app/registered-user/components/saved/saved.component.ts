@@ -8,6 +8,9 @@ import { RsaService } from 'src/app/shared/service/rsa.service';
 import { environment } from 'src/environments/environment';
 import { ExamService } from '../../service/exam.service';
 import { DatePipe } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { QuestionComponent } from 'src/app/faculty/components/question/question.component';
+import { QuestionsComponent } from '../questions/questions.component';
 
 @Component({
   selector: 'app-saved',
@@ -23,75 +26,7 @@ export class SavedComponent {
     'system',
     'score',
   ];
-
-  slides = [
-    { title: 'Slide 1', content: 'Content for Slide 1' },
-    { title: 'Slide 2', content: 'Content for Slide 2' },
-    { title: 'Slide 3', content: 'Content for Slide 3' },
-    { title: 'Slide 4', content: 'Content for Slide 1' },
-    { title: 'Slide 5', content: 'Content for Slide 2' },
-    { title: 'Slide 6', content: 'Content for Slide 3' },
-    { title: 'Slide 7', content: 'Content for Slide 1' },
-    { title: 'Slide 8', content: 'Content for Slide 2' },
-    { title: 'Slide 9', content: 'Content for Slide 3' },
-    { title: 'Slide 10', content: 'Content for Slide 1' },
-    { title: 'Slide 12', content: 'Content for Slide 2' },
-    { title: 'Slide 11', content: 'Content for Slide 3' },
-  ];
-
-  dataSource: MatTableDataSource<any>;
-  examDetails = [
-    {
-      date: '12-11-23',
-      mode: 'timed',
-      question: 10,
-      subject: 'Multiple',
-      system: 'core',
-      score: 98,
-    },
-    {
-      date: '12-15-23',
-      mode: 'timed',
-      question: 10,
-      subject: 'Multiple',
-      system: 'core',
-      score: 98,
-    },
-    {
-      date: '11-22-23',
-      mode: 'timed',
-      question: 10,
-      subject: 'Multiple',
-      system: 'core',
-      score: 98,
-    },
-    {
-      date: '11-20-23',
-      mode: 'timed',
-      question: 10,
-      subject: 'Multiple',
-      system: 'core',
-      score: 98,
-    },
-    {
-      date: '09-10-23',
-      mode: 'timed',
-      question: 10,
-      subject: 'Multiple',
-      system: 'core',
-      score: 98,
-    },
-    {
-      date: '09-12-23',
-      mode: 'timed',
-      question: 10,
-      subject: 'Multiple',
-      system: 'core',
-      score: 98,
-    },
-    // Add more data rows here
-  ];
-
+  public slides = [];
   translateValue = 0; // Initial translation value
   // slideWidth = 300; // Adjust this based on your slide width
 
@@ -102,10 +37,11 @@ export class SavedComponent {
   numVisibleSlides = 3;
   public userId: string;
   secretKey: string = environment.secretKey;
-  examArray:any[]=[];
+  examArray: any[] = [];
   constructor(
     private animationBuilder: AnimationBuilder,
     private rsaService: RsaService,
+    public dialog: MatDialog,
     private examService: ExamService
   ) {}
 
@@ -115,7 +51,6 @@ export class SavedComponent {
       localStorage.getItem('5'),
       this.secretKey
     );
-    console.log(this.userId);
     this.getExamDetails(this.userId);
   }
 
@@ -143,13 +78,24 @@ export class SavedComponent {
   getExamDetails(userid: string) {
     this.examService.getExamDetailsByStudentId(userid).subscribe(
       (response: any) => {
-        this.examArray=response.result.filter((item:any)=> item.mode != null);
-        console.log(this.examArray);
-
+        this.examArray = response.result.filter(
+          (item: any) => item.mode != null
+        );
+        this.slides = this.examArray;
       },
       (err) => {
         console.log(err);
       }
     );
+  }
+  getQuestions(row) {
+    console.log(row);
+    this.examService.getQuestionByExamId(row).subscribe((doc: any) => {
+      this.dialog.open(QuestionsComponent, {
+        width: '1500px',
+        data: doc.result,
+      });
+      // dialogRef.afterClosed().subscribe((result) => {});
+    });
   }
 }

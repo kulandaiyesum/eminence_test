@@ -33,8 +33,6 @@ export class ExamTimedComponent implements OnInit {
     time: 0,
     percentage: 0,
     questionsCount: 0,
-    systemId: '',
-    subSystemId: '',
     subjectId: '',
     createdBy: '',
   };
@@ -74,8 +72,15 @@ export class ExamTimedComponent implements OnInit {
       this.secretKey
     );
     this.examTimedObject.mode = localStorage.getItem('emm'); //mode
-    this.examTimedObject.systemId = localStorage.getItem('emsm'); //systemId
-    this.examTimedObject.subSystemId = localStorage.getItem('emssm'); //subsystemId
+    if (localStorage.getItem('emsm') === 'undefined') {
+    } else {
+      this.examTimedObject.systemId = localStorage.getItem('emsm'); //systemId
+    }
+    if (localStorage.getItem('emssm') === 'undefined') {
+    } else {
+      this.examTimedObject.subSystemId = localStorage.getItem('emssm'); //subsystemId
+    }
+
     this.examTimedObject.subjectId = localStorage.getItem('emsbi'); //subject
     this.examTimedObject.createdBy = this.userFirstName;
     this.examTimedObject.studentId = this.userId;
@@ -298,7 +303,7 @@ export class ExamTimedComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'YES') {
         this.examTimedObject.questions = this.examArray;
-        this.examTimedObject.time = this.displayTimer;
+        this.examTimedObject.time = Number(this.displayTimer);
         this.examTimedObject.questionsCount = this.questions.length;
         console.log(this.examTimedObject);
         this.examService.examSubmit(this.examTimedObject).subscribe(

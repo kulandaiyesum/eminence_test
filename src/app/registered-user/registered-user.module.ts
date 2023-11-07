@@ -44,6 +44,7 @@ import { CalculatorComponent } from './components/calculator/calculator.componen
 import { ExamTimedComponent } from './components/exam-timed/exam-timed.component';
 import { CarouselModule } from 'primeng/carousel';
 import { ExamtimedComfirmationComponent } from './components/examtimed-comfirmation/examtimed-comfirmation.component';
+import { QuestionsComponent } from './components/questions/questions.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { ExamtimedComfirmationComponent } from './components/examtimed-comfirmat
     CalculatorComponent,
     ExamTimedComponent,
     ExamtimedComfirmationComponent,
+    QuestionsComponent,
   ],
   imports: [
     FormsModule,

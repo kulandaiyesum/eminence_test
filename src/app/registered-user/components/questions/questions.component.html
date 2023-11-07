@@ -1,0 +1,35 @@
+<div class="exam-container">
+  <div class="controls">
+    <div class="button" *ngFor="let item of questions; let i = index">
+      <p
+        (click)="changeQuestions(i)"
+        [ngClass]="{ selected: i === currentQuestionIndex }"
+      >
+        {{ i + 1 }}
+      </p>
+    </div>
+  </div>
+  <div class="main">
+    <div class="questions" #scrollQuestionContainer>
+      <div class="questions-main">
+        <h6>Item {{ currentQuestionIndex + 1 }} of {{ totalQuestions }}</h6>
+        <p>
+          {{ indexBasedQuestions?.title }}
+        </p>
+        <!-- <div class="options">
+          <mat-checkbox
+            (change)="optionSelected($event, i, option)"
+            *ngFor="let option of indexBasedQuestions?.options; let i = index"
+            [value]="option?.text"
+            (click)="
+              storeList(option, indexBasedQuestions._id, currentQuestionIndex)
+            "
+            [(ngModel)]="option.checked"
+          >
+            {{ option?.text }}</mat-checkbox
+          >
+        </div> -->
+      </div>
+    </div>
+  </div>
+</div>

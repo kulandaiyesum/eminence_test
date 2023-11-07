@@ -1,0 +1,154 @@
+.exam-container {
+  width: 100%;
+  height: 85vh;
+  // border: 1px solid red;
+  .controls {
+    width: 100%;
+    height: auto;
+    // border: 1px solid yellow;
+    display: flex;
+    .button {
+      width: auto;
+      height: auto;
+      // border: 1px solid pink;
+      p {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        color: #000;
+        background-color: var(--qgen-logo-yellow);
+        margin-left: 10px;
+        text-align: center;
+        padding-top: 5px;
+        cursor: pointer;
+      }
+      .selected {
+        color: #fff;
+
+        border: 1px solid #000;
+      }
+    }
+  }
+  .main {
+    width: 100%;
+    height: 65vh;
+    // border: 1px solid red;
+    display: flex;
+    justify-content: space-around;
+    .questions {
+      width: 45%;
+      height: 65vh;
+      // border: 1px solid black;
+      overflow: auto;
+      .questions-main {
+        height: auto;
+        width: 100%;
+        padding: 15px;
+        .options {
+          width: 100%;
+          height: auto;
+          // border: 1px solid yellow;
+        }
+      }
+    }
+    .explanations {
+      width: 45%;
+      height: 65vh;
+      // border: 1px solid blue;
+      overflow: auto;
+      padding: 15px;
+      .explanations-main {
+        height: auto;
+        width: 100%;
+        #correct-news {
+          // border: 1px solid red;
+          display: flex;
+          p {
+            margin-left: 10px;
+            color: green;
+            font-weight: 500;
+          }
+          mat-icon {
+            color: green;
+            font-weight: 500;
+          }
+        }
+        #incorrect-news {
+          // border: 1px solid red;
+          display: flex;
+          p {
+            margin-left: 10px;
+            color: red;
+            font-weight: 500;
+          }
+          mat-icon {
+            color: red;
+            font-weight: 500;
+          }
+        }
+        .explanation-paragraph {
+          width: auto;
+          height: auto;
+        }
+        #explanation-panel {
+          margin-top: 20px;
+        }
+      }
+    }
+    .flag {
+      width: 10%;
+      height: auto;
+      // border: 1px solid purple;
+      .content {
+        width: auto;
+        height: auto;
+        // border: 1px solid red;
+      }
+    }
+  }
+  @media (max-width: 767px) {
+    .main {
+      flex-direction: column !important;
+      .questions {
+        width: 100% !important;
+      }
+      .explanations {
+        width: 100% !important;
+        margin-top: 20px !important;
+      }
+      .flag {
+        width: auto !important;
+        margin-top: 20px !important;
+        .content {
+          display: flex;
+          justify-content: space-around;
+        }
+      }
+    }
+  }
+  .bottom-controls {
+    width: 100%;
+    height: 12vh;
+    // border: 1px solid pink;
+    .bottom-main {
+      width: 100%;
+      height: 12vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px;
+      button {
+        color: #000;
+        background-color: var(--qgen-logo-yellow);
+      }
+    }
+  }
+  // @media (max-width: 767px){
+  //   .bottom-controls{
+  //     .bottom-main{
+  //       flex-direction: column !important;
+  //       justify-content: center !important;
+  //     }
+  //   }
+  // }
+}

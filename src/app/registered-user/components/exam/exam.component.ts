@@ -47,7 +47,7 @@ export class ExamComponent implements OnInit {
   bindingData: any;
   checked = false;
   calculatorPopupVisible = false;
-  totalQuestions:number;
+  totalQuestions: number;
 
   public examObject: {
     studentId: string;
@@ -73,7 +73,6 @@ export class ExamComponent implements OnInit {
     subjectId: '',
     from: '',
     requestid: '',
-
   };
   public optionInstance: {
     questionId: string;
@@ -112,7 +111,7 @@ export class ExamComponent implements OnInit {
       // Use this.tutorId as needed in your TutorComponent
       console.log(this.tutorId);
     });
-    this.examObject.requestid=this.tutorId
+    this.examObject.requestid = this.tutorId;
     if (this.tutorId) {
       this.getAllQuestions(this.tutorId);
     } else {
@@ -137,7 +136,6 @@ export class ExamComponent implements OnInit {
     this.examObject.createdBy = this.userFirstName;
     this.examInstance.flag = 'NO';
     this.optionInstance.flag = 'NO';
-
   }
 
   ngAfterViewInit() {
@@ -162,10 +160,10 @@ export class ExamComponent implements OnInit {
       this.questions = doc.result.questions;
       console.log(this.questions);
       console.log(this.questions.length);
-      this.totalQuestions=this.questions.length
+      this.totalQuestions = this.questions.length;
       this.maximumQuestionLength = this.questions.length - 1;
       this.getQuestionsIndexBased(this.currentQuestionIndex);
-      this.checkboxStates = new Array(this.questions.length+1).fill(false);
+      this.checkboxStates = new Array(this.questions.length + 1).fill(false);
     });
   }
 
@@ -176,26 +174,15 @@ export class ExamComponent implements OnInit {
     this.incorrectNews = false;
     this.correctNews = false;
     this.flagChecked = false;
-    console.log(this.answerList, index);
     let data;
     let data1 = [];
-    this.bindingData = this.answerList.find((x) => x.i === index);
     console.log(this.bindingData);
+    this.bindingData = this.answerList.find((x) => x.i === index);
     this.value = this.bindingData?.text;
-
-    // data1.push(data);
-    // data1.forEach((res) => {
-    //   if (this.indexBasedQuestions.options._id.includes(res._id)) {
-    //     this.indexBasedQuestions.options.push(res._id);
-    //   }
-    // });
-
-    // this.answerId = this.answerList[index].ans;
   }
 
   changeQuestions(i: number) {
     this.currentQuestionIndex = i;
-    console.log(this.currentQuestionIndex == i);
     this.getQuestionsIndexBased(i);
   }
 
@@ -206,16 +193,6 @@ export class ExamComponent implements OnInit {
    * ******/
 
   optionSelected(event: any, i, selectedOption) {
-    this.group[i] = i;
-    for (let j = 0; j < this.checkboxStates.length; j++) {
-      if (j !== i) {
-        this.checkboxStates[j] = false;
-      }
-    }
-    if (event.checked) {
-      console.log(selectedOption?.text);
-    }
-    console.log('Selected option: ', selectedOption?.text);
     const option = this.indexBasedQuestions.options[i];
     option.checked = event.checked;
     this.indexBasedQuestions.options.forEach((option, index) => {
@@ -223,11 +200,6 @@ export class ExamComponent implements OnInit {
         option.checked = false;
       }
     });
-    // if(selectedOption.checked){
-
-    // }
-    // console.log(this.indexBasedQuestions.options);
-    // console.log(this.indexBasedQuestions);
     const correctOptions = this.indexBasedQuestions.options.filter(
       (item: any) => item.explanation != null
     );
@@ -274,7 +246,7 @@ export class ExamComponent implements OnInit {
     }
 
     const isChecked = this.checkboxStates[i];
-    console.log("Status of checkbox " + isChecked);
+    console.log('Status of checkbox ' + isChecked);
 
     if (isChecked) {
       this.examArray.push({ ...this.optionInstance });
@@ -361,6 +333,8 @@ export class ExamComponent implements OnInit {
     );
   }
   storeList(event, qnsId, i) {
+    console.log(event);
+
     var existValue = this.answerList.find((s) => s.id == qnsId);
     if (existValue != null) {
       existValue.ans = event._id;
@@ -385,6 +359,4 @@ export class ExamComponent implements OnInit {
   closeCalculatorPopup() {
     this.calculatorPopupVisible = false;
   }
-
-  getAnsByQnsId(qnsId) {}
 }

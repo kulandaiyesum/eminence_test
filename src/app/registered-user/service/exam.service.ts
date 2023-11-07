@@ -21,7 +21,11 @@ export class ExamService {
     );
   }
 
-  getExamDetailsByStudentId(id:string){
-    return this.http.get(this.baseUrl+id)
+  getExamDetailsByStudentId(id: string) {
+    return this.http.get(this.baseUrl + id);
+  }
+
+  getQuestionByExamId(data) {
+    return this.http.put(this.baseUrl + data._id, data);
   }
 }

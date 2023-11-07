@@ -10,18 +10,18 @@
               <th>Mode</th>
               <th>Question</th>
               <th>Subject</th>
-              <th>System</th>
+              <!-- <th>System</th> -->
               <th>Score</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let exam of examArray"   id="table-data">
-              <td>{{ exam.createdAt | date:'MM/dd/yyyy' }}</td>
+            <tr *ngFor="let exam of examArray" id="table-data">
+              <td>{{ exam.createdAt | date : "MM/dd/yyyy" }}</td>
               <td>{{ exam.mode }}</td>
               <td>{{ exam.questionIds.length }}</td>
-              <td>{{ exam.subject }}</td>
-              <td>{{ exam.system }}</td>
-              <td>{{ exam.score }}</td>
+              <td>{{ exam.subjectId.subject || "-" }}</td>
+              <!-- <td>{{ exam.systemId.system || "ALL" }}</td> -->
+              <td>{{ exam.percentage || "-" }}</td>
             </tr>
           </tbody>
         </table>
@@ -47,11 +47,11 @@
                   <p><mat-icon>help</mat-icon></p>
                 </div>
                 <div class="text-area">
-                  <h6>{{ slide?.title }}</h6>
-                  <p>{{ slide?.content }}</p>
+                  <h6>{{ slide?.mode }}</h6>
+                  <p>{{ slide?.subjectId.subject }}</p>
                 </div>
                 <div class="controls">
-                  <button mat-button>View</button>
+                  <button mat-button (click)="getQuestions(slide)">View</button>
                 </div>
               </div>
             </ng-template>
