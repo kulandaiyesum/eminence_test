@@ -42,6 +42,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExamComponent } from './components/exam/exam.component';
 import { CalculatorComponent } from './components/calculator/calculator.component';
 import { ExamTimedComponent } from './components/exam-timed/exam-timed.component';
+import { CarouselModule } from 'primeng/carousel';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,7 @@ import { ExamTimedComponent } from './components/exam-timed/exam-timed.component
     NgbCarouselModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule,CarouselModule
   ],
 })
 export class RegisteredUserModule {}

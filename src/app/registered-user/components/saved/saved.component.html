@@ -15,10 +15,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let exam of examDetails">
-              <td>{{ exam.date }}</td>
+            <tr *ngFor="let exam of examArray"   id="table-data">
+              <td>{{ exam.createdAt | date:'MM/dd/yyyy' }}</td>
               <td>{{ exam.mode }}</td>
-              <td>{{ exam.question }}</td>
+              <td>{{ exam.questionIds.length }}</td>
               <td>{{ exam.subject }}</td>
               <td>{{ exam.system }}</td>
               <td>{{ exam.score }}</td>
@@ -35,37 +35,27 @@
           <!-- <mat-icon (click)="prevSlide()">keyboard_arrow_left</mat-icon> -->
         </div>
         <div class="history">
-          <ngb-carousel #carousel="ngbCarousel" *ngIf="images">
-            <ng-template ngbSlide *ngFor="let group of images; let i = index">
-              <div class="carousel-content">
-                <!-- Your content for each group of slides -->
-                <div class="slide-content">
-                  <div class="slide-row">
-                    <!-- Iterate through the images in the current group -->
-                    <div class="slide" *ngFor="let image of group">
-                      <div class="help-icon">
-                        <mat-icon>help</mat-icon>
-                      </div>
-                      <div class="content">
-                        <h6>{{ image.title }}</h6>
-                        <p>{{ image.content }}</p>
-                      </div>
-                      <div class="button">
-                        <button>View</button>
-                      </div>
-                    </div>
-                  </div>
+          <p-carousel
+            [value]="slides"
+            [numVisible]="numVisibleSlides"
+            [numScroll]="1"
+            [circular]="true"
+          >
+            <ng-template let-slide pTemplate="body">
+              <div class="slide-content">
+                <div class="icon-area">
+                  <p><mat-icon>help</mat-icon></p>
                 </div>
-                <!-- Navigation icons -->
-                <button class="carousel-control-prev" (click)="carousel.prev()">
-                  <i class="fas fa-chevron-left custom-icon"></i>
-                </button>
-                <button class="carousel-control-next" (click)="carousel.next()">
-                  <i class="fas fa-chevron-right custom-icon"></i>
-                </button>
+                <div class="text-area">
+                  <h6>{{ slide?.title }}</h6>
+                  <p>{{ slide?.content }}</p>
+                </div>
+                <div class="controls">
+                  <button mat-button>View</button>
+                </div>
               </div>
             </ng-template>
-          </ngb-carousel>
+          </p-carousel>
         </div>
         <div class="arrow-icon">
           <!-- <mat-icon (click)="nextSlide()">keyboard_arrow_right</mat-icon> -->

@@ -20,4 +20,8 @@ export class ExamService {
       examTimedObject
     );
   }
+
+  getExamDetailsByStudentId(id:string){
+    return this.http.get(this.baseUrl+id)
+  }
 }
