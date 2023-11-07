@@ -43,9 +43,11 @@ export class ExamComponent implements OnInit {
   examArray: any[] = [];
   toDisplayEnd: number;
   flagChecked: boolean = false;
+  checkboxStates: boolean[] = [];
   bindingData: any;
   checked = false;
   calculatorPopupVisible = false;
+  totalQuestions:number;
 
   public examObject: {
     studentId: string;
@@ -58,7 +60,7 @@ export class ExamComponent implements OnInit {
     subjectId: string;
     flag: string;
     from: string;
-    qgenid: string;
+    requestid: string;
   } = {
     studentId: '',
     questions: [],
@@ -70,7 +72,7 @@ export class ExamComponent implements OnInit {
     subSystemId: '',
     subjectId: '',
     from: '',
-    qgenid: '',
+    requestid: '',
 
   };
   public optionInstance: {
@@ -84,6 +86,8 @@ export class ExamComponent implements OnInit {
     selectedAnswer: '',
     isCorrectAnswer: '',
   };
+
+  public group: (number | null)[] = [];
   // dialog: any;
 
   constructor(
@@ -108,7 +112,7 @@ export class ExamComponent implements OnInit {
       // Use this.tutorId as needed in your TutorComponent
       console.log(this.tutorId);
     });
-    this.examObject.qgenid=this.tutorId
+    this.examObject.requestid=this.tutorId
     if (this.tutorId) {
       this.getAllQuestions(this.tutorId);
     } else {
@@ -133,6 +137,7 @@ export class ExamComponent implements OnInit {
     this.examObject.createdBy = this.userFirstName;
     this.examInstance.flag = 'NO';
     this.optionInstance.flag = 'NO';
+
   }
 
   ngAfterViewInit() {
@@ -157,8 +162,10 @@ export class ExamComponent implements OnInit {
       this.questions = doc.result.questions;
       console.log(this.questions);
       console.log(this.questions.length);
+      this.totalQuestions=this.questions.length
       this.maximumQuestionLength = this.questions.length - 1;
       this.getQuestionsIndexBased(this.currentQuestionIndex);
+      this.checkboxStates = new Array(this.questions.length+1).fill(false);
     });
   }
 
@@ -199,6 +206,12 @@ export class ExamComponent implements OnInit {
    * ******/
 
   optionSelected(event: any, i, selectedOption) {
+    this.group[i] = i;
+    for (let j = 0; j < this.checkboxStates.length; j++) {
+      if (j !== i) {
+        this.checkboxStates[j] = false;
+      }
+    }
     if (event.checked) {
       console.log(selectedOption?.text);
     }
@@ -259,8 +272,14 @@ export class ExamComponent implements OnInit {
         }
       });
     }
-    this.examArray.push({ ...this.optionInstance });
-    console.log(this.examArray);
+
+    const isChecked = this.checkboxStates[i];
+    console.log("Status of checkbox " + isChecked);
+
+    if (isChecked) {
+      this.examArray.push({ ...this.optionInstance });
+      console.log(this.examArray);
+    }
   }
 
   generateAlphabetChar(index: number): string {

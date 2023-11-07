@@ -26,6 +26,9 @@
         th {
           color: lightblue;
         }
+        #table-data{
+          overflow: auto;
+        }
       }
 
       .exam-table th,
@@ -67,6 +70,7 @@
         width: 85%;
         height: 32vh;
         overflow: hidden;
+        // border: 1px solid red;
         // .slider {
         //   display: flex;
         //   transition: transform 0.3s;
@@ -120,62 +124,109 @@
         //     }
         //   }
         // }
-        ngb-carousel {
-          background-color: transparent;
-          .slide-row {
-            display: flex;
-            justify-content: space-around;
-            padding: 10px;
-            .slide {
-              // border: 1px solid red;
-              margin-right: 10px;
-              width: 25%;
-              height: 25vh;
-              border-radius: 20px;
-              padding: 10px;
-              background-color: lightblue;
-              .help-icon {
-                width: 20%;
-                height: 5vh;
-                background-color: #fff;
-                border-radius: 10px;
-                display: grid;
-                place-items: center;
-                mat-icon {
-                  color: orange;
-                }
-              }
-              .content {
-                margin-top: 10px;
-                h6 {
-                  font-size: 16px;
-                  color: #fff;
-                  font-weight: bold;
-                }
-                p {
-                  font-size: 12px;
-                  color: #fff;
-                }
-              }
-              .button {
-                width: 100%;
-                height: 5vh;
-                button {
-                  width: 100%;
-                  height: 5vh;
-                  background-color: #fff;
-                  border: none;
-                  border-radius: 5px;
-                  font-weight: bold;
-                  color: darkblue;
-                }
+        // ngb-carousel {
+        //   background-color: transparent;
+        //   .slide-row {
+        //     display: flex;
+        //     justify-content: space-around;
+        //     padding: 10px;
+        //     .slide {
+        //       // border: 1px solid red;
+        //       margin-right: 10px;
+        //       width: 25%;
+        //       height: 25vh;
+        //       border-radius: 20px;
+        //       padding: 10px;
+        //       background-color: lightblue;
+        //       .help-icon {
+        //         width: 20%;
+        //         height: 5vh;
+        //         background-color: #fff;
+        //         border-radius: 10px;
+        //         display: grid;
+        //         place-items: center;
+        //         mat-icon {
+        //           color: orange;
+        //         }
+        //       }
+        //       .content {
+        //         margin-top: 10px;
+        //         h6 {
+        //           font-size: 16px;
+        //           color: #fff;
+        //           font-weight: bold;
+        //         }
+        //         p {
+        //           font-size: 12px;
+        //           color: #fff;
+        //         }
+        //       }
+        //       .button {
+        //         width: 100%;
+        //         height: 5vh;
+        //         button {
+        //           width: 100%;
+        //           height: 5vh;
+        //           background-color: #fff;
+        //           border: none;
+        //           border-radius: 5px;
+        //           font-weight: bold;
+        //           color: darkblue;
+        //         }
+        //       }
+        //     }
+        //   }
+        //   .custom-icon {
+        //     color: red;
+        //     font-size: 24px;
+        //   }
+        // }
+        .slide-content{
+
+          margin-left: 10px;
+          padding: 20px;
+          background-color: #84D6FE;
+          height: auto;
+          border-radius: 20px;
+          .icon-area{
+            width: auto;
+            height: 5vh;
+            // border: 1px solid black;
+            p{
+              background-color: #fff;
+              width: 15%;
+              height: 5vh;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-radius: 50%;
+              mat-icon{
+                color: #FFC400;
               }
             }
           }
-          .custom-icon {
-            color: red;
-            font-size: 24px;
+          .text-area{
+            width: 100%;
+            height: 10vh;
+            // border: 1px solid orange;
+            margin-top: 10px;
+            color: #fff;
+            h6{
+              font-weight: bold;
+            }
           }
+          .controls{
+            width: 100%;
+            height: auto;
+            // border: 1px solid cadetblue;
+            button{
+              width: 100%;
+              background-color: #fff;
+              color: blue;
+              border-radius: 10px;
+            }
+          }
+
         }
       }
     }
