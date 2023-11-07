@@ -206,12 +206,14 @@ export class ExamComponent implements OnInit {
    * ******/
 
   optionSelected(event: any, i, selectedOption) {
+    console.log(this.checkboxStates);
     this.group[i] = i;
     for (let j = 0; j < this.checkboxStates.length; j++) {
       if (j !== i) {
         this.checkboxStates[j] = false;
       }
     }
+    console.log(this.checkboxStates);
     if (event.checked) {
       console.log(selectedOption?.text);
     }
