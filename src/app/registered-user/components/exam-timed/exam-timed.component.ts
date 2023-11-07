@@ -31,6 +31,7 @@ export class ExamTimedComponent implements OnInit {
     questions: [],
     mode: '',
     time: 0,
+    percentage: 0,
     questionsCount: 0,
     systemId: '',
     subSystemId: '',
@@ -263,11 +264,28 @@ export class ExamTimedComponent implements OnInit {
     return questionId === this.selectedQuestion._id;
   }
 
+  calculateResultInPercentage(): number {
+    let percentage = 0;
+    let correctAnswers = 0;
+    let worngAnswers = 0;
+    const qLength = this.questions.length;
+    this.examArray.forEach((p) => {
+      if (p.isCorrectAnswer === 'YES') {
+        correctAnswers++;
+      } else {
+        worngAnswers++;
+      }
+    });
+    percentage = (correctAnswers / qLength) * 100;
+    return percentage;
+  }
+
   submitExam() {
     this.stopTimer();
     clearInterval(this.examStoper);
     this.savedTimer = this.timer;
     this.savedCalculatedTime = this.calcutatedTime;
+    this.examTimedObject.percentage = this.calculateResultInPercentage();
     let dialogBoxSettings = {
       width: '500px',
       margin: '0 auto',
