@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { ExamService } from '../../service/exam.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 
 class payloadQuestion {
   questionId: string;
@@ -32,7 +33,7 @@ export class ExamTimedComponent implements OnInit {
     subjectId: '',
     createdBy: '',
   };
-  questions: any;
+  questions: Question[];
   selectedQuestion: Question;
   selectOption = '';
 
@@ -45,11 +46,14 @@ export class ExamTimedComponent implements OnInit {
   IntevelStoper: any;
 
   setHeight: boolean = false;
+  examStoper: any;
+  calcutatedTime: number;
 
   constructor(
     private rsaService: RsaService,
     private examService: ExamService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
   ngOnInit(): void {
     this.questions = JSON.parse(localStorage.getItem('emex-td'));
@@ -67,9 +71,9 @@ export class ExamTimedComponent implements OnInit {
     this.examTimedObject.subjectId = localStorage.getItem('emsbi'); //subject
     this.examTimedObject.createdBy = this.userFirstName;
     this.examTimedObject.studentId = this.userId;
-    console.log(this.examTimedObject, this.questions);
     this.selectedQuestion = this.questions[0];
     this.startTimer();
+    this.displayTimerUI();
   }
 
   navigateQuestion(questionId: string, index: number) {
@@ -105,7 +109,7 @@ export class ExamTimedComponent implements OnInit {
           questionId: '',
           selectedAnswer: '',
           isCorrectAnswer: '',
-          flag: '',
+          flag: 'NO',
           time: 0,
           selectedAnswerId: '',
         };
@@ -153,7 +157,7 @@ export class ExamTimedComponent implements OnInit {
           questionId: '',
           selectedAnswer: '',
           isCorrectAnswer: '',
-          flag: '',
+          flag: 'NO',
           time: 0,
           selectedAnswerId: '',
         };
@@ -189,20 +193,31 @@ export class ExamTimedComponent implements OnInit {
     }
     this.IntevelStoper = setInterval(() => {
       this.timer++;
-      const min = Math.floor(this.timer / 60);
-      const sec = this.timer % 60;
+    }, 1000);
+  }
+
+  displayTimerUI() {
+    clearInterval(this.examStoper);
+    const timePerQuestion = 75;
+    this.calcutatedTime = timePerQuestion * this.questions.length;
+    this.examStoper = setInterval(() => {
+      this.calcutatedTime--;
+      const min = Math.floor(this.calcutatedTime / 60);
+      const sec = this.calcutatedTime % 60;
       this.displayTimer = `${String(min).padStart(2, '0')}:${String(
         sec
       ).padStart(2, '0')}`;
-      if (this.timer >= 90) {
-        this.stopTimer();
-        if (this.questions.length === this.tempQuestionIndex + 1) return;
-        this.navigateQuestionByIndex(this.tempQuestionIndex + 1);
+      if (this.calcutatedTime === 0) {
+        this.stopDisplayTimerAndEndExam();
       }
     }, 1000);
   }
   stopTimer() {
     clearInterval(this.IntevelStoper);
+  }
+  stopDisplayTimerAndEndExam() {
+    clearInterval(this.examStoper);
+    this.submitExam();
   }
 
   isflaggedQuestion(questionId: string): boolean {
@@ -233,6 +248,7 @@ export class ExamTimedComponent implements OnInit {
 
   submitExam() {
     this.stopTimer();
+    clearInterval(this.examStoper);
     this.examTimedObject.questions = this.examArray;
     console.log(this.examTimedObject);
     this.examService.examSubmit(this.examTimedObject).subscribe(
@@ -249,14 +265,7 @@ export class ExamTimedComponent implements OnInit {
       },
       (error) => {
         console.error('An error occurred:', error);
-        Swal.fire('Exam finished', 'Have a look on performance board').then(
-          (result) => {
-            if (result.isConfirmed) {
-              this.router.navigate(['/eminence/student/build-test']);
-            }
-            this.router.navigate(['/eminence/student/build-test']);
-          }
-        );
+        this.toastr.error(error.error.message, '', { timeOut: 3000 });
       }
     );
   }
