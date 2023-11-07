@@ -30,6 +30,8 @@ export class ExamTimedComponent implements OnInit {
     studentId: '',
     questions: [],
     mode: '',
+    time: 0,
+    questionsCount: 0,
     systemId: '',
     subSystemId: '',
     subjectId: '',
@@ -278,6 +280,8 @@ export class ExamTimedComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'YES') {
         this.examTimedObject.questions = this.examArray;
+        this.examTimedObject.time = this.displayTimer;
+        this.examTimedObject.questionsCount = this.questions.length;
         console.log(this.examTimedObject);
         this.examService.examSubmit(this.examTimedObject).subscribe(
           (response: any) => {
