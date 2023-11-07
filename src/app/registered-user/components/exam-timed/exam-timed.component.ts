@@ -277,9 +277,6 @@ export class ExamTimedComponent implements OnInit {
       }
     });
     percentage = (correctAnswers / qLength) * 100;
-    console.log(
-      `correct is ${correctAnswers}, worng is ${worngAnswers} and total is ${qLength}. so percentage is ${percentage}`
-    );
     return percentage;
   }
 
