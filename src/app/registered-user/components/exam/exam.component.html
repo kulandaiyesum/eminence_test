@@ -34,6 +34,7 @@
                     currentQuestionIndex
                   )
                 "
+                [name]="'group-' + i"
                 [(ngModel)]="checkboxStates[i]"
               >
                 {{ generateAlphabetChar(i) }}.{{ option?.text }}</mat-checkbox
