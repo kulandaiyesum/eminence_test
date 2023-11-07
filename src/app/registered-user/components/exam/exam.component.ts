@@ -43,9 +43,11 @@ export class ExamComponent implements OnInit {
   examArray: any[] = [];
   toDisplayEnd: number;
   flagChecked: boolean = false;
+  checkboxStates: boolean[] = [];
   bindingData: any;
   checked = false;
   calculatorPopupVisible = false;
+  totalQuestions:number;
 
   public examObject: {
     studentId: string;
@@ -133,6 +135,7 @@ export class ExamComponent implements OnInit {
     this.examObject.createdBy = this.userFirstName;
     this.examInstance.flag = 'NO';
     this.optionInstance.flag = 'NO';
+
   }
 
   ngAfterViewInit() {
@@ -157,8 +160,10 @@ export class ExamComponent implements OnInit {
       this.questions = doc.result.questions;
       console.log(this.questions);
       console.log(this.questions.length);
+      this.totalQuestions=this.questions.length
       this.maximumQuestionLength = this.questions.length - 1;
       this.getQuestionsIndexBased(this.currentQuestionIndex);
+      this.checkboxStates = new Array(this.questions.length+1).fill(false);
     });
   }
 
@@ -259,8 +264,14 @@ export class ExamComponent implements OnInit {
         }
       });
     }
-    this.examArray.push({ ...this.optionInstance });
-    console.log(this.examArray);
+
+    const isChecked = this.checkboxStates[i];
+    console.log("Status of checkbox " + isChecked);
+
+    if (isChecked) {
+      this.examArray.push({ ...this.optionInstance });
+      console.log(this.examArray);
+    }
   }
 
   generateAlphabetChar(index: number): string {

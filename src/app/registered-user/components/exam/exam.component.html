@@ -12,6 +12,7 @@
   <div class="main">
     <div class="questions" #scrollQuestionContainer>
       <div class="questions-main">
+        <h6>Item {{currentQuestionIndex+1}} of {{totalQuestions}}</h6>
         <p>
           {{ indexBasedQuestions?.title }}
         </p>
@@ -33,7 +34,7 @@
                     currentQuestionIndex
                   )
                 "
-                [(ngModel)]="option.checked"
+                [(ngModel)]="checkboxStates[i]"
               >
                 {{ generateAlphabetChar(i) }}.{{ option?.text }}</mat-checkbox
               >
