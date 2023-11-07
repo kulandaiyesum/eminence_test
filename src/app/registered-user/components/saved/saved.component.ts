@@ -1,9 +1,13 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import Scrollbar from 'smooth-scrollbar';
 import { AnimationBuilder, style, animate } from '@angular/animations';
+import { RsaService } from 'src/app/shared/service/rsa.service';
+import { environment } from 'src/environments/environment';
+import { ExamService } from '../../service/exam.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-saved',
@@ -19,22 +23,20 @@ export class SavedComponent {
     'system',
     'score',
   ];
-  images = [
-    [
-      { title: 'Slide 1', content: 'Content for Slide 1' },
-      { title: 'Slide 2', content: 'Content for Slide 2' },
-      { title: 'Slide 3', content: 'Content for Slide 3' },
-    ],
-    [
-      { title: 'Slide 4', content: 'Content for Slide 4' },
-      { title: 'Slide 5', content: 'Content for Slide 5' },
-      { title: 'Slide 6', content: 'Content for Slide 6' },
-    ],
-    [
-      { title: 'Slide 7', content: 'Content for Slide 7' },
-      { title: 'Slide 8', content: 'Content for Slide 8' },
-      { title: 'Slide 9', content: 'Content for Slide 9' },
-    ],
+
+  slides = [
+    { title: 'Slide 1', content: 'Content for Slide 1' },
+    { title: 'Slide 2', content: 'Content for Slide 2' },
+    { title: 'Slide 3', content: 'Content for Slide 3' },
+    { title: 'Slide 4', content: 'Content for Slide 1' },
+    { title: 'Slide 5', content: 'Content for Slide 2' },
+    { title: 'Slide 6', content: 'Content for Slide 3' },
+    { title: 'Slide 7', content: 'Content for Slide 1' },
+    { title: 'Slide 8', content: 'Content for Slide 2' },
+    { title: 'Slide 9', content: 'Content for Slide 3' },
+    { title: 'Slide 10', content: 'Content for Slide 1' },
+    { title: 'Slide 12', content: 'Content for Slide 2' },
+    { title: 'Slide 11', content: 'Content for Slide 3' },
   ];
 
   dataSource: MatTableDataSource<any>;
@@ -90,41 +92,6 @@ export class SavedComponent {
     // Add more data rows here
   ];
 
-  roomHistory = [
-    {
-      title: 'Shek',
-      subtitle: 'showkath',
-    },
-    {
-      title: 'hari',
-      subtitle: 'sudhan',
-    },
-    {
-      title: 'sneha',
-      subtitle: 'singh',
-    },
-    {
-      title: 'tamil',
-      subtitle: 'selvan',
-    },
-    {
-      title: 'swathi ',
-      subtitle: 'devasenapathy',
-    },
-    {
-      title: 'nivitha',
-      subtitle: 'nivitha',
-    },
-    {
-      title: 'arun',
-      subtitle: 'sridhar',
-    },
-    {
-      title: 'dharu',
-      subtitle: 'sebastin',
-    },
-  ];
-
   translateValue = 0; // Initial translation value
   // slideWidth = 300; // Adjust this based on your slide width
 
@@ -132,74 +99,57 @@ export class SavedComponent {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
   currentSlideIndex = 0;
-  slidesData = [
-    {
-      title: 'Anatomy, Cardiovascular',
-      description: 'Lorem ipsum dolor sit amet consectetur.',
-    },
-    {
-      title: 'Another Title',
-      description: 'Lorem ipsum dolor sit amet consectetur.',
-    },
-    {
-      title: 'Another Title 3',
-      description: 'Lorem ipsum dolor sit amet consectetur.',
-    },
-    {
-      title: 'Another Title 4',
-      description: 'Lorem ipsum dolor sit amet consectetur.',
-    },
-    {
-      title: 'Another Title 5',
-      description: 'Lorem ipsum dolor sit amet consectetur.',
-    },
-    {
-      title: 'Another Title 6',
-      description: 'Lorem ipsum dolor sit amet consectetur.',
-    },
-    {
-      title: 'Another Title 7',
-      description: 'Lorem ipsum dolor sit amet consectetur.',
-    },
-    {
-      title: 'Another Title 8',
-      description: 'Lorem ipsum dolor sit amet consectetur.',
-    },
-  ];
-  constructor(private animationBuilder: AnimationBuilder) {}
+  numVisibleSlides = 3;
+  public userId: string;
+  secretKey: string = environment.secretKey;
+  examArray:any[]=[];
+  constructor(
+    private animationBuilder: AnimationBuilder,
+    private rsaService: RsaService,
+    private examService: ExamService
+  ) {}
+
+  ngOnInit(): void {
+    this.updateNumVisibleSlides(window.innerWidth);
+    this.userId = this.rsaService.decryptText(
+      localStorage.getItem('5'),
+      this.secretKey
+    );
+    console.log(this.userId);
+    this.getExamDetails(this.userId);
+  }
 
   ngAfterViewInit() {
-    this.dataSource = new MatTableDataSource(this.examDetails);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
     const scrollbar = Scrollbar.init(this.scrollContainer.nativeElement, {
       // Smooth Scrollbar options go here
     });
   }
-  prevSlide() {
-    if (this.currentSlideIndex > 0) {
-      this.currentSlideIndex--;
-      this.animateSlider(-this.currentSlideIndex * this.slideWidth);
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.updateNumVisibleSlides(event.target.innerWidth);
+  }
+
+  updateNumVisibleSlides(windowWidth: number) {
+    if (windowWidth <= 768) {
+      this.numVisibleSlides = 1;
+    } else if (windowWidth <= 1024) {
+      this.numVisibleSlides = 2;
+    } else {
+      this.numVisibleSlides = 3;
     }
   }
 
-  nextSlide() {
-    if (this.currentSlideIndex < this.slidesData.length - 1) {
-      this.currentSlideIndex++;
-      this.animateSlider(-this.currentSlideIndex * this.slideWidth);
-    }
-  }
+  getExamDetails(userid: string) {
+    this.examService.getExamDetailsByStudentId(userid).subscribe(
+      (response: any) => {
+        this.examArray=response.result.filter((item:any)=> item.mode != null);
+        console.log(this.examArray);
 
-  animateSlider(value: number) {
-    const factory = this.animationBuilder.build([
-      animate('300ms', style({ transform: `translateX(${value}px)` })),
-    ]);
-    const player = factory.create(document.querySelector('.slider'));
-    player.play();
-  }
-
-  get slideWidth() {
-    // Calculate the slide width based on your design
-    return window.innerWidth <= 767 ? window.innerWidth : 600;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }
