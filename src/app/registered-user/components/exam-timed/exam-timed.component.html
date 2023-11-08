@@ -21,17 +21,21 @@
           [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
           src="../../../../assets/images/lab.png"
           alt="lab"
+          matTooltip="Lab values"
         />
         <img
           [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
           style="transform: translateX(2px)"
           src="../../../../assets/images/notes.png"
           alt="notes"
+          matTooltip="Notes"
         />
         <img
           [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
           src="../../../../assets/images/calculator.png"
           alt="calculator"
+          matTooltip="Calculator"
+          (click)="openCalculatorPopup()"
         />
       </div>
     </div>
@@ -43,15 +47,15 @@
         class="ms-2"
         [ngClass]="{
           'selected-question': isQuestionSubmited(question._id),
-          'flagged-question': isflaggedQuestion(question._id),
-          'both-selected-and-flagged':
-            isQuestionSubmited(question._id) && isflaggedQuestion(question._id),
           'current-question': isCurrentQuestion(question._id)
         }"
         *ngFor="let question of questions; let i = index"
         (click)="navigateQuestion(question._id, i)"
       >
-        {{ i + 1 }}
+        {{ i + 1
+        }}<span
+          [ngClass]="{ flag_icon: isflaggedQuestion(question._id) }"
+        ></span>
       </button>
     </div>
     <div class="question_ans mb-lg-5 mb-md-5 mb-3">
