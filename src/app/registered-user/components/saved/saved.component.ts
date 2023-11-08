@@ -112,9 +112,15 @@ export class SavedComponent {
   getQuestions(row) {
     console.log(row);
     this.examService.getQuestionByExamId(row).subscribe((doc: any) => {
+      console.log(doc);
+      const dataToPass = {
+        result: doc.result,
+        row: row
+      };
       this.dialog.open(QuestionsComponent, {
-        width: '1500px',
-        data: doc.result,
+        width: 'auto',
+        height:'auto',
+        data: dataToPass
       });
       // dialogRef.afterClosed().subscribe((result) => {});
     });

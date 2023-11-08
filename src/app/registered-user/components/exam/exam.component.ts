@@ -314,6 +314,8 @@ export class ExamComponent implements OnInit {
     console.log(this.examArray);
   }
 
+  
+
   submitExam() {
     this.examObject.questions = this.examArray;
     this.examObject.mode = 'TUTOR'; //mode
