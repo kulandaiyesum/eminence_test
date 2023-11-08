@@ -41,6 +41,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExamComponent } from './components/exam/exam.component';
 import { ExamTimedComponent } from './components/exam-timed/exam-timed.component';
+import { LabValuesComponent } from './components/lab-values/lab-values.component';
+import { SerumValuesComponent } from './components/serum-values/serum-values.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { ExamTimedComponent } from './components/exam-timed/exam-timed.component
     ExamRoomComponent,
     ExamComponent,
     ExamTimedComponent,
+    LabValuesComponent,
+    SerumValuesComponent,
   ],
   imports: [
     FormsModule,
