@@ -8,12 +8,18 @@
     >
       <div>
         <section class="checkbox_section">
-          <mat-checkbox class="" formControlName="type0" [(ngModel)]="selectAllCheckbox" [disabled]="specialCheckboxesChecked">All</mat-checkbox>
-          <mat-checkbox formControlName="type1" [disabled]="specialCheckboxesChecked" (click)="checkboxChanged('unused')">Unused</mat-checkbox>
-          <mat-checkbox formControlName="type2" [disabled]="specialCheckboxesChecked" (click)="checkboxChanged('incorrect')">Incorrect</mat-checkbox>
-          <mat-checkbox formControlName="type3" [disabled]="specialCheckboxesChecked"  (click)="checkboxChanged('flagged')">Flagged</mat-checkbox>
-          <mat-checkbox formControlName="type4" [disabled]="specialCheckboxesChecked" (click)="checkboxChanged('qgen')">QGen</mat-checkbox>
-          <mat-icon *ngIf="specialCheckboxesChecked" (click)="enableCheckbox()">refresh</mat-icon>
+          <mat-checkbox
+            class=""
+            formControlName="type0"
+            [(ngModel)]="selectAllCheckbox"
+            (change)="checkBoxChanges('all')"
+            >All</mat-checkbox
+          >
+          <mat-checkbox formControlName="type1" (change)="checkBoxChanges('unused')">Unused</mat-checkbox>
+          <mat-checkbox formControlName="type2" (change)="checkBoxChanges('incorrect')">Incorrect</mat-checkbox>
+          <mat-checkbox formControlName="type3" (change)="checkBoxChanges('flagged')">Flagged</mat-checkbox>
+          <mat-checkbox formControlName="type4" (change)="checkBoxChanges('qgen')">QGen</mat-checkbox>
+          <!-- <mat-icon *ngIf="specialCheckboxesChecked" (click)="enableCheckbox()">refresh</mat-icon> -->
         </section>
         <mat-error
           class="err"

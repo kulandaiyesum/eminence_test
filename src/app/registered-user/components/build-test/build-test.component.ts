@@ -111,9 +111,31 @@ export class BuildTestComponent {
     this.getAllSystem();
     this.getAllSubsystem();
 
-    this.qbankForm.get('type0').valueChanges.subscribe((typeAll) => {
-      console.log(typeAll);
-      if (typeAll) {
+    // this.qbankForm.get('type0').valueChanges.subscribe((typeAll) => {
+    //   console.log(typeAll);
+    //   if (typeAll) {
+    //     this.qbankForm.get('type1').setValue(true);
+    //     this.qbankForm.get('type2').setValue(true);
+    //     this.qbankForm.get('type3').setValue(true);
+    //   } else {
+    //     this.qbankForm.get('type1').setValue(false);
+    //     this.qbankForm.get('type2').setValue(false);
+    //     this.qbankForm.get('type3').setValue(false);
+    //   }
+    // });
+
+  }
+
+  checkBoxChanges(value:string){
+    
+    if (value==='unused') {
+      this.qbankForm.get('type1').setValue(true);
+      this.qbankForm.get('type0').setValue(false);
+      this.qbankForm.get('type2').setValue(false);
+      this.qbankForm.get('type3').setValue(false);
+      this.qbankForm.get('type4').setValue(false);
+    }else if(value==='all'){
+      if (this.selectAllCheckbox) {
         this.qbankForm.get('type1').setValue(true);
         this.qbankForm.get('type2').setValue(true);
         this.qbankForm.get('type3').setValue(true);
@@ -122,22 +144,25 @@ export class BuildTestComponent {
         this.qbankForm.get('type2').setValue(false);
         this.qbankForm.get('type3').setValue(false);
       }
-    });
-  }
-
-  checkboxChanged(value: string) {
-    if (
-      value === 'unused' ||
-      value === 'incorrect' ||
-      value === 'flagged' ||
-      value === 'qgen'
-    ) {
-      this.specialCheckboxesChecked = true;
+    }else if(value==='incorrect'){
+      this.qbankForm.get('type1').setValue(false);
+      this.qbankForm.get('type0').setValue(false);
+      this.qbankForm.get('type2').setValue(true);
+      this.qbankForm.get('type3').setValue(false);
+      this.qbankForm.get('type4').setValue(false);
+    }else if(value==='flagged'){
+      this.qbankForm.get('type1').setValue(false);
+      this.qbankForm.get('type0').setValue(false);
+      this.qbankForm.get('type2').setValue(false);
+      this.qbankForm.get('type3').setValue(true);
+      this.qbankForm.get('type4').setValue(false);
+    }else{
+      this.qbankForm.get('type1').setValue(false);
+      this.qbankForm.get('type0').setValue(false);
+      this.qbankForm.get('type2').setValue(false);
+      this.qbankForm.get('type3').setValue(false);
+      this.qbankForm.get('type4').setValue(true);
     }
-  }
-
-  enableCheckbox() {
-    this.specialCheckboxesChecked = !this.specialCheckboxesChecked;
   }
 
   toggleChanged(selectedMode: string) {
