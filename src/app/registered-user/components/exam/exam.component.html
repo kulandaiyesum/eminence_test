@@ -16,10 +16,10 @@
         <p>
           {{ indexBasedQuestions?.title }}
         </p>
-        <div class="options">
+        <div class="options" *ngFor="let option of indexBasedQuestions?.options; let i = index">
           <mat-checkbox
             (change)="optionSelected($event, i, option)"
-            *ngFor="let option of indexBasedQuestions?.options; let i = index"
+
             [value]="option?.text"
             (click)="
               storeList(option, indexBasedQuestions._id, currentQuestionIndex)
@@ -27,7 +27,7 @@
             [(ngModel)]="option.checked"
           >
             {{ option?.text }}</mat-checkbox
-          >
+          ><br>
         </div>
       </div>
     </div>
