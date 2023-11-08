@@ -7,6 +7,7 @@ import { ExamRoomComponent } from './components/exam-room/exam-room.component';
 import { ExamComponent } from './components/exam/exam.component';
 import { CalculatorComponent } from './components/calculator/calculator.component';
 import { ExamTimedComponent } from './components/exam-timed/exam-timed.component';
+import { LabValuesComponent } from './components/lab-values/lab-values.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'build-test', pathMatch: 'full' },
@@ -18,6 +19,8 @@ const routes: Routes = [
   { path: 'exam', component: ExamComponent },
   { path: 'calculator', component: CalculatorComponent },
   { path: 'exam-timed', component: ExamTimedComponent },
+  { path: 'lab', component: LabValuesComponent },
+
 ];
 
 @NgModule({

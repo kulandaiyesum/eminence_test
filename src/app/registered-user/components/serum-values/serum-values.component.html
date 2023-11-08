@@ -1,0 +1,17 @@
+<mat-table [dataSource]="serumValues" class="mat-elevation-z8">
+  <ng-container matColumnDef="subject">
+    <mat-header-cell *matHeaderCellDef>Subject</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.subject }}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="referenceRange">
+    <mat-header-cell *matHeaderCellDef>Reference Range</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.referenceRange }}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="referenceInterval">
+    <mat-header-cell *matHeaderCellDef>SI Reference Intervals</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{ element.referenceRange }}</mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="serumColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: serumColumns"></mat-row>
+</mat-table>
+

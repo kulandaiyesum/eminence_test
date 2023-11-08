@@ -11,6 +11,7 @@ import { Exam } from '../../model/exam.class';
 import { RsaService } from 'src/app/shared/service/rsa.service';
 import { environment } from 'src/environments/environment';
 import { ExamService } from '../../service/exam.service';
+import { LabValuesComponent } from '../lab-values/lab-values.component';
 import { CalculatorComponent } from '../calculator/calculator.component';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -98,7 +99,7 @@ export class ExamComponent implements OnInit {
     private rsaService: RsaService,
     private examService: ExamService,
     private router: Router,
-    public dialog: MatDialog
+    private dialog: MatDialog
   ) {
     this.matIconRegistry.addSvgIcon(
       'custom-icon',
@@ -191,12 +192,11 @@ export class ExamComponent implements OnInit {
     this.currentQuestionIndex = i;
     this.getQuestionsIndexBased(i);
   }
-
-  /******
-   *
-   *Below method is for options selection event
-   *
-   * ******/
+  openDialog() {
+    const dialogRef = this.dialog.open(LabValuesComponent, {
+      width: '80%',
+    });
+  }
 
   optionSelected(event: any, i, selectedOption) {
     const option = this.indexBasedQuestions.options[i];

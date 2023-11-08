@@ -42,9 +42,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExamComponent } from './components/exam/exam.component';
 import { CalculatorComponent } from './components/calculator/calculator.component';
 import { ExamTimedComponent } from './components/exam-timed/exam-timed.component';
+import { LabValuesComponent } from './components/lab-values/lab-values.component';
+import { SerumValuesComponent } from './components/serum-values/serum-values.component';
 import { CarouselModule } from 'primeng/carousel';
 import { ExamtimedComfirmationComponent } from './components/examtimed-comfirmation/examtimed-comfirmation.component';
 import { QuestionsComponent } from './components/questions/questions.component';
+
 
 @NgModule({
   declarations: [
@@ -55,6 +58,8 @@ import { QuestionsComponent } from './components/questions/questions.component';
     ExamComponent,
     CalculatorComponent,
     ExamTimedComponent,
+    LabValuesComponent,
+    SerumValuesComponent,
     ExamtimedComfirmationComponent,
     QuestionsComponent,
   ],
