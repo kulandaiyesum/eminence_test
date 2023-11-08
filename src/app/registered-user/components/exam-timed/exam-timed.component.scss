@@ -91,12 +91,22 @@
 }
 
 .flagged-question {
-  background-color: rgb(255, 68, 77) !important;
+  background-color: rgb(82, 187, 248) !important;
   color: black !important;
 }
-.both-selected-and-flagged {
-  background-color: rgb(82, 187, 248) !important;
-  color: white !important;
+// .both-selected-and-flagged {
+//   background-color: rgb(82, 187, 248) !important;
+//   color: white !important;
+// }
+.flag_icon {
+  position: relative;
+}
+.flag_icon::after {
+  content: "🚩";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 8px;
 }
 .current-question {
   background-color: yellow !important;
