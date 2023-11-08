@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { QgenOption, Question } from 'src/app/faculty/model/question';
 import { RsaService } from 'src/app/shared/service/rsa.service';
 import { environment } from 'src/environments/environment';
@@ -23,7 +23,7 @@ class payloadQuestion {
   templateUrl: './exam-timed.component.html',
   styleUrls: ['./exam-timed.component.scss'],
 })
-export class ExamTimedComponent implements OnInit {
+export class ExamTimedComponent implements OnInit,OnDestroy {
   private userFirstName: string = '';
   private userId: string = '';
   private secretKey: string = environment.secretKey;
@@ -62,6 +62,10 @@ export class ExamTimedComponent implements OnInit {
     private toastr: ToastrService,
     public dialog: MatDialog
   ) {}
+  ngOnDestroy(): void {
+    this.stopTimer();
+    clearInterval(this.examStoper);
+  }
   ngOnInit(): void {
     this.questions = JSON.parse(localStorage.getItem('emex-td'));
     this.userId = this.rsaService.decryptText(
