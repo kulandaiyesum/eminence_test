@@ -8,7 +8,7 @@ import { SerumValuesComponent } from '../serum-values/serum-values.component';
   styleUrls: ['./lab-values.component.scss']
 })
 export class LabValuesComponent {
-  selectedButton: number = 0;
+  selectedButton: number = 1;
   tabGroupIsOpen: boolean;
   dialogRef: any;
 
