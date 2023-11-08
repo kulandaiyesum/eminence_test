@@ -1,16 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { QgenOption, Question } from 'src/app/faculty/model/question';
 import { RsaService } from 'src/app/shared/service/rsa.service';
 import { environment } from 'src/environments/environment';
 import { ExamService } from '../../service/exam.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
+import { MatDialog } from '@angular/material/dialog';
+import { ExamtimedComfirmationComponent } from '../examtimed-comfirmation/examtimed-comfirmation.component';
+import { CalculatorComponent } from '../calculator/calculator.component';
 
-interface payloadQuestion {
+class payloadQuestion {
   questionId: string;
   selectedAnswer: string;
   isCorrectAnswer: string;
-  flag: string;
+  flag: string = 'NO';
   time: number;
   selectedAnswerId: string;
 }
@@ -19,38 +23,49 @@ interface payloadQuestion {
   templateUrl: './exam-timed.component.html',
   styleUrls: ['./exam-timed.component.scss'],
 })
-export class ExamTimedComponent implements OnInit {
-  userFirstName: string = '';
-  userId: string = '';
-  secretKey: string = environment.secretKey;
-  examTimedObject: any = {
+export class ExamTimedComponent implements OnInit,OnDestroy {
+  private userFirstName: string = '';
+  private userId: string = '';
+  private secretKey: string = environment.secretKey;
+  private examTimedObject: any = {
     studentId: '',
     questions: [],
     mode: '',
-    systemId: '',
-    subSystemId: '',
+    time: 0,
+    percentage: 0,
+    questionsCount: 0,
     subjectId: '',
     createdBy: '',
   };
-  questions: any;
+  questions: Question[];
   selectedQuestion: Question;
   selectOption = '';
 
-  examArray: payloadQuestion[] = [];
+  private examArray: payloadQuestion[] = [];
   tempQuestionIndex = 0;
-  tempOption = '';
+  private tempOption = '';
   isFlag: boolean;
-  timer: number = 0;
+  private timer: number = 0;
   displayTimer: any;
-  IntevelStoper: any;
+  private IntevelStoper: any;
 
   setHeight: boolean = false;
+  private examStoper: any;
+  private calcutatedTime: number;
+  private savedTimer: number = 0;
+  private savedCalculatedTime: number = 0;
 
   constructor(
     private rsaService: RsaService,
     private examService: ExamService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService,
+    public dialog: MatDialog
   ) {}
+  ngOnDestroy(): void {
+    this.stopTimer();
+    clearInterval(this.examStoper);
+  }
   ngOnInit(): void {
     this.questions = JSON.parse(localStorage.getItem('emex-td'));
     this.userId = this.rsaService.decryptText(
@@ -62,14 +77,21 @@ export class ExamTimedComponent implements OnInit {
       this.secretKey
     );
     this.examTimedObject.mode = localStorage.getItem('emm'); //mode
-    this.examTimedObject.systemId = localStorage.getItem('emsm'); //systemId
-    this.examTimedObject.subSystemId = localStorage.getItem('emssm'); //subsystemId
+    if (localStorage.getItem('emsm') === 'undefined') {
+    } else {
+      this.examTimedObject.systemId = localStorage.getItem('emsm'); //systemId
+    }
+    if (localStorage.getItem('emssm') === 'undefined') {
+    } else {
+      this.examTimedObject.subSystemId = localStorage.getItem('emssm'); //subsystemId
+    }
+
     this.examTimedObject.subjectId = localStorage.getItem('emsbi'); //subject
     this.examTimedObject.createdBy = this.userFirstName;
     this.examTimedObject.studentId = this.userId;
-    console.log(this.examTimedObject, this.questions);
     this.selectedQuestion = this.questions[0];
     this.startTimer();
+    this.displayTimerUI();
   }
 
   navigateQuestion(questionId: string, index: number) {
@@ -105,7 +127,7 @@ export class ExamTimedComponent implements OnInit {
           questionId: '',
           selectedAnswer: '',
           isCorrectAnswer: '',
-          flag: '',
+          flag: 'NO',
           time: 0,
           selectedAnswerId: '',
         };
@@ -153,7 +175,7 @@ export class ExamTimedComponent implements OnInit {
           questionId: '',
           selectedAnswer: '',
           isCorrectAnswer: '',
-          flag: '',
+          flag: 'NO',
           time: 0,
           selectedAnswerId: '',
         };
@@ -179,59 +201,147 @@ export class ExamTimedComponent implements OnInit {
 
   startTimer() {
     this.stopTimer();
-    this.timer = 0;
-    const tempObj = this.examArray.find(
-      (payloadQuestion) =>
-        payloadQuestion.questionId === this.selectedQuestion._id
-    );
-    if (tempObj) {
-      this.timer = tempObj.time;
+    if (this.savedTimer !== 0 && this.timer === this.savedTimer) {
+      this.savedTimer = 0;
+    } else {
+      this.timer = 0;
+      const tempObj = this.examArray.find(
+        (payloadQuestion) =>
+          payloadQuestion.questionId === this.selectedQuestion._id
+      );
+      if (tempObj) {
+        this.timer = tempObj.time;
+      }
     }
     this.IntevelStoper = setInterval(() => {
       this.timer++;
-      const min = Math.floor(this.timer / 60);
-      const sec = this.timer % 60;
+    }, 1000);
+  }
+
+  displayTimerUI() {
+    if (
+      this.savedCalculatedTime !== 0 &&
+      this.calcutatedTime === this.savedCalculatedTime
+    ) {
+      this.savedCalculatedTime = 0;
+    } else {
+      const timePerQuestion = 75;
+      this.calcutatedTime = timePerQuestion * this.questions.length;
+    }
+    this.examStoper = setInterval(() => {
+      this.calcutatedTime--;
+      const min = Math.floor(this.calcutatedTime / 60);
+      const sec = this.calcutatedTime % 60;
       this.displayTimer = `${String(min).padStart(2, '0')}:${String(
         sec
       ).padStart(2, '0')}`;
-      if (this.timer >= 90) {
-        this.stopTimer();
-        if (this.questions.length === this.tempQuestionIndex + 1) return;
-        this.navigateQuestionByIndex(this.tempQuestionIndex + 1);
+      if (this.calcutatedTime === 0) {
+        this.stopDisplayTimerAndEndExam();
       }
     }, 1000);
   }
   stopTimer() {
     clearInterval(this.IntevelStoper);
   }
+  stopDisplayTimerAndEndExam() {
+    clearInterval(this.examStoper);
+    this.submitExam();
+  }
+
+  isflaggedQuestion(questionId: string): boolean {
+    const tempObj = this.examArray.find(
+      (payloadObj) => payloadObj.questionId === questionId
+    );
+    let returnOBj = false;
+    if (tempObj && tempObj.flag === 'YES') {
+      returnOBj = true;
+    }
+    return returnOBj;
+  }
+
+  isQuestionSubmited(questionId: string): boolean {
+    let result = false;
+    const tempObj = this.examArray.find(
+      (payloadObj) => payloadObj.questionId === questionId
+    );
+    if (tempObj && tempObj.selectedAnswerId !== '') {
+      result = true;
+    }
+    return result;
+  }
+
+  isCurrentQuestion(questionId: string): boolean {
+    return questionId === this.selectedQuestion._id;
+  }
+
+  calculateResultInPercentage(): number {
+    let percentage = 0;
+    let correctAnswers = 0;
+    let worngAnswers = 0;
+    const qLength = this.questions.length;
+    this.examArray.forEach((p) => {
+      if (p.isCorrectAnswer === 'YES') {
+        correctAnswers++;
+      } else {
+        worngAnswers++;
+      }
+    });
+    percentage = (correctAnswers / qLength) * 100;
+    return percentage;
+  }
+
+  openCalculatorPopup() {
+    const dialogRef = this.dialog.open(CalculatorComponent, {
+      width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
+  }
 
   submitExam() {
     this.stopTimer();
-    this.examTimedObject.questions = this.examArray;
-    console.log(this.examTimedObject);
-    this.examService.examSubmit(this.examTimedObject).subscribe(
-      (response: any) => {
-        console.log(response);
-        Swal.fire('Exam finished', 'Have a look on performance board').then(
-          (result) => {
-            if (result.isConfirmed) {
-              this.router.navigate(['/eminence/student/build-test']);
-            }
-            this.router.navigate(['/eminence/student/build-test']);
-          }
-        );
-      },
-      (error) => {
-        console.error('An error occurred:', error);
-        Swal.fire('Exam finished', 'Have a look on performance board').then(
-          (result) => {
-            if (result.isConfirmed) {
-              this.router.navigate(['/eminence/student/build-test']);
-            }
-            this.router.navigate(['/eminence/student/build-test']);
-          }
-        );
-      }
+    clearInterval(this.examStoper);
+    this.savedTimer = this.timer;
+    this.savedCalculatedTime = this.calcutatedTime;
+    this.examTimedObject.percentage = this.calculateResultInPercentage();
+    let dialogBoxSettings = {
+      width: '500px',
+      margin: '0 auto',
+      border: '1px solid #000',
+    };
+    const dialogRef = this.dialog.open(
+      ExamtimedComfirmationComponent,
+      dialogBoxSettings
     );
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'YES') {
+        this.examTimedObject.questions = this.examArray;
+        this.examTimedObject.time = Number(this.displayTimer);
+        this.examTimedObject.questionsCount = this.questions.length;
+        console.log(this.examTimedObject);
+        this.examService.examSubmit(this.examTimedObject).subscribe(
+          (response: any) => {
+            console.log(response);
+            Swal.fire('Exam finished', 'Have a look on performance board').then(
+              (result) => {
+                if (result.isConfirmed) {
+                  this.router.navigate(['/eminence/student/build-test']);
+                }
+                this.router.navigate(['/eminence/student/build-test']);
+              }
+            );
+          },
+          (error) => {
+            console.error('An error occurred:', error);
+            this.toastr.error(error.error.message, '', { timeOut: 3000 });
+          }
+        );
+      } else {
+        this.timer = this.savedTimer;
+        this.calcutatedTime = this.savedCalculatedTime;
+        this.startTimer();
+        this.displayTimerUI();
+      }
+    });
   }
 }

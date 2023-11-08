@@ -12,6 +12,7 @@ import { RsaService } from 'src/app/shared/service/rsa.service';
 import { environment } from 'src/environments/environment';
 import { ExamService } from '../../service/exam.service';
 import { LabValuesComponent } from '../lab-values/lab-values.component';
+import { CalculatorComponent } from '../calculator/calculator.component';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component({
@@ -43,8 +44,11 @@ export class ExamComponent implements OnInit {
   examArray: any[] = [];
   toDisplayEnd: number;
   flagChecked: boolean = false;
+  checkboxStates: boolean[] = [];
   bindingData: any;
   checked = false;
+  calculatorPopupVisible = false;
+  totalQuestions: number;
 
   public examObject: {
     studentId: string;
@@ -56,6 +60,8 @@ export class ExamComponent implements OnInit {
     subSystemId: string;
     subjectId: string;
     flag: string;
+    from: string;
+    requestid: string;
   } = {
     studentId: '',
     questions: [],
@@ -66,6 +72,8 @@ export class ExamComponent implements OnInit {
     systemId: '',
     subSystemId: '',
     subjectId: '',
+    from: '',
+    requestid: '',
   };
   public optionInstance: {
     questionId: string;
@@ -78,6 +86,9 @@ export class ExamComponent implements OnInit {
     selectedAnswer: '',
     isCorrectAnswer: '',
   };
+
+  flaggedQuestionsList:any[]=[];
+  public currentQuestionID:string;
 
   constructor(
     private route: ActivatedRoute,
@@ -101,6 +112,7 @@ export class ExamComponent implements OnInit {
       // Use this.tutorId as needed in your TutorComponent
       console.log(this.tutorId);
     });
+    this.examObject.requestid = this.tutorId;
     if (this.tutorId) {
       this.getAllQuestions(this.tutorId);
     } else {
@@ -149,8 +161,10 @@ export class ExamComponent implements OnInit {
       this.questions = doc.result.questions;
       console.log(this.questions);
       console.log(this.questions.length);
+      this.totalQuestions = this.questions.length;
       this.maximumQuestionLength = this.questions.length - 1;
       this.getQuestionsIndexBased(this.currentQuestionIndex);
+      this.checkboxStates = new Array(this.questions.length + 1).fill(false);
     });
   }
 
@@ -161,26 +175,21 @@ export class ExamComponent implements OnInit {
     this.incorrectNews = false;
     this.correctNews = false;
     this.flagChecked = false;
-    console.log(this.answerList, index);
     let data;
     let data1 = [];
-    this.bindingData = this.answerList.find((x) => x.i === index);
     console.log(this.bindingData);
+    this.bindingData = this.answerList.find((x) => x.i === index);
     this.value = this.bindingData?.text;
+    this.currentQuestionID=this.indexBasedQuestions._id
 
-    // data1.push(data);
-    // data1.forEach((res) => {
-    //   if (this.indexBasedQuestions.options._id.includes(res._id)) {
-    //     this.indexBasedQuestions.options.push(res._id);
-    //   }
-    // });
+    if (this.flaggedQuestionsList.includes(this.currentQuestionID)) {
+      this.flagChecked=true
+    }
 
-    // this.answerId = this.answerList[index].ans;
   }
 
   changeQuestions(i: number) {
     this.currentQuestionIndex = i;
-    console.log(this.currentQuestionIndex == i);
     this.getQuestionsIndexBased(i);
   }
   openDialog() {
@@ -190,10 +199,6 @@ export class ExamComponent implements OnInit {
   }
 
   optionSelected(event: any, i, selectedOption) {
-    if (event.checked) {
-      console.log(selectedOption?.text);
-    }
-    console.log('Selected option: ', selectedOption?.text);
     const option = this.indexBasedQuestions.options[i];
     option.checked = event.checked;
     this.indexBasedQuestions.options.forEach((option, index) => {
@@ -201,11 +206,6 @@ export class ExamComponent implements OnInit {
         option.checked = false;
       }
     });
-    // if(selectedOption.checked){
-
-    // }
-    // console.log(this.indexBasedQuestions.options);
-    // console.log(this.indexBasedQuestions);
     const correctOptions = this.indexBasedQuestions.options.filter(
       (item: any) => item.explanation != null
     );
@@ -221,8 +221,8 @@ export class ExamComponent implements OnInit {
 
     const selectedOptions = this.generateAlphabetChar(selectOptionsIndex);
     console.log('Selected options is : ' + selectedOptions);
-    this.examInstance.selectedAnswer = selectedOption?._id;
-    this.optionInstance.selectedAnswer = selectedOption?._id;
+    this.examInstance.selectedAnswer = selectedOptions;
+    this.optionInstance.selectedAnswer = selectedOptions;
     console.log(correctOptions);
     this.value = correctOptions[0].text;
 
@@ -250,6 +250,7 @@ export class ExamComponent implements OnInit {
         }
       });
     }
+
     this.examArray.push({ ...this.optionInstance });
     console.log(this.examArray);
   }
@@ -279,10 +280,15 @@ export class ExamComponent implements OnInit {
       this.optionInstance.flag = 'YES';
       this.optionInstance.isCorrectAnswer = '';
       this.optionInstance.selectedAnswer = '';
+      this.flaggedQuestionsList.push(this.currentQuestionID);
+      console.log(this.flaggedQuestionsList);
     } else {
       this.examInstance.flag = 'NO';
       this.examObject.flag = 'NO';
       this.optionInstance.flag = 'NO';
+      this.flaggedQuestionsList=this.flaggedQuestionsList.filter(item => item !== this.currentQuestionID);
+      console.log(this.flaggedQuestionsList);
+
     }
 
     // if (this.examInstance.flag == 'YES') {
@@ -308,9 +314,12 @@ export class ExamComponent implements OnInit {
     console.log(this.examArray);
   }
 
+  
+
   submitExam() {
     this.examObject.questions = this.examArray;
     this.examObject.mode = 'TUTOR'; //mode
+    this.examObject.from = 'qgen'; //mode
     this.examObject.systemId = localStorage.getItem('emsm'); //systemId
     this.examObject.subSystemId = localStorage.getItem('emssm'); //subsystemId
     this.examObject.subjectId = localStorage.getItem('emsbi'); //subjectId
@@ -332,6 +341,8 @@ export class ExamComponent implements OnInit {
     );
   }
   storeList(event, qnsId, i) {
+    console.log(event);
+
     var existValue = this.answerList.find((s) => s.id == qnsId);
     if (existValue != null) {
       existValue.ans = event._id;
@@ -346,5 +357,14 @@ export class ExamComponent implements OnInit {
     // this.answerList.findIndex((val: any, index: number) => i == index);
     console.log(this.answerList);
   }
-  getAnsByQnsId(qnsId) {}
+  openCalculatorPopup() {
+    const dialogRef = this.dialog.open(CalculatorComponent, {
+      width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
+  }
+  closeCalculatorPopup() {
+    this.calculatorPopupVisible = false;
+  }
 }

@@ -5,6 +5,7 @@ import { PerformanceComponent } from './components/performance/performance.compo
 import { SavedComponent } from './components/saved/saved.component';
 import { ExamRoomComponent } from './components/exam-room/exam-room.component';
 import { ExamComponent } from './components/exam/exam.component';
+import { CalculatorComponent } from './components/calculator/calculator.component';
 import { ExamTimedComponent } from './components/exam-timed/exam-timed.component';
 import { LabValuesComponent } from './components/lab-values/lab-values.component';
 
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'exam-room', component: ExamRoomComponent },
   { path: 'exam/:id', component: ExamComponent },
   { path: 'exam', component: ExamComponent },
+  { path: 'calculator', component: CalculatorComponent },
   { path: 'exam-timed', component: ExamTimedComponent },
   { path: 'lab', component: LabValuesComponent },
 

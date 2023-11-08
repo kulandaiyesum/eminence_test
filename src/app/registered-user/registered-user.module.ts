@@ -40,9 +40,14 @@ import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExamComponent } from './components/exam/exam.component';
+import { CalculatorComponent } from './components/calculator/calculator.component';
 import { ExamTimedComponent } from './components/exam-timed/exam-timed.component';
 import { LabValuesComponent } from './components/lab-values/lab-values.component';
 import { SerumValuesComponent } from './components/serum-values/serum-values.component';
+import { CarouselModule } from 'primeng/carousel';
+import { ExamtimedComfirmationComponent } from './components/examtimed-comfirmation/examtimed-comfirmation.component';
+import { QuestionsComponent } from './components/questions/questions.component';
+
 
 @NgModule({
   declarations: [
@@ -51,9 +56,12 @@ import { SerumValuesComponent } from './components/serum-values/serum-values.com
     SavedComponent,
     ExamRoomComponent,
     ExamComponent,
+    CalculatorComponent,
     ExamTimedComponent,
     LabValuesComponent,
     SerumValuesComponent,
+    ExamtimedComfirmationComponent,
+    QuestionsComponent,
   ],
   imports: [
     FormsModule,
@@ -93,6 +101,7 @@ import { SerumValuesComponent } from './components/serum-values/serum-values.com
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    CarouselModule,
   ],
 })
 export class RegisteredUserModule {}

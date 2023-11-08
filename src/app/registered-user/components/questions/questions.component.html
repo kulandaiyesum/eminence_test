@@ -1,0 +1,110 @@
+<!-- <div class="exam-container">
+  <div class="controls">
+    <div class="button" *ngFor="let item of questions; let i = index">
+      <p
+        (click)="changeQuestions(i)"
+        [ngClass]="{ selected: i === currentQuestionIndex }"
+      >
+        {{ i + 1 }}
+      </p>
+    </div>
+  </div>
+  <div class="main">
+    <div class="questions" #scrollQuestionContainer>
+      <div class="questions-main">
+        <h6>Item {{ currentQuestionIndex + 1 }} of {{ totalQuestions }}</h6>
+        <p>
+          {{ indexBasedQuestions?.title }}
+        </p>
+        <div class="options">
+          <mat-checkbox
+            (change)="optionSelected($event, i, option)"
+            *ngFor="let option of indexBasedQuestions?.options; let i = index"
+            [value]="option?.text"
+            (click)="
+              storeList(option, indexBasedQuestions._id, currentQuestionIndex)
+            "
+            [(ngModel)]="option.checked"
+          >
+            {{ option?.text }}</mat-checkbox
+          >
+        </div> -->
+<!-- </div>
+    </div>
+  </div> -->
+<!-- </div> -->
+<div class="questions-container">
+  <div class="heading">
+    <div class="icons">
+      <mat-icon (click)="closeDialog()">close</mat-icon>
+    </div>
+    <div class="title">
+      <h4>Review your question</h4>
+    </div>
+  </div>
+  <div class="main">
+    <div class="controls">
+      <div class="button" *ngFor="let item of questions; let i = index">
+        <p
+          (click)="changeQuestions(i)"
+          [ngClass]="{ selected: i === currentQuestionIndex }"
+        >
+          {{ i + 1 }}
+        </p>
+      </div>
+    </div>
+    <div class="questions">
+      <div class="questions-title">
+        <h6>Item {{ currentQuestionIndex + 1 }} of {{ totalQuestions }}</h6>
+        <p>{{ currentQuestionIndex + 1 }} . {{ indexBasedQuestions?.title }}</p>
+        <span *ngIf="indexBasedQuestions?.answerObject[0].flag === 'YES'">
+          <mat-icon>outlined_flag</mat-icon>
+          <p>Flagged</p>
+        </span>
+      </div>
+      <div class="options">
+        <p
+          role="listitem"
+          *ngFor="let option of indexBasedQuestions?.options; let i = index"
+          [ngClass]="{
+            selectedOptions: generateAlphabetChar(i) === selectedOptions
+          }"
+        >
+          {{ generateAlphabetChar(i) + ". " + option?.text }}
+          <span *ngIf="generateAlphabetChar(i) === selectedOptions">
+            <mat-icon
+              *ngIf="
+                indexBasedQuestions?.answerObject[0].isCorrectAnswer === 'NO'
+              "
+              id="wrong"
+              >close</mat-icon
+            >
+            <mat-icon
+              *ngIf="
+                indexBasedQuestions?.answerObject[0].isCorrectAnswer === 'YES'
+              "
+              id="correct"
+              >check</mat-icon
+            >
+          </span>
+        </p>
+      </div>
+      <div class="button-controls">
+        <button
+          mat-button
+          (click)="previous()"
+          *ngIf="currentQuestionIndex > 0"
+        >
+          Prev
+        </button>
+        <button
+          mat-button
+          (click)="next()"
+          *ngIf="currentQuestionIndex < maximumQuestionLength"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -31,6 +31,7 @@ import { RsaService } from 'src/app/shared/service/rsa.service';
 import { environment } from 'src/environments/environment';
 import { QuerstionService } from 'src/app/faculty/service/querstion.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-build-test',
@@ -53,6 +54,7 @@ export class BuildTestComponent {
   type: number;
   selectAllCheckbox: boolean = false;
   unusedCheckbox: boolean = false;
+  specialCheckboxesChecked: boolean = false;
 
   constructor(
     private rsaService: RsaService,
@@ -64,6 +66,7 @@ export class BuildTestComponent {
     private querstionService: QuerstionService,
     private examDataService: ExamDataService,
     private fb: FormBuilder,
+    private toastr: ToastrService,
     private router: Router
   ) {
     this.userId = this.rsaService.decryptText(
@@ -108,9 +111,31 @@ export class BuildTestComponent {
     this.getAllSystem();
     this.getAllSubsystem();
 
-    this.qbankForm.get('type0').valueChanges.subscribe((typeAll) => {
-      console.log(typeAll);
-      if (typeAll) {
+    // this.qbankForm.get('type0').valueChanges.subscribe((typeAll) => {
+    //   console.log(typeAll);
+    //   if (typeAll) {
+    //     this.qbankForm.get('type1').setValue(true);
+    //     this.qbankForm.get('type2').setValue(true);
+    //     this.qbankForm.get('type3').setValue(true);
+    //   } else {
+    //     this.qbankForm.get('type1').setValue(false);
+    //     this.qbankForm.get('type2').setValue(false);
+    //     this.qbankForm.get('type3').setValue(false);
+    //   }
+    // });
+
+  }
+
+  checkBoxChanges(value:string){
+    
+    if (value==='unused') {
+      this.qbankForm.get('type1').setValue(true);
+      this.qbankForm.get('type0').setValue(false);
+      this.qbankForm.get('type2').setValue(false);
+      this.qbankForm.get('type3').setValue(false);
+      this.qbankForm.get('type4').setValue(false);
+    }else if(value==='all'){
+      if (this.selectAllCheckbox) {
         this.qbankForm.get('type1').setValue(true);
         this.qbankForm.get('type2').setValue(true);
         this.qbankForm.get('type3').setValue(true);
@@ -119,8 +144,27 @@ export class BuildTestComponent {
         this.qbankForm.get('type2').setValue(false);
         this.qbankForm.get('type3').setValue(false);
       }
-    });
+    }else if(value==='incorrect'){
+      this.qbankForm.get('type1').setValue(false);
+      this.qbankForm.get('type0').setValue(false);
+      this.qbankForm.get('type2').setValue(true);
+      this.qbankForm.get('type3').setValue(false);
+      this.qbankForm.get('type4').setValue(false);
+    }else if(value==='flagged'){
+      this.qbankForm.get('type1').setValue(false);
+      this.qbankForm.get('type0').setValue(false);
+      this.qbankForm.get('type2').setValue(false);
+      this.qbankForm.get('type3').setValue(true);
+      this.qbankForm.get('type4').setValue(false);
+    }else{
+      this.qbankForm.get('type1').setValue(false);
+      this.qbankForm.get('type0').setValue(false);
+      this.qbankForm.get('type2').setValue(false);
+      this.qbankForm.get('type3').setValue(false);
+      this.qbankForm.get('type4').setValue(true);
+    }
   }
+
   toggleChanged(selectedMode: string) {
     this.examMode = '';
     if (this.examMode === selectedMode) {
@@ -173,30 +217,41 @@ export class BuildTestComponent {
         break;
       }
     }
+    if (temp.systemId === 'ALL') {
+    } else {
+      this.qbankObject.systemId = temp.systemId;
+    }
+    if (temp.subsystemId === 'ALL') {
+    } else {
+      this.qbankObject.subsystemId = temp.subsystemId;
+    }
     this.qbankObject.mode = this.examMode;
     this.qbankObject.questionsCount = parseInt(temp.questionsCount, 10);
     this.qbankObject.subjectId = temp.subjectId;
-    this.qbankObject.subsystemId = temp.subsystemId;
-    this.qbankObject.systemId = temp.systemId;
     this.qbankObject.type = type;
     this.qbankObject.userId = this.userId;
     this.qbankObject.status = 'VREVIEWED';
-    console.log(this.qbankObject);
     this.questionService
       .postQbankRequest(this.qbankObject)
       .subscribe((doc: any) => {
-        console.log(doc);
+        console.log(doc.result);
         const tempData = doc.result;
-        // this.examDataService.setExamRoomData(tempData);
-        localStorage.setItem('emex-td', JSON.stringify(tempData));
-        localStorage.setItem('emm', this.qbankObject.mode);
-        localStorage.setItem('emsm', this.qbankObject.systemId);
-        localStorage.setItem('emssm', this.qbankObject.subsystemId);
-        localStorage.setItem('emsbi', this.qbankObject.subjectId);
-        if (this.qbankObject.mode === 'TUTOR') {
-          this.router.navigate(['/eminence/student/exam']);
+        if (tempData.length === 0) {
+          this.toastr.warning('NO Questions Found !!!', '', {
+            timeOut: 3000,
+          });
         } else {
-          this.router.navigate(['/eminence/student/exam-timed']);
+          // this.examDataService.setExamRoomData(tempData);
+          localStorage.setItem('emex-td', JSON.stringify(tempData));
+          localStorage.setItem('emm', this.qbankObject.mode);
+          localStorage.setItem('emsm', this.qbankObject.systemId);
+          localStorage.setItem('emssm', this.qbankObject.subsystemId);
+          localStorage.setItem('emsbi', this.qbankObject.subjectId);
+          if (this.qbankObject.mode === 'TUTOR') {
+            this.router.navigate(['/eminence/student/exam']);
+          } else {
+            this.router.navigate(['/eminence/student/exam-timed']);
+          }
         }
       });
   }

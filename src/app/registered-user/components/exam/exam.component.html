@@ -12,69 +12,22 @@
   <div class="main">
     <div class="questions" #scrollQuestionContainer>
       <div class="questions-main">
+        <h6>Item {{ currentQuestionIndex + 1 }} of {{ totalQuestions }}</h6>
         <p>
           {{ indexBasedQuestions?.title }}
         </p>
-        <div class="options">
-          <!-- <mat-checkbox> -->
-
-          <mat-list role="list">
-            <mat-list-item
-              role="listitem"
-              *ngFor="let option of indexBasedQuestions?.options; let i = index"
-            >
-              <mat-checkbox
-                (change)="optionSelected($event, i, option)"
-                [value]="option?.text"
-                (click)="
-                  storeList(
-                    option,
-                    indexBasedQuestions._id,
-                    currentQuestionIndex
-                  )
-                "
-                [(ngModel)]="option.checked"
-              >
-                {{ generateAlphabetChar(i) }}.{{ option?.text }}</mat-checkbox
-              >
-            </mat-list-item>
-          </mat-list>
-
-          <!-- <mat-checkbox
+        <div class="options" *ngFor="let option of indexBasedQuestions?.options; let i = index">
+          <mat-checkbox
             (change)="optionSelected($event, i, option)"
-            *ngFor="let option of indexBasedQuestions?.options; let i = index"
+
             [value]="option?.text"
             (click)="
               storeList(option, indexBasedQuestions._id, currentQuestionIndex)
             "
             [(ngModel)]="option.checked"
           >
-            {{generateAlphabetChar(i)}}.{{ option?.text }}</mat-checkbox
-          > -->
-          <!-- </mat-checkbox -->
-          <!-- > -->
-          <!-- <mat-radio-group (change)="optionSelected($event,i)">
-            <mat-list
-              role="list"
-              *ngFor="let option of indexBasedQuestions?.options; let i = index"
-            >
-              <mat-list-item role="listitem">
-                <mat-radio-button
-                  [name]="option.text"
-                  [value]="option?.text"
-                  (click)="
-                    storeList(
-                      option,
-                      indexBasedQuestions._id,
-                      currentQuestionIndex
-                    )
-                  "
-                >
-                  {{ option?.text }}
-                </mat-radio-button>
-              </mat-list-item>
-            </mat-list>
-          </mat-radio-group> -->
+          {{ generateAlphabetChar(i) + '. ' + option?.text }}</mat-checkbox
+          ><br>
         </div>
       </div>
     </div>
@@ -136,8 +89,8 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header> </mat-expansion-panel-header>
         <div class="content">
-          <mat-icon svgIcon="custom-icon" (click)="openDialog()"></mat-icon>
-          <mat-icon>exposure</mat-icon>
+          <mat-icon svgIcon="custom-icon"></mat-icon>
+          <mat-icon (click)="openCalculatorPopup()">exposure</mat-icon>
           <mat-icon>assignment</mat-icon>
         </div>
       </mat-expansion-panel>
