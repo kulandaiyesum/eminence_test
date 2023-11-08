@@ -12,6 +12,7 @@
               <!-- <th>Subject</th>
               <th>System</th> -->
               <th>Score</th>
+              <th>Review</th>
             </tr>
           </thead>
           <tbody>
@@ -22,6 +23,7 @@
               <!-- <td>{{ exam?.subjectId?.subject || "-" }}</td>
               <td>{{ exam.systemId.system || "ALL" }}</td> -->
               <td>{{ exam?.percentage || "-" }}</td>
+              <td><mat-icon (click)="getQuestions(exam)">visibility</mat-icon></td>
             </tr>
           </tbody>
         </table>
