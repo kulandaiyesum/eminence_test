@@ -86,8 +86,8 @@ export class ExamComponent implements OnInit {
     isCorrectAnswer: '',
   };
 
-  public group: (number | null)[] = [];
-  // dialog: any;
+  flaggedQuestionsList:any[]=[];
+  public currentQuestionID:string;
 
   constructor(
     private route: ActivatedRoute,
@@ -179,6 +179,12 @@ export class ExamComponent implements OnInit {
     console.log(this.bindingData);
     this.bindingData = this.answerList.find((x) => x.i === index);
     this.value = this.bindingData?.text;
+    this.currentQuestionID=this.indexBasedQuestions._id
+
+    if (this.flaggedQuestionsList.includes(this.currentQuestionID)) {
+      this.flagChecked=true
+    }
+
   }
 
   changeQuestions(i: number) {
@@ -245,13 +251,8 @@ export class ExamComponent implements OnInit {
       });
     }
 
-    const isChecked = this.checkboxStates[i];
-    console.log('Status of checkbox ' + isChecked);
-
-    if (isChecked) {
-      this.examArray.push({ ...this.optionInstance });
-      console.log(this.examArray);
-    }
+    this.examArray.push({ ...this.optionInstance });
+    console.log(this.examArray);
   }
 
   generateAlphabetChar(index: number): string {
@@ -279,10 +280,15 @@ export class ExamComponent implements OnInit {
       this.optionInstance.flag = 'YES';
       this.optionInstance.isCorrectAnswer = '';
       this.optionInstance.selectedAnswer = '';
+      this.flaggedQuestionsList.push(this.currentQuestionID);
+      console.log(this.flaggedQuestionsList);
     } else {
       this.examInstance.flag = 'NO';
       this.examObject.flag = 'NO';
       this.optionInstance.flag = 'NO';
+      this.flaggedQuestionsList=this.flaggedQuestionsList.filter(item => item !== this.currentQuestionID);
+      console.log(this.flaggedQuestionsList);
+
     }
 
     // if (this.examInstance.flag == 'YES') {

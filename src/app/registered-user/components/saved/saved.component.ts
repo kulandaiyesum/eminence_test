@@ -26,7 +26,28 @@ export class SavedComponent {
     'system',
     'score',
   ];
-  public slides = [];
+  public slides = [
+    {
+      title:"Slide 1",
+      content:"Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+    },
+    {
+      title:"Slide 2",
+      content:"Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+    },
+    {
+      title:"Slide 3",
+      content:"Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+    },
+    {
+      title:"Slide 4",
+      content:"Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+    },
+    {
+      title:"Slide 5",
+      content:"Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+    },
+  ];
   translateValue = 0; // Initial translation value
   // slideWidth = 300; // Adjust this based on your slide width
 
@@ -81,7 +102,7 @@ export class SavedComponent {
         this.examArray = response.result.filter(
           (item: any) => item.mode != null
         );
-        this.slides = this.examArray;
+        console.log(this.examArray);
       },
       (err) => {
         console.log(err);
