@@ -47,7 +47,9 @@
       <div class="button" *ngFor="let item of questions; let i = index">
         <p
           (click)="changeQuestions(i)"
-          [ngClass]="{ selected: i === currentQuestionIndex }"
+          [ngClass]="{ selected: i === currentQuestionIndex,
+            'wrong-answer': i === currentQuestionIndex && indexBasedQuestions?.answerObject[0]?.isCorrectAnswer?.toLowerCase() === 'no'
+           }"
         >
           {{ i + 1 }}
         </p>
@@ -88,6 +90,30 @@
             >
           </span>
         </p>
+      </div>
+      <div
+        *ngFor="let option of indexBasedQuestions?.options"
+        class="correct-expansion"
+      >
+        <div
+          *ngIf="
+            indexBasedQuestions?.answerObject[0].isCorrectAnswer === 'NO' ||
+            indexBasedQuestions?.answerObject[0].flag === 'YES'
+          "
+        >
+          <mat-expansion-panel
+            *ngIf="
+              option?.explanation !== null && option?.explanation !== undefined
+            "
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title> View correct answer </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p *ngIf="option.correctAnswer === 'true'">
+              <b>Correct Answer : </b> {{ option?.text }}
+            </p>
+          </mat-expansion-panel>
+        </div>
       </div>
       <div class="button-controls">
         <button

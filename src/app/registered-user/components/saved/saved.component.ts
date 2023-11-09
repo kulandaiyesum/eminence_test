@@ -100,7 +100,7 @@ export class SavedComponent {
     this.examService.getExamDetailsByStudentId(userid).subscribe(
       (response: any) => {
         this.examArray = response.result.filter(
-          (item: any) => item.mode != null
+          (item: any) => item.mode === 'TIMED'
         );
         console.log(this.examArray);
       },
@@ -120,7 +120,7 @@ export class SavedComponent {
       this.dialog.open(QuestionsComponent, {
         width: 'auto',
         height:'auto',
-        data: dataToPass
+        data: dataToPass,
       });
       // dialogRef.afterClosed().subscribe((result) => {});
     });
