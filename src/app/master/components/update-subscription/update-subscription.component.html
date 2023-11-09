@@ -11,10 +11,10 @@
       </div>
     </div>
     <div class="forms">
-      <form [formGroup]="updateSubscriptionForm">
+      <form>
         <select
           id="packages"
-          formControlName="packageId"
+          name="packageId"
           [(ngModel)]="subscriptionObject.packageId"
           (change)="selectedPackage($event)"
         >
@@ -35,9 +35,9 @@
               [matDatepicker]="picker"
               [(ngModel)]="subscriptionObject.startDate"
               [min]="minDate"
-              formControlName="startDate"
               name="startdate"
               (dateChange)="calculateEndDate()"
+              (input)="updateIsUnchanged()"
               required
             />
             <mat-datepicker-toggle
@@ -58,18 +58,18 @@
           </p>
           <div
             class="error-message"
-            *ngIf="
-              updateSubscriptionForm.controls['startDate'].hasError(
-                'required'
-              ) || updateSubscriptionForm.status === 'INVALID'
-            "
+            *ngIf="!subscriptionObject.startDate && subscriptionObject.endDate"
           >
-            Enter Valid information.
+            Enter a valid start date.
           </div>
           <button
             type="submit"
             (click)="onSubscriptionUpdate()"
-            [disabled]="updateSubscriptionForm.invalid"
+            [disabled]="
+              !subscriptionObject.packageId ||
+              !subscriptionObject.startDate ||
+              isUnchanged
+            "
           >
             Update
           </button>
