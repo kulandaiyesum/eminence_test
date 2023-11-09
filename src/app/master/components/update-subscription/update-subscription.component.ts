@@ -23,7 +23,6 @@ interface MyObject {
   styleUrls: ['./update-subscription.component.scss'],
 })
 export class UpdateSubscriptionComponent {
-  updateSubscriptionForm: FormGroup;
   subscriptionObject: Subscription;
   private secretKey: string = environment.secretKey;
   public packageList;
@@ -35,6 +34,7 @@ export class UpdateSubscriptionComponent {
   public selectedPackageOption;
   public maxDate = new Date();
   public minDate: string = this.calculateMinDate();
+  isUnchanged: boolean = true;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: any,
@@ -44,14 +44,11 @@ export class UpdateSubscriptionComponent {
     private subscriptionService: SubscriptionService,
     private toastr: ToastrService,
     private rsaService: RsaService
-  ) {
-    console.log(this.data);
-  }
+  ) {}
 
   ngOnInit(): void {
     this.subscriptionObject = new Subscription();
     this.getPackageData();
-    this.initForm();
     this.subscriptionObject._id = this.data._id;
     this.subscriptionObject.institutionId = this.data.institutionId;
     this.subscriptionObject.packageId = this.data?.packageId?._id;
@@ -65,14 +62,7 @@ export class UpdateSubscriptionComponent {
     } else {
       this.calculateEndDate();
     }
-  }
-
-  initForm() {
-    this.updateSubscriptionForm = new FormGroup({
-      packageId: new FormControl(),
-      startDate: new FormControl('', [Validators.required]),
-      endDate: new FormControl(),
-    });
+    this.updateIsUnchanged();
   }
 
   private calculateMinDate(): string {
@@ -136,6 +126,7 @@ export class UpdateSubscriptionComponent {
         console.log('No package selected');
       }
     }
+    this.updateIsUnchanged();
   }
 
   calculateEndDate() {
@@ -166,5 +157,13 @@ export class UpdateSubscriptionComponent {
         endDate = null;
     }
     this.subscriptionObject.endDate = endDate;
+    this.updateIsUnchanged();
+  }
+
+  updateIsUnchanged() {
+    this.isUnchanged =
+      this.subscriptionObject.packageId === this.data?.packageId?._id &&
+      this.subscriptionObject.startDate.getTime() ===
+        new Date(this.data?.startDate).getTime();
   }
 }
