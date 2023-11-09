@@ -16,12 +16,13 @@ export class QuestionsComponent implements OnInit {
   public currentQuestionsID: string;
   public selectedOptions: string;
   public answerObject;
+  public correctOptions;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<QuestionsComponent>
   ) {
     console.log(data);
-    console.log(data.result);
+    console.log(data.result.questions);
     console.log(data.row.questionIds);
     this.examDetails = data.row.questionIds;
   }
@@ -29,7 +30,7 @@ export class QuestionsComponent implements OnInit {
     this.dialogRef.close();
   }
   ngOnInit(): void {
-    this.questions = this.data.result;
+    this.questions = this.data.result.questions;
     this.totalQuestions = this.questions.length;
     this.maximumQuestionLength = this.questions.length - 1;
     this.getQuestionsIndexBased(0);
@@ -39,7 +40,7 @@ export class QuestionsComponent implements OnInit {
     this.getQuestionsIndexBased(i);
   }
   getQuestionsIndexBased(index: number) {
-    this.questions = this.data.result;
+    this.questions = this.data.result.questions;
     this.indexBasedQuestions = this.questions[index];
     this.currentQuestionsID = this.indexBasedQuestions._id;
     console.log(this.currentQuestionsID);
@@ -50,6 +51,8 @@ export class QuestionsComponent implements OnInit {
     console.log(this.answerObject);
     this.indexBasedQuestions.answerObject = this.answerObject;
     console.log(this.indexBasedQuestions);
+    this.correctOptions=this.indexBasedQuestions.options.filter((item:any)=> item.explanation !=null);
+    console.log(this.correctOptions);
     this.selectedOptions=this.indexBasedQuestions.answerObject[0].selectedAnswer
     console.log(this.selectedOptions);
   }

@@ -314,7 +314,21 @@ export class ExamComponent implements OnInit {
     console.log(this.examArray);
   }
 
-  
+  showEndExamConfirmation() {
+    Swal.fire({
+      title: 'Are you sure want to end this exam?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, end it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.submitExam();
+      }
+    });
+  }
+
 
   submitExam() {
     this.examObject.questions = this.examArray;
