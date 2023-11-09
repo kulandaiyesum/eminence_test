@@ -14,6 +14,7 @@ import { ExamService } from '../../service/exam.service';
 import { LabValuesComponent } from '../lab-values/lab-values.component';
 import { CalculatorComponent } from '../calculator/calculator.component';
 import { MatDialog } from '@angular/material/dialog';
+import { NotesComponent } from '../notes/notes.component';
 
 @Component({
   selector: 'app-exam',
@@ -188,6 +189,7 @@ export class ExamComponent implements OnInit {
 
   }
 
+
   changeQuestions(i: number) {
     this.currentQuestionIndex = i;
     this.getQuestionsIndexBased(i);
@@ -197,6 +199,8 @@ export class ExamComponent implements OnInit {
       width: '80%',
     });
   }
+
+
 
   optionSelected(event: any, i, selectedOption) {
     const option = this.indexBasedQuestions.options[i];
@@ -258,6 +262,7 @@ export class ExamComponent implements OnInit {
   generateAlphabetChar(index: number): string {
     return String.fromCharCode(65 + index);
   }
+
 
   previous() {
     console.log(this.currentQuestionIndex);
@@ -381,4 +386,13 @@ export class ExamComponent implements OnInit {
   closeCalculatorPopup() {
     this.calculatorPopupVisible = false;
   }
+  openNotepadEditor() {
+    const dialogRef = this.dialog.open(NotesComponent, {
+      width: '500px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The notepad dialog was closed');
+    });
+}
 }
