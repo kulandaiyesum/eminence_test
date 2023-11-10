@@ -52,6 +52,8 @@ export class QgenComponent implements OnInit {
       localStorage.getItem('2'),
       this.secretKey
     );
+    console.log(this.user);
+
 
     this.userId = this.rsaService.decryptText(
       localStorage.getItem('5'),
@@ -159,7 +161,11 @@ export class QgenComponent implements OnInit {
           _id: item._id,
         }));
         console.log(this.itemsreceivedQuestion);
-
+        if (this.itemsreceivedQuestion?.length) {
+          console.log('Array has values');
+        } else {
+          console.log('Array is empty or undefined/null');
+        }
       },
       (err) => {
         console.log(err);

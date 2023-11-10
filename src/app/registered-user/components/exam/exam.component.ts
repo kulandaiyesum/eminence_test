@@ -348,9 +348,9 @@ export class ExamComponent implements OnInit {
         Swal.fire('Exam finished', 'Have a look on performance board').then(
           (result) => {
             if (result.isConfirmed) {
-              this.router.navigate(['/eminence/student/build-test']);
+              this.router.navigate(['/eminence/student/saved']);
             }
-            this.router.navigate(['/eminence/student/build-test']);
+            this.router.navigate(['/eminence/student/saved']);
           }
         );
       },
