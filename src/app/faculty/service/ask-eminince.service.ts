@@ -6,16 +6,15 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class AskEmininceService {
-  public baseUrl = environment.localdomain + 'askEminence/';
-  public updateUrl = environment.localdomain + 'askEminence/update';
-  public deleteUrl = environment.localdomain + 'askEminence/delete';
+  public baseUrl = environment.localdomain + 'askEminences/';
+  // public updateUrl = environment.localdomain + 'askEminence/update';
+  // public deleteUrl = environment.localdomain + 'askEminence/delete';
   public emailUrl = environment.localdomain + 'askEminence/email';
 
   constructor(private http: HttpClient) {}
   getAskeminice = (askEminence) => {
     console.log(askEminence);
-
-    return this.http.post(this.baseUrl + 'saveAskEminence', askEminence);
+    return this.http.post(this.baseUrl, askEminence);
   };
 
   sampleResponse() {
@@ -23,11 +22,11 @@ export class AskEmininceService {
   }
 
   askEminenceUpdate(data) {
-    return this.http.put(this.updateUrl, data);
+    return this.http.put(this.baseUrl + data._id, data);
   }
 
   askEminencedelete(data) {
-    return this.http.delete(this.deleteUrl, data);
+    return this.http.delete(this.baseUrl + data._id, data);
   }
   askEminenceEmail(data) {
     return this.http.post(this.emailUrl, data);

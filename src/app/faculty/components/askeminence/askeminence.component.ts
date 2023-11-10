@@ -18,7 +18,6 @@ import { QgenService } from '../../service/qgen.service';
 })
 export class AskeminenceComponent implements OnInit {
   public askEminence: Askeminice;
-  public qgen: Qgen;
   secretKey: string = environment.secretKey;
   userId: string = '';
   userFirstName: string = '';
@@ -27,12 +26,12 @@ export class AskeminenceComponent implements OnInit {
   isEditMode = true;
   resultObject = {
     _id: '',
-    keyword: '',
+    keyword: '' || [],
     answer: '',
   };
   resultObjectForEmail = {
     _id: '',
-    keyword: '',
+    keyword: '' || [],
     answer: '',
     type: '',
   };
@@ -44,7 +43,6 @@ export class AskeminenceComponent implements OnInit {
   constructor(
     private askEmininveService: AskEmininceService,
     private rsaService: RsaService,
-    private gGenService: QgenService,
     private spinner: NgxSpinnerService,
     private toastr: ToastrService
   ) {}
@@ -56,7 +54,6 @@ export class AskeminenceComponent implements OnInit {
   ];
   ngOnInit(): void {
     this.askEminence = new Askeminice();
-    this.qgen = new Qgen();
     this.userId = this.rsaService.decryptText(
       localStorage.getItem('5'),
       this.secretKey
@@ -81,25 +78,27 @@ export class AskeminenceComponent implements OnInit {
   bulid() {
     this.spinner.show();
     this.loading = true;
-    this.qgen.userId = this.userId;
-    this.qgen.type = 'ASKEMINENCE';
-    this.qgen.createdBy = this.userFirstName;
-    this.gGenService.submitQgen(this.qgen).subscribe(
+    this.askEminence.userId = this.userId;
+    this.askEminence.type = 'AskEminence';
+    this.askEminence.createdBy = this.userFirstName;
+    this.askEmininveService.getAskeminice(this.askEminence).subscribe(
       (doc: any) => {
-        if (doc.result.answer.length > 0) {
-          this.spinner.hide();
-          this.loading = false;
-          this.askEminence.result = this.sampleData.answer;
+        this.spinner.hide();
+        this.loading = false;
+        const tempObj = doc.result;
+        if (tempObj) {
+          this.askEminence.result = tempObj.saveAskEminence.answer;
           this.resultObject.answer = this.askEminence.result;
-          this.resultObject.keyword = this.sampleData.keyword;
-          this.resultObject._id = this.sampleData._id;
-          console.log(doc.statuscode);
+          this.resultObject.keyword = tempObj.request.keywords;
+          this.resultObject._id = tempObj.saveAskEminence._id;
         }
       },
       (error) => {
-        // this.toastr.error('Something went wrong', '', {
-        //   timeOut: 3000,
-        // });
+        this.spinner.hide();
+        this.loading = false;
+        this.toastr.error('Something went wrong', '', {
+          timeOut: 3000,
+        });
         console.error('Not data get', error);
         // setTimeout(() => {
         //   this.loading = false;
