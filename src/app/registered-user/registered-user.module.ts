@@ -47,6 +47,7 @@ import { SerumValuesComponent } from './components/serum-values/serum-values.com
 import { CarouselModule } from 'primeng/carousel';
 import { ExamtimedComfirmationComponent } from './components/examtimed-comfirmation/examtimed-comfirmation.component';
 import { QuestionsComponent } from './components/questions/questions.component';
+import { NotesComponent } from './components/notes/notes.component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { QuestionsComponent } from './components/questions/questions.component';
     SerumValuesComponent,
     ExamtimedComfirmationComponent,
     QuestionsComponent,
+    NotesComponent,
   ],
   imports: [
     FormsModule,
