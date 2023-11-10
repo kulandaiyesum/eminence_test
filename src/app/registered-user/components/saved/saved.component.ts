@@ -110,9 +110,9 @@ export class SavedComponent {
     );
   }
   getQuestions(row) {
-    console.log(row);
+
     this.examService.getQuestionByExamId(row).subscribe((doc: any) => {
-      console.log(doc);
+      
       const dataToPass = {
         result: doc.result,
         row: row

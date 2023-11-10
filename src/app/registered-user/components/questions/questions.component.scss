@@ -204,11 +204,22 @@
         }
         .selected {
           color: #fff;
-          border: 1px solid #000;
+          border: 1px solid orange;
         }
         .wrong-answer{
           background-color: red;
           color: #fff;
+        }
+        .bg-red {
+          background-color: red;
+        }
+
+        .bg-green {
+          background-color: green;
+        }
+
+        .bg-yellow {
+          background-color: yellow;
         }
       }
     }
