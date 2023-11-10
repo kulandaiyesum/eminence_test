@@ -34,6 +34,7 @@ export class QuestionsComponent implements OnInit {
     this.totalQuestions = this.questions.length;
     this.maximumQuestionLength = this.questions.length - 1;
     this.getQuestionsIndexBased(0);
+
   }
   changeQuestions(i: number) {
     this.currentQuestionIndex = i;
@@ -55,6 +56,7 @@ export class QuestionsComponent implements OnInit {
     console.log(this.correctOptions);
     this.selectedOptions=this.indexBasedQuestions.answerObject[0].selectedAnswer
     console.log(this.selectedOptions);
+    this.mergeArray();
   }
 
   generateAlphabetChar(index: number): string {
@@ -71,4 +73,21 @@ export class QuestionsComponent implements OnInit {
     this.currentQuestionIndex = this.currentQuestionIndex + 1;
     this.getQuestionsIndexBased(this.currentQuestionIndex);
   }
+
+  mergeArray(){
+    const mergedArray = this.questions.map(question => {
+      const correspondingDetail = this.examDetails.find(detail => detail.questionId === question._id);
+      // Add properties from examDetails to questions
+      return {
+        ...question,
+        flag: correspondingDetail ? correspondingDetail.flag : null,
+        isCorrectAnswer: correspondingDetail ? correspondingDetail.isCorrectAnswer : null,
+        selectedAnswer: correspondingDetail ? correspondingDetail.selectedAnswer : null,
+        // Add more properties as needed
+      };
+    });
+    console.log(mergedArray);
+    this.questions=mergedArray
+  }
 }
+

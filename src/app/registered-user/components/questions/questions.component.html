@@ -47,9 +47,12 @@
       <div class="button" *ngFor="let item of questions; let i = index">
         <p
           (click)="changeQuestions(i)"
-          [ngClass]="{ selected: i === currentQuestionIndex,
-            'wrong-answer': i === currentQuestionIndex && indexBasedQuestions?.answerObject[0]?.isCorrectAnswer?.toLowerCase() === 'no'
-           }"
+          [ngClass]="{
+            'bg-red': item.isCorrectAnswer === 'NO',
+            'bg-green': item.isCorrectAnswer === 'YES',
+            'bg-yellow': item.flag === 'YES',
+            'selected': i === currentQuestionIndex
+          }"
         >
           {{ i + 1 }}
         </p>
