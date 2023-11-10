@@ -372,7 +372,11 @@ export class EditorComponent implements OnInit, OnDestroy {
           this.qgenService.reviewQuestionSet(data).subscribe(
             (response) => {
               console.log(response);
-              this.router.navigate(['/eminence/faculty/history']);
+              if (this.user === 'VETTER') {
+                this.router.navigate(['/eminence/vetter/history']);
+              }else {
+                this.router.navigate(['/eminence/faculty/history']);
+              }
             },
             (error) => {
               // Handle the error response
