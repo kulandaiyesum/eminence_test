@@ -32,6 +32,7 @@ import { environment } from 'src/environments/environment';
 import { QuerstionService } from 'src/app/faculty/service/querstion.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ExamService } from '../../service/exam.service';
 
 @Component({
   selector: 'app-build-test',
@@ -56,6 +57,10 @@ export class BuildTestComponent {
   unusedCheckbox: boolean = false;
   specialCheckboxesChecked: boolean = false;
 
+  @ViewChild('scrollContainer') scrollContainer: ElementRef;
+  examArray: any[] = [];
+
+
   constructor(
     private rsaService: RsaService,
     private cdr: ChangeDetectorRef,
@@ -67,7 +72,9 @@ export class BuildTestComponent {
     private examDataService: ExamDataService,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private examService: ExamService
+
   ) {
     this.userId = this.rsaService.decryptText(
       localStorage.getItem('5'),
@@ -110,6 +117,11 @@ export class BuildTestComponent {
     this.getAllSubject();
     this.getAllSystem();
     this.getAllSubsystem();
+    this.userId = this.rsaService.decryptText(
+      localStorage.getItem('5'),
+      this.secretKey
+    );
+    this.getExamDetails(this.userId);
 
     // this.qbankForm.get('type0').valueChanges.subscribe((typeAll) => {
     //   console.log(typeAll);
@@ -127,7 +139,7 @@ export class BuildTestComponent {
   }
 
   checkBoxChanges(value:string){
-    
+
     if (value==='unused') {
       this.qbankForm.get('type1').setValue(true);
       this.qbankForm.get('type0').setValue(false);
@@ -281,6 +293,29 @@ export class BuildTestComponent {
         // console.log('subsystem', this.subsystemList);
       },
       (err: any) => {
+        console.log(err);
+      }
+    );
+  }
+
+  ngAfterViewInit() {
+    const scrollbar = Scrollbar.init(this.scrollContainer.nativeElement, {
+      // Smooth Scrollbar options go here
+    });
+  }
+
+  getExamDetails(userid: string) {
+    this.examService.getExamDetailsByStudentId(userid).subscribe(
+      (response: any) => {
+        this.examArray = response.result.filter(
+          (item: any) => item.mode === 'TIMED'
+        );
+        console.log(this.examArray);
+        this.examArray=this.examArray.filter((item:any)=> item.percentage < 30);
+        console.log(this.examArray);
+
+      },
+      (err) => {
         console.log(err);
       }
     );
