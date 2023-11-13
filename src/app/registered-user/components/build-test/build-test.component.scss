@@ -147,7 +147,59 @@
   flex-wrap: wrap;
   gap: 1rem;
 }
-
+.right_section {
+  .gqen_sub_section {
+    background-color: var(--qgen-bg-color);
+    .qgen_g {
+      background-color: #fff;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      ::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 10px;
+        border-radius: 20px;
+        box-shadow: inset 0px 5px 5px -5px rgba(0, 0, 0, 0.5);
+      }
+      .qgen_g_header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #ccc;
+        button {
+          background-color: #82dd55;
+          border-radius: 10px;
+          font-size: small;
+          font-weight: 600;
+          padding: 4px 16px;
+        }
+      }
+      .gen_g_body {
+        text-align: center;
+        .sucess_message {
+          color: #82dd55;
+          font-weight: 600;
+          margin-bottom: 0.5rem;
+        }
+        .button_flex {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1rem;
+          button {
+            background-color: #fff;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+          }
+        }
+      }
+    }
+  }
+}
 .err {
   font-size: small;
 }
