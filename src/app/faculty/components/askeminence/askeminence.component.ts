@@ -26,12 +26,12 @@ export class AskeminenceComponent implements OnInit {
   isEditMode = true;
   resultObject = {
     _id: '',
-    keyword: '' || [],
+    keyword: '',
     answer: '',
   };
   resultObjectForEmail = {
     _id: '',
-    keyword: '' || [],
+    keyword: '',
     answer: '',
     type: '',
   };
@@ -89,7 +89,7 @@ export class AskeminenceComponent implements OnInit {
         if (tempObj) {
           this.askEminence.result = tempObj.saveAskEminence.answer;
           this.resultObject.answer = this.askEminence.result;
-          this.resultObject.keyword = tempObj.request.keywords;
+          this.resultObject.keyword = tempObj.saveAskEminence.keyword;
           this.resultObject._id = tempObj.saveAskEminence._id;
         }
       },
