@@ -5,7 +5,7 @@ import { SerumValuesComponent } from '../serum-values/serum-values.component';
 @Component({
   selector: 'app-lab-values',
   templateUrl: './lab-values.component.html',
-  styleUrls: ['./lab-values.component.scss']
+  styleUrls: ['./lab-values.component.scss'],
 })
 export class LabValuesComponent {
   selectedButton: number = 1;
@@ -20,10 +20,6 @@ export class LabValuesComponent {
     });
   }
 
-  closeDialog() {
-      this.dialogRef.close();
-  }
-
   closeTab() {
     this.selectedButton = 0;
   }
@@ -34,5 +30,8 @@ export class LabValuesComponent {
 
   selectButton(buttonNumber: number) {
     this.selectedButton = buttonNumber;
+  }
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }

@@ -24,10 +24,5 @@ export class SerumValuesComponent {
     {subject:'Biochemistry' , referenceRange: '136–146 mEq/L', referenceInterval:'136–146 mmol/L'},
     {subject:'Biochemistry' , referenceRange: '136–146 mEq/L', referenceInterval:'136–146 mmol/L'},
     {subject:'Biochemistry' , referenceRange: '136–146 mEq/L', referenceInterval:'136–146 mmol/L'},
-    {subject:'Biochemistry' , referenceRange: '136–146 mEq/L', referenceInterval:'136–146 mmol/L'},
-    {subject:'Biochemistry' , referenceRange: '136–146 mEq/L', referenceInterval:'136–146 mmol/L'},
-    {subject:'Biochemistry' , referenceRange: '136–146 mEq/L', referenceInterval:'136–146 mmol/L'},
-    {subject:'Biochemistry' , referenceRange: '136–146 mEq/L', referenceInterval:'136–146 mmol/L'},
-
   ];
 }

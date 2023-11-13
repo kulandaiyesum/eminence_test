@@ -21,12 +21,14 @@
           [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
           src="../../../../assets/images/lab.png"
           alt="lab"
+          (click)="openLabvaluesPopup()"
         />
         <img
           [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
           style="transform: translateX(2px)"
           src="../../../../assets/images/notes.png"
           alt="notes"
+          (click)="openNotesPopup()"
         />
         <img
           [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
