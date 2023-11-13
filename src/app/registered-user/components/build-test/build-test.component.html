@@ -6,85 +6,107 @@
       [formGroup]="qbankForm"
       (ngSubmit)="generateTest()"
     >
-    <div class="qgen" #scrollContainer>
-      <h6>Recommended for you</h6>
-      <p>Needs more practise</p>
-      <mat-chip-listbox aria-label="Fish selection" >
-        <mat-chip-option *ngFor="let exam of examArray">{{ exam?.subjectId?.subject }}</mat-chip-option>
-      </mat-chip-listbox>
-      <p>Haven't seen in a while</p>
-      <mat-chip-listbox aria-label="Fish selection">
-        <mat-chip-option>Anatomy</mat-chip-option>
-        <mat-chip-option>Embroyology</mat-chip-option>
-        <mat-chip-option>Genetics</mat-chip-option>
-        <mat-chip-option>Histology</mat-chip-option>
-      </mat-chip-listbox>
-    </div>
-      <div>
-        <section class="checkbox_section">
-          <mat-checkbox
-            class=""
-            formControlName="type0"
-            [(ngModel)]="selectAllCheckbox"
-            (change)="checkBoxChanges('all')"
-            >All</mat-checkbox
-          >
-          <mat-checkbox formControlName="type1" (change)="checkBoxChanges('unused')">Unused</mat-checkbox>
-          <mat-checkbox formControlName="type2" (change)="checkBoxChanges('incorrect')">Incorrect</mat-checkbox>
-          <mat-checkbox formControlName="type3" (change)="checkBoxChanges('flagged')">Flagged</mat-checkbox>
-          <mat-checkbox formControlName="type4" (change)="checkBoxChanges('qgen')">QGen</mat-checkbox>
-          <!-- <mat-icon *ngIf="specialCheckboxesChecked" (click)="enableCheckbox()">refresh</mat-icon> -->
-        </section>
-        <mat-error
-          class="err"
-          *ngIf="
-            qbankForm.hasError('atLeastOneType') &&
-            (qbankForm.get('type0').touched ||
-              qbankForm.get('type1').touched ||
-              qbankForm.get('type2').touched ||
-              qbankForm.get('type3').touched ||
-              qbankForm.get('type4').touched)
-          "
-        >
-          Required
-        </mat-error>
+    <div class="row row_flex_rev">
+      <div class="qgen col-lg-6" #scrollContainer>
+        <h6>Recommended for you</h6>
+        <p>Needs more practise</p>
+        <mat-chip-listbox aria-label="Fish selection">
+          <mat-chip-option *ngFor="let exam of examArray">{{
+            exam?.subjectId?.subject
+          }}</mat-chip-option>
+        </mat-chip-listbox>
+        <p>Haven't seen in a while</p>
+        <mat-chip-listbox aria-label="Fish selection">
+          <mat-chip-option>Anatomy</mat-chip-option>
+          <mat-chip-option>Embroyology</mat-chip-option>
+          <mat-chip-option>Genetics</mat-chip-option>
+          <mat-chip-option>Histology</mat-chip-option>
+        </mat-chip-listbox>
       </div>
-
-
-      <div class="row_formfield mt-5">
-        <mat-form-field appearance="outline">
-          <mat-label>Subject</mat-label>
-          <mat-select
-            type="text"
-            matInput
-            placeholder="Choose subject"
-            formControlName="subjectId"
-          >
-            <mat-option
-              *ngFor="let subject of subjectList"
-              [value]="subject._id"
+      
+      <div class="left_section col-lg-6">
+        <div>
+          <section class="checkbox_section">
+            <mat-checkbox
+              class=""
+              formControlName="type0"
+              [(ngModel)]="selectAllCheckbox"
+              (change)="checkBoxChanges('all')"
+              >All</mat-checkbox
             >
-              {{ subject.subject }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="qbankForm.get('subjectId').hasError('required')"
-            >Subject is required</mat-error
+            <mat-checkbox
+              formControlName="type1"
+              (change)="checkBoxChanges('unused')"
+              >Unused</mat-checkbox
+            >
+            <mat-checkbox
+              formControlName="type2"
+              (change)="checkBoxChanges('incorrect')"
+              >Incorrect</mat-checkbox
+            >
+            <mat-checkbox
+              formControlName="type3"
+              (change)="checkBoxChanges('flagged')"
+              >Flagged</mat-checkbox
+            >
+            <mat-checkbox
+              formControlName="type4"
+              (change)="checkBoxChanges('qgen')"
+              >QGen</mat-checkbox
+            >
+            <!-- <mat-icon *ngIf="specialCheckboxesChecked" (click)="enableCheckbox()">refresh</mat-icon> -->
+          </section>
+          <mat-error
+            class="err"
+            *ngIf="
+              qbankForm.hasError('atLeastOneType') &&
+              (qbankForm.get('type0').touched ||
+                qbankForm.get('type1').touched ||
+                qbankForm.get('type2').touched ||
+                qbankForm.get('type3').touched ||
+                qbankForm.get('type4').touched)
+            "
           >
-        </mat-form-field>
+            Required
+          </mat-error>
+        </div>
+        <div class="row_formfield mt-5">
+          <mat-form-field appearance="outline">
+            <mat-label>Subject</mat-label>
+            <mat-select
+              type="text"
+              matInput
+              placeholder="Choose subject"
+              formControlName="subjectId"
+            >
+              <mat-option
+                *ngFor="let subject of subjectList"
+                [value]="subject._id"
+              >
+                {{ subject.subject }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="qbankForm.get('subjectId').hasError('required')"
+              >Subject is required</mat-error
+            >
+          </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>System</mat-label>
-          <mat-select placeholder="Choose system" formControlName="systemId">
-            <mat-option value="ALL">All</mat-option>
-            <mat-option *ngFor="let system of systemList" [value]="system._id">
-              {{ system.system }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="qbankForm.get('systemId').hasError('required')"
-            >System is required</mat-error
-          >
-        </mat-form-field>
-
+          <mat-form-field appearance="outline">
+            <mat-label>System</mat-label>
+            <mat-select placeholder="Choose system" formControlName="systemId">
+              <mat-option value="ALL">All</mat-option>
+              <mat-option
+                *ngFor="let system of systemList"
+                [value]="system._id"
+              >
+                {{ system.system }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="qbankForm.get('systemId').hasError('required')"
+              >System is required</mat-error
+            >
+          </mat-form-field>
+        </div>
         <mat-form-field appearance="outline">
           <mat-label>Sub System</mat-label>
           <mat-select
@@ -103,7 +125,47 @@
           >
         </mat-form-field>
       </div>
-
+      <div class="right_section col-lg-6">
+        <div class="gqen_sub_section p-3">
+          <div class="h6">Qgen</div>
+          <div class="qgen_g">
+            <div class="qgen_g_header p-3">
+              <span>carcinoma, smoker, respiratory, pathology</span>
+              <button>Go</button>
+            </div>
+            <div class="gen_g_body mb-3">
+              <p class="sucess_message">Sucess</p>
+              <p class="sucess_content">
+                EminenceAI has generated questions related to carcinoma, smoker,
+                respiratory, pathology
+              </p>
+              <div class="button_flex">
+                <img
+                  src="../../../../assets/images/minus.png"
+                  alt="minus"
+                  width="24"
+                  height="24"
+                />
+                <span>1</span>
+                <img
+                  src="../../../../assets/images/plus.png"
+                  alt="plus"
+                  width="24"
+                  height="24"
+                />
+                <img
+                  src="../../../../assets/images/playlist.png"
+                  alt="add all"
+                  width="24"
+                  height="24"
+                />
+                <button class="p-2">Add to exam</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
 
       <div class="controls mt-5">
         <div class="button-area">
@@ -168,6 +230,5 @@
         </div>
       </div>
     </form>
-
   </div>
 </div>
