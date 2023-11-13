@@ -5,6 +5,8 @@ import { Router, NavigationEnd, Scroll } from '@angular/router';
 import { Observable, Subscription, map, shareReplay } from 'rxjs';
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-portal-layout',
@@ -17,8 +19,17 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
   // questionNumbers = [1, 2, 3, 4, 5, 6, 7];
   pathMatch: boolean = false;
   private pathSubcriber: Subscription;
-  constructor(private router: Router, private rsaService: RsaService) {}
+  constructor(private router: Router, private rsaService: RsaService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer,
+    ) {
+    this.matIconRegistry.addSvgIcon(
+      'custom-icon',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/images/qgen.svg')
+    );
+  }
   firstName: string = '';
+
   ngOnDestroy(): void {
     this.pathSubcriber.unsubscribe();
   }
