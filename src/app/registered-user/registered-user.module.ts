@@ -48,6 +48,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { ExamtimedComfirmationComponent } from './components/examtimed-comfirmation/examtimed-comfirmation.component';
 import { QuestionsComponent } from './components/questions/questions.component';
 import { NotesComponent } from './components/notes/notes.component';
+import { SendInviteComponent } from './components/send-invite/send-invite.component';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { NotesComponent } from './components/notes/notes.component';
     ExamtimedComfirmationComponent,
     QuestionsComponent,
     NotesComponent,
+    SendInviteComponent,
   ],
   imports: [
     FormsModule,

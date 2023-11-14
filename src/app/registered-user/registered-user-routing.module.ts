@@ -13,6 +13,7 @@ import { NotesComponent } from './components/notes/notes.component';
 const routes: Routes = [
   { path: '', redirectTo: 'build-test', pathMatch: 'full' },
   { path: 'build-test', component: BuildTestComponent },
+  { path: 'build-test/hostexam', component: BuildTestComponent },
   { path: 'performance', component: PerformanceComponent },
   { path: 'saved', component: SavedComponent },
   { path: 'exam-room', component: ExamRoomComponent },
