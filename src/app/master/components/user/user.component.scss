@@ -51,7 +51,7 @@
   .table-container {
     margin-top: 20px;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    // border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
     table {
@@ -60,25 +60,12 @@
       border-radius: 8px;
 
       tr {
-        &:first-child {
-          // border-radius: 8px 8px 0 0;
-        }
-
         th {
           background-color: var(--qgen-logo-blue);
           font-size: 16px;
           font-weight: 500;
           color: #fff;
-
-          &:first-child {
-            // border-radius: 8px 0 0 0;
-          }
-
-          &:last-child {
-            // border-radius: 0 8px 0 0;
-          }
         }
-
         td {
           font-size: 14px;
         }

@@ -19,6 +19,7 @@
           #subjectInput="ngModel"
         />
         <div
+          class="error"
           *ngIf="
             subjectInput.invalid && (subjectInput.dirty || subjectInput.touched)
           "

@@ -1,5 +1,5 @@
 .add-element-container {
-  width: 600px;
+  width: 100%;
   height: auto;
   padding: 20px;
   @media (max-width: 767px) {
@@ -74,4 +74,10 @@
       }
     }
   }
+}
+.error {
+  line-height: 20px !important;
+  height: 20px !important;
+  font-size: 14px;
+  color: #f44336;
 }

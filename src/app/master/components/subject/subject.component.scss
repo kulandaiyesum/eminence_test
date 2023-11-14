@@ -60,34 +60,18 @@
         table {
           width: 100%;
           height: auto;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
-          // border: none !important;
-          // box-shadow: none !important;
-          // border-color: #fff !important;
-          border-left-color: #f5f5f5;
-          border-right-color: #f5f5f5;
-          border-bottom-color: #fff !important;
+          border-bottom: transparent;
           th {
             background-color: var(--qgen-logo-blue);
             font-size: 16px;
             font-weight: 500;
             color: #fff;
-            // border: 1px solid red;
-            // border: 1px solid red;
           }
-          // td{
-          //   // border: 1px solid red;
-          // }
-
-          // mat-cell{
-          //   // border: 1px solid red;
-          // }
           #subject-table {
             flex: 10 !important;
           }
           #status-table {
             flex: 0.5;
-            // border: 1px solid blue;
           }
           #action-table {
             flex: 0.5;
@@ -99,7 +83,7 @@
         }
         mat-paginator {
           z-index: 1;
-          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+          // box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
       }
     }

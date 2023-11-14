@@ -93,11 +93,12 @@ export class AddAttributesComponent {
   }
 
   openAddDialog(rowDetails: any): void {
-    const dialogRef = this.dialog.open(AddElementComponent, {
-      width: 'auto', // Customize the width
-      height: 'auto', // Customize the height
-      data: rowDetails, // Pass row details as a parameter
-    });
+    const dialogOptions = {
+      width: '500px',
+      margin: '0 auto',
+      data: rowDetails,
+    };
+    const dialogRef = this.dialog.open(AddElementComponent, dialogOptions);
     dialogRef.afterClosed().subscribe((result) => {
       this.getQuestionsList();
       if (result) {
@@ -106,11 +107,12 @@ export class AddAttributesComponent {
     });
   }
   openAddDialog1(row) {
-    const dialogRef = this.dialog.open(AddVetterComponent, {
-      width: 'auto', // Customize the width
-      height: 'auto', // Customize the height
-      data: row, // Pass row details as a parameter
-    });
+     const dialogOptions = {
+       width: '500px',
+       margin: '0 auto',
+       data: row,
+     };
+    const dialogRef = this.dialog.open(AddVetterComponent, dialogOptions);
 
     dialogRef.afterClosed().subscribe((result) => {
       this.getQuestionsList();
