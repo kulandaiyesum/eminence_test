@@ -30,9 +30,11 @@ import { Qbank } from '../../model/qbank';
 import { RsaService } from 'src/app/shared/service/rsa.service';
 import { environment } from 'src/environments/environment';
 import { QuerstionService } from 'src/app/faculty/service/querstion.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ExamService } from '../../service/exam.service';
+import { SendInviteComponent } from '../send-invite/send-invite.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-build-test',
@@ -56,10 +58,10 @@ export class BuildTestComponent {
   selectAllCheckbox: boolean = false;
   unusedCheckbox: boolean = false;
   specialCheckboxesChecked: boolean = false;
+  currentRouter: string;
 
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
   examArray: any[] = [];
-
 
   constructor(
     private rsaService: RsaService,
@@ -73,8 +75,9 @@ export class BuildTestComponent {
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
-    private examService: ExamService
-
+    private examService: ExamService,
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {
     this.userId = this.rsaService.decryptText(
       localStorage.getItem('5'),
@@ -136,17 +139,18 @@ export class BuildTestComponent {
     //   }
     // });
 
+    this.currentRouter = this.route.snapshot.url.join('/');
+    console.log(this.currentRouter);
   }
 
-  checkBoxChanges(value:string){
-
-    if (value==='unused') {
+  checkBoxChanges(value: string) {
+    if (value === 'unused') {
       this.qbankForm.get('type1').setValue(true);
       this.qbankForm.get('type0').setValue(false);
       this.qbankForm.get('type2').setValue(false);
       this.qbankForm.get('type3').setValue(false);
       this.qbankForm.get('type4').setValue(false);
-    }else if(value==='all'){
+    } else if (value === 'all') {
       if (this.selectAllCheckbox) {
         this.qbankForm.get('type1').setValue(true);
         this.qbankForm.get('type2').setValue(true);
@@ -156,19 +160,19 @@ export class BuildTestComponent {
         this.qbankForm.get('type2').setValue(false);
         this.qbankForm.get('type3').setValue(false);
       }
-    }else if(value==='incorrect'){
+    } else if (value === 'incorrect') {
       this.qbankForm.get('type1').setValue(false);
       this.qbankForm.get('type0').setValue(false);
       this.qbankForm.get('type2').setValue(true);
       this.qbankForm.get('type3').setValue(false);
       this.qbankForm.get('type4').setValue(false);
-    }else if(value==='flagged'){
+    } else if (value === 'flagged') {
       this.qbankForm.get('type1').setValue(false);
       this.qbankForm.get('type0').setValue(false);
       this.qbankForm.get('type2').setValue(false);
       this.qbankForm.get('type3').setValue(true);
       this.qbankForm.get('type4').setValue(false);
-    }else{
+    } else {
       this.qbankForm.get('type1').setValue(false);
       this.qbankForm.get('type0').setValue(false);
       this.qbankForm.get('type2').setValue(false);
@@ -219,53 +223,64 @@ export class BuildTestComponent {
   }
 
   generateTest() {
-    const temp = this.qbankForm.value;
-    // const typeArray: number[] = [];
-    let type: number;
-    for (let i = 0; i <= 4; i++) {
-      if (temp[`type${i}`]) {
-        // typeArray.push(i);
-        type = i;
-        break;
-      }
-    }
-    if (temp.systemId === 'ALL') {
-    } else {
-      this.qbankObject.systemId = temp.systemId;
-    }
-    if (temp.subsystemId === 'ALL') {
-    } else {
-      this.qbankObject.subsystemId = temp.subsystemId;
-    }
-    this.qbankObject.mode = this.examMode;
-    this.qbankObject.questionsCount = parseInt(temp.questionsCount, 10);
-    this.qbankObject.subjectId = temp.subjectId;
-    this.qbankObject.type = type;
-    this.qbankObject.userId = this.userId;
-    this.qbankObject.status = 'VREVIEWED';
-    this.questionService
-      .postQbankRequest(this.qbankObject)
-      .subscribe((doc: any) => {
-        console.log(doc.result);
-        const tempData = doc.result;
-        if (tempData.length === 0) {
-          this.toastr.warning('NO Questions Found !!!', '', {
-            timeOut: 3000,
-          });
-        } else {
-          // this.examDataService.setExamRoomData(tempData);
-          localStorage.setItem('emex-td', JSON.stringify(tempData));
-          localStorage.setItem('emm', this.qbankObject.mode);
-          localStorage.setItem('emsm', this.qbankObject.systemId);
-          localStorage.setItem('emssm', this.qbankObject.subsystemId);
-          localStorage.setItem('emsbi', this.qbankObject.subjectId);
-          if (this.qbankObject.mode === 'TUTOR') {
-            this.router.navigate(['/eminence/student/exam']);
-          } else {
-            this.router.navigate(['/eminence/student/exam-timed']);
-          }
+    if (this.currentRouter === 'build-test') {
+      const temp = this.qbankForm.value;
+      // const typeArray: number[] = [];
+      let type: number;
+      for (let i = 0; i <= 4; i++) {
+        if (temp[`type${i}`]) {
+          // typeArray.push(i);
+          type = i;
+          break;
         }
+      }
+      if (temp.systemId === 'ALL') {
+      } else {
+        this.qbankObject.systemId = temp.systemId;
+      }
+      if (temp.subsystemId === 'ALL') {
+      } else {
+        this.qbankObject.subsystemId = temp.subsystemId;
+      }
+      this.qbankObject.mode = this.examMode;
+      this.qbankObject.questionsCount = parseInt(temp.questionsCount, 10);
+      this.qbankObject.subjectId = temp.subjectId;
+      this.qbankObject.type = type;
+      this.qbankObject.userId = this.userId;
+      this.qbankObject.status = 'VREVIEWED';
+      this.questionService
+        .postQbankRequest(this.qbankObject)
+        .subscribe((doc: any) => {
+          console.log(doc.result);
+          const tempData = doc.result;
+          if (tempData.length === 0) {
+            this.toastr.warning('NO Questions Found !!!', '', {
+              timeOut: 3000,
+            });
+          } else {
+            // this.examDataService.setExamRoomData(tempData);
+            localStorage.setItem('emex-td', JSON.stringify(tempData));
+            localStorage.setItem('emm', this.qbankObject.mode);
+            localStorage.setItem('emsm', this.qbankObject.systemId);
+            localStorage.setItem('emssm', this.qbankObject.subsystemId);
+            localStorage.setItem('emsbi', this.qbankObject.subjectId);
+            if (this.qbankObject.mode === 'TUTOR') {
+              this.router.navigate(['/eminence/student/exam']);
+            } else {
+              this.router.navigate(['/eminence/student/exam-timed']);
+            }
+          }
+        });
+    } else {
+      const dialogRef = this.dialog.open(SendInviteComponent, {
+        width: '600px', // Set the width as needed
+        height: '300px', // Set the height as needed
+        // You can add other MatDialogConfig options here
       });
+      dialogRef.afterClosed().subscribe((result) => {
+        console.log('Dialog closed with result:');
+      });
+    }
   }
 
   getAllSystem() {
@@ -311,9 +326,10 @@ export class BuildTestComponent {
           (item: any) => item.mode === 'TIMED'
         );
         console.log(this.examArray);
-        this.examArray=this.examArray.filter((item:any)=> item.percentage < 30);
+        this.examArray = this.examArray.filter(
+          (item: any) => item.percentage < 30
+        );
         console.log(this.examArray);
-
       },
       (err) => {
         console.log(err);

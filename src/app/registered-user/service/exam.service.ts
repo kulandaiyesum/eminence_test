@@ -28,4 +28,10 @@ export class ExamService {
   getQuestionByExamId(data) {
     return this.http.put(this.baseUrl + data._id, data);
   }
+
+  generateCode(): string {
+    // Customize this method to generate your unique code
+    const randomCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+    return `A${randomCode}`;
+  }
 }
