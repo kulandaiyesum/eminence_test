@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
 import { ExamtimedComfirmationComponent } from '../examtimed-comfirmation/examtimed-comfirmation.component';
 import { CalculatorComponent } from '../calculator/calculator.component';
+import { NotesComponent } from '../notes/notes.component';
 
 class payloadQuestion {
   questionId: string;
@@ -293,6 +294,13 @@ export class ExamTimedComponent implements OnInit,OnDestroy {
   openCalculatorPopup() {
     const dialogRef = this.dialog.open(CalculatorComponent, {
       width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {});
+  }
+  openNotesPopup() {
+    const dialogRef = this.dialog.open(NotesComponent, {
+      width: '500px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {});

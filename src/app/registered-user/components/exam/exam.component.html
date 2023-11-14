@@ -79,21 +79,43 @@
         </div>
       </div>
     </div>
-    <div class="flag">
-      <mat-checkbox
-        class="example-margin"
-        [(ngModel)]="flagChecked"
-        (change)="flagChanges()"
-        >Flag</mat-checkbox
-      >
-      <mat-expansion-panel>
-        <mat-expansion-panel-header> </mat-expansion-panel-header>
-        <div class="content">
-          <mat-icon svgIcon="custom-icon"></mat-icon>
-          <mat-icon (click)="openCalculatorPopup()">exposure</mat-icon>
-          <mat-icon (click)="openNotepadEditor()">assignment</mat-icon>
-        </div>
-      </mat-expansion-panel>
+    <div class="flag_section">
+      <label for="{{ selectedQuestion._id }}">
+        <input
+          id="{{ selectedQuestion._id }}"
+          type="checkbox"
+          class="form-check-input"
+          [(ngModel)]="isFlag"
+          (change)="isFlagged($event)"
+        />
+        Flag
+      </label>
+      <div class="exapnsion_div">
+        <img
+          src="../../../../assets/images/triangle_blue.png"
+          alt="triangle_blue"
+          (click)="setHeight = !setHeight"
+        />
+        <img
+          [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
+          src="../../../../assets/images/lab.png"
+          alt="lab"
+          (click)="openDialog()"
+        />
+        <img
+          [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
+          style="transform: translateX(2px)"
+          src="../../../../assets/images/notes.png"
+          alt="notes"
+          (click)="openNotepadEditor()"
+        />
+        <img
+          [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
+          src="../../../../assets/images/calculator.png"
+          alt="calculator"
+          (click)="openCalculatorPopup()"
+        />
+      </div>
     </div>
   </div>
   <div class="bottom-controls">

@@ -16,6 +16,15 @@ import { CalculatorComponent } from '../calculator/calculator.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NotesComponent } from '../notes/notes.component';
 
+class payloadQuestion {
+  questionId: string;
+  selectedAnswer: string;
+  isCorrectAnswer: string;
+  flag: string = 'NO';
+  time: number;
+  selectedAnswerId: string;
+}
+
 @Component({
   selector: 'app-exam',
   templateUrl: './exam.component.html',
@@ -26,7 +35,8 @@ export class ExamComponent implements OnInit {
   value;
   public questLength: number;
   public answerList: any[] = [];
-  questions: Question[];
+
+
   examInstance: Exam = new Exam();
   @ViewChild('scrollExplanationContainer')
   scrollExplanationContainer: ElementRef;
@@ -50,6 +60,11 @@ export class ExamComponent implements OnInit {
   checked = false;
   calculatorPopupVisible = false;
   totalQuestions: number;
+  questions: Question[];
+  selectedQuestion: Question;
+  selectOption = '';
+  isFlag: boolean;
+  setHeight: boolean = false;
 
   public examObject: {
     studentId: string;
@@ -168,6 +183,51 @@ export class ExamComponent implements OnInit {
       this.checkboxStates = new Array(this.questions.length + 1).fill(false);
     });
   }
+  isFlagged(event: any) {
+    if (event.target.id === this.selectedQuestion._id) {
+      const tempObj = this.examArray.find(
+        (question) => question.questionId === this.selectedQuestion._id
+      );
+      if (tempObj !== undefined) {
+        this.examArray.forEach((payloadQuestion) => {
+          if (payloadQuestion.questionId === this.selectedQuestion._id) {
+            if (payloadQuestion.flag === 'YES') {
+              payloadQuestion.flag = 'NO';
+            } else {
+              payloadQuestion.flag = 'YES';
+            }
+          }
+        });
+      } else {
+        let tempPayloadQuestion: payloadQuestion = {
+          questionId: '',
+          selectedAnswer: '',
+          isCorrectAnswer: '',
+          flag: 'NO',
+          time: 0,
+          selectedAnswerId: '',
+        };
+        tempPayloadQuestion.flag = 'YES';
+        tempPayloadQuestion.questionId = this.selectedQuestion._id;
+        this.examArray.push(tempPayloadQuestion);
+      }
+    }
+  }
+  isFlaggedByDefault(selectedQuestionId: string) {
+    if (this.examArray === undefined) {
+      return;
+    }
+    const tempObj = this.examArray.find(
+      (question) => question.questionId === selectedQuestionId
+    );
+    if (tempObj === undefined) {
+      this.isFlag = false;
+    } else {
+      tempObj.flag === 'YES' ? (this.isFlag = true) : (this.isFlag = false);
+      this.selectOption =
+        tempObj.selectedAnswerId === '' ? '' : tempObj.selectedAnswerId;
+    }
+  }
 
   getQuestionsIndexBased(index: number) {
     this.indexBasedQuestions = this.questions[index];
@@ -198,7 +258,9 @@ export class ExamComponent implements OnInit {
     const dialogRef = this.dialog.open(LabValuesComponent, {
       width: '80%',
     });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
+
 
 
 
