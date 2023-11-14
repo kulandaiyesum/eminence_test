@@ -1,0 +1,111 @@
+.exam-room-container {
+  width: 100%;
+  height: 85vh;
+  // border: 1px solid red;
+  padding: 10px;
+  .invite-area {
+    width: 100%;
+    height: auto;
+    // border: 1px solid yellow;
+    .send-area {
+      width: 50%;
+      height: auto;
+      // border: 1px solid blue;
+      input {
+        width: 75%;
+        height: 33px;
+      }
+      button {
+        float: right;
+        background-color: #42b4e8;
+        color: #fff;
+        border: none;
+        width: 100px;
+        height: 33px;
+        border-radius: 5px;
+        font-weight: 600;
+      }
+    }
+  }
+  .join-area {
+    width: 100%;
+    height: 20vh;
+    // border: 1px solid grey;
+    margin-top: 15px;
+    .host-area {
+      width: 100%;
+      height: 15vh;
+      background-color: #f5f6fc;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: 10px;
+      padding-right: 10px;
+      button {
+        height: 45px;
+        border: 1px solid black;
+        background-color: transparent;
+        border-radius: 100px;
+      }
+      .code-area {
+        width: 45%;
+        height: 15vh;
+        // background-color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        p {
+          font-weight: 600;
+          margin-top: 15px;
+        }
+        input {
+          border: none;
+          height: 35px;
+        }
+        button {
+          width: 70px;
+          height: 35px;
+          background-color: #fdbd04;
+          color: #000;
+          font-weight: 600;
+          border: none;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .invite-area .send-area {
+      // border: 1px solid saddlebrown;
+      width: 100%;
+      height: auto;
+      input {
+        width: 50%;
+        height: 33px;
+        border: 1px solid rgba(0, 0, 0, 0.616);
+      }
+    }
+    .join-area {
+      height: auto;
+      .host-area {
+        flex-direction: column;
+        height: auto;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        h6{
+          margin-top: 15px;
+        }
+        .code-area{
+          flex-direction: column;
+          button{
+            margin-top: 15px;
+            
+          }
+        }
+      }
+    }
+  }
+}
