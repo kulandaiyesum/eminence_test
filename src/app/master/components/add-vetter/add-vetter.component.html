@@ -3,8 +3,8 @@
     <mat-icon (click)="closeDialog()">close</mat-icon>
   </div>
   <div class="heading">
-    <p *ngIf="!updateValueMappingIDForVetter" >Add Vetter</p>
-    <p *ngIf="updateValueMappingIDForVetter" >Update Vetter</p>
+    <p *ngIf="!updateValueMappingIDForVetter">Add Vetter</p>
+    <p *ngIf="updateValueMappingIDForVetter">Update Vetter</p>
   </div>
   <div class="details">
     <p><b>Input : </b>{{ input }}</p>
@@ -25,8 +25,11 @@
           {{ subject.firstName }}
         </option>
       </select>
-      <div *ngIf="subject.invalid && (subject.dirty || subject.touched)">
-        <div *ngIf="subject.errors?.['required']">Subject is required.</div>
+      <div
+        class="error"
+        *ngIf="subject.invalid && (subject.dirty || subject.touched)"
+      >
+        <div *ngIf="subject.errors?.['required']">Required.</div>
       </div>
 
       <button

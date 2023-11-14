@@ -7,7 +7,7 @@
       <div class="control-area">
         <input placeholder="Search here" (keyup)="applyFilter($event)" />
       </div>
-      <div class="table">
+      <div class="table mat-elevation-z8">
         <mat-table [dataSource]="dataSource" matSort>
           <ng-container matColumnDef="date">
             <mat-header-cell *matHeaderCellDef mat-sort-header id="data-table"

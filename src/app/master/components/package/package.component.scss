@@ -63,7 +63,7 @@
           display: flex;
           justify-content: right;
           button {
-            background-color: #1bb0e6;
+            background-color: var(--qgen-logo-blue);
             color: #fff;
           }
         }
@@ -92,7 +92,7 @@
           margin-top: 15px;
           box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
           mat-header-cell {
-            background-color: #1bb0e6;
+            background-color: var(--qgen-logo-blue);
             color: #fff;
             font-size: 16px;
           }

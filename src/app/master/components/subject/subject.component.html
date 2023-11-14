@@ -8,7 +8,7 @@
         <input placeholder="Search here" (keyup)="applyFilter($event)" />
         <button mat-raised-button (click)="openAddDialog()">Add Subject</button>
       </div>
-      <div class="table">
+      <div class="table mat-elevation-z8">
         <table
           mat-table
           [dataSource]="dataSource"

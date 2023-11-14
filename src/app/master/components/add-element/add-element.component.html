@@ -24,7 +24,10 @@
           {{ subject.subject }}
         </option>
       </select>
-      <div *ngIf="subject.invalid && (subject.dirty || subject.touched)">
+      <div
+        class="error"
+        *ngIf="subject.invalid && (subject.dirty || subject.touched)"
+      >
         <div *ngIf="subject.errors?.['required']">Subject is required.</div>
       </div>
 
@@ -42,7 +45,10 @@
           {{ system.system }}
         </option>
       </select>
-      <div *ngIf="system.invalid && (system.dirty || system.touched)">
+      <div
+        class="error"
+        *ngIf="system.invalid && (system.dirty || system.touched)"
+      >
         <div *ngIf="system.errors?.['required']">System is required.</div>
       </div>
 
@@ -62,7 +68,10 @@
           {{ subsystem.subSystem }}
         </option>
       </select>
-      <div *ngIf="subsystem.invalid && (subsystem.dirty || subsystem.touched)">
+      <div
+        class="error"
+        *ngIf="subsystem.invalid && (subsystem.dirty || subsystem.touched)"
+      >
         <div *ngIf="subsystem.errors?.['required']">
           Sub-system is required.
         </div>
