@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 
 @Component({
@@ -8,4 +9,9 @@ import { Component } from '@angular/core';
 })
 export class NotesComponent {
 
+  constructor(public dialogRef: MatDialogRef<NotesComponent>) {}
+
+  closeDialog() {
+      this.dialogRef.close();
+  }
 }

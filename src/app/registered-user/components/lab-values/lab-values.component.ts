@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { SerumValuesComponent } from '../serum-values/serum-values.component';
 
 @Component({
@@ -10,15 +10,9 @@ import { SerumValuesComponent } from '../serum-values/serum-values.component';
 export class LabValuesComponent {
   selectedButton: number = 1;
   tabGroupIsOpen: boolean;
-  dialogRef: any;
+  // dialogRef: any;
 
-  constructor(private dialog: MatDialog) {}
-
-  openDialog() {
-    this.dialogRef = this.dialog.open(SerumValuesComponent, {
-      width: '80%',
-    });
-  }
+  constructor(public dialogRef: MatDialogRef<LabValuesComponent>) {}
 
   closeDialog() {
       this.dialogRef.close();
