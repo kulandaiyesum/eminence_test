@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ExamtimedComfirmationComponent } from '../examtimed-comfirmation/examtimed-comfirmation.component';
 import { CalculatorComponent } from '../calculator/calculator.component';
 import { NotesComponent } from '../notes/notes.component';
+import { LabValuesComponent } from '../lab-values/lab-values.component';
 
 class payloadQuestion {
   questionId: string;
@@ -304,6 +305,14 @@ export class ExamTimedComponent implements OnInit,OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((result) => {});
+  }
+
+  openLabValues() {
+    const dialogOption = {
+      width: '80%',
+      margin: '0 auto'
+    }
+    const dialogRef = this.dialog.open(LabValuesComponent, dialogOption);
   }
 
   submitExam() {

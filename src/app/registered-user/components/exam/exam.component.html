@@ -80,16 +80,12 @@
       </div>
     </div>
     <div class="flag_section">
-      <label for="{{ selectedQuestion._id }}">
-        <input
-          id="{{ selectedQuestion._id }}"
-          type="checkbox"
-          class="form-check-input"
-          [(ngModel)]="isFlag"
-          (change)="isFlagged($event)"
-        />
-        Flag
-      </label>
+      <mat-checkbox
+        class="example-margin"
+        [(ngModel)]="flagChecked"
+        (change)="flagChanges()"
+        >Flag</mat-checkbox
+      >
       <div class="exapnsion_div">
         <img
           src="../../../../assets/images/triangle_blue.png"
