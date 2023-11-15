@@ -12,14 +12,13 @@
   <div class="invite-area">
     <h6>Send an email invite with code</h6>
     <form #inviteForm="ngForm">
-      <input
-        type="email"
+      <textarea
         [(ngModel)]="sendCode.email"
         name="email"
         required
-        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+        pattern="([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\s*,\s*)*([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})"
         #emailInput="ngModel"
-      />
+      ></textarea>
 
       <button
         type="submit"
@@ -29,6 +28,7 @@
         Send
       </button>
       <!-- Display validation message if email is not valid -->
+      <h6 id="comma">Use comma to add more Email</h6>
       <div
         *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
         class="error-message"

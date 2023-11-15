@@ -142,14 +142,6 @@ export class BuildTestComponent {
     this.currentRouter = this.route.snapshot.url.join('/');
     console.log(this.currentRouter);
 
-    const dialogRef = this.dialog.open(SendInviteComponent, {
-      width: '600px', // Set the width as needed
-      height: 'auto', // Set the height as needed
-      // You can add other MatDialogConfig options here
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('Dialog closed with result:');
-    });
   }
 
   checkBoxChanges(value: string) {
