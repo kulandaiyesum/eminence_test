@@ -7,11 +7,35 @@
   </div>
   <div class="code-area">
     <h5>host exam room code</h5>
-    <h2>{{uniqueCode}}</h2>
+    <h2>{{ uniqueCode }}</h2>
   </div>
   <div class="invite-area">
     <h6>Send an email invite with code</h6>
-    <input type="text">
-    <button>Send</button>
+    <form #inviteForm="ngForm">
+      <input
+        type="email"
+        [(ngModel)]="sendCode.email"
+        name="email"
+        required
+        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+        #emailInput="ngModel"
+      />
+
+      <button
+        type="submit"
+        [disabled]="inviteForm.invalid"
+        (click)="sendInvite(inviteForm)"
+      >
+        Send
+      </button>
+      <!-- Display validation message if email is not valid -->
+      <div
+        *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
+        class="error-message"
+      >
+        <div *ngIf="emailInput.errors?.['required']">Email is required.</div>
+        <div *ngIf="emailInput.errors?.['pattern']">Invalid email address.</div>
+      </div>
+    </form>
   </div>
 </div>
