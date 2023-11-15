@@ -16,18 +16,20 @@
         <p>
           {{ indexBasedQuestions?.title }}
         </p>
-        <div class="options" *ngFor="let option of indexBasedQuestions?.options; let i = index">
+        <div
+          class="options"
+          *ngFor="let option of indexBasedQuestions?.options; let i = index"
+        >
           <mat-checkbox
             (change)="optionSelected($event, i, option)"
-
             [value]="option?.text"
             (click)="
               storeList(option, indexBasedQuestions._id, currentQuestionIndex)
             "
             [(ngModel)]="option.checked"
           >
-          {{ generateAlphabetChar(i) + '. ' + option?.text }}</mat-checkbox
-          ><br>
+            {{ generateAlphabetChar(i) + ". " + option?.text }}</mat-checkbox
+          ><br />
         </div>
       </div>
     </div>
@@ -112,7 +114,7 @@
           (click)="openCalculatorPopup()"
         />
       </div>
-    </div>
+    </div> -->
   </div>
   <div class="bottom-controls">
     <div class="bottom-main">
