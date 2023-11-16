@@ -57,6 +57,8 @@ export class ExamTimedComponent implements OnInit,OnDestroy {
   private savedTimer: number = 0;
   private savedCalculatedTime: number = 0;
 
+  public liveExamRoomCode;
+
   constructor(
     private rsaService: RsaService,
     private examService: ExamService,
@@ -94,6 +96,8 @@ export class ExamTimedComponent implements OnInit,OnDestroy {
     this.selectedQuestion = this.questions[0];
     this.startTimer();
     this.displayTimerUI();
+    this.liveExamRoomCode = localStorage.getItem('8');
+    console.log(this.liveExamRoomCode);
   }
 
   navigateQuestion(questionId: string, index: number) {
@@ -339,6 +343,7 @@ export class ExamTimedComponent implements OnInit,OnDestroy {
         this.examService.examSubmit(this.examTimedObject).subscribe(
           (response: any) => {
             console.log(response);
+            localStorage.removeItem('8');
             Swal.fire('Exam finished', 'Have a look on performance board').then(
               (result) => {
                 if (result.isConfirmed) {

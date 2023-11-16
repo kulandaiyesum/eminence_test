@@ -9,12 +9,21 @@ import { NgForm } from '@angular/forms';
   templateUrl: './send-invite.component.html',
   styleUrls: ['./send-invite.component.scss'],
 })
+
 export class SendInviteComponent {
   public uniqueCode;
   public sendCode: Sendcode = {
-    email: '',
     otp: '',
+    email: ''
   };
+
+  public inviteObject: {
+    email: any;
+    otp: string;
+  }={
+    otp: '',
+    email: undefined
+  }
   constructor(
     private examService: ExamService,
     public dialogRef: MatDialogRef<SendInviteComponent>
@@ -27,6 +36,10 @@ export class SendInviteComponent {
 
   closeDialog(): void {
     this.dialogRef.close();
+  }
+  closeDialogStartnoew(): void {
+    this.dialogRef.close();
+    localStorage.setItem('8', this.sendCode.otp);
   }
 
   getRandomCodeForEmail() {
@@ -49,8 +62,15 @@ export class SendInviteComponent {
   sendInvite(form: NgForm): void {
     if (form.valid) {
       // Your logic to send the invite using this.sendCode.email
-      console.log('Sending invite to:', this.sendCode);
-      this.examService.sendExamCode(this.sendCode).subscribe(
+      const emailArray = this.sendCode.email
+      .split(',')
+      .map((email) => ({ email: email.trim() }));
+      console.log(emailArray);
+      this.inviteObject.email=emailArray
+      this.inviteObject.otp=this.sendCode.otp
+
+      console.log('Sending invite to:', this.inviteObject);
+      this.examService.sendExamCode(this.inviteObject).subscribe(
         (response: any) => {
           console.log(response);
         },

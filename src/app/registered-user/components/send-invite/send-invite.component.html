@@ -3,7 +3,7 @@
     <mat-icon (click)="closeDialog()">close</mat-icon>
   </div>
   <div class="start-now">
-    <button>Start now</button>
+    <button (click)="closeDialogStartnoew()">Start now</button>
   </div>
   <div class="code-area">
     <h5>host exam room code</h5>
@@ -14,7 +14,7 @@
     <form #inviteForm="ngForm">
       <textarea
         [(ngModel)]="sendCode.email"
-        name="email"
+        name="emails"
         required
         pattern="([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\s*,\s*)*([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})"
         #emailInput="ngModel"
