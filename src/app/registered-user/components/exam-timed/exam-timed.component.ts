@@ -48,7 +48,7 @@ export class ExamTimedComponent implements OnInit,OnDestroy {
   private tempOption = '';
   isFlag: boolean;
   private timer: number = 0;
-  displayTimer: any;
+  displayTimer: string;
   private IntevelStoper: any;
 
   setHeight: boolean = false;
@@ -56,6 +56,7 @@ export class ExamTimedComponent implements OnInit,OnDestroy {
   private calcutatedTime: number;
   private savedTimer: number = 0;
   private savedCalculatedTime: number = 0;
+  private timePerQuestion = environment.timePerQuestion;
 
   public liveExamRoomCode;
 
@@ -231,8 +232,7 @@ export class ExamTimedComponent implements OnInit,OnDestroy {
     ) {
       this.savedCalculatedTime = 0;
     } else {
-      const timePerQuestion = 75;
-      this.calcutatedTime = timePerQuestion * this.questions.length;
+      this.calcutatedTime = this.timePerQuestion * this.questions.length;
     }
     this.examStoper = setInterval(() => {
       this.calcutatedTime--;
@@ -314,9 +314,14 @@ export class ExamTimedComponent implements OnInit,OnDestroy {
   openLabValues() {
     const dialogOption = {
       width: '80%',
-      margin: '0 auto'
-    }
+      margin: '0 auto',
+    };
     const dialogRef = this.dialog.open(LabValuesComponent, dialogOption);
+  }
+
+  timeTakenForExam(): number {
+    const TotalExamTime = this.timePerQuestion * this.questions.length;
+    return TotalExamTime - this.calcutatedTime;
   }
 
   submitExam() {
@@ -337,7 +342,7 @@ export class ExamTimedComponent implements OnInit,OnDestroy {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'YES') {
         this.examTimedObject.questions = this.examArray;
-        this.examTimedObject.time = Number(this.displayTimer);
+        this.examTimedObject.time = this.timeTakenForExam();
         this.examTimedObject.questionsCount = this.questions.length;
         console.log(this.examTimedObject);
         this.examService.examSubmit(this.examTimedObject).subscribe(
