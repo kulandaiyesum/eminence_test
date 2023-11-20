@@ -62,11 +62,15 @@ export class SendInviteComponent {
   sendInvite(form: NgForm): void {
     if (form.valid) {
       // Your logic to send the invite using this.sendCode.email
+      console.log(this.sendCode.email);
+      let emailArrayNew = this.sendCode.email.split(',');
+      // console.log(emailArrayNew);
+
       const emailArray = this.sendCode.email
       .split(',')
       .map((email) => ({ email: email.trim() }));
-      console.log(emailArray);
-      this.inviteObject.email=emailArray
+      // console.log(emailArray);
+      this.inviteObject.email=emailArrayNew
       this.inviteObject.otp=this.sendCode.otp
 
       console.log('Sending invite to:', this.inviteObject);
