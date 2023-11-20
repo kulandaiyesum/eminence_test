@@ -40,6 +40,10 @@
     </div>
     <div class="item_no mb-3">
       <span>Item {{ tempQuestionIndex + 1 }} of {{ questions.length }}</span>
+      <div id="exam-code">
+        <h5 *ngIf="liveExamRoomCode">Private exam room</h5>
+        <p *ngIf="liveExamRoomCode">Room code :  {{liveExamRoomCode}}</p>
+      </div>
     </div>
     <div class="question_id_link mb-lg-4 mb-md-4 mb-3">
       <button

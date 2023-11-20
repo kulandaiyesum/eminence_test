@@ -105,6 +105,8 @@ export class ExamComponent implements OnInit {
   flaggedQuestionsList:any[]=[];
   public currentQuestionID:string;
 
+  public liveExamRoomCode;
+
   constructor(
     private route: ActivatedRoute,
     private questionService: QuerstionService,
@@ -152,6 +154,8 @@ export class ExamComponent implements OnInit {
     this.examObject.createdBy = this.userFirstName;
     this.examInstance.flag = 'NO';
     this.optionInstance.flag = 'NO';
+    this.liveExamRoomCode = localStorage.getItem('8');
+    console.log(this.liveExamRoomCode);
   }
 
   ngAfterViewInit() {

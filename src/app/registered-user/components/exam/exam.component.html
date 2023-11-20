@@ -1,4 +1,8 @@
 <div class="exam-container">
+  <div id="exam-code">
+    <h5 *ngIf="liveExamRoomCode">Private exam room</h5>
+    <p *ngIf="liveExamRoomCode">Room code :  {{liveExamRoomCode}}</p>
+  </div>
   <div class="controls">
     <div class="button" *ngFor="let item of questions; let i = index">
       <p
