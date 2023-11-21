@@ -62,14 +62,19 @@ export class RegisterComponent {
     this.dialogRef.close();
   }
   fetchB2CPackages() {
-    this.packageService.getB2CPackages().subscribe((packages: any) => {
-      this.b2cPackages = packages.result;
-      if (this.b2cPackages.length > 0) {
-        this.packageType = this.b2cPackages[0].packageName;
-        this.priceOption = `$${this.b2cPackages[0].rate}/quarter`;
+    this.packageService.getPackagesforRegistration().subscribe((response: any) => {
+      if (response.success) {
+        this.b2cPackages = response.result;
+        if (this.b2cPackages.length > 0) {
+          this.packageType = this.b2cPackages[0].packageName;
+          this.priceOption = `$${this.b2cPackages[0].amount}/${this.b2cPackages[0].durationType}`;
+        }
+      } else {
+        console.error(response.message);
       }
     });
   }
+
 
   openLoginPopUp() {
     const dialogRef = this.dialog.open(LoginComponent, {
