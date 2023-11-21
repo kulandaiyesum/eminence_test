@@ -49,6 +49,7 @@ import { ExamtimedComfirmationComponent } from './components/examtimed-comfirmat
 import { QuestionsComponent } from './components/questions/questions.component';
 import { NotesComponent } from './components/notes/notes.component';
 import { SendInviteComponent } from './components/send-invite/send-invite.component';
+import { InitialsPipe } from './pipes/initials.pipe';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { SendInviteComponent } from './components/send-invite/send-invite.compon
     QuestionsComponent,
     NotesComponent,
     SendInviteComponent,
+    InitialsPipe,
   ],
   imports: [
     FormsModule,
