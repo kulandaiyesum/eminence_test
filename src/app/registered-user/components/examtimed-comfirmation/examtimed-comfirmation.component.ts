@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-examtimed-comfirmation',
@@ -7,7 +7,12 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./examtimed-comfirmation.component.scss'],
 })
 export class ExamtimedComfirmationComponent {
-  constructor(public dialogRef: MatDialogRef<ExamtimedComfirmationComponent>) {}
+  constructor(
+    public dialogRef: MatDialogRef<ExamtimedComfirmationComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: boolean
+  ) {
+    console.log(data);
+  }
   onNoClick(): void {
     this.dialogRef.close();
   }
