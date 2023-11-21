@@ -3,6 +3,7 @@ import { ExamService } from '../../service/exam.service';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Sendcode } from '../../model/sendcode.class';
 import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-send-invite',
@@ -26,7 +27,9 @@ export class SendInviteComponent {
   }
   constructor(
     private examService: ExamService,
-    public dialogRef: MatDialogRef<SendInviteComponent>
+    public dialogRef: MatDialogRef<SendInviteComponent>,
+    private toastr: ToastrService,
+
   ) {}
 
   ngOnInit(): void {
@@ -77,9 +80,15 @@ export class SendInviteComponent {
       this.examService.sendExamCode(this.inviteObject).subscribe(
         (response: any) => {
           console.log(response);
+          this.toastr.success('Email sent succesfully', '', {
+            timeOut: 3000,
+          });
         },
         (error) => {
           console.error('Error sending code :', error);
+          this.toastr.error(error.error.message, '', {
+            timeOut: 3000,
+          });
         }
       );
     } else {
