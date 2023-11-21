@@ -268,11 +268,35 @@ export class BuildTestComponent {
               timeOut: 3000,
             });
           } else {
+            console.log(this.qbankForm.value.subjectId === 'ALL');
+
+            console.log('fffffffffffffffffffeeeefrrrrrrrrrrrreeeeeeeee');
+            console.log(this.qbankObject);
+            if (this.qbankForm.value.systemId === 'ALL') {
+              console.log('fffffffffeeeeeeeee');
+            } else {
+              console.log('ffffffrrrrrrrrrrrddddddddddddddddddr444444444');
+              localStorage.setItem('emsm', this.qbankObject.systemId);
+            }
+            if (this.qbankForm.value.subsystemId === 'ALL') {
+              console.log(
+                'fffffffffffffffffffeeeefrrrrrrrrrrrddddddddddddddddreeeeeeeee'
+              );
+            } else {
+              console.log('ffffffrrrrrrrrrrrr444444444');
+
+              localStorage.setItem('emssm', this.qbankObject.subsystemId);
+            }
+            // if (this.qbankObject.systemId != undefined) {
+            //   localStorage.setItem('emsm', this.qbankObject.systemId);
+            // }
+            // if (this.qbankObject.subsystemId != undefined) {
+            //   localStorage.setItem('emssm', this.qbankObject.subsystemId);
+            // }
+
             // this.examDataService.setExamRoomData(tempData);
             localStorage.setItem('emex-td', JSON.stringify(tempData));
             localStorage.setItem('emm', this.qbankObject.mode);
-            localStorage.setItem('emsm', this.qbankObject.systemId);
-            localStorage.setItem('emssm', this.qbankObject.subsystemId);
             localStorage.setItem('emsbi', this.qbankObject.subjectId);
             if (this.qbankObject.mode === 'TUTOR') {
               this.router.navigate(['/eminence/student/exam']);
@@ -324,6 +348,8 @@ export class BuildTestComponent {
                 timeOut: 3000,
               });
             } else {
+              console.log('fffffffffffffeeeeeeeeeee');
+
               // this.examDataService.setExamRoomData(tempData);
               localStorage.setItem('emex-td', JSON.stringify(tempData));
               localStorage.setItem('emm', this.qbankObject.mode);

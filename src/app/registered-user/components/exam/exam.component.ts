@@ -36,7 +36,6 @@ export class ExamComponent implements OnInit {
   public questLength: number;
   public answerList: any[] = [];
 
-
   examInstance: Exam = new Exam();
   @ViewChild('scrollExplanationContainer')
   scrollExplanationContainer: ElementRef;
@@ -84,8 +83,8 @@ export class ExamComponent implements OnInit {
     createdBy: '',
     flag: '',
     mode: '',
-    systemId: '',
-    subSystemId: '',
+    systemId: '6541e129ea77c02cb3962f75',
+    subSystemId: '6541e144ea77c02cb3962f7b',
     subjectId: '',
     from: '',
     requestid: '',
@@ -102,8 +101,8 @@ export class ExamComponent implements OnInit {
     isCorrectAnswer: '',
   };
 
-  flaggedQuestionsList:any[]=[];
-  public currentQuestionID:string;
+  flaggedQuestionsList: any[] = [];
+  public currentQuestionID: string;
 
   public liveExamRoomCode;
 
@@ -136,6 +135,7 @@ export class ExamComponent implements OnInit {
       this.questions = JSON.parse(localStorage.getItem('emex-td'));
       // this.questions = this.examDataService.getExamRoomData();
       this.questLength = this.questions.length;
+      this.totalQuestions = this.questions.length;
       this.getQuestionsIndexBased(0);
     }
     this.userId = this.rsaService.decryptText(
@@ -190,6 +190,9 @@ export class ExamComponent implements OnInit {
   getQuestionsIndexBased(index: number) {
     this.indexBasedQuestions = this.questions[index];
     console.log(this.indexBasedQuestions);
+    if (this.indexBasedQuestions.status === 'Pending') {
+      this.examObject.from = 'qgen';
+    }
     this.showExplanations = false;
     this.incorrectNews = false;
     this.correctNews = false;
@@ -199,14 +202,12 @@ export class ExamComponent implements OnInit {
     console.log(this.bindingData);
     this.bindingData = this.answerList.find((x) => x.i === index);
     this.value = this.bindingData?.text;
-    this.currentQuestionID=this.indexBasedQuestions._id
+    this.currentQuestionID = this.indexBasedQuestions._id;
 
     if (this.flaggedQuestionsList.includes(this.currentQuestionID)) {
-      this.flagChecked=true
+      this.flagChecked = true;
     }
-
   }
-
 
   changeQuestions(i: number) {
     this.currentQuestionIndex = i;
@@ -218,9 +219,6 @@ export class ExamComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe((result) => {});
   }
-
-
-
 
   optionSelected(event: any, i, selectedOption) {
     const option = this.indexBasedQuestions.options[i];
@@ -283,7 +281,6 @@ export class ExamComponent implements OnInit {
     return String.fromCharCode(65 + index);
   }
 
-
   previous() {
     console.log(this.currentQuestionIndex);
 
@@ -311,9 +308,10 @@ export class ExamComponent implements OnInit {
       this.examInstance.flag = 'NO';
       this.examObject.flag = 'NO';
       this.optionInstance.flag = 'NO';
-      this.flaggedQuestionsList=this.flaggedQuestionsList.filter(item => item !== this.currentQuestionID);
+      this.flaggedQuestionsList = this.flaggedQuestionsList.filter(
+        (item) => item !== this.currentQuestionID
+      );
       console.log(this.flaggedQuestionsList);
-
     }
 
     // if (this.examInstance.flag == 'YES') {
@@ -346,7 +344,7 @@ export class ExamComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, end it!'
+      confirmButtonText: 'Yes, end it!',
     }).then((result) => {
       if (result.isConfirmed) {
         this.submitExam();
@@ -354,13 +352,25 @@ export class ExamComponent implements OnInit {
     });
   }
 
-
   submitExam() {
     this.examObject.questions = this.examArray;
     this.examObject.mode = 'TUTOR'; //mode
-    this.examObject.from = 'qgen'; //mode
-    this.examObject.systemId = localStorage.getItem('emsm'); //systemId
-    this.examObject.subSystemId = localStorage.getItem('emssm'); //subsystemId
+    // this.examObject.from = 'qgen'; //mode
+    let data1 = localStorage.getItem('emsm');
+    let data2 = localStorage.getItem('emssm');
+    console.log(data1 === undefined);
+
+    if (data1 === null) {
+    } else {
+      this.examObject.systemId = localStorage.getItem('emsm'); //systemId
+    }
+    if (data2 === null) {
+    } else {
+      this.examObject.subSystemId = localStorage.getItem('emssm');
+    }
+
+    // this.examObject.systemId = localStorage.getItem('emsm'); //systemId
+    // this.examObject.subSystemId = localStorage.getItem('emssm'); //subsystemId
     this.examObject.subjectId = localStorage.getItem('emsbi'); //subjectId
     this.examService.examSubmit(this.examObject).subscribe(
       (response: any) => {
@@ -414,5 +424,5 @@ export class ExamComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The notepad dialog was closed');
     });
-}
+  }
 }
