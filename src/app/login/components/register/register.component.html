@@ -13,33 +13,17 @@
 
       <div class="tier_info_section">
         <div class="form-Group ratio_group" *ngFor="let package of b2cPackages">
-          <label
-            for="premium"
-            class="label_flex"
-
-          >
+          <label for="premium" class="label_flex">
             <input type="radio" id="premium" checked />
             <span class="tier_info">{{ package.packageName }}</span>
           </label>
-          <div class="description">
-            Enjoy unlimited question generation with the premium membership!
-          </div>
-          <div class="price-options" >
-            <label for="price"
-              ><input type="radio" name="price" id="price" checked />{{
-                package.amount
-              }}{{ package.durationType }}</label
-            >
-          </div>
-          <!-- <div class="price-options">
+          <!-- <div class="description">{{ package.questionsCount }}</div> -->
+          <div class="price-options">
             <label for="price">
-              <input
-                type="radio"
-                name="price"
-                id="price"
-              />$20.00/quarter</label
-            >
-          </div> -->
+              <input type="radio" name="price" id="price" checked />
+              {{ package.amount }} / {{ package.durationType }}
+            </label>
+          </div>
         </div>
       </div>
 

@@ -8,7 +8,6 @@ import { Package } from '../model/package.class';
   providedIn: 'root',
 })
 export class PackageService {
-
   private packageBaseUrl = environment.localdomain + 'packages';
 
   constructor(private http: HttpClient) {}
@@ -22,14 +21,21 @@ export class PackageService {
   }
 
   updatePackage(data: any): Observable<any> {
-    return this.http.put(this.packageBaseUrl+'/'+data._id, data);
+    return this.http.put(this.packageBaseUrl + '/' + data._id, data);
+  }
+  /**
+   * this method is provide in register page to show the b2c packages
+   * @returns
+   */
+  getPackagesforRegistration(): Observable<any> {
+    const body = {
+      type: 'B2C',
+    };
+    return this.http.put<any>(`${this.packageBaseUrl}/`, body);
   }
 
-  getB2CPackages(): Observable<Package[]> {
-    return this.http.get<Package[]>(`${this.packageBaseUrl}/getAll?type=B2C`);
-  }
 
   deletePackage(data: any): Observable<any> {
-    return this.http.delete(this.packageBaseUrl+'/'+data._id);
+    return this.http.delete(this.packageBaseUrl + '/' + data._id);
   }
 }
