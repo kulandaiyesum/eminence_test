@@ -25,7 +25,7 @@ class payloadQuestion {
   templateUrl: './exam-timed.component.html',
   styleUrls: ['./exam-timed.component.scss'],
 })
-export class ExamTimedComponent implements OnInit,OnDestroy {
+export class ExamTimedComponent implements OnInit, OnDestroy {
   private userFirstName: string = '';
   private userId: string = '';
   private secretKey: string = environment.secretKey;
@@ -251,7 +251,7 @@ export class ExamTimedComponent implements OnInit,OnDestroy {
   }
   stopDisplayTimerAndEndExam() {
     clearInterval(this.examStoper);
-    this.submitExam();
+    this.submitExam(true);
   }
 
   isflaggedQuestion(questionId: string): boolean {
@@ -274,6 +274,17 @@ export class ExamTimedComponent implements OnInit,OnDestroy {
       result = true;
     }
     return result;
+  }
+
+  isDefaultQuestion(questionId: string): boolean {
+    let result = false;
+    const tempObj = this.examArray.find(
+      (payloadObj) => payloadObj.questionId === questionId
+    );
+    if (tempObj && tempObj.selectedAnswerId == '' && (tempObj.flag == 'YES'||tempObj.flag == 'NO')) {
+      result = true;
+    }
+    return result
   }
 
   isCurrentQuestion(questionId: string): boolean {
@@ -324,23 +335,28 @@ export class ExamTimedComponent implements OnInit,OnDestroy {
     return TotalExamTime - this.calcutatedTime;
   }
 
-  submitExam() {
+  submitExam(isTimeOut: boolean = false) {
     this.stopTimer();
     clearInterval(this.examStoper);
     this.savedTimer = this.timer;
     this.savedCalculatedTime = this.calcutatedTime;
     this.examTimedObject.percentage = this.calculateResultInPercentage();
+    console.log('is time out', isTimeOut);
     let dialogBoxSettings = {
-      width: '500px',
+      width: isTimeOut ? '400px' : '500px',
       margin: '0 auto',
       border: '1px solid #000',
+      data: isTimeOut,
     };
     const dialogRef = this.dialog.open(
       ExamtimedComfirmationComponent,
       dialogBoxSettings
     );
     dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'YES') {
+      if (
+        (isTimeOut && (result === 'YES' || result === undefined)) ||
+        (!isTimeOut && result === 'YES')
+      ) {
         this.examTimedObject.questions = this.examArray;
         this.examTimedObject.time = this.timeTakenForExam();
         this.examTimedObject.questionsCount = this.questions.length;
