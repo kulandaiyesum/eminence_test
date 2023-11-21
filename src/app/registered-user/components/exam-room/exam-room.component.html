@@ -3,8 +3,24 @@
     <h5>Invite your friends to join Eminence</h5>
     <div class="send-area">
       <p>Send an email invite</p>
-      <input type="text" name="invite" id="invite" />
-      <button>Send</button>
+      <input
+        type="text"
+        name="invite"
+        id="invite"
+        #emailInput="ngModel"
+        [(ngModel)]="inviteEmail"
+        required
+        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+      />
+      <button (click)="sendInvite()" [disabled]="emailInput.invalid">Send</button>
+      <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
+        <div *ngIf="emailInput.errors?.['required']" style="color: red;">
+          Email is required.
+        </div>
+        <div *ngIf="emailInput.errors?.['pattern']" style="color: red;">
+          Please enter a valid email address.
+        </div>
+      </div>
     </div>
   </div>
   <div class="join-area">
