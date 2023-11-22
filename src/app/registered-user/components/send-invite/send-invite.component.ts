@@ -24,6 +24,8 @@ export class SendInviteComponent {
     otp: '',
     email: undefined,
   };
+
+  noActiveMembers:string[]=[];
   constructor(
     private examService: ExamService,
     public dialogRef: MatDialogRef<SendInviteComponent>,
@@ -144,13 +146,20 @@ export class SendInviteComponent {
         (response: any) => {
           console.log(response);
           console.log(response.result.users);
+
+          // Extract email addresses from the post method response
           const responseEmails = response.result.users
             .filter((response) => response !== null)
             .map((response) => response.email);
+
+          // Filter out the email addresses that are not present in the post method response
           const notPresentEmails = emailArrayNew.filter(
             (email) => !responseEmails.includes(email)
           );
+
           console.log(notPresentEmails);
+          this.noActiveMembers=notPresentEmails;
+
           this.toastr.success('Email sent succesfully', '', {
             timeOut: 3000,
           });
