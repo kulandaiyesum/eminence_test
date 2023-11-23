@@ -281,7 +281,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
       }
     });
     percentage = (correctAnswers / qLength) * 100;
-    return percentage;
+    return parseFloat(percentage.toFixed(2));
   }
 
   openCalculatorPopup() {
