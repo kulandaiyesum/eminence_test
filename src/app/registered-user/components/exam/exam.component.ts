@@ -70,8 +70,8 @@ export class ExamComponent implements OnInit {
     createdAt: string;
     createdBy: string;
     mode: string;
-    systemId: string;
-    subSystemId: string;
+    systemId?: string;
+    subSystemId?: string;
     subjectId: string;
     flag: string;
     from: string;
@@ -83,8 +83,8 @@ export class ExamComponent implements OnInit {
     createdBy: '',
     flag: '',
     mode: '',
-    systemId: '6541e129ea77c02cb3962f75',
-    subSystemId: '6541e144ea77c02cb3962f7b',
+    // systemId: '6541e129ea77c02cb3962f75',
+    // subSystemId: '6541e144ea77c02cb3962f7b',
     subjectId: '',
     from: '',
     requestid: '',
@@ -324,7 +324,9 @@ export class ExamComponent implements OnInit {
     //   this.optionInstance.flag = 'YES';
     // }
     setTimeout(() => {
-      this.next();
+      if (this.questLength !== this.currentQuestionIndex + 1) {
+        this.next();
+      }
       this.examArray.push({ ...this.optionInstance });
       console.log(this.examArray);
       this.optionInstance.flag = 'NO';
@@ -372,6 +374,8 @@ export class ExamComponent implements OnInit {
     // this.examObject.systemId = localStorage.getItem('emsm'); //systemId
     // this.examObject.subSystemId = localStorage.getItem('emssm'); //subsystemId
     this.examObject.subjectId = localStorage.getItem('emsbi'); //subjectId
+    console.log(this.examObject, "/n checking exam array", this.examArray);
+    return;
     this.examService.examSubmit(this.examObject).subscribe(
       (response: any) => {
         console.log(response);
