@@ -128,13 +128,13 @@
       <button
         mat-button
         (click)="next()"
-        *ngIf="currentQuestionIndex < maximumQuestionLength"
+        *ngIf="!(questLength === currentQuestionIndex + 1)"
       >
         Next
       </button>
       <button
         mat-button
-        *ngIf="questions?.length == examArray?.length"
+        *ngIf="(questLength === currentQuestionIndex + 1)"
         (click)="showEndExamConfirmation()"
       >
         End
