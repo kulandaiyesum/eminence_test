@@ -38,4 +38,43 @@
       </div>
     </form>
   </div>
+  <div class="user-list-area">
+    <div class="user-list-main">
+      <div class="wait-list">
+        <h6>Waiting list</h6>
+        <div id="wait-list">
+          <p *ngFor="let email of inviteObject.email" matTooltip="{{ email }}">
+            {{ email | initials }}
+          </p>
+          &nbsp;
+        </div>
+      </div>
+      <div class="joined-list">
+        <h6>Joined list</h6>
+        <div id="joined-list">
+          <p matTooltip="dharukumar@gmail.com ">
+            {{ "dharukumar@gmail.com " | initials }}
+          </p>
+          &nbsp;
+          <p matTooltip="shek@gmail.com">{{ "shek@gmail.com" | initials }}</p>
+          &nbsp;
+          <p matTooltip="tamilselvan@gmail.com">
+            {{ "tamilselvan@gmail.com" | initials }}
+          </p>
+          &nbsp;
+          <p matTooltip="tamil@gmail.com">{{ "tamil@gmail.com" | initials }}</p>
+          &nbsp;
+        </div>
+      </div>
+    </div>
+    <div class="no-active">
+      <h6>Non registered members</h6>
+      <div id="no-active-list">
+        <p *ngFor="let email of noActiveMembers" matTooltip="{{ email }}">
+          {{ email | initials }}
+        </p>
+        &nbsp;
+      </div>
+    </div>
+  </div>
 </div>

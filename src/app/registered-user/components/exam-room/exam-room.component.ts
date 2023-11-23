@@ -9,6 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ExamRoomComponent implements OnInit {
   joinLink: string = '';
+  inviteEmail: string = '';
 
   constructor(
     private examRoomService: ExamRoomService,
@@ -31,5 +32,16 @@ export class ExamRoomComponent implements OnInit {
         });
       }
     );
+  }
+
+  sendInvite() {
+    // Your logic to send the invite goes here
+    console.log('Sending invite to:', this.inviteEmail);
+  }
+
+  goRoom(){
+    console.log(this.joinLink);
+
+
   }
 }

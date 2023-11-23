@@ -99,10 +99,7 @@
         class="correct-expansion"
       >
         <div
-          *ngIf="
-            indexBasedQuestions?.answerObject[0].isCorrectAnswer === 'NO' ||
-            indexBasedQuestions?.answerObject[0].flag === 'YES'
-          "
+
         >
           <mat-expansion-panel
             *ngIf="
@@ -114,6 +111,19 @@
             </mat-expansion-panel-header>
             <p *ngIf="option.correctAnswer === 'true'">
               <b>Correct Answer : </b> {{ option?.text }}
+            </p>
+          </mat-expansion-panel>
+          <mat-expansion-panel
+            *ngIf="
+              option?.explanation !== null && option?.explanation !== undefined
+            "
+            style="margin-top: 20px;"
+          >
+            <mat-expansion-panel-header>
+              <mat-panel-title> View explanation</mat-panel-title>
+            </mat-expansion-panel-header>
+            <p *ngIf="option.correctAnswer === 'true'">
+              <b>Explanations : </b> {{ option?.explanation }}
             </p>
           </mat-expansion-panel>
         </div>
