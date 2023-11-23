@@ -108,7 +108,6 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     this.startTimer();
   }
   navigateQuestionByIndex(index: number) {
-    this.questions;
     this.selectedQuestion = this.questions[index];
     this.tempQuestionIndex = index;
     this.isFlaggedByDefault(this.selectedQuestion._id);
@@ -265,28 +264,6 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     return returnOBj;
   }
 
-  isQuestionSubmited(questionId: string): boolean {
-    let result = false;
-    const tempObj = this.examArray.find(
-      (payloadObj) => payloadObj.questionId === questionId
-    );
-    if (tempObj && tempObj.selectedAnswerId !== '') {
-      result = true;
-    }
-    return result;
-  }
-
-  isDefaultQuestion(questionId: string): boolean {
-    let result = false;
-    const tempObj = this.examArray.find(
-      (payloadObj) => payloadObj.questionId === questionId
-    );
-    if (tempObj && tempObj.selectedAnswerId == '' && (tempObj.flag == 'YES'||tempObj.flag == 'NO')) {
-      result = true;
-    }
-    return result
-  }
-
   isCurrentQuestion(questionId: string): boolean {
     return questionId === this.selectedQuestion._id;
   }
@@ -368,9 +345,9 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
             Swal.fire('Exam finished', 'Have a look on performance board').then(
               (result) => {
                 if (result.isConfirmed) {
-                  this.router.navigate(['/eminence/student/build-test']);
+                  this.router.navigate(['/eminence/student/saved']);
                 }
-                this.router.navigate(['/eminence/student/build-test']);
+                this.router.navigate(['/eminence/student/saved']);
               }
             );
           },
@@ -388,3 +365,27 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     });
   }
 }
+
+// following function can be used in future development
+
+// isQuestionSubmited(questionId: string): boolean {
+//   let result = false;
+//   const tempObj = this.examArray.find(
+//     (payloadObj) => payloadObj.questionId === questionId
+//   );
+//   if (tempObj && tempObj.selectedAnswerId !== '') {
+//     result = true;
+//   }
+//   return result;
+// }
+
+// isDefaultQuestion(questionId: string): boolean {
+//   let result = false;
+//   const tempObj = this.examArray.find(
+//     (payloadObj) => payloadObj.questionId === questionId
+//   );
+//   if (tempObj && tempObj.selectedAnswerId == '' && (tempObj.flag == 'YES'||tempObj.flag == 'NO')) {
+//     result = true;
+//   }
+//   return result
+// }

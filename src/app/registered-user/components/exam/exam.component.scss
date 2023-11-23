@@ -187,3 +187,14 @@
   //   }
   // }
 }
+
+.flag_icon {
+  position: relative;
+}
+.flag_icon::after {
+  content: "🚩";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 8px;
+}
