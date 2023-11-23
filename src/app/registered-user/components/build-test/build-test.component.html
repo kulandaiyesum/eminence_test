@@ -12,7 +12,7 @@
           <p>Needs more practise</p>
           <mat-chip-listbox aria-label="Fish selection">
             <mat-chip-option *ngFor="let exam of examArray">{{
-              exam?.subjectId?.subject
+              exam
             }}</mat-chip-option>
           </mat-chip-listbox>
           <p>Haven't seen in a while</p>
@@ -36,25 +36,25 @@
                 >All</mat-checkbox
               >
               <mat-checkbox
-              color="primary"
+                color="primary"
                 formControlName="type1"
                 (change)="checkBoxChanges('unused')"
                 >Unused</mat-checkbox
               >
               <mat-checkbox
-              color="primary"
+                color="primary"
                 formControlName="type2"
                 (change)="checkBoxChanges('incorrect')"
                 >Incorrect</mat-checkbox
               >
               <mat-checkbox
-              color="primary"
+                color="primary"
                 formControlName="type3"
                 (change)="checkBoxChanges('flagged')"
                 >Flagged</mat-checkbox
               >
               <mat-checkbox
-              color="primary"
+                color="primary"
                 formControlName="type4"
                 (change)="checkBoxChanges('qgen')"
                 >QGen</mat-checkbox
