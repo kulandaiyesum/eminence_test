@@ -48,11 +48,6 @@
     <div class="question_id_link mb-lg-4 mb-md-4 mb-3">
       <button
         class="ms-2"
-        [ngClass]="{
-          'selected-question': isQuestionSubmited(question._id),
-          'current-question': isCurrentQuestion(question._id),
-          'default-question': isDefaultQuestion(question._id)
-        }"
         *ngFor="let question of questions; let i = index"
         (click)="navigateQuestion(question._id, i)"
       >

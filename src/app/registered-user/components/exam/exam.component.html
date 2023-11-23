@@ -10,6 +10,9 @@
         [ngClass]="{ selected: i === currentQuestionIndex }"
       >
         {{ i + 1 }}
+        <span
+          [ngClass]="{ flag_icon: isflaggedQuestion(item?._id) }"
+        ></span>
       </p>
     </div>
   </div>
@@ -134,7 +137,7 @@
       </button>
       <button
         mat-button
-        *ngIf="(questLength === currentQuestionIndex + 1)"
+        *ngIf="questLength === currentQuestionIndex + 1"
         (click)="showEndExamConfirmation()"
       >
         End

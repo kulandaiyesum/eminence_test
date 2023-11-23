@@ -374,8 +374,6 @@ export class ExamComponent implements OnInit {
     // this.examObject.systemId = localStorage.getItem('emsm'); //systemId
     // this.examObject.subSystemId = localStorage.getItem('emssm'); //subsystemId
     this.examObject.subjectId = localStorage.getItem('emsbi'); //subjectId
-    console.log(this.examObject, "/n checking exam array", this.examArray);
-    return;
     this.examService.examSubmit(this.examObject).subscribe(
       (response: any) => {
         console.log(response);
@@ -428,5 +426,21 @@ export class ExamComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The notepad dialog was closed');
     });
+  }
+
+  /**
+   * the bellow function will check the current qustion is flagged or not
+   * @param questionId
+   * @returns
+   */
+  isflaggedQuestion(questionId: string): boolean {
+    const tempObj = this.examArray.find(
+      (payloadObj) => payloadObj.questionId === questionId
+    );
+    let returnOBj = false;
+    if (tempObj && tempObj.flag === 'YES') {
+      returnOBj = true;
+    }
+    return returnOBj;
   }
 }
