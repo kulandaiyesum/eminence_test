@@ -38,4 +38,10 @@ export class ExamRoomComponent implements OnInit {
     // Your logic to send the invite goes here
     console.log('Sending invite to:', this.inviteEmail);
   }
+
+  goRoom(){
+    console.log(this.joinLink);
+
+
+  }
 }
