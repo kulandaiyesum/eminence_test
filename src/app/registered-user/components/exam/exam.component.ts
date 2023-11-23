@@ -106,6 +106,67 @@ export class ExamComponent implements OnInit {
 
   public liveExamRoomCode;
 
+  chatMessages = [
+    {
+      userName: 'Emily',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'John',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'Joe',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'sri',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'honey',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'swathi',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'dhara',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'tamil',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'jawahar',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'veera',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'shek',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    // Add more messages as needed
+  ];
+
+  @ViewChild('scrollContainerss') scrollContainerss: ElementRef;
+
   constructor(
     private route: ActivatedRoute,
     private questionService: QuerstionService,
@@ -167,6 +228,12 @@ export class ExamComponent implements OnInit {
     );
     const scrollbar = Scrollbar.init(
       this.scrollQuestionContainer.nativeElement,
+      {
+        // Smooth Scrollbar options go here
+      }
+    );
+    const scrollbarss = Scrollbar.init(
+      this.scrollContainerss.nativeElement,
       {
         // Smooth Scrollbar options go here
       }

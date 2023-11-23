@@ -62,6 +62,7 @@
       // border: 1px solid blue;
       overflow: auto;
       padding: 15px;
+
       .explanations-main{
         height: auto;
         width: 100%;
@@ -98,6 +99,8 @@
         #explanation-panel{
           margin-top: 20px;
         }
+
+
       }
     }
     .flag{
@@ -198,6 +201,7 @@
   transform: translateY(-50%);
   font-size: 8px;
 }
+
 
 
 ::ng-deep
