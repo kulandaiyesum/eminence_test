@@ -216,7 +216,7 @@
   flex-direction: row-reverse;
 }
 .qgen {
-  width: 45%;
+  // width: 45%;
   height: fit-content;
   border: 2px solid grey;
   // float: right;
@@ -277,4 +277,27 @@
       margin-left: 0 !important;
     }
   }
+}
+
+::ng-deep
+  .mat-mdc-checkbox.mat-primary
+  .mdc-checkbox--selected
+  ~ .mdc-checkbox__ripple {
+  background-color: #000 !important;
+}
+::ng-deep
+  .mat-mdc-checkbox.mat-primary
+  .mdc-checkbox
+  .mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background,
+.mat-mdc-checkbox
+  .mdc-checkbox
+  .mdc-checkbox__native-control:enabled:indeterminate
+  ~ .mdc-checkbox__background,
+.mat-mdc-checkbox
+  .mdc-checkbox
+  .mdc-checkbox__native-control[data-indeterminate="true"]:enabled
+  ~ .mdc-checkbox__background {
+  border-color: transparent !important;
+  background-color: #000 !important;
 }

@@ -406,14 +406,11 @@ export class BuildTestComponent {
   getExamDetails(userid: string) {
     this.examService.getExamDetailsByStudentId(userid).subscribe(
       (response: any) => {
-        this.examArray = response.result.filter(
-          (item: any) => item.mode === 'TIMED'
-        );
-        console.log(this.examArray);
-        this.examArray = this.examArray.filter(
-          (item: any) => item.percentage < 30
-        );
-        console.log(this.examArray);
+        const filteredSubjects = response.result
+          .filter((item: any) => item.mode === 'TIMED' && item.percentage < 30)
+          .map((item: any) => item?.subjectId?.subject);
+        this.examArray = [...new Set(filteredSubjects)];
+        // console.log(this.examArray);
       },
       (err) => {
         console.log(err);

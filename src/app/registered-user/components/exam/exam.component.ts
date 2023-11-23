@@ -322,6 +322,13 @@ export class ExamComponent implements OnInit {
       this.incorrectNews = false;
       this.examInstance.isCorrectAnswer = 'YES';
       this.optionInstance.isCorrectAnswer = 'YES';
+      Swal.fire({
+        title: 'Your answer is correct!',
+        width: '500px',
+        icon: 'success',
+        showConfirmButton: true,
+        confirmButtonText: 'OK',
+      });
     } else {
       console.log('Selected answer is incorrect XXX');
       this.examInstance.isCorrectAnswer = 'NO';
