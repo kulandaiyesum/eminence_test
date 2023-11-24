@@ -3,7 +3,7 @@
     <mat-icon (click)="closeDialog()">close</mat-icon>
   </div>
   <div class="start-now">
-    <button (click)="closeDialogStartnoew()">Start now</button>
+    <button (click)="createQusetion()">Create Room</button>
   </div>
   <div class="code-area">
     <h5>host exam room code</h5>
@@ -37,6 +37,9 @@
         <div *ngIf="emailInput.errors?.['pattern']">Invalid email address.</div>
       </div>
     </form>
+  </div>
+  <div class="start-now">
+    <button (click)="generateQusetion()">Generate Questions</button>
   </div>
   <div class="user-list-area">
     <div class="user-list-main">

@@ -78,6 +78,8 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.loginService.loginAuthenticate(this.loginForm.value).subscribe(
         (response: any) => {
+          console.log(response, 'oooooooooo');
+
           if (
             response.result.user.role.role === 'ADMIN' ||
             response.result.user.role.role === 'FACULTY' ||
@@ -129,11 +131,16 @@ export class LoginComponent {
               response.result.user._id,
               this.secretKey
             );
+            this.loginUser.email = this.encryptText(
+              response.result.user.email,
+              this.secretKey
+            );
             localStorage.setItem('1', response.result.token);
             localStorage.setItem('2', this.loginUser.role);
             localStorage.setItem('3', this.loginUser.firstName);
             localStorage.setItem('4', this.loginUser.lastName);
             localStorage.setItem('5', this.loginUser.id);
+            localStorage.setItem('10', this.loginUser.email);
           } else {
           }
         },

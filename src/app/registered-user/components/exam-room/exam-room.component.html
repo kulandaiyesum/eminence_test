@@ -12,12 +12,16 @@
         required
         pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
       />
-      <button (click)="sendInvite()" [disabled]="emailInput.invalid">Send</button>
-      <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)">
-        <div *ngIf="emailInput.errors?.['required']" style="color: red;">
+      <button (click)="sendInvite()" [disabled]="emailInput.invalid">
+        Send
+      </button>
+      <div
+        *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
+      >
+        <div *ngIf="emailInput.errors?.['required']" style="color: red">
           Email is required.
         </div>
-        <div *ngIf="emailInput.errors?.['pattern']" style="color: red;">
+        <div *ngIf="emailInput.errors?.['pattern']" style="color: red">
           Please enter a valid email address.
         </div>
       </div>
@@ -30,24 +34,36 @@
         Host Exam Room
       </button>
       <h6>OR</h6>
-      <form class="code-area" #joinForm="ngForm" >
+      <form class="code-area" #joinForm="ngForm">
         <p>Join Exam Room :</p>
 
         <input
           type="text"
-          [(ngModel)]="joinLink"
+          [(ngModel)]="privateExam.roomCode"
           name="joinLink"
           #joinLinkInput="ngModel"
           required
           minlength="4"
         />
-        <br>
-        <div *ngIf="joinLinkInput.invalid && (joinLinkInput.dirty || joinLinkInput.touched)" style="color: red;">
-          <div *ngIf="joinLinkInput.errors?.['required']">Link is required.</div>
-          <div *ngIf="joinLinkInput.errors?.['minlength']">Link must be at least 4 characters.</div>
+        <br />
+        <div
+          *ngIf="
+            joinLinkInput.invalid &&
+            (joinLinkInput.dirty || joinLinkInput.touched)
+          "
+          style="color: red"
+        >
+          <div *ngIf="joinLinkInput.errors?.['required']">
+            Link is required.
+          </div>
+          <div *ngIf="joinLinkInput.errors?.['minlength']">
+            Link must be at least 4 characters.
+          </div>
         </div>
 
-        <button type="submit" (click)="goRoom()" [disabled]="joinForm.invalid">Go</button>
+        <button type="submit" (click)="goRoom()" [disabled]="joinForm.invalid">
+          Go
+        </button>
       </form>
     </div>
   </div>

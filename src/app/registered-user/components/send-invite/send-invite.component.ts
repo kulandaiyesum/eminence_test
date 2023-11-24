@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { ExamService } from '../../service/exam.service';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Sendcode } from '../../model/sendcode.class';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { QuerstionService } from 'src/app/faculty/service/querstion.service';
+import { PrivateExamService } from '../../service/private-exam.service';
+import { environment } from 'src/environments/environment';
+import { LoginService } from 'src/app/login/service/login.service';
 
 @Component({
   selector: 'app-send-invite',
@@ -12,6 +16,11 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SendInviteComponent {
   public uniqueCode;
+  public question = [];
+  public questionCount = [];
+  public emailArray = [];
+  public idArray;
+  secretKey = environment.secretKey;
   public sendCode: Sendcode = {
     otp: '',
     email: '',
@@ -25,15 +34,21 @@ export class SendInviteComponent {
     email: undefined,
   };
 
-  noActiveMembers:string[]=[];
+  noActiveMembers: string[] = [];
   constructor(
     private examService: ExamService,
     public dialogRef: MatDialogRef<SendInviteComponent>,
-    private toastr: ToastrService
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private toastr: ToastrService,
+    private questionService: QuerstionService,
+    private loginService: LoginService,
+    private privateExamService: PrivateExamService
   ) {}
 
   ngOnInit(): void {
     this.getRandomCodeForEmail();
+    const mail = localStorage.getItem('10');
+    this.sendCode.email = this.loginService.decryptText(mail, this.secretKey);
     console.log(this.sendCode);
 
     const emailAddresses = [
@@ -129,23 +144,20 @@ export class SendInviteComponent {
 
   sendInvite(form: NgForm): void {
     if (form.valid) {
-      // Your logic to send the invite using this.sendCode.email
       console.log(this.sendCode.email);
       let emailArrayNew = this.sendCode.email.split(',');
-      console.log(emailArrayNew);
-
       const emailArray = this.sendCode.email
         .split(',')
         .map((email) => ({ email: email.trim() }));
-      // console.log(emailArray);
       this.inviteObject.email = emailArrayNew;
       this.inviteObject.otp = this.sendCode.otp;
-
-      console.log('Sending invite to:', this.inviteObject);
       this.examService.sendExamCode(this.inviteObject).subscribe(
         (response: any) => {
           console.log(response);
           console.log(response.result.users);
+          this.questionCount = response.result.users;
+          this.emailArray = this.questionCount.map((obj) => obj.email);
+          console.log(this.emailArray, 'ssssssssssss');
 
           // Extract email addresses from the post method response
           const responseEmails = response.result.users
@@ -156,10 +168,7 @@ export class SendInviteComponent {
           const notPresentEmails = emailArrayNew.filter(
             (email) => !responseEmails.includes(email)
           );
-
-          console.log(notPresentEmails);
-          this.noActiveMembers=notPresentEmails;
-
+          this.noActiveMembers = notPresentEmails;
           this.toastr.success('Email sent succesfully', '', {
             timeOut: 3000,
           });
@@ -174,5 +183,25 @@ export class SendInviteComponent {
     } else {
       console.log('Form is invalid');
     }
+  }
+  createQusetion() {
+    this.questionService.postQbankRequest(this.data).subscribe((doc: any) => {
+      console.log(doc.result);
+      this.question = doc.result;
+      this.idArray = this.question.map((obj) => obj._id);
+      console.log(this.idArray);
+    });
+  }
+  generateQusetion() {
+    let data = {
+      questionIds: this.idArray,
+      roomCode: this.sendCode.otp,
+      emails: this.emailArray,
+    };
+    console.log(data);
+    this.privateExamService.savePrivateExam(data).subscribe((doc: any) => {
+      console.log(doc.result);
+      this.closeDialog();
+    });
   }
 }

@@ -268,23 +268,12 @@ export class BuildTestComponent {
               timeOut: 3000,
             });
           } else {
-            console.log(this.qbankForm.value.subjectId === 'ALL');
-
-            console.log('fffffffffffffffffffeeeefrrrrrrrrrrrreeeeeeeee');
-            console.log(this.qbankObject);
             if (this.qbankForm.value.systemId === 'ALL') {
-              console.log('fffffffffeeeeeeeee');
             } else {
-              console.log('ffffffrrrrrrrrrrrddddddddddddddddddr444444444');
               localStorage.setItem('emsm', this.qbankObject.systemId);
             }
             if (this.qbankForm.value.subsystemId === 'ALL') {
-              console.log(
-                'fffffffffffffffffffeeeefrrrrrrrrrrrddddddddddddddddreeeeeeeee'
-              );
             } else {
-              console.log('ffffffrrrrrrrrrrrr444444444');
-
               localStorage.setItem('emssm', this.qbankObject.subsystemId);
             }
             // if (this.qbankObject.systemId != undefined) {
@@ -306,63 +295,62 @@ export class BuildTestComponent {
           }
         });
     } else {
+      const temp = this.qbankForm.value;
+      // const typeArray: number[] = [];
+      let type: number;
+      for (let i = 0; i <= 4; i++) {
+        if (temp[`type${i}`]) {
+          // typeArray.push(i);
+          type = i;
+          break;
+        }
+      }
+      if (temp.systemId === 'ALL') {
+      } else {
+        this.qbankObject.systemId = temp.systemId;
+      }
+      if (temp.subsystemId === 'ALL') {
+      } else {
+        this.qbankObject.subsystemId = temp.subsystemId;
+      }
+      this.qbankObject.mode = this.examMode;
+      this.qbankObject.questionsCount = parseInt(temp.questionsCount, 10);
+      this.qbankObject.subjectId = temp.subjectId;
+      this.qbankObject.type = type;
+      this.qbankObject.userId = this.userId;
+      this.qbankObject.status = 'VREVIEWED';
       const dialogRef = this.dialog.open(SendInviteComponent, {
         width: '600px', // Set the width as needed
         height: 'auto', // Set the height as needed
+        data: this.qbankObject,
         // You can add other MatDialogConfig options here
       });
       dialogRef.afterClosed().subscribe((result) => {
         console.log('Dialog closed with result:');
 
-        const temp = this.qbankForm.value;
-        // const typeArray: number[] = [];
-        let type: number;
-        for (let i = 0; i <= 4; i++) {
-          if (temp[`type${i}`]) {
-            // typeArray.push(i);
-            type = i;
-            break;
-          }
-        }
-        if (temp.systemId === 'ALL') {
-        } else {
-          this.qbankObject.systemId = temp.systemId;
-        }
-        if (temp.subsystemId === 'ALL') {
-        } else {
-          this.qbankObject.subsystemId = temp.subsystemId;
-        }
-        this.qbankObject.mode = this.examMode;
-        this.qbankObject.questionsCount = parseInt(temp.questionsCount, 10);
-        this.qbankObject.subjectId = temp.subjectId;
-        this.qbankObject.type = type;
-        this.qbankObject.userId = this.userId;
-        this.qbankObject.status = 'VREVIEWED';
-        this.questionService
-          .postQbankRequest(this.qbankObject)
-          .subscribe((doc: any) => {
-            console.log(doc.result);
-            const tempData = doc.result;
-            if (tempData.length === 0) {
-              this.toastr.warning('NO Questions Found !!!', '', {
-                timeOut: 3000,
-              });
-            } else {
-              console.log('fffffffffffffeeeeeeeeeee');
-
-              // this.examDataService.setExamRoomData(tempData);
-              localStorage.setItem('emex-td', JSON.stringify(tempData));
-              localStorage.setItem('emm', this.qbankObject.mode);
-              localStorage.setItem('emsm', this.qbankObject.systemId);
-              localStorage.setItem('emssm', this.qbankObject.subsystemId);
-              localStorage.setItem('emsbi', this.qbankObject.subjectId);
-              if (this.qbankObject.mode === 'TUTOR') {
-                this.router.navigate(['/eminence/student/exam']);
-              } else {
-                this.router.navigate(['/eminence/student/exam-timed']);
-              }
-            }
-          });
+        // this.questionService
+        //   .postQbankRequest(this.qbankObject)
+        //   .subscribe((doc: any) => {
+        //     console.log(doc.result);
+        //     const tempData = doc.result;
+        //     if (tempData.length === 0) {
+        //       this.toastr.warning('NO Questions Found !!!', '', {
+        //         timeOut: 3000,
+        //       });
+        //     } else {
+        //       // this.examDataService.setExamRoomData(tempData);
+        //       localStorage.setItem('emex-td', JSON.stringify(tempData));
+        //       localStorage.setItem('emm', this.qbankObject.mode);
+        //       localStorage.setItem('emsm', this.qbankObject.systemId);
+        //       localStorage.setItem('emssm', this.qbankObject.subsystemId);
+        //       localStorage.setItem('emsbi', this.qbankObject.subjectId);
+        //       if (this.qbankObject.mode === 'TUTOR') {
+        //         this.router.navigate(['/eminence/student/exam']);
+        //       } else {
+        //         this.router.navigate(['/eminence/student/exam-timed']);
+        //       }
+        //     }
+        //   });
       });
     }
   }
