@@ -17,4 +17,11 @@ export class PrivateExamService {
   joinExam(data) {
     return this.http.put(this.baseUrl + '/', data);
   }
+
+  updateChat(data) {
+    return this.http.put(this.baseUrl + '/message', data);
+  }
+  getByRoomCode(data) {
+    return this.http.put(this.baseUrl + '/chats', data);
+  }
 }
