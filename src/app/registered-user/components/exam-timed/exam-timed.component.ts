@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { QgenOption, Question } from 'src/app/faculty/model/question';
 import { RsaService } from 'src/app/shared/service/rsa.service';
 import { environment } from 'src/environments/environment';
@@ -12,7 +18,9 @@ import { CalculatorComponent } from '../calculator/calculator.component';
 import { NotesComponent } from '../notes/notes.component';
 import { LabValuesComponent } from '../lab-values/lab-values.component';
 import Scrollbar from 'smooth-scrollbar';
-
+import { Message } from '../../model/message';
+import { PrivateExamService } from '../../service/private-exam.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 class payloadQuestion {
   questionId: string;
@@ -28,6 +36,9 @@ class payloadQuestion {
   styleUrls: ['./exam-timed.component.scss'],
 })
 export class ExamTimedComponent implements OnInit, OnDestroy {
+  public message: Message;
+  public currentTime;
+  public currentTime1;
   private userFirstName: string = '';
   private userId: string = '';
   private secretKey: string = environment.secretKey;
@@ -53,6 +64,8 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
   private timer: number = 0;
   displayTimer: string;
   private IntevelStoper: any;
+  public chatData;
+  public messageList = [];
 
   setHeight: boolean = false;
   private examStoper: any;
@@ -61,7 +74,8 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
   private savedCalculatedTime: number = 0;
   private timePerQuestion = environment.timePerQuestion;
 
-  public liveExamRoomCode;
+  public liveExamRoomCode: string;
+  chatForm: FormGroup;
   chatMessages = [
     {
       userName: 'Emily',
@@ -121,20 +135,34 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     // Add more messages as needed
   ];
 
-  @ViewChild('scrollContainer') scrollContainer: ElementRef;
+  // @ViewChild('scrollContainer') scrollContainer: ElementRef;
+  @ViewChild('scrollContainer', { static: false }) scrollContainer: ElementRef;
 
   constructor(
     private rsaService: RsaService,
     private examService: ExamService,
     private router: Router,
     private toastr: ToastrService,
+    private privateExamService: PrivateExamService,
     public dialog: MatDialog
-  ) {}
+  ) {
+    this.chatForm = new FormGroup({
+      replymessage: new FormControl(),
+    });
+  }
   ngOnDestroy(): void {
     this.stopTimer();
     clearInterval(this.examStoper);
   }
   ngOnInit(): void {
+    this.message = new Message();
+    this.currentTime = new Date();
+    const hours = this.currentTime.getHours();
+    const min = this.currentTime.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    const formattedHours = hours % 12 === 0 ? 12 : hours % 12;
+    const formattedMinutes = min < 10 ? '0' + min : min;
+    this.currentTime1 = `${formattedHours}:${formattedMinutes} ${ampm}`;
     this.questions = JSON.parse(localStorage.getItem('emex-td'));
     this.userId = this.rsaService.decryptText(
       localStorage.getItem('5'),
@@ -160,6 +188,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     this.selectedQuestion = this.questions[0];
     this.startTimer();
     this.displayTimerUI();
+
     this.liveExamRoomCode = localStorage.getItem('8');
     console.log(this.liveExamRoomCode);
   }
@@ -432,6 +461,24 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
         this.startTimer();
         this.displayTimerUI();
       }
+    });
+  }
+  clickMessage() {
+    this.message.time = this.currentTime1;
+    this.message.senderUsername = this.userFirstName;
+    this.message.roomCode = this.liveExamRoomCode;
+    this.privateExamService.updateChat(this.message).subscribe((doc) => {
+      this.chatForm.reset();
+      let data1 = { roomCode: this.liveExamRoomCode };
+      this.privateExamService.getByRoomCode(data1).subscribe((doc1: any) => {
+        this.chatData = doc1.result;
+        this.messageList = this.chatData.messageList;
+        if (this.scrollContainer) {
+          const element = this.scrollContainer.nativeElement as HTMLElement;
+          element.scrollTop = element.scrollHeight - element.clientHeight;
+          console.log('bottom la pocha');
+        }
+      });
     });
   }
 }

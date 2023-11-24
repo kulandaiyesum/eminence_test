@@ -92,26 +92,36 @@
         <mat-expansion-panel-header>
           <mat-panel-title> Chat </mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="chats">
-          <div class="text-area" #scrollContainer>
-            <div id="chat" *ngFor="let message of chatMessages">
-              <div id="name-text-chat">
-                <div style="display: flex">
-                  <p id="user-profile">{{ message?.userName.charAt(0) }}</p>
-                  <h6 style="margin-left: 15px; margin-top: 10px">
-                    {{ message?.userName }}
-                  </h6>
+        <form [formGroup]="chatForm">
+          <div class="chats">
+            <div class="text-area" #scrollContainer>
+              <div id="chat" *ngFor="let message of messageList">
+                <div id="name-text-chat">
+                  <div style="display: flex">
+                    <p id="user-profile">
+                      {{ message?.senderUsername.charAt(0) }}
+                    </p>
+                    <h6 style="margin-left: 15px; margin-top: 10px">
+                      {{ message?.senderUsername }}
+                    </h6>
+                  </div>
+                  <p>{{ message?.replymessage }}</p>
                 </div>
-                <p>{{ message?.text }}</p>
+                <span>{{ message?.time }}</span>
               </div>
-              <span>{{ message?.timestamp }}</span>
+            </div>
+            <div class="input-area">
+              <input
+                type="text"
+                placeholder="Type here..."
+                formControlName="replymessage"
+                [(ngModel)]="message.replymessage"
+                (keyup.enter)="clickMessage()"
+              />
+              <button mat-button (click)="clickMessage()">send</button>
             </div>
           </div>
-          <div class="input-area">
-            <input type="text" placeholder="Type here..." />
-            <button mat-button><mat-icon>send</mat-icon></button>
-          </div>
-        </div>
+        </form>
       </mat-expansion-panel>
     </div>
     <div class="timed_mode_actions">
