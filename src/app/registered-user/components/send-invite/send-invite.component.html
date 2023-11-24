@@ -2,9 +2,9 @@
   <div class="close-area">
     <mat-icon (click)="closeDialog()">close</mat-icon>
   </div>
-  <div class="start-now">
-    <button (click)="createQusetion()">Create Room</button>
-  </div>
+  <!-- <div class="start-now">
+    <button (click)="createQusetion()" *ngIf="showCreateQuestions">Create questions</button>
+  </div> -->
   <div class="code-area">
     <h5>host exam room code</h5>
     <h2>{{ uniqueCode }}</h2>
@@ -24,9 +24,12 @@
         type="submit"
         [disabled]="inviteForm.invalid"
         (click)="sendInvite(inviteForm)"
+        *ngIf="showSendEmail"
       >
         Send
       </button>
+      <button (click)="generateQusetion()" *ngIf="showGenerateRoom">Generate Room</button>
+      <button (click)="createQusetion()" *ngIf="showCreateQuestions">Create questions</button>
       <!-- Display validation message if email is not valid -->
       <h6 id="comma">Use comma to add more Email</h6>
       <div
@@ -38,9 +41,9 @@
       </div>
     </form>
   </div>
-  <div class="start-now">
-    <button (click)="generateQusetion()">Generate Questions</button>
-  </div>
+  <!-- <div class="start-now">
+    <button (click)="generateQusetion()" *ngIf="showGenerateRoom">Generate Room</button>
+  </div> -->
   <div class="user-list-area">
     <div class="user-list-main">
       <div class="wait-list">
@@ -52,7 +55,7 @@
           &nbsp;
         </div>
       </div>
-      <div class="joined-list">
+      <!-- <div class="joined-list">
         <h6>Joined list</h6>
         <div id="joined-list">
           <p matTooltip="dharukumar@gmail.com ">
@@ -68,7 +71,7 @@
           <p matTooltip="tamil@gmail.com">{{ "tamil@gmail.com" | initials }}</p>
           &nbsp;
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="no-active">
       <h6>Non registered members</h6>

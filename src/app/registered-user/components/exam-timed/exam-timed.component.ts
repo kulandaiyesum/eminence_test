@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  NgZone,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -49,7 +50,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     time: 0,
     percentage: 0,
     questionsCount: 0,
-    correctQuestions:0,
+    correctQuestions: 0,
     subjectId: '',
     createdBy: '',
   };
@@ -76,6 +77,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
 
   public liveExamRoomCode: string;
   chatForm: FormGroup;
+  private chartIntervalId;
   chatMessages = [
     {
       userName: 'Emily',
@@ -136,7 +138,8 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
   ];
 
   // @ViewChild('scrollContainer') scrollContainer: ElementRef;
-  @ViewChild('scrollContainer', { static: false }) scrollContainer: ElementRef;
+  @ViewChild('target') private myScrollContainer: ElementRef;
+  gettingChatData;
 
   constructor(
     private rsaService: RsaService,
@@ -144,7 +147,8 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     private router: Router,
     private toastr: ToastrService,
     private privateExamService: PrivateExamService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private zone: NgZone
   ) {
     this.chatForm = new FormGroup({
       replymessage: new FormControl(),
@@ -153,6 +157,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.stopTimer();
     clearInterval(this.examStoper);
+    this.stopChartInterval();
   }
   ngOnInit(): void {
     this.message = new Message();
@@ -191,13 +196,17 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
 
     this.liveExamRoomCode = localStorage.getItem('8');
     console.log(this.liveExamRoomCode);
+    this.gettingChatData = { roomCode: this.liveExamRoomCode };
+    this.clickMessage();
+    this.getChatmessages();
+    this.startChartInterval();
   }
 
-  ngAfterViewInit() {
-    const scrollbar = Scrollbar.init(this.scrollContainer.nativeElement, {
-      // Smooth Scrollbar options go here
-    });
-  }
+  // ngAfterViewInit() {
+  //   const scrollbar = Scrollbar.init(this.myScrollContainer.nativeElement, {
+  //     // Smooth Scrollbar options go here
+  //   });
+  // }
 
   navigateQuestion(questionId: string, index: number) {
     this.selectedQuestion = this.questions.find((q) => q._id === questionId);
@@ -470,16 +479,53 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     this.privateExamService.updateChat(this.message).subscribe((doc) => {
       this.chatForm.reset();
       let data1 = { roomCode: this.liveExamRoomCode };
+      console.log(data1);
+
       this.privateExamService.getByRoomCode(data1).subscribe((doc1: any) => {
         this.chatData = doc1.result;
         this.messageList = this.chatData.messageList;
-        if (this.scrollContainer) {
-          const element = this.scrollContainer.nativeElement as HTMLElement;
-          element.scrollTop = element.scrollHeight - element.clientHeight;
-          console.log('bottom la pocha');
-        }
+        console.log(this.messageList);
+        setTimeout(() => {
+          // Your code here
+          this.scrollToElement();
+        }, 500);
       });
     });
+  }
+
+  scrollToElement(): void {
+    this.myScrollContainer.nativeElement.scroll({
+      top: this.myScrollContainer.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth',
+    });
+    // console.log(" bottom la pacha");
+  }
+
+  getChatmessages() {
+    this.privateExamService
+      .getByRoomCode(this.gettingChatData)
+      .subscribe((doc1: any) => {
+        this.chatData = doc1.result;
+        this.messageList = this.chatData.messageList;
+        // console.log(this.messageList);
+        setTimeout(() => {
+          // Your code here
+          this.scrollToElement();
+        }, 500);
+      });
+  }
+
+  startChartInterval() {
+    this.chartIntervalId = setInterval(() => {
+      this.getChatmessages();
+    }, 1000);
+  }
+
+  stopChartInterval() {
+    if (this.chartIntervalId) {
+      clearInterval(this.chartIntervalId);
+    }
   }
 }
 
