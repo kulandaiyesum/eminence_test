@@ -47,10 +47,12 @@ export class ExamRoomComponent implements OnInit {
   }
 
   goRoom() {
+
     this.privateExamService.joinExam(this.privateExam).subscribe(
       (resp: any) => {
         console.log(resp);
-        const tempData = resp.result[1];
+        console.log(resp.result);
+        const tempData = resp.result[0];
         if (tempData.length === 0) {
           this.toastr.warning('NO Questions Found !!!', '', {
             timeOut: 3000,
@@ -58,6 +60,7 @@ export class ExamRoomComponent implements OnInit {
         } else {
           // this.examDataService.setExamRoomData(tempData);
           localStorage.setItem('emex-td', JSON.stringify(tempData));
+          localStorage.setItem('8', this.privateExam.roomCode);
           // localStorage.setItem('emm', this.qbankObject.mode);
           // if (this.qbankObject.mode === 'TUTOR') {
           // this.router.navigate(['/eminence/student/exam']);
