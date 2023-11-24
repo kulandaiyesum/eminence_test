@@ -327,7 +327,7 @@ export class BuildTestComponent {
       });
       dialogRef.afterClosed().subscribe((result) => {
         console.log('Dialog closed with result:');
-
+        this.router.navigate(['/eminence/student/build-test']);
         // this.questionService
         //   .postQbankRequest(this.qbankObject)
         //   .subscribe((doc: any) => {
