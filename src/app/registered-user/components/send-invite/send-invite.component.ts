@@ -35,6 +35,9 @@ export class SendInviteComponent {
   };
 
   noActiveMembers: string[] = [];
+  showSendEmail: boolean = true;
+  showCreateQuestions: boolean = false;
+  showGenerateRoom: boolean = false;
   constructor(
     private examService: ExamService,
     public dialogRef: MatDialogRef<SendInviteComponent>,
@@ -172,6 +175,9 @@ export class SendInviteComponent {
           this.toastr.success('Email sent succesfully', '', {
             timeOut: 3000,
           });
+          this.showCreateQuestions = true;
+          this.showSendEmail = false;
+          this.sendCode.email = '';
         },
         (error) => {
           console.error('Error sending code :', error);
@@ -185,12 +191,26 @@ export class SendInviteComponent {
     }
   }
   createQusetion() {
-    this.questionService.postQbankRequest(this.data).subscribe((doc: any) => {
-      console.log(doc.result);
-      this.question = doc.result;
-      this.idArray = this.question.map((obj) => obj._id);
-      console.log(this.idArray);
-    });
+    this.questionService.postQbankRequest(this.data).subscribe(
+      (doc: any) => {
+        console.log(doc.result);
+        this.question = doc.result;
+        this.idArray = this.question.map((obj) => obj._id);
+        this.toastr.success('Question created successfully !!!', '', {
+          timeOut: 3000,
+        });
+        this.showSendEmail = false;
+        this.showCreateQuestions = false;
+        this.showGenerateRoom = true;
+        console.log(this.idArray);
+      },
+      (error) => {
+        console.error('Oops something went', error);
+        this.toastr.error(error.error.message, '', {
+          timeOut: 3000,
+        });
+      }
+    );
   }
   generateQusetion() {
     let data = {
@@ -199,9 +219,21 @@ export class SendInviteComponent {
       emails: this.emailArray,
     };
     console.log(data);
-    this.privateExamService.savePrivateExam(data).subscribe((doc: any) => {
-      console.log(doc.result);
-      this.closeDialog();
-    });
+    this.privateExamService.savePrivateExam(data).subscribe(
+      (doc: any) => {
+        console.log(doc.result);
+        this.closeDialog();
+        this.toastr.success('Room created successfully !!!', '', {
+          timeOut: 3000,
+        });
+      },
+
+      (error) => {
+        console.error('Oops something went', error);
+        this.toastr.error(error.error.message, '', {
+          timeOut: 3000,
+        });
+      }
+    );
   }
 }
