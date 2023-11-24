@@ -498,14 +498,14 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
       left: 0,
       behavior: 'smooth'
     });
-    console.log(" bottom la pacha");
+    // console.log(" bottom la pacha");
   }
 
   getChatmessages(){
     this.privateExamService.getByRoomCode(this.gettingChatData).subscribe((doc1: any) => {
       this.chatData = doc1.result;
       this.messageList = this.chatData.messageList;
-      console.log(this.messageList);
+      // console.log(this.messageList);
       setTimeout(() => {
         // Your code here
         this.scrollToElement();
