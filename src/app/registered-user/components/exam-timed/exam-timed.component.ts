@@ -38,6 +38,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     time: 0,
     percentage: 0,
     questionsCount: 0,
+    correctQuestions:0,
     subjectId: '',
     createdBy: '',
   };
@@ -348,6 +349,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
         worngAnswers++;
       }
     });
+    this.examTimedObject.correctQuestions = correctAnswers;
     percentage = (correctAnswers / qLength) * 100;
     return parseFloat(percentage.toFixed(2));
   }

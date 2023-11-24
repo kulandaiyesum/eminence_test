@@ -50,6 +50,7 @@ import { QuestionsComponent } from './components/questions/questions.component';
 import { NotesComponent } from './components/notes/notes.component';
 import { SendInviteComponent } from './components/send-invite/send-invite.component';
 import { InitialsPipe } from './pipes/initials.pipe';
+import { TimeformatPipe } from './pipes/timeformat.pipe';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import { InitialsPipe } from './pipes/initials.pipe';
     NotesComponent,
     SendInviteComponent,
     InitialsPipe,
+    TimeformatPipe,
   ],
   imports: [
     FormsModule,
