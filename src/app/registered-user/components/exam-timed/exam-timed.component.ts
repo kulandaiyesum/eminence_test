@@ -50,7 +50,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     time: 0,
     percentage: 0,
     questionsCount: 0,
-    correctQuestions:0,
+    correctQuestions: 0,
     subjectId: '',
     createdBy: '',
   };
@@ -77,6 +77,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
 
   public liveExamRoomCode: string;
   chatForm: FormGroup;
+  private chartIntervalId;
   chatMessages = [
     {
       userName: 'Emily',
@@ -156,6 +157,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.stopTimer();
     clearInterval(this.examStoper);
+    this.stopChartInterval();
   }
   ngOnInit(): void {
     this.message = new Message();
@@ -194,11 +196,10 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
 
     this.liveExamRoomCode = localStorage.getItem('8');
     console.log(this.liveExamRoomCode);
-   this.gettingChatData= { roomCode: this.liveExamRoomCode }
+    this.gettingChatData = { roomCode: this.liveExamRoomCode };
     this.clickMessage();
     this.getChatmessages();
     this.startChartInterval();
-
   }
 
   // ngAfterViewInit() {
@@ -496,33 +497,36 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     this.myScrollContainer.nativeElement.scroll({
       top: this.myScrollContainer.nativeElement.scrollHeight,
       left: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
     // console.log(" bottom la pacha");
   }
 
-  getChatmessages(){
-    this.privateExamService.getByRoomCode(this.gettingChatData).subscribe((doc1: any) => {
-      this.chatData = doc1.result;
-      this.messageList = this.chatData.messageList;
-      // console.log(this.messageList);
-      setTimeout(() => {
-        // Your code here
-        this.scrollToElement();
-      }, 500);
-    });
+  getChatmessages() {
+    this.privateExamService
+      .getByRoomCode(this.gettingChatData)
+      .subscribe((doc1: any) => {
+        this.chatData = doc1.result;
+        this.messageList = this.chatData.messageList;
+        // console.log(this.messageList);
+        setTimeout(() => {
+          // Your code here
+          this.scrollToElement();
+        }, 500);
+      });
   }
 
-  startChartInterval(){
-    setInterval(() => {
-      // Your code here
+  startChartInterval() {
+    this.chartIntervalId = setInterval(() => {
       this.getChatmessages();
     }, 1000);
   }
 
-
-
-
+  stopChartInterval() {
+    if (this.chartIntervalId) {
+      clearInterval(this.chartIntervalId);
+    }
+  }
 }
 
 // following function can be used in future development
