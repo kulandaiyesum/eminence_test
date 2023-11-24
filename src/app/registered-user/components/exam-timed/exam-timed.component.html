@@ -87,6 +87,33 @@
         </button>
       </div>
     </div>
+    <div class="chat-area" *ngIf="liveExamRoomCode">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Chat </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="chats">
+          <div class="text-area" #scrollContainer>
+            <div id="chat" *ngFor="let message of chatMessages">
+              <div id="name-text-chat">
+                <div style="display: flex">
+                  <p id="user-profile">{{ message?.userName.charAt(0) }}</p>
+                  <h6 style="margin-left: 15px; margin-top: 10px">
+                    {{ message?.userName }}
+                  </h6>
+                </div>
+                <p>{{ message?.text }}</p>
+              </div>
+              <span>{{ message?.timestamp }}</span>
+            </div>
+          </div>
+          <div class="input-area">
+            <input type="text" placeholder="Type here..." />
+            <button mat-button><mat-icon>send</mat-icon></button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </div>
     <div class="timed_mode_actions">
       <button class="btn btn-warning" (click)="submitExam()">End</button>
       <div class="timer_elapsed">

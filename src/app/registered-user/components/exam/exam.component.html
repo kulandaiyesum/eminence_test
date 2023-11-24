@@ -41,6 +41,7 @@
       </div>
     </div>
     <div class="explanations" #scrollExplanationContainer>
+      
       <div class="explanations-main" *ngIf="showExplanations">
         <mat-accordion>
           <mat-expansion-panel>
@@ -62,6 +63,7 @@
             </div>
           </mat-expansion-panel>
         </mat-accordion>
+
         <div
           class="explanation-paragraph"
           *ngFor="let option of indexBasedQuestions?.options"

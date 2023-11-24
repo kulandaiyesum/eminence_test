@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { QgenOption, Question } from 'src/app/faculty/model/question';
 import { RsaService } from 'src/app/shared/service/rsa.service';
 import { environment } from 'src/environments/environment';
@@ -11,6 +11,8 @@ import { ExamtimedComfirmationComponent } from '../examtimed-comfirmation/examti
 import { CalculatorComponent } from '../calculator/calculator.component';
 import { NotesComponent } from '../notes/notes.component';
 import { LabValuesComponent } from '../lab-values/lab-values.component';
+import Scrollbar from 'smooth-scrollbar';
+
 
 class payloadQuestion {
   questionId: string;
@@ -59,6 +61,66 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
   private timePerQuestion = environment.timePerQuestion;
 
   public liveExamRoomCode;
+  chatMessages = [
+    {
+      userName: 'Emily',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky,Wow, This question is actually pretty tricky,Wow, This question is actually pretty tricky,Wow, This question is actually pretty tricky,Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'John',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'Joe',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'sri',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'honey',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'swathi',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'dhara',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'tamil',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'jawahar',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'veera',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    {
+      userName: 'shek',
+      timestamp: '09:20',
+      text: 'Wow, This question is actually pretty tricky',
+    },
+    // Add more messages as needed
+  ];
+
+  @ViewChild('scrollContainer') scrollContainer: ElementRef;
 
   constructor(
     private rsaService: RsaService,
@@ -99,6 +161,12 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     this.displayTimerUI();
     this.liveExamRoomCode = localStorage.getItem('8');
     console.log(this.liveExamRoomCode);
+  }
+
+  ngAfterViewInit() {
+    const scrollbar = Scrollbar.init(this.scrollContainer.nativeElement, {
+      // Smooth Scrollbar options go here
+    });
   }
 
   navigateQuestion(questionId: string, index: number) {
