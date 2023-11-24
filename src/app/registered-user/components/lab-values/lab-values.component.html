@@ -27,17 +27,16 @@
   <button (click)="selectButton(3)">Hematologic</button>
   <button (click)="selectButton(4)">Urine</button>
 </div>
-  <div *ngIf="selectedButton === 1" class="custom_tab_Serum">
-    <app-serum-values></app-serum-values>
-  </div>
-  <div *ngIf="selectedButton === 2" class="custom_tab_Cerebrospinal">
-    <app-serum-values></app-serum-values>
-  </div>
-  <div *ngIf="selectedButton === 3" class="custom_tab_Hematologic">
-    <app-serum-values></app-serum-values>
-  </div>
-  <div *ngIf="selectedButton === 4" class="custom_tab_Urine">
-    <app-serum-values></app-serum-values>
-  </div>
+<div *ngIf="selectedButton === 1" class="custom_tab_Serum" [@slideInOut]>
+  <app-serum-values></app-serum-values>
+</div>
+<div *ngIf="selectedButton === 2" class="custom_tab_Cerebrospinal" [@slideInOut]>
+  <app-serum-values></app-serum-values>
+</div>
+<div *ngIf="selectedButton === 3" class="custom_tab_Hematologic" [@slideInOut]>
+  <app-serum-values></app-serum-values>
+</div>
+<div *ngIf="selectedButton === 4" class="custom_tab_Urine" [@slideInOut]>
+  <app-serum-values></app-serum-values>
 </div>
 </div>
