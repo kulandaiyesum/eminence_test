@@ -12,6 +12,7 @@
               <!-- <th>Subject</th>
               <th>System</th> -->
               <th>Score</th>
+              <th>Time</th>
               <th>Review</th>
             </tr>
           </thead>
@@ -19,11 +20,24 @@
             <tr *ngFor="let exam of examArray" id="table-data">
               <td>{{ exam?.createdAt | date : "MM/dd/yyyy" }}</td>
               <td>{{ exam?.mode }}</td>
-              <td>{{ exam?.questionIds?.length }}</td>
+              <td>
+                <span *ngIf="exam?.correctQuestions"
+                  >{{ exam?.correctQuestions }} / {{
+                    exam?.questionIds?.length
+                  }}</span
+                ><span *ngIf="!exam?.correctQuestions"
+                  >{{ ((exam?.percentage * exam?.questionIds?.length) / 100).toFixed()}} / {{
+                    exam?.questionIds?.length
+                  }}</span
+                >
+              </td>
               <!-- <td>{{ exam?.subjectId?.subject || "-" }}</td>
               <td>{{ exam.systemId.system || "ALL" }}</td> -->
               <td>{{ exam?.percentage || "-" }}</td>
-              <td><mat-icon (click)="getQuestions(exam)">visibility</mat-icon></td>
+              <td>{{exam?.time | timeformat}}</td>
+              <td>
+                <mat-icon (click)="getQuestions(exam)">visibility</mat-icon>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -66,4 +80,3 @@
     </div>
   </div>
 </div>
-
