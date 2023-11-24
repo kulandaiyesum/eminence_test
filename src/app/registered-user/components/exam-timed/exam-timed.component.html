@@ -94,7 +94,7 @@
         </mat-expansion-panel-header>
         <form [formGroup]="chatForm">
           <div class="chats">
-            <div class="text-area" #scrollContainer>
+            <div class="text-area" #target>
               <div id="chat" *ngFor="let message of messageList">
                 <div id="name-text-chat">
                   <div style="display: flex">
@@ -116,12 +116,13 @@
                 placeholder="Type here..."
                 formControlName="replymessage"
                 [(ngModel)]="message.replymessage"
-                
+
               />
               <button mat-button (click)="clickMessage()">send</button>
             </div>
           </div>
         </form>
+        <!-- <button (click)="scrollToElement(target)">Click</button> -->
       </mat-expansion-panel>
     </div>
     <div class="timed_mode_actions">
