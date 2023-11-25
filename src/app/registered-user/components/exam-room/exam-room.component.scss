@@ -75,6 +75,45 @@
     }
   }
 
+  .live-exam-area{
+    width: 100%;
+    height: auto;
+    // border: 1px solid cadetblue;
+    padding: 10px;
+
+    #exam-area{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    .live-area{
+      width: 20%;
+      height: auto;
+      // border: 1px solid yellow;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      padding-top: 30px;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-bottom: 30px;
+      margin: 10px;
+      h6{
+        text-align: center;
+      }
+      p{
+        font-size: 14px;
+        color: #42b4e8;
+        text-align: center;
+      }
+      button{
+        background-color: #42b4e8;
+        color: #fff;
+        width: 100%;
+      }
+    }
+
+  }
+
   @media screen and (max-width: 600px) {
     .invite-area .send-area {
       // border: 1px solid saddlebrown;
@@ -102,7 +141,7 @@
           flex-direction: column;
           button{
             margin-top: 15px;
-            
+
           }
         }
       }

@@ -17,7 +17,7 @@ export class ExamRoomComponent implements OnInit {
   inviteEmail: string = '';
   public privateExam: PrivateExam;
   secretKey = environment.secretKey;
-
+  
   constructor(
     private examRoomService: ExamRoomService,
     private privateExamService: PrivateExamService,
@@ -32,6 +32,8 @@ export class ExamRoomComponent implements OnInit {
       mail,
       this.secretKey
     );
+
+
   }
 
   joinRoom() {
