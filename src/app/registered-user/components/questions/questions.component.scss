@@ -196,14 +196,14 @@
           height: 30px;
           border-radius: 50%;
           color: #000;
-          background-color: var(--qgen-logo-yellow);
+          border: 1px solid orange;
           margin-left: 10px;
           text-align: center;
           padding-top: 5px;
           cursor: pointer;
         }
         .selected {
-          color: #fff;
+          color: blue;
           border: 1px solid orange;
         }
         .wrong-answer{
@@ -335,7 +335,7 @@
         }
         .correct-expansion{
           margin-top: 20px;
-          
+
         }
 
         // .button-controls {
