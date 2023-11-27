@@ -99,9 +99,7 @@ export class SavedComponent {
   getExamDetails(userid: string) {
     this.examService.getExamDetailsByStudentId(userid).subscribe(
       (response: any) => {
-        this.examArray = response.result.filter(
-          (item: any) => item.mode === 'TIMED'
-        );
+        this.examArray = response.result
         console.log(this.examArray);
       },
       (err) => {
@@ -112,7 +110,7 @@ export class SavedComponent {
   getQuestions(row) {
 
     this.examService.getQuestionByExamId(row).subscribe((doc: any) => {
-      
+
       const dataToPass = {
         result: doc.result,
         row: row
