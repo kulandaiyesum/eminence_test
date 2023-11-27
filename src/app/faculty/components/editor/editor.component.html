@@ -25,12 +25,11 @@
       <button
         *ngFor="let question of questions; let i = index"
         (click)="showReviewAlert(question._id, i, question)"
-        [ngClass]="{
-          'edited-button': question.isEdited,
-          'reviewed-button': isReviewed(question)
-        }"
       >
         {{ i + 1 }}
+        <span class="isReviewed" *ngIf="isReviewed(question)">&#x2714;</span>
+        <mat-icon *ngIf="question.isDeleted" class="delete-icon">delete</mat-icon>
+        <mat-icon *ngIf="question.isEdited" class="isEdited">edit</mat-icon>
       </button>
     </div>
     <!-- Question Links section -->
@@ -141,8 +140,12 @@
             </div>
           </div>
         </div>
-        <mat-icon matTooltip="Cancel" *ngIf="isEditMode" (click)="cancelEdit()">close</mat-icon>
-        <mat-icon matTooltip="Save" *ngIf="isEditMode" (click)="saveChange()">save</mat-icon>
+        <mat-icon matTooltip="Cancel" *ngIf="isEditMode" (click)="cancelEdit()"
+          >close</mat-icon
+        >
+        <mat-icon matTooltip="Save" *ngIf="isEditMode" (click)="saveChange()"
+          >save</mat-icon
+        >
       </div>
     </div>
     <!-- Questions section -->

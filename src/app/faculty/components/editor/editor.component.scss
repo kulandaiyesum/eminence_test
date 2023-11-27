@@ -28,7 +28,10 @@
       flex-wrap: wrap;
       gap: 1rem;
       button {
-        background-color: var(--qgen-logo-yellow);
+        background-color: transparent;
+        border: 1px solid #000;
+        color: #000;
+        position: relative;
         &.edited-button {
           background-color: green !important;
           color: #fff !important;
@@ -38,11 +41,18 @@
           color: #000;
         }
         border-radius: 50%;
-        border: none;
         font-weight: 600;
         font-size: 14px;
         width: 30px;
         height: 30px;
+        .isReviewed {
+          position: absolute;
+          top: -0.5rem;
+          left: 60%;
+          transform: rotate(0.05turn);
+          font-weight: 700;
+          color: rgb(22, 175, 13) !important;
+        }
       }
     }
     /* Question Links section */
@@ -146,6 +156,26 @@
 
     /* Questions section*/
   }
+}
+.delete-icon.mat-icon {
+  height: 12px !important;
+  width: 12px !important;
+  font-size: 12px !important;
+  position: absolute;
+  top: 50%;
+  left: 60%;
+  color: red;
+  transform: translateY(-50%);
+}
+.isEdited.mat-icon {
+  height: 12px !important;
+  width: 12px !important;
+  font-size: 12px !important;
+  position: absolute;
+  top: 50%;
+  left: 60%;
+  // color: var(--gold-color);
+  transform: translateY(-50%);
 }
 @media (max-width: 576px) {
   .editor_container {
