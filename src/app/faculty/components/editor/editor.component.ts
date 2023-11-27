@@ -35,6 +35,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     'Inaccuracy in question/answer choices',
     'Inaccuracy in explanation',
     'Question was too easy',
+    'Others'
   ];
   showDiv = false;
   public user;

@@ -26,9 +26,10 @@ section {
         color: #000;
         font-weight: 500;
         width: 30px;
-        border: none;
+        border: 1px solid #000;
         height: 30px;
-        background-color: var(--qgen-logo-yellow);
+        background-color: transparent;
+        position: relative;
       }
     }
     .question_ans {
@@ -180,7 +181,12 @@ section {
 }
 
 .selected-question {
-  background-color: rgb(112, 243, 112) !important;
+  position: absolute;
+  top: -0.5rem;
+  left: 60%;
+  transform: rotate(0.05turn);
+  font-weight: 700;
+  color: rgb(22,175,13) !important;
 }
 .default-question {
   background-color: var(--qgen-logo-yellow) !important;
