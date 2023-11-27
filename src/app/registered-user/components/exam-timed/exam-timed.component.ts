@@ -301,6 +301,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
         this.examArray.push(tempPayloadQuestion);
       }
     }
+    this.selectOption = '';
     if (this.questions.length === this.tempQuestionIndex + 1) return;
     this.navigateQuestionByIndex(this.tempQuestionIndex + 1);
   }
@@ -426,12 +427,13 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     this.savedTimer = this.timer;
     this.savedCalculatedTime = this.calcutatedTime;
     this.examTimedObject.percentage = this.calculateResultInPercentage();
-    console.log('is time out', isTimeOut);
+    // console.log('is time out', isTimeOut);
+    // console.log(this.examArray, this.isAllQuestionsAttend());
     let dialogBoxSettings = {
       width: isTimeOut ? '400px' : '500px',
       margin: '0 auto',
       border: '1px solid #000',
-      data: isTimeOut,
+      data: { isTimeOut, isAllQuestionsAttend: this.isAllQuestionsAttend() },
     };
     const dialogRef = this.dialog.open(
       ExamtimedComfirmationComponent,
@@ -445,7 +447,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
         this.examTimedObject.questions = this.examArray;
         this.examTimedObject.time = this.timeTakenForExam();
         this.examTimedObject.questionsCount = this.questions.length;
-        console.log(this.examTimedObject);
+        // console.log(this.examTimedObject);
         this.examService.examSubmit(this.examTimedObject).subscribe(
           (response: any) => {
             console.log(response);
@@ -539,18 +541,34 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  isDefaultQuestion(questionId: string): boolean {
-    let result = false;
-    const tempObj = this.examArray.find(
-      (payloadObj) => payloadObj.questionId === questionId
-    );
-    if (
-      tempObj &&
-      tempObj.selectedAnswerId == '' &&
-      (tempObj.flag == 'YES' || tempObj.flag == 'NO')
-    ) {
-      result = true;
+  // isDefaultQuestion(questionId: string): boolean {
+  //   let result = false;
+  //   const tempObj = this.examArray.find(
+  //     (payloadObj) => payloadObj.questionId === questionId
+  //   );
+  //   if (
+  //     tempObj &&
+  //     tempObj.selectedAnswerId == '' &&
+  //     (tempObj.flag == 'YES' || tempObj.flag == 'NO')
+  //   ) {
+  //     result = true;
+  //   }
+  //   return result;
+  // }
+
+  isAllQuestionsAttend() {
+    let selectedQuestionLength = 0;
+    this.examArray.forEach((payloadObj) => {
+      if (payloadObj.selectedAnswerId !== '') {
+        selectedQuestionLength++;
+      }
+    });
+    if(this.examArray.length === 0) {
+      return false;
+    }else if (this.questions.length === selectedQuestionLength) {
+      return true;
+    } else {
+      return false;
     }
-    return result;
   }
 }

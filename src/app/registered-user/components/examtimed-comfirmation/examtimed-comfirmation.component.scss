@@ -1,5 +1,8 @@
 .confirm_submission {
   border: 1px solid #000;
+  h6 {
+    line-height: 1.5;
+  }
   .buttons {
     display: flex;
     align-items: center;

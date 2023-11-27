@@ -9,7 +9,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class ExamtimedComfirmationComponent {
   constructor(
     public dialogRef: MatDialogRef<ExamtimedComfirmationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: boolean
+    @Inject(MAT_DIALOG_DATA)
+    public data: { isTimeOut: boolean; isAllQuestionsAttend: boolean }
   ) {
     console.log(data);
   }
