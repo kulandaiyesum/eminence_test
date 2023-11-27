@@ -527,28 +527,30 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
       clearInterval(this.chartIntervalId);
     }
   }
+
+  isQuestionSubmited(questionId: string): boolean {
+    let result = false;
+    const tempObj = this.examArray.find(
+      (payloadObj) => payloadObj.questionId === questionId
+    );
+    if (tempObj && tempObj.selectedAnswerId !== '') {
+      result = true;
+    }
+    return result;
+  }
+
+  isDefaultQuestion(questionId: string): boolean {
+    let result = false;
+    const tempObj = this.examArray.find(
+      (payloadObj) => payloadObj.questionId === questionId
+    );
+    if (
+      tempObj &&
+      tempObj.selectedAnswerId == '' &&
+      (tempObj.flag == 'YES' || tempObj.flag == 'NO')
+    ) {
+      result = true;
+    }
+    return result;
+  }
 }
-
-// following function can be used in future development
-
-// isQuestionSubmited(questionId: string): boolean {
-//   let result = false;
-//   const tempObj = this.examArray.find(
-//     (payloadObj) => payloadObj.questionId === questionId
-//   );
-//   if (tempObj && tempObj.selectedAnswerId !== '') {
-//     result = true;
-//   }
-//   return result;
-// }
-
-// isDefaultQuestion(questionId: string): boolean {
-//   let result = false;
-//   const tempObj = this.examArray.find(
-//     (payloadObj) => payloadObj.questionId === questionId
-//   );
-//   if (tempObj && tempObj.selectedAnswerId == '' && (tempObj.flag == 'YES'||tempObj.flag == 'NO')) {
-//     result = true;
-//   }
-//   return result
-// }

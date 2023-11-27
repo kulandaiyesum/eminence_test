@@ -51,10 +51,9 @@
         *ngFor="let question of questions; let i = index"
         (click)="navigateQuestion(question._id, i)"
       >
-        {{ i + 1
-        }}<span
-          [ngClass]="{ flag_icon: isflaggedQuestion(question._id) }"
-        ></span>
+        {{ i + 1 }}
+        <span class="selected-question" *ngIf="isQuestionSubmited(question._id)">&#x2714;</span>
+        <span [ngClass]="{ flag_icon: isflaggedQuestion(question._id) }"></span>
       </button>
     </div>
     <div class="question_ans mb-lg-5 mb-md-5 mb-3">
@@ -116,7 +115,6 @@
                 placeholder="Type here..."
                 formControlName="replymessage"
                 [(ngModel)]="message.replymessage"
-
               />
               <button mat-button (click)="clickMessage()">send</button>
             </div>
