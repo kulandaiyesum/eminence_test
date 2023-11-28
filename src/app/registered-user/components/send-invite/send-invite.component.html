@@ -28,6 +28,14 @@
       >
         Send
       </button>
+      <button
+        type="submit"
+        [disabled]="inviteForm.invalid"
+        (click)="checkAvailability(inviteForm)"
+        *ngIf="showAvailability"
+      >
+        Check Availability
+      </button>
       <button (click)="generateQusetion()" *ngIf="showGenerateRoom">Generate Room</button>
       <button (click)="createQusetion()" *ngIf="showCreateQuestions">Create questions</button>
       <!-- Display validation message if email is not valid -->

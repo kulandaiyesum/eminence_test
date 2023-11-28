@@ -328,7 +328,7 @@ export class BuildTestComponent {
           const dialogRef = this.dialog.open(SendInviteComponent, {
             width: '600px', // Set the width as needed
             height: 'auto', // Set the height as needed
-            data: this.qbankObject,
+            data: doc.result,
             // You can add other MatDialogConfig options here
           });
           dialogRef.afterClosed().subscribe((result) => {
