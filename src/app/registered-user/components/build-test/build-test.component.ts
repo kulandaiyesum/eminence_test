@@ -60,6 +60,10 @@ export class BuildTestComponent {
   specialCheckboxesChecked: boolean = false;
   currentRouter: string;
 
+  private systemId: string = '';
+  private subsystemId: string = '';
+  private subjectId: string = '';
+
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
   examArray: any[] = [];
 
@@ -90,14 +94,14 @@ export class BuildTestComponent {
     this.qbankForm = this.fb.group(
       {
         _id: [''],
-        subjectId: ['', Validators.required],
-        systemId: ['', Validators.required],
-        subsystemId: ['', Validators.required],
+        subjectId: ['ALL', Validators.required],
+        systemId: ['ALL', Validators.required],
+        subsystemId: ['ALL', Validators.required],
         type0: false,
         type1: false,
         type2: false,
         type3: false,
-        type4: false,
+        // type4: false,
         questionsCount: [
           '',
           [
@@ -159,7 +163,7 @@ export class BuildTestComponent {
       this.qbankForm.get('type0').setValue(false);
       this.qbankForm.get('type2').setValue(false);
       this.qbankForm.get('type3').setValue(false);
-      this.qbankForm.get('type4').setValue(false);
+      // this.qbankForm.get('type4').setValue(false);
     } else if (value === 'all') {
       if (this.selectAllCheckbox) {
         this.qbankForm.get('type1').setValue(true);
@@ -175,19 +179,19 @@ export class BuildTestComponent {
       this.qbankForm.get('type0').setValue(false);
       this.qbankForm.get('type2').setValue(true);
       this.qbankForm.get('type3').setValue(false);
-      this.qbankForm.get('type4').setValue(false);
+      // this.qbankForm.get('type4').setValue(false);
     } else if (value === 'flagged') {
       this.qbankForm.get('type1').setValue(false);
       this.qbankForm.get('type0').setValue(false);
       this.qbankForm.get('type2').setValue(false);
       this.qbankForm.get('type3').setValue(true);
-      this.qbankForm.get('type4').setValue(false);
+      // this.qbankForm.get('type4').setValue(false);
     } else {
       this.qbankForm.get('type1').setValue(false);
       this.qbankForm.get('type0').setValue(false);
       this.qbankForm.get('type2').setValue(false);
       this.qbankForm.get('type3').setValue(false);
-      this.qbankForm.get('type4').setValue(true);
+      // this.qbankForm.get('type4').setValue(true);
     }
   }
 
@@ -224,8 +228,8 @@ export class BuildTestComponent {
       const type1 = control.get('type1').value;
       const type2 = control.get('type2').value;
       const type3 = control.get('type3').value;
-      const type4 = control.get('type4').value;
-      if (!(type0 || type1 || type2 || type3 || type4)) {
+      // const type4 = control.get('type4').value;
+      if (!(type0 || type1 || type2 || type3)) {
         return { atLeastOneType: true };
       }
       return null;
@@ -233,31 +237,35 @@ export class BuildTestComponent {
   }
 
   generateTest() {
+    const temp = this.qbankForm.value;
+    // const typeArray: number[] = [];
+    let type: number;
+    for (let i = 0; i <= 4; i++) {
+      if (temp[`type${i}`]) {
+        // typeArray.push(i);
+        type = i;
+        break;
+      }
+    }
+    this.qbankObject.mode = this.examMode;
+    this.qbankObject.questionsCount = parseInt(temp.questionsCount, 10);
+    this.qbankObject.type = type;
+    this.qbankObject.userId = this.userId;
+    this.qbankObject.status = 'VREVIEWED';
+    this.systemId = temp.systemId;
+    this.subjectId = temp.subjectId;
+    this.subsystemId = temp.subsystemId;
+    if (temp.systemId !== 'ALL') {
+      Object.assign(this.qbankObject, { systemId: this.systemId });
+    }
+    if (temp.subsystemId !== 'ALL') {
+      Object.assign(this.qbankObject, { subsystemId: this.subsystemId });
+    }
+    if (temp.subjectId !== 'ALL') {
+      Object.assign(this.qbankObject, { subjectId: this.subjectId });
+    }
+
     if (this.currentRouter === 'build-test') {
-      const temp = this.qbankForm.value;
-      // const typeArray: number[] = [];
-      let type: number;
-      for (let i = 0; i <= 4; i++) {
-        if (temp[`type${i}`]) {
-          // typeArray.push(i);
-          type = i;
-          break;
-        }
-      }
-      if (temp.systemId === 'ALL') {
-      } else {
-        this.qbankObject.systemId = temp.systemId;
-      }
-      if (temp.subsystemId === 'ALL') {
-      } else {
-        this.qbankObject.subsystemId = temp.subsystemId;
-      }
-      this.qbankObject.mode = this.examMode;
-      this.qbankObject.questionsCount = parseInt(temp.questionsCount, 10);
-      this.qbankObject.subjectId = temp.subjectId;
-      this.qbankObject.type = type;
-      this.qbankObject.userId = this.userId;
-      this.qbankObject.status = 'VREVIEWED';
       this.questionService
         .postQbankRequest(this.qbankObject)
         .subscribe((doc: any) => {
@@ -268,23 +276,17 @@ export class BuildTestComponent {
               timeOut: 3000,
             });
           } else {
-            if (this.qbankForm.value.systemId === 'ALL') {
-            } else {
-              localStorage.setItem('emsm', this.qbankObject.systemId);
+            if (temp.systemId !== 'ALL') {
+              localStorage.setItem('emsm', this.systemId);
             }
-            if (this.qbankForm.value.subsystemId === 'ALL') {
-            } else {
-              localStorage.setItem('emssm', this.qbankObject.subsystemId);
+            if (temp.subsystemId !== 'ALL') {
+              localStorage.setItem('emssm', this.subsystemId);
             }
-            // if (this.qbankObject.systemId != undefined) {
-            //   localStorage.setItem('emsm', this.qbankObject.systemId);
-            // }
-            // if (this.qbankObject.subsystemId != undefined) {
-            //   localStorage.setItem('emssm', this.qbankObject.subsystemId);
-            // }
+            if (temp.subjectId !== 'ALL') {
+              localStorage.setItem('emsbi', this.subjectId);
+            }
             localStorage.setItem('emex-td', JSON.stringify(tempData));
             localStorage.setItem('emm', this.qbankObject.mode);
-            localStorage.setItem('emsbi', this.qbankObject.subjectId);
             if (this.qbankObject.mode === 'TUTOR') {
               this.router.navigate(['/eminence/student/exam']);
             } else {
@@ -293,30 +295,6 @@ export class BuildTestComponent {
           }
         });
     } else {
-      const temp = this.qbankForm.value;
-      // const typeArray: number[] = [];
-      let type: number;
-      for (let i = 0; i <= 4; i++) {
-        if (temp[`type${i}`]) {
-          // typeArray.push(i);
-          type = i;
-          break;
-        }
-      }
-      if (temp.systemId === 'ALL') {
-      } else {
-        this.qbankObject.systemId = temp.systemId;
-      }
-      if (temp.subsystemId === 'ALL') {
-      } else {
-        this.qbankObject.subsystemId = temp.subsystemId;
-      }
-      this.qbankObject.mode = this.examMode;
-      this.qbankObject.questionsCount = parseInt(temp.questionsCount, 10);
-      this.qbankObject.subjectId = temp.subjectId;
-      this.qbankObject.type = type;
-      this.qbankObject.userId = this.userId;
-      this.qbankObject.status = 'VREVIEWED';
       this.questionService.postQbankRequest(this.qbankObject).subscribe(
         (doc: any) => {
           console.log(doc.result);
@@ -324,15 +302,13 @@ export class BuildTestComponent {
             timeOut: 3000,
           });
           const dialogRef = this.dialog.open(SendInviteComponent, {
-            width: '600px', // Set the width as needed
-            height: 'auto', // Set the height as needed
+            width: '600px',
+            height: 'auto',
             data: doc.result,
-            // You can add other MatDialogConfig options here
           });
           dialogRef.afterClosed().subscribe((result) => {
             console.log('Dialog closed with result:');
             this.router.navigate(['/eminence/student/build-test']);
-
           });
         },
         (error) => {
