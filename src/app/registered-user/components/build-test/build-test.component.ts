@@ -1,4 +1,4 @@
-import { ExamDataService } from './../../service/exam-data.service';
+// import { ExamDataService } from './../../service/exam-data.service';
 import {
   Component,
   ElementRef,
@@ -71,7 +71,7 @@ export class BuildTestComponent {
     private systemService: SystemService,
     private subSystemService: SubSystemService,
     private querstionService: QuerstionService,
-    private examDataService: ExamDataService,
+    // private examDataService: ExamDataService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
@@ -282,8 +282,6 @@ export class BuildTestComponent {
             // if (this.qbankObject.subsystemId != undefined) {
             //   localStorage.setItem('emssm', this.qbankObject.subsystemId);
             // }
-
-            // this.examDataService.setExamRoomData(tempData);
             localStorage.setItem('emex-td', JSON.stringify(tempData));
             localStorage.setItem('emm', this.qbankObject.mode);
             localStorage.setItem('emsbi', this.qbankObject.subjectId);

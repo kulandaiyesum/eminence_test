@@ -1,47 +1,49 @@
 <div class="exam-container">
-  <div id="exam-code">
+  <!-- <div id="exam-code">
     <h5 *ngIf="liveExamRoomCode">Private exam room</h5>
     <p *ngIf="liveExamRoomCode">Room code : {{ liveExamRoomCode }}</p>
-  </div>
-  <div class="controls">
-    <div class="button" *ngFor="let item of questions; let i = index">
-      <p
-        (click)="changeQuestions(i)"
-        [ngClass]="{ selected: i === currentQuestionIndex }"
+  </div> -->
+  <div class="controls ps-lg-3">
+    <button
+      class="button ms-2"
+      *ngFor="let item of questions; let i = index"
+      (click)="changeQuestions(i)"
+    >
+      <!-- [ngClass]="{ selected: i === currentQuestionIndex }" -->
+      {{ i + 1 }}
+      <span class="selected-question" *ngIf="isQuestionSubmited(item?._id)"
+        >&#x2714;</span
       >
-        {{ i + 1 }}
-        <span
-          [ngClass]="{ flag_icon: isflaggedQuestion(item?._id) }"
-        ></span>
-      </p>
-    </div>
+      <span [ngClass]="{ flag_icon: isflaggedQuestion(item?._id) }"></span>
+    </button>
   </div>
   <div class="main">
     <div class="questions" #scrollQuestionContainer>
       <div class="questions-main">
-        <h6>Item {{ currentQuestionIndex + 1 }} of {{ totalQuestions }}</h6>
+        <h6>Item {{ currentQuestionIndex + 1 }} of {{ questions.length }}</h6>
         <p>
           {{ indexBasedQuestions?.title }}
         </p>
-        <div
-          class="options"
-          *ngFor="let option of indexBasedQuestions?.options; let i = index"
-        >
-          <mat-checkbox
-            (change)="optionSelected($event, i, option)"
-            [value]="option?.text"
-            (click)="
-              storeList(option, indexBasedQuestions._id, currentQuestionIndex)
-            "
-            [(ngModel)]="option.checked"
+        <ul class="options">
+          <li
+            *ngFor="let option of indexBasedQuestions?.options; let i = index"
           >
-            {{ generateAlphabetChar(i) + ". " + option?.text }}</mat-checkbox
-          ><br />
-        </div>
+            <label class="pointer_cl" for="{{ option._id }}">
+              <!-- (click)="selectOptionIndex(i)" -->
+              <input
+                id="{{ option._id }}"
+                [(ngModel)]="selectOption"
+                type="radio"
+                class="square_radio"
+                [value]="option?._id"
+                (click)="optionSelected(i, option)"
+              />{{ generateAlphabetChar(i) }}. {{ option?.text }}</label
+            >
+          </li>
+        </ul>
       </div>
     </div>
     <div class="explanations" #scrollExplanationContainer>
-      
       <div class="explanations-main" *ngIf="showExplanations">
         <mat-accordion>
           <mat-expansion-panel>
@@ -57,7 +59,7 @@
               <p>You selected wrong answer</p>
             </div>
             <div *ngFor="let option of indexBasedQuestions?.options">
-              <p *ngIf="option.correctAnswer === 'true'">
+              <p *ngIf="option.explanation !== null">
                 <b>Correct Answer : </b> {{ option?.text }}
               </p>
             </div>
@@ -68,9 +70,6 @@
           class="explanation-paragraph"
           *ngFor="let option of indexBasedQuestions?.options"
         >
-          <!-- <p *ngIf="option.correctAnswer === 'true'">
-            <b>Explanation : </b> {{ option?.explanation }}
-          </p> -->
           <mat-accordion>
             <mat-expansion-panel
               *ngIf="
@@ -82,7 +81,7 @@
               <mat-expansion-panel-header>
                 <mat-panel-title> Explanation </mat-panel-title>
               </mat-expansion-panel-header>
-              <p *ngIf="option.correctAnswer === 'true'">
+              <p *ngIf="option.explanation !== null">
                 <b>Explanation : </b> {{ option?.explanation }}
               </p>
             </mat-expansion-panel>
@@ -91,12 +90,15 @@
       </div>
     </div>
     <div class="flag_section">
-      <mat-checkbox
-        class="example-margin"
-        [(ngModel)]="flagChecked"
-        (change)="flagChanges()"
-        >Flag</mat-checkbox
-      >
+      <label for="{{ indexBasedQuestions._id }}">
+        <input
+          id="{{ indexBasedQuestions._id }}"
+          class="form-check-input"
+          type="checkbox"
+          [(ngModel)]="flagChecked"
+          (change)="flagChanges($event)"
+        />Flag
+      </label>
       <div class="exapnsion_div">
         <img
           src="../../../../assets/images/triangle_blue.png"
