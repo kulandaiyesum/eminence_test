@@ -35,7 +35,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     'Inaccuracy in question/answer choices',
     'Inaccuracy in explanation',
     'Question was too easy',
-    'Others'
+    'Others',
   ];
   showDiv = false;
   public user;
@@ -112,14 +112,11 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.questionService.getAllQuestions(data).subscribe((doc: any) => {
       this.questLength = doc.result.questions.length;
       this.questions = doc.result.questions;
-      console.log(this.questions);
       this.title = doc.result.request.keywords[0];
       this.getQuestion(this.questions[0]._id, 0);
       const pendingCount = this.questions.filter(
         (item: any) => item.status === 'Pending'
       ).length;
-      console.log(pendingCount, 'ffffffff');
-
       if (pendingCount === 1) {
         this.shouldShowButton = true;
         const pendingData = this.questions.filter(
@@ -136,13 +133,8 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.nextButtonQuestionId = question_id;
     this.nextButtonQuestionIndex = index;
     this.questionNo = this.tempQuestion.index + 1;
-    console.log(this.questionNo);
     this.questionId = this.tempQuestion.question._id;
     this.currentQuestionStatus = this.tempQuestion.question.status;
-    console.log(this.tempQuestion.question);
-    console.log(' nav butt id ' + question_id);
-    console.log(this.questionId);
-
     if (
       this.currentQuestionStatus === 'FREVIEWED' ||
       this.currentQuestionStatus === 'RREVIEWED' ||
@@ -233,44 +225,60 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   saveChange() {
-    this.isEditMode = false;
-    this.editIconVisibility = true;
-    this.cdr.detectChanges();
+    Swal.fire({
+      title: 'Save Changes',
+      text: 'Are you sure you want to Save ?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Save',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      console.log(result, 'dddddddddd');
+      if (result.isConfirmed === true) {
+        this.isEditMode = false;
+        this.editIconVisibility = true;
+        this.cdr.detectChanges();
 
-    this.tempQuestion.question.options.forEach((option) => {
-      if (option._id === this.selectedAnswer) {
-        option.correctAnswer = 'true';
-        option.explanation = this.selectedOptionExplanation;
+        this.tempQuestion.question.options.forEach((option) => {
+          if (option._id === this.selectedAnswer) {
+            option.correctAnswer = 'true';
+            option.explanation = this.selectedOptionExplanation;
+          } else {
+            option.correctAnswer = 'false';
+            option.explanation = '';
+          }
+        });
+        this.tempQuestion.question.options.forEach((res) => {
+          this.optionsAttributes.push({
+            id: res.coreOptionId,
+            text: res.text,
+            explanation: res.explanation,
+            correct_answer: res.correctAnswer,
+          });
+        });
+        this.tempQuestion.question.title =
+          this.editableDiv.nativeElement.textContent;
+        let data = {
+          selectAnswer: this.selectedAnswer,
+          option: this.selectedOptionExplanation,
+          temp: this.tempQuestion,
+          Option: this.optionsAttributes,
+        };
+        this.questionService
+          .UpdateOption(this.reqId, data)
+          .subscribe((doc: any) => {
+            this.toastr.success(doc.message, '', {
+              timeOut: 3000,
+            });
+            this.getAllQuestions(this.reqId);
+            this.reviewAll();
+          });
       } else {
-        option.correctAnswer = 'false';
-        option.explanation = '';
-      }
-    });
-    this.tempQuestion.question.options.forEach((res) => {
-      this.optionsAttributes.push({
-        id: res.coreOptionId,
-        text: res.text,
-        explanation: res.explanation,
-        correct_answer: res.correctAnswer,
-      });
-    });
-    this.tempQuestion.question.title =
-      this.editableDiv.nativeElement.textContent;
-    let data = {
-      selectAnswer: this.selectedAnswer,
-      option: this.selectedOptionExplanation,
-      temp: this.tempQuestion,
-      Option: this.optionsAttributes,
-    };
-    this.questionService
-      .UpdateOption(this.reqId, data)
-      .subscribe((doc: any) => {
-        this.toastr.success(doc.message, '', {
+        this.toastr.warning('Not Saved', '', {
           timeOut: 3000,
         });
-        this.getAllQuestions(this.reqId);
-        this.reviewAll();
-      });
+      }
+    });
   }
   toggleDivSection() {
     this.showDiv = !this.showDiv;
@@ -309,7 +317,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
   }
   deleteQuestion(reason: string) {
-    console.log(this.tempQuestion.question.coreQuestionId);
+    console.log(this.tempQuestion.question);
 
     const payload = {
       _id: this.tempQuestion.question.coreQuestionId,
@@ -354,9 +362,9 @@ export class EditorComponent implements OnInit, OnDestroy {
         item.status === 'FREVIEWED';
       }
     });
-
-    console.log(allReviewed);
-    const hasPendingStatus = this.questions.some((item:any) => item.status === "Pending");
+    const hasPendingStatus = this.questions.some(
+      (item: any) => item.status === 'Pending'
+    );
     console.log(hasPendingStatus);
     if (!hasPendingStatus) {
       this.isAllQuestions = true;
@@ -367,23 +375,26 @@ export class EditorComponent implements OnInit, OnDestroy {
         title: 'You reviewed all questions',
         icon: 'success',
       }).then((result) => {
-        if (result.isConfirmed) {
+        if (result.isConfirmed === true) {
           // Call the review service to make the HTTP PUT request
-          let data = { reqId: this.reqId, status: this.status };
-          this.qgenService.reviewQuestionSet(data).subscribe(
-            (response) => {
-              console.log(response);
-              if (this.user === 'VETTER') {
-                this.router.navigate(['/eminence/vetter/history']);
-              }else {
-                this.router.navigate(['/eminence/faculty/history']);
-              }
-            },
-            (error) => {
-              // Handle the error response
-              console.error('HTTP PUT request failed', error);
+          let data1 = { reqId: this.reqId, status: this.status };
+          let data = { questions: this.questions };
+          this.qgenService.reviewQuestionSet(data1).subscribe((doc: any) => {
+            if (this.user === 'VETTER') {
+              this.router.navigate(['/eminence/vetter/history']);
+            } else {
+              this.router.navigate(['/eminence/faculty/history']);
             }
-          );
+            this.questionService.coreUpdate(data).subscribe(
+              (response) => {
+                console.log('dfffffffffffffffffff');
+              },
+              (error) => {
+                // Handle the error response
+                console.error('HTTP PUT request failed', error);
+              }
+            );
+          });
         } else {
           this.isAllQuestions = false;
         }

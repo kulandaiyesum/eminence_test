@@ -31,6 +31,9 @@ export class QuerstionService {
    * @returns
    */
   postQbankRequest(qbank: Qbank) {
-    return this.http.put(this.updateQuestionStatus+ 'exams/', qbank);
+    return this.http.put(this.updateQuestionStatus + 'exams/', qbank);
+  }
+  coreUpdate(data) {
+    return this.http.post(this.baseUrl, data);
   }
 }

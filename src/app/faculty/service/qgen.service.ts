@@ -8,9 +8,8 @@ import { Attributes } from 'src/app/master/model/attributes.class';
   providedIn: 'root',
 })
 export class QgenService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   public baseUrl = environment.localdomain + 'requests/';
-
 
   submitQgen(qgen: Qgen) {
     return this.http.post(this.baseUrl, qgen);
@@ -32,7 +31,6 @@ export class QgenService {
   }
 
   reviewQuestionSet(data) {
-
     return this.http.patch(this.baseUrl + data.reqId + '/status', data);
   }
 
