@@ -228,10 +228,15 @@ export class SendInviteComponent {
   }
   generateQusetion() {
     this.idArray = this.data.map((obj) => obj._id);
+    console.log(this.emailArray);
+    const transformedArray = this.emailArray.map(email => ({ email, isActive: false }));
+    console.log(transformedArray);
+
     let data = {
       questionIds: this.idArray,
       roomCode: this.sendCode.otp,
-      emails: this.emailArray,
+      emails: transformedArray,
+      HostEmail: this.userEmail,
     };
     console.log(data);
     this.privateExamService.savePrivateExam(data).subscribe(
