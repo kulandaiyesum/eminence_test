@@ -43,7 +43,7 @@ export class SendInviteComponent {
   showAvailability: boolean = true;
   userEmail: string;
   checkAvailabilityResponse;
-  showGotolanding:boolean=false;
+  showGotolanding: boolean = false;
   constructor(
     private examService: ExamService,
     public dialogRef: MatDialogRef<SendInviteComponent>,
@@ -168,8 +168,7 @@ export class SendInviteComponent {
     this.userService.checkRegisteredUser(emailArrays).subscribe(
       (response: any) => {
         console.log(response);
-        this.showSendEmail = true;
-        this.showAvailability = false;
+
         this.checkAvailabilityResponse = response.result.users;
 
         // if (response.result.users =[]) {
@@ -199,6 +198,8 @@ export class SendInviteComponent {
           this.toastr.success('User available', '', {
             timeOut: 3000,
           });
+          this.showSendEmail = true;
+          this.showAvailability = false;
         }
       },
       (error) => {
@@ -298,8 +299,8 @@ export class SendInviteComponent {
       (doc: any) => {
         console.log(doc.result);
         // this.closeDialog();
-        this.showGenerateRoom=false;
-        this.showGotolanding=true;
+        this.showGenerateRoom = false;
+        this.showGotolanding = true;
         this.toastr.success('Room created successfully !!!', '', {
           timeOut: 3000,
         });
@@ -314,12 +315,16 @@ export class SendInviteComponent {
     );
   }
 
-  goToLanding(){
+  goToLanding() {
     this.closeDialog();
     console.log(this.sendCode.otp);
     console.log(this.userEmail);
     setTimeout(() => {
-      this.router.navigate(['/eminence/student/landing']);
+      this.router.navigate([
+        '/eminence/student/landing',
+        this.sendCode.otp,
+        this.userEmail,
+      ]);
     }, 300);
   }
 }

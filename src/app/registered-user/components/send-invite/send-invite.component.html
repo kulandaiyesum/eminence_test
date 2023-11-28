@@ -7,7 +7,7 @@
   </div> -->
   <div class="code-area">
     <h5>host exam room code</h5>
-    <h2>{{ uniqueCode }}</h2>
+    <h2 *ngIf="showSendEmail">{{ uniqueCode }}</h2>
   </div>
   <div class="invite-area">
     <h6>Send invite to registered users </h6>
