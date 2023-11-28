@@ -51,6 +51,7 @@ import { NotesComponent } from './components/notes/notes.component';
 import { SendInviteComponent } from './components/send-invite/send-invite.component';
 import { InitialsPipe } from './pipes/initials.pipe';
 import { TimeformatPipe } from './pipes/timeformat.pipe';
+import { LandingComponent } from './components/landing/landing.component';
 
 
 @NgModule({
@@ -70,6 +71,7 @@ import { TimeformatPipe } from './pipes/timeformat.pipe';
     SendInviteComponent,
     InitialsPipe,
     TimeformatPipe,
+    LandingComponent,
   ],
   imports: [
     FormsModule,

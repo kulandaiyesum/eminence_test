@@ -38,6 +38,7 @@
       </button>
       <button (click)="generateQusetion()" *ngIf="showGenerateRoom">Generate Room</button>
       <button (click)="createQusetion()" *ngIf="showCreateQuestions">Create questions</button>
+      <button routerLink="/eminence/student/landing" (click)="goToLanding()" *ngIf="showGotolanding">Go to exam</button>
       <!-- Display validation message if email is not valid -->
       <h6 id="comma">Use comma to add more Email</h6>
       <div
