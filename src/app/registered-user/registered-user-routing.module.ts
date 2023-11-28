@@ -9,6 +9,7 @@ import { CalculatorComponent } from './components/calculator/calculator.componen
 import { ExamTimedComponent } from './components/exam-timed/exam-timed.component';
 import { LabValuesComponent } from './components/lab-values/lab-values.component';
 import { NotesComponent } from './components/notes/notes.component';
+import { LandingComponent } from './components/landing/landing.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'build-test', pathMatch: 'full' },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'build-test/hostexam', component: BuildTestComponent },
   { path: 'performance', component: PerformanceComponent },
   { path: 'saved', component: SavedComponent },
+  { path: 'landing', component: LandingComponent },
   { path: 'exam-room', component: ExamRoomComponent },
   { path: 'exam/:id', component: ExamComponent },
   { path: 'exam', component: ExamComponent },

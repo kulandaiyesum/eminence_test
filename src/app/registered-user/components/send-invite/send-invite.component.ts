@@ -8,6 +8,8 @@ import { QuerstionService } from 'src/app/faculty/service/querstion.service';
 import { PrivateExamService } from '../../service/private-exam.service';
 import { environment } from 'src/environments/environment';
 import { LoginService } from 'src/app/login/service/login.service';
+import { UserService } from 'src/app/master/service/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-send-invite',
@@ -39,7 +41,9 @@ export class SendInviteComponent {
   showCreateQuestions: boolean = false;
   showGenerateRoom: boolean = false;
   showAvailability: boolean = true;
-  userEmail:string;
+  userEmail: string;
+  checkAvailabilityResponse;
+  showGotolanding:boolean=false;
   constructor(
     private examService: ExamService,
     public dialogRef: MatDialogRef<SendInviteComponent>,
@@ -47,7 +51,9 @@ export class SendInviteComponent {
     private toastr: ToastrService,
     private questionService: QuerstionService,
     private loginService: LoginService,
-    private privateExamService: PrivateExamService
+    private privateExamService: PrivateExamService,
+    private userService: UserService,
+    private router: Router
   ) {
     console.log(data);
   }
@@ -56,7 +62,7 @@ export class SendInviteComponent {
     this.getRandomCodeForEmail();
     const mail = localStorage.getItem('10');
     this.sendCode.email = this.loginService.decryptText(mail, this.secretKey);
-    this.userEmail= this.loginService.decryptText(mail, this.secretKey);
+    this.userEmail = this.loginService.decryptText(mail, this.secretKey);
     console.log(this.sendCode);
     console.log(this.userEmail);
 
@@ -152,10 +158,56 @@ export class SendInviteComponent {
   }
 
   checkAvailability(form: NgForm) {
-    this.showSendEmail = true;
-    this.showAvailability = false;
-    const emailArray = this.sendCode.email.split(',').map(email => email.trim());
-    const newEmailArray=emailArray.filter(email=>email !==this.userEmail);
+    const emailArray = this.sendCode.email
+      .split(',')
+      .map((email) => email.trim());
+    const newEmailArray = emailArray.filter(
+      (email) => email !== this.userEmail
+    );
+    const emailArrays = { email: newEmailArray };
+    this.userService.checkRegisteredUser(emailArrays).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.showSendEmail = true;
+        this.showAvailability = false;
+        this.checkAvailabilityResponse = response.result.users;
+
+        // if (response.result.users =[]) {
+        //   this.toastr.error('User not available', '', {
+        //     timeOut: 3000,
+        //   });
+        // }else{
+        //   this.toastr.success('User available', '', {
+        //     timeOut: 3000,
+        //   });
+        // }
+
+        const responseEmails = this.checkAvailabilityResponse.map(
+          (item) => item?.email
+        );
+        // Find emails not present in the database
+        const notInDatabaseEmails = newEmailArray.filter(
+          (email) => !responseEmails.includes(email)
+        );
+        console.log(notInDatabaseEmails);
+        this.noActiveMembers = notInDatabaseEmails;
+        if (notInDatabaseEmails.length > 0) {
+          this.toastr.error('User not available', '', {
+            timeOut: 3000,
+          });
+        } else {
+          this.toastr.success('User available', '', {
+            timeOut: 3000,
+          });
+        }
+      },
+      (error) => {
+        console.error('Something went wrong : ', error);
+        this.toastr.error(error.error.message, '', {
+          timeOut: 3000,
+        });
+      }
+    );
   }
 
   sendInvite(form: NgForm): void {
@@ -184,7 +236,7 @@ export class SendInviteComponent {
           const notPresentEmails = emailArrayNew.filter(
             (email) => !responseEmails.includes(email)
           );
-          this.noActiveMembers = notPresentEmails;
+
           this.toastr.success('Email sent succesfully', '', {
             timeOut: 3000,
           });
@@ -229,7 +281,10 @@ export class SendInviteComponent {
   generateQusetion() {
     this.idArray = this.data.map((obj) => obj._id);
     console.log(this.emailArray);
-    const transformedArray = this.emailArray.map(email => ({ email, isActive: false }));
+    const transformedArray = this.emailArray.map((email) => ({
+      email,
+      isActive: false,
+    }));
     console.log(transformedArray);
 
     let data = {
@@ -242,7 +297,9 @@ export class SendInviteComponent {
     this.privateExamService.savePrivateExam(data).subscribe(
       (doc: any) => {
         console.log(doc.result);
-        this.closeDialog();
+        // this.closeDialog();
+        this.showGenerateRoom=false;
+        this.showGotolanding=true;
         this.toastr.success('Room created successfully !!!', '', {
           timeOut: 3000,
         });
@@ -255,5 +312,14 @@ export class SendInviteComponent {
         });
       }
     );
+  }
+
+  goToLanding(){
+    this.closeDialog();
+    console.log(this.sendCode.otp);
+    console.log(this.userEmail);
+    setTimeout(() => {
+      this.router.navigate(['/eminence/student/landing']);
+    }, 300);
   }
 }

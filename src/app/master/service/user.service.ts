@@ -28,4 +28,9 @@ export class UserService {
   getAllVetter(data) {
     return this.http.get(this.userUrl + '/'+data.role);
   }
+
+  checkRegisteredUser(data){
+    return this.http.put(this.userUrl+'/',data);
+  }
+
 }
