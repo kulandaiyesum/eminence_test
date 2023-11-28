@@ -21,6 +21,8 @@ section {
   position: relative;
   .exam_timed_wrap {
     .question_id_link {
+      display: flex;
+      flex-wrap: wrap;
       button {
         border-radius: 50%;
         color: #000;
