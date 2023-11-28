@@ -25,6 +25,8 @@ class examTutorPayload {
   createdBy: string;
   mode: string = 'TUTOR';
   examType: string = 'SINGLE'; // 'SINGLE', 'GROUP'
+  correctQuestions: number = 0;
+  percentage: number = 0;
 }
 @Component({
   selector: 'app-exam',
@@ -254,6 +256,7 @@ export class ExamComponent implements OnInit {
       Object.assign(this.examObject, tempObjTutor);
     }
     this.examObject.questions = this.examArray;
+    this.examObject.percentage = this.calculateResultInPercentage();
     this.examService.examSubmit(this.examObject).subscribe(
       (response: any) => {
         console.log(response);
@@ -316,5 +319,22 @@ export class ExamComponent implements OnInit {
       returnOBj = true;
     }
     return returnOBj;
+  }
+
+  calculateResultInPercentage(): number {
+    let percentage = 0;
+    let correctAnswers = 0;
+    let worngAnswers = 0;
+    const qLength = this.questions.length;
+    this.examArray.forEach((p) => {
+      if (p.isCorrectAnswer === 'YES') {
+        correctAnswers++;
+      } else {
+        worngAnswers++;
+      }
+    });
+    this.examObject.correctQuestions = correctAnswers;
+    percentage = (correctAnswers / qLength) * 100;
+    return parseFloat(percentage.toFixed(2));
   }
 }
