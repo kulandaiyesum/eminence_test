@@ -35,9 +35,11 @@ export class SendInviteComponent {
   };
 
   noActiveMembers: string[] = [];
-  showSendEmail: boolean = true;
+  showSendEmail: boolean = false;
   showCreateQuestions: boolean = false;
   showGenerateRoom: boolean = false;
+  showAvailability: boolean = true;
+  userEmail:string;
   constructor(
     private examService: ExamService,
     public dialogRef: MatDialogRef<SendInviteComponent>,
@@ -46,13 +48,17 @@ export class SendInviteComponent {
     private questionService: QuerstionService,
     private loginService: LoginService,
     private privateExamService: PrivateExamService
-  ) {}
+  ) {
+    console.log(data);
+  }
 
   ngOnInit(): void {
     this.getRandomCodeForEmail();
     const mail = localStorage.getItem('10');
     this.sendCode.email = this.loginService.decryptText(mail, this.secretKey);
+    this.userEmail= this.loginService.decryptText(mail, this.secretKey);
     console.log(this.sendCode);
+    console.log(this.userEmail);
 
     const emailAddresses = [
       'shekm@datapattern.ai',
@@ -145,6 +151,13 @@ export class SendInviteComponent {
     return !!this.sendCode.email; // You can add more validation as needed
   }
 
+  checkAvailability(form: NgForm) {
+    this.showSendEmail = true;
+    this.showAvailability = false;
+    const emailArray = this.sendCode.email.split(',').map(email => email.trim());
+    const newEmailArray=emailArray.filter(email=>email !==this.userEmail);
+  }
+
   sendInvite(form: NgForm): void {
     if (form.valid) {
       console.log(this.sendCode.email);
@@ -175,7 +188,8 @@ export class SendInviteComponent {
           this.toastr.success('Email sent succesfully', '', {
             timeOut: 3000,
           });
-          this.showCreateQuestions = true;
+          this.showCreateQuestions = false;
+          this.showGenerateRoom = true;
           this.showSendEmail = false;
           this.sendCode.email = '';
         },
@@ -213,10 +227,16 @@ export class SendInviteComponent {
     );
   }
   generateQusetion() {
+    this.idArray = this.data.map((obj) => obj._id);
+    console.log(this.emailArray);
+    const transformedArray = this.emailArray.map(email => ({ email, isActive: false }));
+    console.log(transformedArray);
+
     let data = {
       questionIds: this.idArray,
       roomCode: this.sendCode.otp,
-      emails: this.emailArray,
+      emails: transformedArray,
+      HostEmail: this.userEmail,
     };
     console.log(data);
     this.privateExamService.savePrivateExam(data).subscribe(

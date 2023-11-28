@@ -319,39 +319,31 @@ export class BuildTestComponent {
       this.qbankObject.type = type;
       this.qbankObject.userId = this.userId;
       this.qbankObject.status = 'VREVIEWED';
-      const dialogRef = this.dialog.open(SendInviteComponent, {
-        width: '600px', // Set the width as needed
-        height: 'auto', // Set the height as needed
-        data: this.qbankObject,
-        // You can add other MatDialogConfig options here
-      });
-      dialogRef.afterClosed().subscribe((result) => {
-        console.log('Dialog closed with result:');
-        this.router.navigate(['/eminence/student/build-test']);
-        // this.questionService
-        //   .postQbankRequest(this.qbankObject)
-        //   .subscribe((doc: any) => {
-        //     console.log(doc.result);
-        //     const tempData = doc.result;
-        //     if (tempData.length === 0) {
-        //       this.toastr.warning('NO Questions Found !!!', '', {
-        //         timeOut: 3000,
-        //       });
-        //     } else {
-        //       // this.examDataService.setExamRoomData(tempData);
-        //       localStorage.setItem('emex-td', JSON.stringify(tempData));
-        //       localStorage.setItem('emm', this.qbankObject.mode);
-        //       localStorage.setItem('emsm', this.qbankObject.systemId);
-        //       localStorage.setItem('emssm', this.qbankObject.subsystemId);
-        //       localStorage.setItem('emsbi', this.qbankObject.subjectId);
-        //       if (this.qbankObject.mode === 'TUTOR') {
-        //         this.router.navigate(['/eminence/student/exam']);
-        //       } else {
-        //         this.router.navigate(['/eminence/student/exam-timed']);
-        //       }
-        //     }
-        //   });
-      });
+      this.questionService.postQbankRequest(this.qbankObject).subscribe(
+        (doc: any) => {
+          console.log(doc.result);
+          this.toastr.success('Question created successfully !!!', '', {
+            timeOut: 3000,
+          });
+          const dialogRef = this.dialog.open(SendInviteComponent, {
+            width: '600px', // Set the width as needed
+            height: 'auto', // Set the height as needed
+            data: doc.result,
+            // You can add other MatDialogConfig options here
+          });
+          dialogRef.afterClosed().subscribe((result) => {
+            console.log('Dialog closed with result:');
+            this.router.navigate(['/eminence/student/build-test']);
+
+          });
+        },
+        (error) => {
+          console.error('Oops something went', error);
+          this.toastr.error(error.error.message, '', {
+            timeOut: 3000,
+          });
+        }
+      );
     }
   }
 
