@@ -1,5 +1,5 @@
-<div class="build-test-container container" #scrollContainer>
-  <div class="main">
+<div class="build-test-container container-fluid" #scrollContainer>
+  <div class="main container">
     <h3>Eminence QBank</h3>
     <form
       class="qbank mt-5"
@@ -7,21 +7,23 @@
       (ngSubmit)="generateTest()"
     >
       <div class="row row_flex_rev">
-        <div class="qgen col-lg-6" #scrollContainer>
-          <h6>Recommended for you</h6>
-          <p>Needs more practise</p>
-          <mat-chip-listbox aria-label="Fish selection">
-            <mat-chip-option *ngFor="let exam of examArray">{{
-              exam
-            }}</mat-chip-option>
-          </mat-chip-listbox>
-          <p>Haven't seen in a while</p>
-          <mat-chip-listbox aria-label="Fish selection">
-            <mat-chip-option>Anatomy</mat-chip-option>
-            <mat-chip-option>Embroyology</mat-chip-option>
-            <mat-chip-option>Genetics</mat-chip-option>
-            <mat-chip-option>Histology</mat-chip-option>
-          </mat-chip-listbox>
+        <div class="wrap_recommed col-lg-6">
+          <div class="qgen" #scrollContainer>
+            <h6>Recommended for you</h6>
+            <p>Needs more practise</p>
+            <mat-chip-listbox aria-label="Fish selection">
+              <mat-chip-option *ngFor="let exam of examArray">{{
+                exam
+              }}</mat-chip-option>
+            </mat-chip-listbox>
+            <p>Haven't seen in a while</p>
+            <mat-chip-listbox aria-label="Fish selection">
+              <mat-chip-option>Anatomy</mat-chip-option>
+              <mat-chip-option>Embroyology</mat-chip-option>
+              <mat-chip-option>Genetics</mat-chip-option>
+              <mat-chip-option>Histology</mat-chip-option>
+            </mat-chip-listbox>
+          </div>
         </div>
 
         <div class="left_section col-lg-6">
@@ -53,12 +55,12 @@
                 (change)="checkBoxChanges('flagged')"
                 >Flagged</mat-checkbox
               >
-              <mat-checkbox
+              <!-- <mat-checkbox
                 color="primary"
                 formControlName="type4"
                 (change)="checkBoxChanges('qgen')"
                 >QGen</mat-checkbox
-              >
+              > -->
               <!-- <mat-icon *ngIf="specialCheckboxesChecked" (click)="enableCheckbox()">refresh</mat-icon> -->
             </section>
             <mat-error
@@ -68,8 +70,7 @@
                 (qbankForm.get('type0').touched ||
                   qbankForm.get('type1').touched ||
                   qbankForm.get('type2').touched ||
-                  qbankForm.get('type3').touched ||
-                  qbankForm.get('type4').touched)
+                  qbankForm.get('type3').touched)
               "
             >
               Required
@@ -84,6 +85,7 @@
                 placeholder="Choose subject"
                 formControlName="subjectId"
               >
+                <mat-option value="ALL">All</mat-option>
                 <mat-option
                   *ngFor="let subject of subjectList"
                   [value]="subject._id"
