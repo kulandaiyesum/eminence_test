@@ -22,14 +22,17 @@ import Scrollbar from 'smooth-scrollbar';
 import { Message } from '../../model/message';
 import { PrivateExamService } from '../../service/private-exam.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { indexBasedQuestionType } from '../../model/exam.class';
 
 class payloadQuestion {
-  questionId: string;
-  selectedAnswer: string;
-  isCorrectAnswer: string;
+  questionId: string = '';
+  selectedAnswer: string = '';
+  isCorrectAnswer: string = 'NO';
   flag: string = 'NO';
-  time: number;
-  selectedAnswerId: string;
+  time: number = 0;
+  createdBy: string = '';
+  studentId: string = '';
+  selectedAnswerId: string = '';
 }
 @Component({
   selector: 'app-exam-timed',
@@ -53,15 +56,16 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     correctQuestions: 0,
     subjectId: '',
     createdBy: '',
+    examType: 'SINGLE',
   };
-  questions: Question[];
-  selectedQuestion: Question;
+  questions: indexBasedQuestionType[];
+  selectedQuestion: indexBasedQuestionType;
   selectOption = '';
 
   private examArray: payloadQuestion[] = [];
   tempQuestionIndex = 0;
   private tempOption = '';
-  isFlag: boolean;
+  isFlag: boolean = false;
   private timer: number = 0;
   displayTimer: string;
   private IntevelStoper: any;
@@ -194,12 +198,22 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     this.startTimer();
     this.displayTimerUI();
 
+    this.questions.forEach((question: indexBasedQuestionType) => {
+      let tempQuestionObj: payloadQuestion = new payloadQuestion();
+      tempQuestionObj.questionId = question._id;
+      tempQuestionObj.studentId = this.userId;
+      tempQuestionObj.createdBy = this.userFirstName;
+      this.examArray.push(tempQuestionObj);
+    });
     this.liveExamRoomCode = localStorage.getItem('8');
     console.log(this.liveExamRoomCode);
     this.gettingChatData = { roomCode: this.liveExamRoomCode };
-    this.clickMessage();
-    this.getChatmessages();
-    this.startChartInterval();
+    if (this.liveExamRoomCode) {
+      this.examTimedObject.examType = 'GROUP';
+      this.clickMessage();
+      this.getChatmessages();
+      this.startChartInterval();
+    }
   }
 
   // ngAfterViewInit() {
@@ -222,84 +236,44 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
   }
   isFlagged(event: any) {
     if (event.target.id === this.selectedQuestion._id) {
-      const tempObj = this.examArray.find(
-        (question) => question.questionId === this.selectedQuestion._id
-      );
-      if (tempObj !== undefined) {
-        this.examArray.forEach((payloadQuestion) => {
-          if (payloadQuestion.questionId === this.selectedQuestion._id) {
-            if (payloadQuestion.flag === 'YES') {
-              payloadQuestion.flag = 'NO';
-            } else {
-              payloadQuestion.flag = 'YES';
-            }
-          }
-        });
-      } else {
-        let tempPayloadQuestion: payloadQuestion = {
-          questionId: '',
-          selectedAnswer: '',
-          isCorrectAnswer: '',
-          flag: 'NO',
-          time: 0,
-          selectedAnswerId: '',
-        };
-        tempPayloadQuestion.flag = 'YES';
-        tempPayloadQuestion.questionId = this.selectedQuestion._id;
-        this.examArray.push(tempPayloadQuestion);
-      }
+      this.examArray.forEach((payloadQuestion) => {
+        if (payloadQuestion.questionId === this.selectedQuestion._id) {
+          // if (payloadQuestion.flag === 'YES') {
+          //   payloadQuestion.flag = 'NO';
+          // } else {
+          //   payloadQuestion.flag = 'YES';
+          // }
+          payloadQuestion.flag = this.isFlag ? 'YES' : 'NO';
+        }
+      });
     }
   }
   isFlaggedByDefault(selectedQuestionId: string) {
-    if (this.examArray === undefined) {
-      return;
-    }
     const tempObj = this.examArray.find(
       (question) => question.questionId === selectedQuestionId
     );
-    if (tempObj === undefined) {
-      this.isFlag = false;
-    } else {
-      tempObj.flag === 'YES' ? (this.isFlag = true) : (this.isFlag = false);
+    if (tempObj) {
+      this.isFlag = tempObj.flag === 'YES' ? true : false;
       this.selectOption =
         tempObj.selectedAnswerId === '' ? '' : tempObj.selectedAnswerId;
+    } else {
+      this.isFlag = false;
     }
   }
-  gotoNext(selectedQuestion: Question, selectedOptionId: string) {
+  gotoNext(selectedQuestion: indexBasedQuestionType, selectedOptionId: string) {
     if (selectedOptionId !== undefined && selectedOptionId !== '') {
-      const tempObj = this.examArray.find(
-        (question) => question.questionId === selectedQuestion?._id
-      );
       const correctAnswer: QgenOption = selectedQuestion.options.find(
         (item: any) => item.explanation != null
       );
-      if (tempObj !== undefined) {
-        this.examArray.forEach((payloadQuestion) => {
-          if (payloadQuestion.questionId === this.selectedQuestion._id) {
-            payloadQuestion.isCorrectAnswer =
-              correctAnswer._id === selectedOptionId ? 'YES' : 'NO';
-            payloadQuestion.selectedAnswer = this.tempOption;
-            payloadQuestion.selectedAnswerId = selectedOptionId;
-            payloadQuestion.time = this.timer;
-          }
-        });
-      } else {
-        let tempPayloadQuestion: payloadQuestion = {
-          questionId: '',
-          selectedAnswer: '',
-          isCorrectAnswer: '',
-          flag: 'NO',
-          time: 0,
-          selectedAnswerId: '',
-        };
-        tempPayloadQuestion.isCorrectAnswer =
-          correctAnswer._id === selectedOptionId ? 'YES' : 'NO';
-        tempPayloadQuestion.questionId = selectedQuestion?._id;
-        tempPayloadQuestion.selectedAnswer = this.tempOption;
-        tempPayloadQuestion.time = this.timer;
-        tempPayloadQuestion.selectedAnswerId = selectedOptionId;
-        this.examArray.push(tempPayloadQuestion);
-      }
+      this.examArray.forEach((payloadQuestion) => {
+        if (payloadQuestion.questionId === this.selectedQuestion._id) {
+          payloadQuestion.isCorrectAnswer =
+            correctAnswer._id === selectedOptionId ? 'YES' : 'NO';
+          payloadQuestion.selectedAnswer = this.tempOption;
+          payloadQuestion.selectedAnswerId = selectedOptionId;
+          payloadQuestion.time = this.timer;
+        }
+      });
     }
     this.selectOption = '';
     if (this.questions.length === this.tempQuestionIndex + 1) return;
@@ -541,21 +515,6 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     return result;
   }
 
-  // isDefaultQuestion(questionId: string): boolean {
-  //   let result = false;
-  //   const tempObj = this.examArray.find(
-  //     (payloadObj) => payloadObj.questionId === questionId
-  //   );
-  //   if (
-  //     tempObj &&
-  //     tempObj.selectedAnswerId == '' &&
-  //     (tempObj.flag == 'YES' || tempObj.flag == 'NO')
-  //   ) {
-  //     result = true;
-  //   }
-  //   return result;
-  // }
-
   isAllQuestionsAttend() {
     let selectedQuestionLength = 0;
     this.examArray.forEach((payloadObj) => {
@@ -563,9 +522,9 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
         selectedQuestionLength++;
       }
     });
-    if(this.examArray.length === 0) {
+    if (this.examArray.length === 0) {
       return false;
-    }else if (this.questions.length === selectedQuestionLength) {
+    } else if (this.questions.length === selectedQuestionLength) {
       return true;
     } else {
       return false;
