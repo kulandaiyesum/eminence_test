@@ -46,7 +46,9 @@ export class SendInviteComponent {
     private questionService: QuerstionService,
     private loginService: LoginService,
     private privateExamService: PrivateExamService
-  ) {}
+  ) {
+    console.log(data);
+  }
 
   ngOnInit(): void {
     this.getRandomCodeForEmail();
