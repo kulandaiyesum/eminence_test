@@ -1,4 +1,3 @@
-import { ExamDataService } from './../../service/exam-data.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Question } from 'src/app/faculty/model/question';
@@ -7,7 +6,11 @@ import Scrollbar from 'smooth-scrollbar';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material/icon';
 import Swal from 'sweetalert2';
-import { Exam } from '../../model/exam.class';
+import {
+  Exam,
+  ExamTutorOption,
+  indexBasedQuestionType,
+} from '../../model/exam.class';
 import { RsaService } from 'src/app/shared/service/rsa.service';
 import { environment } from 'src/environments/environment';
 import { ExamService } from '../../service/exam.service';
@@ -16,266 +19,119 @@ import { CalculatorComponent } from '../calculator/calculator.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NotesComponent } from '../notes/notes.component';
 
-class payloadQuestion {
-  questionId: string;
-  selectedAnswer: string;
-  isCorrectAnswer: string;
-  flag: string = 'NO';
-  time: number;
-  selectedAnswerId: string;
+class examTutorPayload {
+  studentId: string;
+  questions: Exam[];
+  createdBy: string;
+  mode: string = 'TUTOR';
+  examType: string = 'SINGLE'; // 'SINGLE', 'GROUP'
 }
-
 @Component({
   selector: 'app-exam',
   templateUrl: './exam.component.html',
   styleUrls: ['./exam.component.scss'],
 })
 export class ExamComponent implements OnInit {
-  tutorId: string;
-  value;
   public questLength: number;
-  public answerList: any[] = [];
-
-  examInstance: Exam = new Exam();
   @ViewChild('scrollExplanationContainer')
   scrollExplanationContainer: ElementRef;
   @ViewChild('scrollQuestionContainer') scrollQuestionContainer: ElementRef;
-  public indexBasedQuestions;
+  public indexBasedQuestions: indexBasedQuestionType;
   public showExplanations: boolean = false;
-  public currentQuestionIndex: number = 0;
-  public maximumQuestionLength: number = 0;
+  public currentQuestionIndex: number = 0; //
   public correctNews: boolean;
   public incorrectNews: boolean;
-  public answerId;
-  selectedOption: number | null = null;
+  selectedOption: ExamTutorOption; // option object
   secretKey: string = environment.secretKey;
   userId: string = '';
   userFirstName: string = '';
-  examArray: any[] = [];
+  examArray: Exam[] = [];
   toDisplayEnd: number;
   flagChecked: boolean = false;
-  checkboxStates: boolean[] = [];
-  bindingData: any;
-  checked = false;
   calculatorPopupVisible = false;
-  totalQuestions: number;
-  questions: Question[];
-  selectedQuestion: Question;
-  selectOption = '';
-  setHeight: boolean = false;
+  questions: indexBasedQuestionType[];
+  selectOption = ''; // this for chosing options
+  setHeight: boolean = false; // this for option(lab, calculator and notes)
+  isQuestionsFromQgen: boolean = false;
+  public examObject: examTutorPayload;
 
-  public examObject: {
-    studentId: string;
-    questions: any[]; // You can use a specific type for 'question' if needed
-    createdAt: string;
-    createdBy: string;
-    mode: string;
-    systemId?: string;
-    subSystemId?: string;
-    subjectId: string;
-    flag: string;
-    from: string;
-    requestid: string;
-  } = {
-    studentId: '',
-    questions: [],
-    createdAt: '',
-    createdBy: '',
-    flag: '',
-    mode: '',
-    // systemId: '6541e129ea77c02cb3962f75',
-    // subSystemId: '6541e144ea77c02cb3962f7b',
-    subjectId: '',
-    from: '',
-    requestid: '',
-  };
-  public optionInstance: {
-    questionId: string;
-    selectedAnswer: string;
-    isCorrectAnswer: string;
-    flag: string;
-  } = {
-    flag: '',
-    questionId: '',
-    selectedAnswer: '',
-    isCorrectAnswer: '',
-  };
-
-  flaggedQuestionsList: any[] = [];
-  public currentQuestionID: string;
-
-  public liveExamRoomCode;
-
-  chatMessages = [
-    {
-      userName: 'Emily',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'John',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'Joe',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'sri',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'honey',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'swathi',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'dhara',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'tamil',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'jawahar',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'veera',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'shek',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    // Add more messages as needed
-  ];
-
-  @ViewChild('scrollContainerss') scrollContainerss: ElementRef;
-
+  private requestid: string;
   constructor(
     private route: ActivatedRoute,
-    private questionService: QuerstionService,
-    private examDataService: ExamDataService,
-    private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer,
     private rsaService: RsaService,
     private examService: ExamService,
     private router: Router,
     private dialog: MatDialog
-  ) {
-    this.matIconRegistry.addSvgIcon(
-      'custom-icon',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/images/lab.svg')
-    );
-  }
+  ) {}
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.tutorId = params['id']; // Retrieve the tutor ID from the route parameters
-      // Use this.tutorId as needed in your TutorComponent
-      console.log(this.tutorId);
+      this.requestid = params['id'];
     });
-    this.examObject.requestid = this.tutorId;
-    if (this.tutorId) {
-      this.getAllQuestions(this.tutorId);
-    } else {
-      this.questions = JSON.parse(localStorage.getItem('emex-td'));
-      // this.questions = this.examDataService.getExamRoomData();
-      this.questLength = this.questions.length;
-      this.totalQuestions = this.questions.length;
-      this.getQuestionsIndexBased(0);
-    }
+    this.examObject = new examTutorPayload();
+    this.questions = JSON.parse(localStorage.getItem('emex-td'));
+    this.questLength = this.questions.length;
     this.userId = this.rsaService.decryptText(
       localStorage.getItem('5'),
       this.secretKey
     );
-    console.log(this.userId);
-    this.examInstance.studentId = this.userId;
-    this.examObject.studentId = this.userId;
     this.userFirstName = this.rsaService.decryptText(
       localStorage.getItem('3'),
       this.secretKey
     );
-    console.log(this.userFirstName);
-    this.examInstance.createdBy = this.userFirstName;
+    this.examObject.studentId = this.userId;
     this.examObject.createdBy = this.userFirstName;
-    this.examInstance.flag = 'NO';
-    this.optionInstance.flag = 'NO';
-    this.liveExamRoomCode = localStorage.getItem('8');
-    console.log(this.liveExamRoomCode);
+    this.questions.forEach((question: indexBasedQuestionType) => {
+      let tempQuestionObj: Exam = new Exam();
+      tempQuestionObj.questionId = question._id;
+      tempQuestionObj.studentId = this.userId;
+      tempQuestionObj.createdBy = this.userFirstName;
+      this.examArray.push(tempQuestionObj);
+    });
+    this.getQuestionsIndexBased(0);
   }
 
   ngAfterViewInit() {
     const scrollbars = Scrollbar.init(
       this.scrollExplanationContainer.nativeElement,
-      {
-        // Smooth Scrollbar options go here
-      }
+      {}
     );
     const scrollbar = Scrollbar.init(
       this.scrollQuestionContainer.nativeElement,
-      {
-        // Smooth Scrollbar options go here
-      }
+      {}
     );
-    const scrollbarss = Scrollbar.init(
-      this.scrollContainerss.nativeElement,
-      {
-        // Smooth Scrollbar options go here
-      }
-    );
-  }
-
-  getAllQuestions(reqId?: string) {
-    let data = { reqId };
-    this.questionService.getAllQuestions(data).subscribe((doc: any) => {
-      this.questLength = doc.result.questions.length;
-      this.questions = doc.result.questions;
-      console.log(this.questions);
-      console.log(this.questions.length);
-      this.totalQuestions = this.questions.length;
-      this.maximumQuestionLength = this.questions.length - 1;
-      this.getQuestionsIndexBased(this.currentQuestionIndex);
-      this.checkboxStates = new Array(this.questions.length + 1).fill(false);
-    });
   }
 
   getQuestionsIndexBased(index: number) {
     this.indexBasedQuestions = this.questions[index];
-    console.log(this.indexBasedQuestions);
     if (this.indexBasedQuestions.status === 'Pending') {
-      this.examObject.from = 'qgen';
+      this.isQuestionsFromQgen = true;
     }
     this.showExplanations = false;
     this.incorrectNews = false;
     this.correctNews = false;
     this.flagChecked = false;
-    let data;
-    let data1 = [];
-    console.log(this.bindingData);
-    this.bindingData = this.answerList.find((x) => x.i === index);
-    this.value = this.bindingData?.text;
-    this.currentQuestionID = this.indexBasedQuestions._id;
+    this.isFlaggedByDefault(this.indexBasedQuestions._id);
+  }
 
-    if (this.flaggedQuestionsList.includes(this.currentQuestionID)) {
-      this.flagChecked = true;
+  isFlaggedByDefault(questionId: string) {
+    const tempPayloadObj = this.examArray.find(
+      (p) => p.questionId === questionId
+    );
+    if (tempPayloadObj) {
+      this.flagChecked = tempPayloadObj.flag === 'YES' ? true : false;
+      this.selectOption =
+        tempPayloadObj.selectedAnswerId === ''
+          ? ''
+          : tempPayloadObj.selectedAnswerId;
+    } else {
+      this.flagChecked = false;
     }
   }
 
+  /**
+   * Function to change question by clicking the buttons(1,2,3,...)
+   * @param i (index)
+   */
   changeQuestions(i: number) {
     this.currentQuestionIndex = i;
     this.getQuestionsIndexBased(i);
@@ -287,41 +143,15 @@ export class ExamComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {});
   }
 
-  optionSelected(event: any, i, selectedOption) {
-    const option = this.indexBasedQuestions.options[i];
-    option.checked = event.checked;
-    this.indexBasedQuestions.options.forEach((option, index) => {
-      if (index !== i) {
-        option.checked = false;
-      }
-    });
-    const correctOptions = this.indexBasedQuestions.options.filter(
-      (item: any) => item.explanation != null
+  optionSelected(i: number, selectedOption: ExamTutorOption) {
+    const correctOption = this.indexBasedQuestions.options.find(
+      (option) => option.explanation !== null
     );
-    this.examInstance.questionId = this.indexBasedQuestions._id;
-    // this.answerId = this.indexBasedQuestions.option._id;
-    this.optionInstance.questionId = this.indexBasedQuestions._id;
-    this.examArray = this.examArray.filter(
-      (item: any) => item.questionId !== this.optionInstance.questionId
-    );
-    const selectOptionsIndex = this.indexBasedQuestions.options.findIndex(
-      (item) => item.text === selectedOption?.text
-    );
-
-    const selectedOptions = this.generateAlphabetChar(selectOptionsIndex);
-    console.log('Selected options is : ' + selectedOptions);
-    this.examInstance.selectedAnswer = selectedOptions;
-    this.optionInstance.selectedAnswer = selectedOptions;
-    console.log(correctOptions);
-    this.value = correctOptions[0].text;
-
-    if (correctOptions[0].text === selectedOption?.text) {
-      console.log('Selected answer is correct ');
+    const selectedOptionIndex: string = this.generateAlphabetChar(i);
+    if (correctOption._id === selectedOption._id) {
       this.showExplanations = true;
       this.correctNews = true;
       this.incorrectNews = false;
-      this.examInstance.isCorrectAnswer = 'YES';
-      this.optionInstance.isCorrectAnswer = 'YES';
       Swal.fire({
         title: 'Your answer is correct!',
         width: '500px',
@@ -329,10 +159,14 @@ export class ExamComponent implements OnInit {
         showConfirmButton: true,
         confirmButtonText: 'OK',
       });
+      this.examArray.forEach((payloadObj) => {
+        if (payloadObj.questionId === this.indexBasedQuestions._id) {
+          payloadObj.isCorrectAnswer = 'YES';
+          payloadObj.selectedAnswer = selectedOptionIndex;
+          payloadObj.selectedAnswerId = selectedOption._id;
+        }
+      });
     } else {
-      console.log('Selected answer is incorrect XXX');
-      this.examInstance.isCorrectAnswer = 'NO';
-      this.optionInstance.isCorrectAnswer = 'NO';
       Swal.fire({
         title: 'You selected the wrong answer',
         width: '500px',
@@ -344,11 +178,15 @@ export class ExamComponent implements OnInit {
           this.incorrectNews = true;
           this.correctNews = false;
         }
+        this.examArray.forEach((payloadObj) => {
+          if (payloadObj.questionId === this.indexBasedQuestions._id) {
+            payloadObj.isCorrectAnswer = 'NO';
+            payloadObj.selectedAnswer = selectedOptionIndex;
+            payloadObj.selectedAnswerId = selectedOption._id;
+          }
+        });
       });
     }
-
-    this.examArray.push({ ...this.optionInstance });
-    console.log(this.examArray);
   }
 
   generateAlphabetChar(index: number): string {
@@ -356,8 +194,6 @@ export class ExamComponent implements OnInit {
   }
 
   previous() {
-    console.log(this.currentQuestionIndex);
-
     this.currentQuestionIndex = this.currentQuestionIndex - 1;
     this.getQuestionsIndexBased(this.currentQuestionIndex);
   }
@@ -367,55 +203,24 @@ export class ExamComponent implements OnInit {
     this.getQuestionsIndexBased(this.currentQuestionIndex);
   }
 
-  flagChanges() {
-    this.optionInstance.questionId = this.indexBasedQuestions._id;
-    console.log(this.flagChecked);
-    if (this.flagChecked == true) {
-      this.examInstance.flag = 'YES';
-      this.examObject.flag = 'YES';
-      this.optionInstance.flag = 'YES';
-      this.optionInstance.isCorrectAnswer = '';
-      this.optionInstance.selectedAnswer = '';
-      this.flaggedQuestionsList.push(this.currentQuestionID);
-      console.log(this.flaggedQuestionsList);
-    } else {
-      this.examInstance.flag = 'NO';
-      this.examObject.flag = 'NO';
-      this.optionInstance.flag = 'NO';
-      this.flaggedQuestionsList = this.flaggedQuestionsList.filter(
-        (item) => item !== this.currentQuestionID
-      );
-      console.log(this.flaggedQuestionsList);
+  flagChanges(event: any) {
+    if (event.target.id === this.indexBasedQuestions._id) {
+      this.examArray.forEach((payloadObj) => {
+        if (payloadObj.questionId === event.target.id) {
+          payloadObj.flag = this.flagChecked ? 'YES' : 'NO';
+        }
+      });
     }
-
-    // if (this.examInstance.flag == 'YES') {
-    //   this.examInstance.flag = 'NO';
-    //   this.examObject.flag = 'NO';
-    //   this.optionInstance.flag = 'NO';
-    // } else {
-    //   this.examInstance.flag = 'YES';
-    //   this.examObject.flag = 'YES';
-    //   this.optionInstance.flag = 'YES';
-    // }
-    setTimeout(() => {
-      if (this.questLength !== this.currentQuestionIndex + 1) {
-        this.next();
-      }
-      this.examArray.push({ ...this.optionInstance });
-      console.log(this.examArray);
-      this.optionInstance.flag = 'NO';
-    }, 500);
   }
-
-  addObjectToExamArray(data: any) {
-    console.log(this.examArray);
-    this.examArray.push(data);
-    console.log(this.examArray);
-  }
-
   showEndExamConfirmation() {
+    const notAnsweresQuestionLength = this.examArray.filter(
+      (p) => p.selectedAnswerId === ''
+    ).length;
     Swal.fire({
-      title: 'Are you sure want to end this exam?',
+      title:
+        notAnsweresQuestionLength !== 0
+          ? 'Not all questions have been answered. Do you want to finish the exam?'
+          : 'Are you sure want to end this exam?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -429,25 +234,26 @@ export class ExamComponent implements OnInit {
   }
 
   submitExam() {
+    // systemId?: string;
+    // subSystemId?: string;
+    // subjectId?: string;
+    // from?: string; // checking where there the questions generated form qgen or qbank. if its qbank dont send field to server. if its from qgen send form = 'qgen'
+    // requestid: string;
+    if (this.isQuestionsFromQgen) {
+      const tempObjQgen = {
+        from: 'qgen',
+        requestid: this.requestid,
+      };
+      Object.assign(this.examObject, tempObjQgen);
+    } else {
+      const tempObjTutor = {
+        systemId: localStorage.getItem('emsm'),
+        subSystemId: localStorage.getItem('emssm'),
+        subjectId: localStorage.getItem('emsbi'),
+      };
+      Object.assign(this.examObject, tempObjTutor);
+    }
     this.examObject.questions = this.examArray;
-    this.examObject.mode = 'TUTOR'; //mode
-    // this.examObject.from = 'qgen'; //mode
-    let data1 = localStorage.getItem('emsm');
-    let data2 = localStorage.getItem('emssm');
-    console.log(data1 === undefined);
-
-    if (data1 === null) {
-    } else {
-      this.examObject.systemId = localStorage.getItem('emsm'); //systemId
-    }
-    if (data2 === null) {
-    } else {
-      this.examObject.subSystemId = localStorage.getItem('emssm');
-    }
-
-    // this.examObject.systemId = localStorage.getItem('emsm'); //systemId
-    // this.examObject.subSystemId = localStorage.getItem('emssm'); //subsystemId
-    this.examObject.subjectId = localStorage.getItem('emsbi'); //subjectId
     this.examService.examSubmit(this.examObject).subscribe(
       (response: any) => {
         console.log(response);
@@ -464,23 +270,6 @@ export class ExamComponent implements OnInit {
         console.error('An error occurred:', error);
       }
     );
-  }
-  storeList(event, qnsId, i) {
-    console.log(event);
-
-    var existValue = this.answerList.find((s) => s.id == qnsId);
-    if (existValue != null) {
-      existValue.ans = event._id;
-    } else {
-      this.answerList.push({
-        i: i,
-        id: qnsId,
-        ans: event._id,
-        txt: event.text,
-      });
-    }
-    // this.answerList.findIndex((val: any, index: number) => i == index);
-    console.log(this.answerList);
   }
   openCalculatorPopup() {
     const dialogRef = this.dialog.open(CalculatorComponent, {
@@ -500,6 +289,17 @@ export class ExamComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The notepad dialog was closed');
     });
+  }
+
+  isQuestionSubmited(questionId: string): boolean {
+    let result = false;
+    const tempObj = this.examArray.find(
+      (payloadObj) => payloadObj.questionId === questionId
+    );
+    if (tempObj && tempObj.selectedAnswerId !== '') {
+      result = true;
+    }
+    return result;
   }
 
   /**
