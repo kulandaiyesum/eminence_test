@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'performance', component: PerformanceComponent },
   { path: 'saved', component: SavedComponent },
   { path: 'landing', component: LandingComponent },
-  { path: 'landing/:otp/:email', component: LandingComponent },
+  { path: 'landing/:otp', component: LandingComponent },
   { path: 'exam-room', component: ExamRoomComponent },
   { path: 'exam/:id', component: ExamComponent },
   { path: 'exam', component: ExamComponent },

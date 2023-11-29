@@ -323,7 +323,7 @@ export class SendInviteComponent {
       this.router.navigate([
         '/eminence/student/landing',
         this.sendCode.otp,
-        this.userEmail,
+        
       ]);
     }, 300);
   }

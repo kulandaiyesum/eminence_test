@@ -12,4 +12,8 @@ export class ExamRoomService {
   joinExam(jionLink: string) {
     return this.http.post(this.baseUrl, { jionLink });
   }
+
+  getLandingPage(data){
+    return this.http.put(this.baseUrl+'privateExams/users',data);
+  }
 }

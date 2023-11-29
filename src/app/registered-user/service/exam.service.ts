@@ -9,6 +9,7 @@ import { Sendcode } from '../model/sendcode.class';
 export class ExamService {
   public baseUrl = environment.localdomain + 'exams/';
 
+
   constructor(private http: HttpClient) {}
 
   examSubmit(data) {
@@ -44,6 +45,9 @@ export class ExamService {
     return this.http.post(this.baseUrl,sendCodeObject);
   }
 
+
   
+
+
 
 }
