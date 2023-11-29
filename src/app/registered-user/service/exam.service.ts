@@ -9,7 +9,6 @@ import { Sendcode } from '../model/sendcode.class';
 export class ExamService {
   public baseUrl = environment.localdomain + 'exams/';
 
-
   constructor(private http: HttpClient) {}
 
   examSubmit(data) {
@@ -37,17 +36,14 @@ export class ExamService {
     return `A${randomCode}`;
   }
 
-  getRandomCode(){
-    return this.http.get(this.baseUrl)
+  getRandomCode() {
+    return this.http.get(this.baseUrl);
   }
 
-  sendExamCode(sendCodeObject:Sendcode){
-    return this.http.post(this.baseUrl,sendCodeObject);
+  sendExamCode(sendCodeObject: Sendcode) {
+    return this.http.post(this.baseUrl, sendCodeObject);
   }
-
-
-  
-
-
-
+  getQuestionsByTopic() {
+    return this.http.get(this.baseUrl + 'questions');
+  }
 }

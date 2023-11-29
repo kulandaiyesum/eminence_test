@@ -10,6 +10,7 @@ import { ExamTimedComponent } from './components/exam-timed/exam-timed.component
 import { LabValuesComponent } from './components/lab-values/lab-values.component';
 import { NotesComponent } from './components/notes/notes.component';
 import { LandingComponent } from './components/landing/landing.component';
+import { LiveExamroomComponent } from './components/live-examroom/live-examroom.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'build-test', pathMatch: 'full' },
@@ -26,6 +27,7 @@ const routes: Routes = [
   { path: 'exam-timed', component: ExamTimedComponent },
   { path: 'lab', component: LabValuesComponent },
   { path: 'notes', component: NotesComponent },
+  { path: 'live-room', component: LiveExamroomComponent },
 ];
 
 @NgModule({

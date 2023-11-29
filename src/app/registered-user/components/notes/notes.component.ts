@@ -11,24 +11,25 @@ export class NotesComponent {
   textareaContent: string = '';
   constructor(
     public dialogRef: MatDialogRef<NotesComponent>,
-    private examdataService:ExamDataService
-    ) {}
+    private examdataService: ExamDataService
+  ) {}
 
-    ngOnInit(): void {
-      // Retrieve the text content when the component initializes
-      this.restoreTextContent();
-    }
+  ngOnInit(): void {
+    // Retrieve the text content when the component initializes
+    this.restoreTextContent();
+  }
 
   closeDialog() {
     this.dialogRef.close();
   }
 
-   restoreTextContent(): void {
+  restoreTextContent(): void {
     const savedContent = this.examdataService.getTextContent();
     this.textareaContent = savedContent;
   }
 
-   saveTextContent(): void {
+  saveTextContent(): void {
     this.examdataService.setTextContent(this.textareaContent);
+    this.closeDialog();
   }
 }

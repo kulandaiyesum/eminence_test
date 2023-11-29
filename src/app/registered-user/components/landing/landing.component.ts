@@ -24,7 +24,7 @@ export class LandingComponent {
 
   getLandingPageDetails() {
     let data = {
-      otp: this.roomCode,
+      roomCode: this.roomCode,
     };
     console.log(data);
 

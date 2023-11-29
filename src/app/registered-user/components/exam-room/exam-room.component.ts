@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ExamRoomService } from '../../service/exam-room.service';
 import { ToastrService } from 'ngx-toastr';
 import { PrivateExamService } from '../../service/private-exam.service';
 import { PrivateExam } from '../../model/privateExam';
 import { environment } from 'src/environments/environment';
 import { LoginService } from 'src/app/login/service/login.service';
 import { Router } from '@angular/router';
+import { ExamService } from '../../service/exam.service';
 
 @Component({
   selector: 'app-exam-room',
@@ -19,7 +19,7 @@ export class ExamRoomComponent implements OnInit {
   secretKey = environment.secretKey;
 
   constructor(
-    private examRoomService: ExamRoomService,
+    private examService: ExamService,
     private privateExamService: PrivateExamService,
     private loginService: LoginService,
     private toastr: ToastrService,
@@ -33,7 +33,14 @@ export class ExamRoomComponent implements OnInit {
       this.secretKey
     );
   }
-
+  liveExamRoom() {
+    this.examService.getQuestionsByTopic().subscribe((doc: any) => {
+      console.log(doc);
+      const tempData = doc.result;
+      localStorage.setItem('emex-td', JSON.stringify(tempData));
+      this.router.navigate(['/eminence/student/exam-timed']);
+    });
+  }
   joinRoom() {
     if (!this.joinLink) {
       console.log('Enter something.');

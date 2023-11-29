@@ -52,6 +52,7 @@ import { SendInviteComponent } from './components/send-invite/send-invite.compon
 import { InitialsPipe } from './pipes/initials.pipe';
 import { TimeformatPipe } from './pipes/timeformat.pipe';
 import { LandingComponent } from './components/landing/landing.component';
+import { LiveExamroomComponent } from './components/live-examroom/live-examroom.component';
 
 
 @NgModule({
@@ -72,6 +73,7 @@ import { LandingComponent } from './components/landing/landing.component';
     InitialsPipe,
     TimeformatPipe,
     LandingComponent,
+    LiveExamroomComponent,
   ],
   imports: [
     FormsModule,
