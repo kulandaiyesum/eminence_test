@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ExamRoomService } from '../../service/exam-room.service';
+import { PrivateExamService } from '../../service/private-exam.service';
 
 @Component({
   selector: 'app-landing',
@@ -11,28 +11,27 @@ export class LandingComponent {
   roomCode: string;
   constructor(
     private route: ActivatedRoute,
-    private examroomService: ExamRoomService
+    private privateExamRoomService: PrivateExamService
   ) {}
 
   ngOnInit() {
     this.route.params.subscribe((params) => {
       const otp = params['otp'];
-
-      console.log(otp);
       this.roomCode = otp;
-      
+
       // Now you can use otp and email in your component
       this.getLandingPageDetails();
     });
   }
 
   getLandingPageDetails() {
-    let data={
-      otp:this.roomCode
-    }
-    this.examroomService.getLandingPage(data).subscribe(
-      (response) => {
-        console.log(response);
+    let data = {
+      otp: this.roomCode,
+    };
+    this.privateExamRoomService.getLandingPage(data).subscribe(
+      (response: any) => {
+        this.roomCode = response.getUser.roomCode;
+        console.log(response.activeUse);
       },
       (error) => {
         console.error('Error fetching random code:', error);

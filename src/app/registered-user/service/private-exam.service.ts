@@ -24,4 +24,7 @@ export class PrivateExamService {
   getByRoomCode(data) {
     return this.http.put(this.baseUrl + '/chats', data);
   }
+  getLandingPage(data) {
+    return this.http.put(this.baseUrl + '/users', data);
+  }
 }

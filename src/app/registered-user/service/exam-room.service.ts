@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +11,5 @@ export class ExamRoomService {
 
   joinExam(jionLink: string) {
     return this.http.post(this.baseUrl, { jionLink });
-  }
-
-  getLandingPage(data){
-    return this.http.put(this.baseUrl+'privateExams/users',data);
   }
 }
