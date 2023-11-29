@@ -22,6 +22,7 @@ export class SendInviteComponent {
   public questionCount = [];
   public emailArray = [];
   public idArray;
+  public role;
   secretKey = environment.secretKey;
   public sendCode: Sendcode = {
     otp: '',
@@ -63,10 +64,10 @@ export class SendInviteComponent {
   ngOnInit(): void {
     this.getRandomCodeForEmail();
     const mail = localStorage.getItem('10');
+    const role = localStorage.getItem('2');
     this.sendCode.email = this.loginService.decryptText(mail, this.secretKey);
     this.userEmail = this.loginService.decryptText(mail, this.secretKey);
-    console.log(this.sendCode);
-    console.log(this.userEmail);
+    this.role = this.loginService.decryptText(role, this.secretKey);
 
     const emailAddresses = [
       'shekm@datapattern.ai',
@@ -295,7 +296,7 @@ export class SendInviteComponent {
       questionIds: this.idArray,
       roomCode: this.sendCode.otp,
       emails: transformedArray,
-      HostEmail: this.userEmail,
+      hostEmail: this.userEmail,
     };
     console.log(data);
     this.privateExamService.savePrivateExam(data).subscribe(
