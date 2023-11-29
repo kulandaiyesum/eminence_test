@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 })
 export class ExamDataService {
   private examRoomData: any = [];
+  private textContent: string = '';
   constructor() {}
   setExamRoomData(examRoomData: any) {
     this.examRoomData = examRoomData;
@@ -13,5 +14,13 @@ export class ExamDataService {
 
   getExamRoomData() {
     return this.examRoomData;
+  }
+
+  getTextContent(): string {
+    return this.textContent;
+  }
+
+  setTextContent(content: string): void {
+    this.textContent = content;
   }
 }
