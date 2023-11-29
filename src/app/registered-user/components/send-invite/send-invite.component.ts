@@ -166,7 +166,7 @@ export class SendInviteComponent {
     const newEmailArray = emailArray.filter(
       (email) => email !== this.userEmail
     );
-    const emailArrays = { email: newEmailArray };
+    const emailArrays = { email: newEmailArray,role:this.role };
     this.userService.checkRegisteredUser(emailArrays).subscribe(
       (response: any) => {
         console.log(response);

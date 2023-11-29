@@ -8,52 +8,22 @@
       <div class="attended-user">
         <h5>Attended people</h5>
         <div class="people">
-          <div id="list">
-            <p>S</p>
-          </div>
-          <div id="list">
-            <p>H</p>
-          </div>
-          <div id="list">
-            <p>A</p>
-          </div>
-          <div id="list">
-            <p>M</p>
-          </div>
-          <div id="list">
-            <p>B</p>
-          </div>
-          <div id="list">
-            <p>B</p>
+          <div id="list" *ngFor="let email of attendedEmailArray" matTooltip="{{ email }}">
+            <p>{{ email| initials }}</p>
           </div>
         </div>
       </div>
       <div class="non-attended-user">
         <h5>Non Attended people</h5>
         <div class="people">
-          <div id="list">
-            <p>S</p>
-          </div>
-          <div id="list">
-            <p>H</p>
-          </div>
-          <div id="list">
-            <p>A</p>
-          </div>
-          <div id="list">
-            <p>M</p>
-          </div>
-          <div id="list">
-            <p>B</p>
-          </div>
-          <div id="list">
-            <p>B</p>
+          <div id="list" *ngFor="let email of nonattendedEmailArray" matTooltip="{{ email }}">
+            <p>{{ email| initials }}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="controls">
-    <button mat-raised-button color="primary">Start Exam</button>
+    <button mat-raised-button color="primary" *ngIf="enableStartButton" (click)="startExam()">Start Exam</button>
   </div>
 </div>
