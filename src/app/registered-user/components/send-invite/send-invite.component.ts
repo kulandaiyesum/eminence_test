@@ -41,9 +41,11 @@ export class SendInviteComponent {
   showCreateQuestions: boolean = false;
   showGenerateRoom: boolean = false;
   showAvailability: boolean = true;
+  showTextArea:boolean=true
   userEmail: string;
   checkAvailabilityResponse;
   showGotolanding: boolean = false;
+
   constructor(
     private examService: ExamService,
     public dialogRef: MatDialogRef<SendInviteComponent>,
@@ -245,6 +247,7 @@ export class SendInviteComponent {
           this.showGenerateRoom = true;
           this.showSendEmail = false;
           this.sendCode.email = '';
+          this.showTextArea=false;
         },
         (error) => {
           console.error('Error sending code :', error);
@@ -323,7 +326,7 @@ export class SendInviteComponent {
       this.router.navigate([
         '/eminence/student/landing',
         this.sendCode.otp,
-        
+
       ]);
     }, 300);
   }
