@@ -28,7 +28,9 @@
       >
         {{ i + 1 }}
         <span class="isReviewed" *ngIf="isReviewed(question)">&#x2714;</span>
-        <mat-icon *ngIf="question.isDeleted" class="delete-icon">delete</mat-icon>
+        <mat-icon *ngIf="question.isDeleted" class="delete-icon"
+          >delete</mat-icon
+        >
         <mat-icon *ngIf="question.isEdited" class="isEdited">edit</mat-icon>
       </button>
     </div>
@@ -114,18 +116,18 @@
           </ng-container>
         </div>
       </div>
-      <div class="question-action">
+      <div class="question-action" *ngIf="!tempQuestion?.question?.isDeleted">
         <mat-icon
-          *ngIf="editIconVisibility"
           matTooltip="Edit"
+          *ngIf="!isEditMode"
           (click)="editQuestion(tempQuestion.question)"
           >edit</mat-icon
         >
         <div class="delete-option">
           <mat-icon
             class="mb-2"
-            *ngIf="editIconVisibility"
             matTooltip="Reject"
+            *ngIf="!isEditMode"
             (click)="toggleDivSection()"
             >delete</mat-icon
           >

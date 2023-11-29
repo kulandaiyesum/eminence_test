@@ -1,28 +1,23 @@
 export class Question {
   _id: string;
   reqId: string;
-  userId?: string; // need to ask
   options: QgenOption[];
   title: string;
-  status?: number;
+  status: string;
   isEdited: boolean;
   isDeleted: boolean;
-  createdBy?: string;
-  modifiedBy?: string;
   createdAt?: string;
-  modifiedAt?: string;
   coreQuestionId?: string;
 }
 export class QgenOption {
   _id: string;
   text: string;
-  correctAnswer: string;
-  explanation: string;
-  createdBy?: string;
-  modifiedBy?: string;
+  correctAnswer: string; // 'false' or 'true'
+  explanation: string | null;
   createdAt?: string;
-  modifiedAt?: string;
   coreOptionId?: string;
+  isDeleted: boolean;
+  status: number; // ex. 1
 }
 
 export class TempQuestion {
