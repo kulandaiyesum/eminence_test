@@ -17,7 +17,7 @@ export class ExamRoomComponent implements OnInit {
   inviteEmail: string = '';
   public privateExam: PrivateExam;
   secretKey = environment.secretKey;
-  
+
   constructor(
     private examRoomService: ExamRoomService,
     private privateExamService: PrivateExamService,
@@ -49,33 +49,37 @@ export class ExamRoomComponent implements OnInit {
   }
 
   goRoom() {
+    this.router.navigate([
+      '/eminence/student/landing',
+      this.privateExam.roomCode,
 
-    this.privateExamService.joinExam(this.privateExam).subscribe(
-      (resp: any) => {
-        console.log(resp);
-        console.log(resp.result);
-        const tempData = resp.result[0];
-        if (tempData.length === 0) {
-          this.toastr.warning('NO Questions Found !!!', '', {
-            timeOut: 3000,
-          });
-        } else {
-          // this.examDataService.setExamRoomData(tempData);
-          localStorage.setItem('emex-td', JSON.stringify(tempData));
-          localStorage.setItem('8', this.privateExam.roomCode);
-          // localStorage.setItem('emm', this.qbankObject.mode);
-          // if (this.qbankObject.mode === 'TUTOR') {
-          // this.router.navigate(['/eminence/student/exam']);
-          // } else {
-          this.router.navigate(['/eminence/student/exam-timed']);
-          // }
-        }
-      },
-      (err: any) => {
-        this.toastr.error(err.error.message, '', {
-          timeOut: 3000,
-        });
-      }
-    );
+    ]);
+    // this.privateExamService.joinExam(this.privateExam).subscribe(
+    //   (resp: any) => {
+    //     console.log(resp);
+    //     console.log(resp.result);
+    //     const tempData = resp.result[0];
+    //     if (tempData.length === 0) {
+    //       this.toastr.warning('NO Questions Found !!!', '', {
+    //         timeOut: 3000,
+    //       });
+    //     } else {
+    //       // this.examDataService.setExamRoomData(tempData);
+    //       localStorage.setItem('emex-td', JSON.stringify(tempData));
+    //       localStorage.setItem('8', this.privateExam.roomCode);
+    //       // localStorage.setItem('emm', this.qbankObject.mode);
+    //       // if (this.qbankObject.mode === 'TUTOR') {
+    //       // this.router.navigate(['/eminence/student/exam']);
+    //       // } else {
+    //       this.router.navigate(['/eminence/student/exam-timed']);
+    //       // }
+    //     }
+    //   },
+    //   (err: any) => {
+    //     this.toastr.error(err.error.message, '', {
+    //       timeOut: 3000,
+    //     });
+    //   }
+    // );
   }
 }

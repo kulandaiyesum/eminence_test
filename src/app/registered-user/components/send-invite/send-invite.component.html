@@ -10,7 +10,7 @@
     <h2 *ngIf="showSendEmail">{{ uniqueCode }}</h2>
   </div>
   <div class="invite-area">
-    <h6>Send invite to registered users </h6>
+    <h6>Send invite to registered users</h6>
     <form #inviteForm="ngForm">
       <textarea
         [(ngModel)]="sendCode.email"
@@ -36,9 +36,7 @@
       >
         Check Availability
       </button>
-      <button (click)="generateQusetion()" *ngIf="showGenerateRoom">Generate Room</button>
-      <button (click)="createQusetion()" *ngIf="showCreateQuestions">Create questions</button>
-      <button routerLink="/eminence/student/landing" (click)="goToLanding()" *ngIf="showGotolanding">Go to exam</button>
+
       <!-- Display validation message if email is not valid -->
       <h6 id="comma">Use comma to add more Email</h6>
       <div
@@ -54,7 +52,7 @@
     <button (click)="generateQusetion()" *ngIf="showGenerateRoom">Generate Room</button>
   </div> -->
   <div class="user-list-area">
-    <div class="user-list-main">
+    <!-- <div class="user-list-main">
       <div class="wait-list">
         <h6>Waiting list</h6>
         <div id="wait-list">
@@ -64,7 +62,7 @@
           &nbsp;
         </div>
       </div>
-      <!-- <div class="joined-list">
+      <div class="joined-list">
         <h6>Joined list</h6>
         <div id="joined-list">
           <p matTooltip="dharukumar@gmail.com ">
@@ -80,8 +78,8 @@
           <p matTooltip="tamil@gmail.com">{{ "tamil@gmail.com" | initials }}</p>
           &nbsp;
         </div>
-      </div> -->
-    </div>
+      </div>
+    </div> -->
     <div class="no-active">
       <h6>Non registered members</h6>
       <div id="no-active-list">
@@ -91,5 +89,21 @@
         &nbsp;
       </div>
     </div>
+  </div>
+  <div id="bottom-controls">
+    <button (click)="generateQusetion()" *ngIf="showGenerateRoom" style="width: 100%;">
+      Generate Room
+    </button>
+    <button (click)="createQusetion()" *ngIf="showCreateQuestions" style="width: 100%;">
+      Create questions
+    </button>
+    <button
+      routerLink="/eminence/student/landing"
+      (click)="goToLanding()"
+      *ngIf="showGotolanding"
+      style="width: 100%;"
+    >
+      Go to exam
+    </button>
   </div>
 </div>

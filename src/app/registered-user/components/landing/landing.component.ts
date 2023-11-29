@@ -17,10 +17,10 @@ export class LandingComponent {
   ngOnInit() {
     this.route.params.subscribe((params) => {
       const otp = params['otp'];
-      const email = params['email'];
+
       console.log(otp);
       this.roomCode = otp;
-      console.log(email);
+      
       // Now you can use otp and email in your component
       this.getLandingPageDetails();
     });

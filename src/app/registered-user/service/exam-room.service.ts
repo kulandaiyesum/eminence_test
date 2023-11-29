@@ -14,6 +14,6 @@ export class ExamRoomService {
   }
 
   getLandingPage(data){
-    return this.http.put(this.baseUrl+'exams/user/',data);
+    return this.http.put(this.baseUrl+'privateExams/users',data);
   }
 }
