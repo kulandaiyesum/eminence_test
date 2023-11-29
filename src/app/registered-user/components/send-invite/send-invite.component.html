@@ -7,12 +7,13 @@
   </div> -->
   <div class="code-area">
     <h5>host exam room code</h5>
-    <h2 *ngIf="showSendEmail">{{ uniqueCode }}</h2>
+    <h2>{{ uniqueCode }}</h2>
   </div>
   <div class="invite-area">
     <h6>Send invite to registered users</h6>
-    <form #inviteForm="ngForm">
+    <form #inviteForm="ngForm" *ngIf="showTextArea">
       <textarea
+
         [(ngModel)]="sendCode.email"
         name="emails"
         required
@@ -91,17 +92,17 @@
     </div>
   </div>
   <div id="bottom-controls">
-    <button (click)="generateQusetion()" *ngIf="showGenerateRoom" style="width: 100%;">
+    <button mat-button (click)="generateQusetion()" *ngIf="showGenerateRoom">
       Generate Room
     </button>
-    <button (click)="createQusetion()" *ngIf="showCreateQuestions" style="width: 100%;">
+    <button mat-button (click)="createQusetion()" *ngIf="showCreateQuestions">
       Create questions
     </button>
     <button
+      mat-button
       routerLink="/eminence/student/landing"
       (click)="goToLanding()"
       *ngIf="showGotolanding"
-      style="width: 100%;"
     >
       Go to exam
     </button>
