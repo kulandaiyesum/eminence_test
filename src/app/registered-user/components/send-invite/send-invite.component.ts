@@ -66,7 +66,6 @@ export class SendInviteComponent {
     this.sendCode.email = this.loginService.decryptText(mail, this.secretKey);
     this.userEmail = this.loginService.decryptText(mail, this.secretKey);
     this.role = this.loginService.decryptText(role, this.secretKey);
-
     const emailAddresses = [
       'shekm@datapattern.ai',
       'shekshowkath2001ms@gmail.com',
@@ -318,8 +317,10 @@ export class SendInviteComponent {
 
   goToLanding() {
     this.closeDialog();
-    console.log(this.sendCode.otp);
-    console.log(this.userEmail);
+    this.sendCode.email === this.userEmail;
+    this.privateExamService
+      .joinExam(this.sendCode)
+      .subscribe((resp: any) => {});
     setTimeout(() => {
       this.router.navigate(['/eminence/student/landing', this.sendCode.otp]);
     }, 300);

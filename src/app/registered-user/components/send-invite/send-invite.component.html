@@ -91,18 +91,21 @@
     </div>
   </div>
   <div id="bottom-controls">
-    <button (click)="generateQusetion()" *ngIf="showGenerateRoom" style="width: 100%;">
+    <button
+      (click)="generateQusetion()"
+      *ngIf="showGenerateRoom"
+      style="width: 100%"
+    >
       Generate Room
     </button>
-    <button (click)="createQusetion()" *ngIf="showCreateQuestions" style="width: 100%;">
+    <button
+      (click)="createQusetion()"
+      *ngIf="showCreateQuestions"
+      style="width: 100%"
+    >
       Create questions
     </button>
-    <button
-      routerLink="/eminence/student/landing"
-      (click)="goToLanding()"
-      *ngIf="showGotolanding"
-      style="width: 100%;"
-    >
+    <button (click)="goToLanding()" *ngIf="showGotolanding" style="width: 100%">
       Go to exam
     </button>
   </div>

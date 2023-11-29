@@ -18,16 +18,16 @@ export class LandingComponent {
     this.route.params.subscribe((params) => {
       const otp = params['otp'];
       this.roomCode = otp;
-
-      // Now you can use otp and email in your component
-      this.getLandingPageDetails();
     });
+    this.getLandingPageDetails();
   }
 
   getLandingPageDetails() {
     let data = {
       otp: this.roomCode,
     };
+    console.log(data);
+
     this.privateExamRoomService.getLandingPage(data).subscribe(
       (response: any) => {
         this.roomCode = response.getUser.roomCode;
