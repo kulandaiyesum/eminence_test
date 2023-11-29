@@ -47,10 +47,11 @@ export class ExamRoomComponent implements OnInit {
   }
 
   goRoom() {
-
     this.privateExamService.joinExam(this.privateExam).subscribe(
       (response: any) => {
-        console.log(response);
+        this.privateExamService
+          .joinExam(this.privateExam)
+          .subscribe((doc: any) => {});
         this.router.navigate([
           '/eminence/student/landing',
           this.privateExam.roomCode,
