@@ -49,6 +49,8 @@
   .button-group {
     text-align: right;
     margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
 
     button {
       padding: 5px 10px;

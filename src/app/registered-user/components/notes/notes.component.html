@@ -1,8 +1,6 @@
 <div class="notepad">
   <div class="notepad-header">
     <h2>Notes</h2>
-
-
     <button (click)="closeDialog()" class="close-icon">
       <mat-icon>close</mat-icon>
     </button>
@@ -12,12 +10,14 @@
     <textarea
       class="simple-textarea"
       placeholder="Click to edit notes"
+      [(ngModel)]="textareaContent"
     ></textarea>
 
     <div class="button-group">
+      <span>Save notes before closing notepad</span>
       <!-- <button (click)="saveNote()" class="blue-button">Save</button>
-
       <button (click)="closeNotepad()" class="red-button">Close</button> -->
+      <button (click)="saveTextContent()" class="blue-button">Save</button>
     </div>
   </div>
 </div>
