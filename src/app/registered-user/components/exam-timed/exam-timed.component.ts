@@ -275,8 +275,8 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
         }
       });
     }
-    this.selectOption = '';
     if (this.questions.length === this.tempQuestionIndex + 1) return;
+    this.selectOption = '';
     this.navigateQuestionByIndex(this.tempQuestionIndex + 1);
   }
   selectOptionIndex(i: number) {
