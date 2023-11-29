@@ -32,8 +32,6 @@ export class ExamRoomComponent implements OnInit {
       mail,
       this.secretKey
     );
-
-
   }
 
   joinRoom() {
@@ -49,11 +47,19 @@ export class ExamRoomComponent implements OnInit {
   }
 
   goRoom() {
-    this.router.navigate([
-      '/eminence/student/landing',
-      this.privateExam.roomCode,
 
-    ]);
+    this.privateExamService.joinExam(this.privateExam).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.router.navigate([
+          '/eminence/student/landing',
+          this.privateExam.roomCode,
+        ]);
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
     // this.privateExamService.joinExam(this.privateExam).subscribe(
     //   (resp: any) => {
     //     console.log(resp);
