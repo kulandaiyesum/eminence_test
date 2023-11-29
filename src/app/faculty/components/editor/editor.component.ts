@@ -1,4 +1,4 @@
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Question, TempQuestion } from '../../model/question';
 import { QgenService } from './../../service/qgen.service';
 import {
@@ -10,7 +10,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { QuerstionService } from '../../service/querstion.service';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { RsaService } from 'src/app/shared/service/rsa.service';
@@ -22,14 +22,13 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./editor.component.scss'],
 })
 export class EditorComponent implements OnInit, OnDestroy {
-  public questLength: number;
-  public title;
+  public questLength: number; // to how many questions generated
+  public title = ''; // topic that searched for
   public optionsAttributes = [];
-
   questions: Question[];
   tempQuestion: TempQuestion;
   reqId: string;
-  public status;
+  status: string;
   reasons: string[] = [
     "Simply didn't need it",
     'Inaccuracy in question/answer choices',
@@ -38,18 +37,14 @@ export class EditorComponent implements OnInit, OnDestroy {
     'Others',
   ];
   showDiv = false;
-  public user;
+  userRole = '';
   selectedAnswer: string = '';
   isEditMode: boolean = false;
   selectedOptionExplanation: string = '';
-  editIconVisibility: boolean = true;
-  questionId: string;
-  questionNo: number;
+  questionId: string = '';
+  questionNo: number = 0;
   currentQuestionStatus: any;
-  isAllQuestions: boolean = false;
   shouldShowButton: boolean = false;
-  nextButtonQuestionId: string;
-  nextButtonQuestionIndex: number;
   private pathSubcriber: Subscription;
   pathMatch: boolean = false;
   secretKey: string = environment.secretKey;
@@ -67,16 +62,11 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.pathSubcriber.unsubscribe();
   }
   ngOnInit(): void {
-    this.user = this.rsaService.decryptText(
+    this.userRole = this.rsaService.decryptText(
       localStorage.getItem('2'),
       this.secretKey
     );
-    console.log(this.user);
-    if (this.user === 'VETTER') {
-      this.status = 'VREVIEWED';
-    } else {
-      this.status = 'FREVIEWED';
-    }
+    this.status = this.userRole === 'VETTER' ? 'VREVIEWED' : 'FREVIEWED';
 
     this.reqId = this.activatedRoute.snapshot.params['reqId'];
     if (this.reqId) {
@@ -92,136 +82,119 @@ export class EditorComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Helper method to convert to string safely
-  getStatusAsString(question: Question): string {
-    return String(question.status);
-  }
-
-  // Add a method to check if the question is reviewed
+  /**
+   * This function is used to check where there the function is reviewed or not
+   * (check mark icon will show if the question is reviewed)
+   * @param question
+   * @returns true or false
+   */
   isReviewed(question: Question): boolean {
-    if (this.user === 'VETTER') {
-      return this.getStatusAsString(question) === 'VREVIEWED';
+    if (this.userRole === 'VETTER') {
+      return question.status === 'VREVIEWED';
     } else {
-      return this.getStatusAsString(question) === 'FREVIEWED';
+      return question.status === 'FREVIEWED';
     }
   }
 
   getAllQuestions(reqId: string) {
-    let data = { reqId };
-    console.log(reqId);
-    this.questionService.getAllQuestions(data).subscribe((doc: any) => {
+    this.questionService.getAllQuestions({ reqId }).subscribe((doc: any) => {
       this.questLength = doc.result.questions.length;
       this.questions = doc.result.questions;
       this.title = doc.result.request.keywords[0];
-      this.getQuestion(this.questions[0]._id, 0);
-      const pendingCount = this.questions.filter(
-        (item: any) => item.status === 'Pending'
-      ).length;
-      if (pendingCount === 1) {
-        this.shouldShowButton = true;
-        const pendingData = this.questions.filter(
-          (item: any) => item.status === 'Pending'
-        );
-        console.log(pendingData);
-        console.log(pendingData[0]._id);
-        this.questionId = pendingData[0]._id;
-      }
+      this.getQuestion(this.questionId, this.questionNo);
     });
   }
 
-  showReviewAlert(question_id: string, index: number, question: any) {
-    this.nextButtonQuestionId = question_id;
-    this.nextButtonQuestionIndex = index;
-    this.questionNo = this.tempQuestion.index + 1;
-    this.questionId = this.tempQuestion.question._id;
-    this.currentQuestionStatus = this.tempQuestion.question.status;
-    if (
-      this.currentQuestionStatus === 'FREVIEWED' ||
-      this.currentQuestionStatus === 'RREVIEWED' ||
-      this.questionId == question_id
-    ) {
-      this.getQuestion(question_id, index);
-    } else {
-      Swal.fire({
-        title: 'Are you sure?',
-        html: 'Reviewed question no: ' + this.questionNo,
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, reviewed',
-        cancelButtonText: 'No',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.changeStatusOfQuestion();
-          this.getQuestion(question_id, index);
-        } else {
-          // Handle the "No" case (close the popup or perform any other action)
-        }
-      });
-    }
-  }
-
+  /**
+   * This function helps to change/upodate view question in UI(html)
+   * @param question_id
+   * @param index
+   */
   getQuestion(question_id: string, index: number) {
-    const findQuestion = this.questions.find((q) => q._id === question_id);
-    this.editIconVisibility = !findQuestion.isEdited;
+    let findQuestion: Question;
+    if (question_id === '') {
+      findQuestion = this.questions[0];
+    } else {
+      findQuestion = this.questions.find((q) => q._id === question_id);
+    }
     this.tempQuestion = {
       index: index,
       question: findQuestion,
     };
     this.editableDiv.nativeElement.textContent =
       this.tempQuestion.question.title;
-    this.reviewAll();
+
+    let pendingCount = 0;
+    this.questions.forEach((q: Question) => {
+      if (q.isDeleted) {
+        pendingCount++;
+      } else if (q.status === this.status) {
+        pendingCount++;
+      } else {
+      }
+    });
+    if (pendingCount === this.questions.length -1) {
+      this.shouldShowButton = true;
+    }
   }
 
-  changeStatusOfQuestion() {
-    let data = { questionId: this.questionId, status: this.status };
-    console.log(this.questionId);
+  showReviewAlert(
+    clickedQuestionId: string,
+    clickedQuestionIndex: number,
+    clickedQuestion: Question
+  ) {
+    if (clickedQuestionId === this.tempQuestion.question._id) {
+      return;
+    }
+    this.currentQuestionStatus = this.tempQuestion.question.status;
+    if (
+      this.currentQuestionStatus === 'FREVIEWED' ||
+      this.currentQuestionStatus === 'VREVIEWED' ||
+      this.tempQuestion.question.isDeleted ||
+      clickedQuestion.status === this.status
+    ) {
+      this.getQuestion(clickedQuestionId, clickedQuestionIndex);
+    } else {
+      if (clickedQuestion.isDeleted || clickedQuestion.status === this.status) {
+        this.getQuestion(clickedQuestionId, clickedQuestionIndex);
+      } else {
+        Swal.fire({
+          title: 'Are you sure?',
+          html: 'Reviewed question no: ' + (this.tempQuestion.index + 1),
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, reviewed',
+          cancelButtonText: 'No',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.changeStatusOfQuestion(
+              clickedQuestionId,
+              clickedQuestionIndex
+            );
+          } else {
+          }
+        });
+      }
+    }
+  }
+
+  changeStatusOfQuestion(questionId:string, index:number) {
+    let data = {
+      questionId: this.tempQuestion.question._id,
+      status: this.status,
+    };
     this.questionService.updateStatusOfQuestion(data).subscribe(
       (response) => {
         console.log(response);
         this.cdr.detectChanges();
+        this.questionId = questionId;
+        this.questionNo = index;
         this.getAllQuestions(this.reqId);
-        setTimeout(() => {
-          console.log('Navigate acha ?');
-          this.getQuestion(
-            this.nextButtonQuestionId,
-            this.nextButtonQuestionIndex
-          );
-        }, 500);
-        const pendingCount = this.questions.filter(
-          (item: any) => item.status === 'PENDING'
-        ).length;
-        if (pendingCount === 1) {
-          this.shouldShowButton = true;
-          const pendingData = this.questions.filter(
-            (item: any) => item.status === 'PENDING'
-          );
-          console.log(pendingData[0]._id);
-          this.questionId = pendingData[0]._id;
-        }
       },
       (error) => {
         console.error('Error updating resource:', error);
       }
     );
-  }
-
-  completeReview() {
-    console.log(this.questionId);
-    Swal.fire({
-      title: 'Are you sure?',
-      html: 'Do you want complete your review',
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, reviewed',
-      cancelButtonText: 'No',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.changeStatusOfQuestion();
-        this.reviewAll();
-      } else {
-        // Handle the "No" case (close the popup or perform any other action)
-      }
-    });
   }
 
   saveChange() {
@@ -233,10 +206,8 @@ export class EditorComponent implements OnInit, OnDestroy {
       confirmButtonText: 'Save',
       cancelButtonText: 'Cancel',
     }).then((result) => {
-      console.log(result, 'dddddddddd');
       if (result.isConfirmed === true) {
         this.isEditMode = false;
-        this.editIconVisibility = true;
         this.cdr.detectChanges();
 
         this.tempQuestion.question.options.forEach((option) => {
@@ -270,8 +241,9 @@ export class EditorComponent implements OnInit, OnDestroy {
             this.toastr.success(doc.message, '', {
               timeOut: 3000,
             });
+            this.questionId = this.tempQuestion.question._id;
+            this.questionNo = this.tempQuestion.index;
             this.getAllQuestions(this.reqId);
-            this.reviewAll();
           });
       } else {
         this.toastr.warning('Not Saved', '', {
@@ -286,7 +258,6 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   editQuestion(question: Question) {
     this.isEditMode = true;
-    this.editIconVisibility = false;
     const selectedOption = this.tempQuestion.question.options.find(
       (option) => option.correctAnswer === 'true'
     );
@@ -299,7 +270,6 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   cancelEdit() {
-    this.editIconVisibility = true;
     this.isEditMode = false;
   }
 
@@ -317,8 +287,6 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
   }
   deleteQuestion(reason: string) {
-    console.log(this.tempQuestion.question);
-
     const payload = {
       _id: this.tempQuestion.question.coreQuestionId,
       reqId: this.tempQuestion.question.reqId,
@@ -340,8 +308,9 @@ export class EditorComponent implements OnInit, OnDestroy {
             this.toastr.success(response.message, '', {
               timeOut: 3000,
             });
+            this.questionId = this.tempQuestion.question._id;
+            this.questionNo = this.tempQuestion.index;
             this.getAllQuestions(this.reqId);
-            this.reviewAll();
           },
           (err) => {
             console.log(err);
@@ -354,51 +323,46 @@ export class EditorComponent implements OnInit, OnDestroy {
     });
   }
 
-  reviewAll() {
-    const allReviewed = this.questions.every((item: any) => {
-      if (this.user === 'VETTER') {
-        item.status === 'RREVIEWED';
-      } else {
-        item.status === 'FREVIEWED';
+  completeReview() {
+    console.log(this.tempQuestion.question._id);
+    Swal.fire({
+      title: 'Are you sure?',
+      html: 'Do you want complete your review',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, reviewed',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.reviewAll();
       }
     });
-    const hasPendingStatus = this.questions.some(
-      (item: any) => item.status === 'Pending'
-    );
-    console.log(hasPendingStatus);
-    if (!hasPendingStatus) {
-      this.isAllQuestions = true;
-    }
+  }
 
-    if (this.isAllQuestions) {
-      Swal.fire({
-        title: 'You reviewed all questions',
-        icon: 'success',
-      }).then((result) => {
-        if (result.isConfirmed === true) {
-          // Call the review service to make the HTTP PUT request
-          let data1 = { reqId: this.reqId, status: this.status };
-          let data = { questions: this.questions };
-          this.qgenService.reviewQuestionSet(data1).subscribe((doc: any) => {
-            if (this.user === 'VETTER') {
-              this.router.navigate(['/eminence/vetter/history']);
-            } else {
-              this.router.navigate(['/eminence/faculty/history']);
+  reviewAll() {
+    Swal.fire({
+      title: 'You reviewed all questions',
+      icon: 'success',
+    }).then((result) => {
+        let data1 = { reqId: this.reqId, status: this.status };
+        let data = { questions: this.questions };
+        this.qgenService.reviewQuestionSet(data1).subscribe((doc: any) => {
+          if (this.userRole === 'VETTER') {
+            this.router.navigate(['/eminence/vetter/history']);
+          } else {
+            this.router.navigate(['/eminence/faculty/history']);
+          }
+          this.questionService.coreUpdate(data).subscribe(
+            (response) => {
+              console.log('dfffffffffffffffffff');
+            },
+            (error) => {
+              // Handle the error response
+              console.error('HTTP PUT request failed', error);
             }
-            this.questionService.coreUpdate(data).subscribe(
-              (response) => {
-                console.log('dfffffffffffffffffff');
-              },
-              (error) => {
-                // Handle the error response
-                console.error('HTTP PUT request failed', error);
-              }
-            );
-          });
-        } else {
-          this.isAllQuestions = false;
-        }
-      });
-    }
+          );
+        });
+    });
+    // }
   }
 }
