@@ -19,6 +19,8 @@ export class LandingComponent {
   secretKey = environment.secretKey;
   enableStartButton:boolean=false;
 
+  private intervalId;
+
   constructor(
     private route: ActivatedRoute,
     private privateExamRoomService: PrivateExamService,
@@ -39,23 +41,24 @@ export class LandingComponent {
     console.log(this.hostMail);
 
     this.getLandingPageDetails();
+    this.startInterval();
   }
 
   getLandingPageDetails() {
     let data = {
       roomCode: this.roomCode,
     };
-    console.log(data);
+
     this.privateExamRoomService.getLandingPage(data).subscribe(
       (response: any) => {
         // this.roomCode = response.getUser.roomCode;
-        console.log(response.activeUse);
-        console.log(response.result.getUser.hostMail);
-        console.log(response.result.activeUser);
+        // console.log(response.activeUse);
+        // console.log(response.result.getUser.hostMail);
+        // console.log(response.result.activeUser);
         this.attendedEmailArray=response.result.activeUser
         this.nonattendedEmailArray=response.result.inactiveUser
         if (this.hostMail===response.result.getUser.hostMail) {
-          console.log("You are host");
+          // console.log("You are host");
           this.enableStartButton=true
         }
 
@@ -98,5 +101,21 @@ export class LandingComponent {
         });
       }
     );
+  }
+
+  startInterval(): void {
+    this.intervalId = setInterval(() => {
+      this.getLandingPageDetails();
+
+    }, 1000);
+  }
+
+  stopInterval(): void {
+    clearInterval(this.intervalId);
+    console.log('Interval stopped');
+  }
+
+  ngOnDestroy(): void {
+    this.stopInterval();
   }
 }
