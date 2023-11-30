@@ -1,3 +1,98 @@
-<div class="container">
-  <h5>Live Exam Room</h5>
+<div class="container-fluid flag_wrap">
+  <div class="flag_section">
+    <div class="exapnsion_div">
+      <img
+        src="../../../../assets/images/triangle_blue.png"
+        alt="triangle_blue"
+        (click)="setHeight = !setHeight"
+      />
+      <img
+        [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
+        src="../../../../assets/images/lab.png"
+        alt="lab"
+        (click)="openLabValues()"
+      />
+      <img
+        [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
+        style="transform: translateX(2px)"
+        src="../../../../assets/images/notes.png"
+        alt="notes"
+        (click)="openNotesPopup()"
+      />
+      <img
+        [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
+        src="../../../../assets/images/calculator.png"
+        alt="calculator"
+        (click)="openCalculatorPopup()"
+      />
+    </div>
+  </div>
+  <div class="container parent_warp">
+    <div class="head_timer">
+      <div>
+        <h4 style="font-weight: 600">Live Exam Room: USMLE Step 1</h4>
+        <!-- <p style="color: #999; font-weight: 600">Currently 224 members online</p> -->
+      </div>
+      <div class="timer_clock">
+        <h5 class="p-2">{{ questionTimerUI }}</h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-11 col-sm-12">
+        <div class="question_ans mb-lg-5 mb-md-5 mb-3">
+          <div class="question mb-4">
+            {{ currentQuestion?.title }}
+          </div>
+          <ul class="options ms-1" style="max-width: fit-content">
+            <li
+              class="mb-1"
+              *ngFor="let option of currentQuestion?.options; let i = index"
+            >
+              <label class="pointer_cl mx-1" for="{{ option._id }}">
+                <!-- (click)="selectOptionIndex(i)" -->
+                <input
+                  id="{{ option._id }}"
+                  [(ngModel)]="selectedOptionId"
+                  type="radio"
+                  class="square_radio"
+                  [value]="option?._id"
+                />{{ generateAlphabetChar(i) }}. {{ option?.text }}</label
+              >
+            </li>
+          </ul>
+          <div class="submit_check" *ngIf="!revealAnswer">
+            <button
+              type="button"
+              class="btn btn-warning"
+              (click)="RevealAnswer()"
+            >
+              Submit Answer
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-11 col-sm-12 ">
+        <div *ngIf="revealAnswer">
+          <p>
+            <strong>Correct Answer:</strong> {{ correctOptionAlphaLetter }}.
+            {{ correctOption?.text }}
+          </p>
+
+          <p><strong>Explanation:</strong> {{ correctOption?.explanation }}</p>
+          <div class="nxt_check">
+            <button
+              type="button"
+              class="btn btn-warning mb-5"
+              (click)="changeQuestion()"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom_timer">
+      <div class="timer_stop">Time Elapsed {{ displayTimer }}</div>
+    </div>
+  </div>
 </div>
