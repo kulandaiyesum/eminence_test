@@ -44,7 +44,7 @@
         class="error-message"
       >
         <div *ngIf="emailInput.errors?.['required']">Email is required.</div>
-        <div *ngIf="emailInput.errors?.['pattern']">Invalid email address.</div>
+
       </div>
     </form>
   </div>
@@ -81,7 +81,7 @@
       </div>
     </div> -->
     <div class="no-active">
-      <h6>Invalid Email List</h6>
+      <h6>Invalid Email Id List</h6>
       <div id="no-active-list">
         <p *ngFor="let email of noActiveMembers" matTooltip="{{ email }}">
           {{ email | initials }}
@@ -91,23 +91,23 @@
     </div>
   </div>
   <div id="bottom-controls">
-    <button mat-button (click)="generateQusetion()" *ngIf="showGenerateRoom">
+    <!-- <button mat-button (click)="generateQusetion()" *ngIf="showGenerateRoom">
       Generate Room
-    </button>
+    </button> -->
     <button mat-button (click)="createQusetion()" *ngIf="showCreateQuestions">
       Create questions
     </button>
-    <button
+    <!-- <button
       mat-button
       routerLink="/eminence/student/landing"
       (click)="goToLanding()"
       *ngIf="showGotolanding"
     >
       Go to exam
-    </button>
+    </button> -->
   </div>
   <div class="reenter-mail" *ngIf="showReEnter">
-    <h6>Do you want re-enter mail ?</h6>
+    <h6>Do you want to correct invalid email Ids ?</h6>
     <button mat-button (click)="reEnterMailNo()">No, Send it</button>
     <button mat-button (click)="reEnterMailYes()">Yes</button>
   </div>
