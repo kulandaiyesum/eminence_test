@@ -241,6 +241,8 @@ export class SendInviteComponent {
           this.showSendEmail = false;
           this.sendCode.email = '';
           this.showTextArea = false;
+          this.generateQusetion();
+
         },
         (error) => {
           console.error('Error sending code :', error);
@@ -300,6 +302,7 @@ export class SendInviteComponent {
         this.toastr.success('Room created successfully !!!', '', {
           timeOut: 3000,
         });
+        this.goToLanding();
       },
 
       (error) => {
@@ -398,6 +401,7 @@ export class SendInviteComponent {
             this.showSendEmail = false;
             this.sendCode.email = '';
             this.showTextArea = false;
+            this.generateQusetion();
           },
           (error) => {
             console.error('Error sending code :', error);
