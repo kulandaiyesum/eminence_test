@@ -10,10 +10,9 @@
     <h2>{{ uniqueCode }}</h2>
   </div>
   <div class="invite-area">
-    <h6>Send invite to registered users</h6>
+    <h6>Send invite to registered users, use comma separator</h6>
     <form #inviteForm="ngForm" *ngIf="showTextArea">
       <textarea
-
         [(ngModel)]="sendCode.email"
         name="emails"
         required
@@ -24,7 +23,7 @@
       <button
         type="submit"
         [disabled]="inviteForm.invalid"
-        (click)="sendInvite(inviteForm)"
+        (click)="checkAvailability(inviteForm)"
         *ngIf="showSendEmail"
       >
         Send
@@ -39,7 +38,7 @@
       </button>
 
       <!-- Display validation message if email is not valid -->
-      <h6 id="comma">Use comma to add more Email</h6>
+      <!-- <h6 id="comma">Use comma to add more Email</h6> -->
       <div
         *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
         class="error-message"
@@ -82,7 +81,7 @@
       </div>
     </div> -->
     <div class="no-active">
-      <h6>Non registered members</h6>
+      <h6>Invalid Email List</h6>
       <div id="no-active-list">
         <p *ngFor="let email of noActiveMembers" matTooltip="{{ email }}">
           {{ email | initials }}
@@ -106,5 +105,10 @@
     >
       Go to exam
     </button>
+  </div>
+  <div class="reenter-mail" *ngIf="showReEnter">
+    <h6>Do you want re-enter mail ?</h6>
+    <button mat-button (click)="reEnterMailNo()">No, Send it</button>
+    <button mat-button (click)="reEnterMailYes()">Yes</button>
   </div>
 </div>

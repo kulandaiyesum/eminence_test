@@ -46,7 +46,6 @@ export class LandingComponent {
       roomCode: this.roomCode,
     };
     console.log(data);
-
     this.privateExamRoomService.getLandingPage(data).subscribe(
       (response: any) => {
         // this.roomCode = response.getUser.roomCode;

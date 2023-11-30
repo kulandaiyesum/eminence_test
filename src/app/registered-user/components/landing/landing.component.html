@@ -6,24 +6,47 @@
   <div class="user-list">
     <div class="main">
       <div class="attended-user">
-        <h5>Attended people</h5>
-        <div class="people">
-          <div id="list" *ngFor="let email of attendedEmailArray" matTooltip="{{ email }}">
-            <p>{{ email| initials }}</p>
-          </div>
-        </div>
+        <h5>Joined</h5>
+        <mat-card>
+          <mat-card-content>
+            <div class="people">
+              <div
+                id="list"
+                *ngFor="let email of attendedEmailArray"
+                matTooltip="{{ email }}"
+              >
+                <p>{{ email | initials }}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </div>
       <div class="non-attended-user">
-        <h5>Non Attended people</h5>
-        <div class="people">
-          <div id="list" *ngFor="let email of nonattendedEmailArray" matTooltip="{{ email }}">
-            <p>{{ email| initials }}</p>
-          </div>
-        </div>
+        <h5>Yet to Join</h5>
+        <mat-card>
+          <mat-card-content>
+            <div class="people">
+              <div
+                id="list"
+                *ngFor="let email of nonattendedEmailArray"
+                matTooltip="{{ email }}"
+              >
+                <p>{{ email | initials }}</p>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
   </div>
   <div class="controls">
-    <button mat-raised-button color="primary" *ngIf="enableStartButton" (click)="startExam()">Start Exam</button>
+    <button
+      mat-raised-button
+      color="primary"
+      *ngIf="enableStartButton"
+      (click)="startExam()"
+    >
+      Start Exam
+    </button>
   </div>
 </div>

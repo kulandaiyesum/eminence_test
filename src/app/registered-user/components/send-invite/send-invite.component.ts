@@ -38,14 +38,15 @@ export class SendInviteComponent {
   };
 
   noActiveMembers: string[] = [];
-  showSendEmail: boolean = false;
+  showSendEmail: boolean = true;
   showCreateQuestions: boolean = false;
   showGenerateRoom: boolean = false;
-  showAvailability: boolean = true;
-  showTextArea:boolean=true
+  showAvailability: boolean = false;
+  showTextArea: boolean = true;
   userEmail: string;
   checkAvailabilityResponse;
   showGotolanding: boolean = false;
+  showReEnter: boolean = false;
 
   constructor(
     private examService: ExamService,
@@ -166,23 +167,13 @@ export class SendInviteComponent {
     const newEmailArray = emailArray.filter(
       (email) => email !== this.userEmail
     );
-    const emailArrays = { email: newEmailArray,role:this.role };
+    const emailArrays = { email: newEmailArray, role: this.role };
+    console.log(emailArrays);
+
     this.userService.checkRegisteredUser(emailArrays).subscribe(
       (response: any) => {
         console.log(response);
-
         this.checkAvailabilityResponse = response.result.users;
-
-        // if (response.result.users =[]) {
-        //   this.toastr.error('User not available', '', {
-        //     timeOut: 3000,
-        //   });
-        // }else{
-        //   this.toastr.success('User available', '', {
-        //     timeOut: 3000,
-        //   });
-        // }
-
         const responseEmails = this.checkAvailabilityResponse.map(
           (item) => item?.email
         );
@@ -196,12 +187,14 @@ export class SendInviteComponent {
           this.toastr.error('User not available', '', {
             timeOut: 3000,
           });
+          this.showReEnter = true;
         } else {
           this.toastr.success('User available', '', {
             timeOut: 3000,
           });
           this.showSendEmail = true;
           this.showAvailability = false;
+          this.sendInvite(form);
         }
       },
       (error) => {
@@ -247,7 +240,7 @@ export class SendInviteComponent {
           this.showGenerateRoom = true;
           this.showSendEmail = false;
           this.sendCode.email = '';
-          this.showTextArea=false;
+          this.showTextArea = false;
         },
         (error) => {
           console.error('Error sending code :', error);
@@ -321,15 +314,108 @@ export class SendInviteComponent {
   goToLanding() {
     this.closeDialog();
     this.sendCode.email === this.userEmail;
+    let privateExam={
+      roomCode:this.sendCode.otp,
+      email:this.userEmail
+    }
+    console.log(privateExam);
     this.privateExamService
-      .joinExam(this.sendCode)
+      .joinExam(privateExam)
       .subscribe((resp: any) => {});
-    setTimeout(() => {
-      this.router.navigate([
-        '/eminence/student/landing',
-        this.sendCode.otp,
 
-      ]);
+    setTimeout(() => {
+      this.router.navigate(['/eminence/student/landing', this.sendCode.otp]);
     }, 300);
+  }
+
+  reEnterMailYes() {
+    this.showReEnter = !this.showReEnter;
+  }
+
+  reEnterMailNo() {
+    const emailArray = this.sendCode.email
+      .split(',')
+      .map((email) => email.trim());
+    const newEmailArray = emailArray.filter(
+      (email) => email !== this.userEmail
+    );
+    const emailArrays = { email: newEmailArray, role: this.role };
+    console.log(emailArrays);
+
+    this.userService.checkRegisteredUser(emailArrays).subscribe(
+      (response: any) => {
+        this.checkAvailabilityResponse = response.result.users;
+        const responseEmails = this.checkAvailabilityResponse.map(
+          (item) => item?.email
+        );
+        // Find emails not present in the database
+        const notInDatabaseEmails = newEmailArray.filter(
+          (email) => !responseEmails.includes(email)
+        );
+        console.log(notInDatabaseEmails);
+        this.noActiveMembers = notInDatabaseEmails;
+
+        // removing not presented emails
+        console.log(this.noActiveMembers);
+        let emailArrayNew = this.sendCode.email.split(',');
+        this.inviteObject.email = emailArrayNew;
+        this.inviteObject.otp = this.sendCode.otp;
+        console.log(this.inviteObject);
+
+        this.noActiveMembers.forEach((email) => {
+          const index = this.inviteObject.email.indexOf(email);
+          if (index !== -1) {
+            this.inviteObject.email.splice(index, 1);
+          }
+        });
+
+        console.log(this.inviteObject);
+
+
+        this.examService.sendExamCode(this.inviteObject).subscribe(
+          (response: any) => {
+            console.log(response);
+            console.log(response.result.users);
+            this.questionCount = response.result.users;
+            this.emailArray = this.questionCount.map((obj) => obj.email);
+            console.log(this.emailArray, 'ssssssssssss');
+
+            // Extract email addresses from the post method response
+            const responseEmails = response.result.users
+              .filter((response) => response !== null)
+              .map((response) => response.email);
+
+            // Filter out the email addresses that are not present in the post method response
+            const notPresentEmails = emailArrayNew.filter(
+              (email) => !responseEmails.includes(email)
+            );
+
+            this.toastr.success('Email sent succesfully', '', {
+              timeOut: 3000,
+            });
+            this.showCreateQuestions = false;
+            this.showGenerateRoom = true;
+            this.showSendEmail = false;
+            this.sendCode.email = '';
+            this.showTextArea = false;
+          },
+          (error) => {
+            console.error('Error sending code :', error);
+            this.toastr.error(error.error.message, '', {
+              timeOut: 3000,
+            });
+          }
+        );
+        this.showReEnter = !this.showReEnter;
+      },
+      (error) => {
+        console.error('Something went wrong : ', error);
+        this.toastr.error(error.error.message, '', {
+          timeOut: 3000,
+        });
+      }
+    );
+
+
   }
 }
