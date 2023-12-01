@@ -66,7 +66,7 @@ export class SendInviteComponent {
     this.getRandomCodeForEmail();
     const mail = localStorage.getItem('10');
     const role = localStorage.getItem('2');
-    this.sendCode.email = this.loginService.decryptText(mail, this.secretKey);
+    // this.sendCode.email = this.loginService.decryptText(mail, this.secretKey);
     this.userEmail = this.loginService.decryptText(mail, this.secretKey);
     this.role = this.loginService.decryptText(role, this.secretKey);
     const emailAddresses = [
@@ -210,6 +210,9 @@ export class SendInviteComponent {
     if (form.valid) {
       console.log(this.sendCode.email);
       let emailArrayNew = this.sendCode.email.split(',');
+
+      emailArrayNew.push(this.userEmail);
+      console.log(emailArrayNew);
       const emailArray = this.sendCode.email
         .split(',')
         .map((email) => ({ email: email.trim() }));
@@ -374,7 +377,8 @@ export class SendInviteComponent {
 
         console.log(this.inviteObject);
 
-
+        emailArrayNew.push(this.userEmail);
+        console.log(emailArrayNew);
         this.examService.sendExamCode(this.inviteObject).subscribe(
           (response: any) => {
             console.log(response);
