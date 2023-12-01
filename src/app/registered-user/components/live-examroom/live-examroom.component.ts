@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { CalculatorComponent } from '../calculator/calculator.component';
 import { LabValuesComponent } from '../lab-values/lab-values.component';
 import { NotesComponent } from '../notes/notes.component';
+import { LiveExamService } from '../../service/live-exam.service';
 
 @Component({
   selector: 'app-live-examroom',
@@ -41,7 +42,7 @@ export class LiveExamroomComponent implements OnInit, OnDestroy {
   displayTimerStopper: any;
 
   constructor(
-    private examService: ExamService,
+    private liveExamService: LiveExamService,
     private toastr: ToastrService,
     private router: Router,
     public dialog: MatDialog
@@ -52,7 +53,7 @@ export class LiveExamroomComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.examService.getQuestionsByTopic().subscribe(
+    this.liveExamService.getQuestionsByTopic().subscribe(
       (data: any) => {
         console.log('response form server, first object', data.result[0]);
         this.questions = data.result;

@@ -43,7 +43,4 @@ export class ExamService {
   sendExamCode(sendCodeObject: Sendcode) {
     return this.http.post(this.baseUrl, sendCodeObject);
   }
-  getQuestionsByTopic() {
-    return this.http.get(this.baseUrl + 'questions');
-  }
 }

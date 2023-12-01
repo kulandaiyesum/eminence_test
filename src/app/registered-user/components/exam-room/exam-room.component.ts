@@ -5,7 +5,7 @@ import { PrivateExam } from '../../model/privateExam';
 import { environment } from 'src/environments/environment';
 import { LoginService } from 'src/app/login/service/login.service';
 import { Router } from '@angular/router';
-import { ExamService } from '../../service/exam.service';
+import { LiveExamService } from '../../service/live-exam.service';
 
 @Component({
   selector: 'app-exam-room',
@@ -19,7 +19,7 @@ export class ExamRoomComponent implements OnInit {
   secretKey = environment.secretKey;
 
   constructor(
-    private examService: ExamService,
+    private liveExamService: LiveExamService,
     private privateExamService: PrivateExamService,
     private loginService: LoginService,
     private toastr: ToastrService,
@@ -34,7 +34,7 @@ export class ExamRoomComponent implements OnInit {
     );
   }
   liveExamRoom() {
-    this.examService.getQuestionsByTopic().subscribe((doc: any) => {
+    this.liveExamService.getQuestionsByTopic().subscribe((doc: any) => {
       console.log(doc);
       const tempData = doc.result;
       localStorage.setItem('emex-td', JSON.stringify(tempData));
