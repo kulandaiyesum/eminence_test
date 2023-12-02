@@ -286,6 +286,7 @@ export class BuildTestComponent {
             }
             localStorage.setItem('emex-td', JSON.stringify(tempData));
             localStorage.setItem('emm', this.qbankObject.mode);
+            localStorage.setItem('qbt', '' + this.qbankObject.type);
             if (this.qbankObject.mode === 'TUTOR') {
               this.router.navigate(['/eminence/student/exam']);
             } else {

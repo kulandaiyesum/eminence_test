@@ -85,6 +85,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
   // @ViewChild('scrollContainer') scrollContainer: ElementRef;
   @ViewChild('target') private myScrollContainer: ElementRef;
   gettingChatData;
+  type: number; // the value maybe 0, 1, 2 or 3
 
   constructor(
     private rsaService: RsaService,
@@ -122,6 +123,8 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
       localStorage.getItem('3'),
       this.secretKey
     );
+    this.type = +localStorage.getItem('qbt');
+    console.log('type in exam timed mode', this.type);
     this.examTimedObject.mode = localStorage.getItem('emm'); //mode
     if (localStorage.getItem('emsm') === 'undefined') {
     } else {
