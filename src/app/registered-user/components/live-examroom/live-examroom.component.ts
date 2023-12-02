@@ -101,7 +101,7 @@ export class LiveExamroomComponent implements OnInit, OnDestroy {
       Swal.fire({
         title: 'Exam Finished!',
         width: '500px',
-        icon: 'success',
+        icon: 'info',
         showConfirmButton: true,
         confirmButtonText: 'OK',
       }).then((result) => {
@@ -158,6 +158,25 @@ export class LiveExamroomComponent implements OnInit, OnDestroy {
       clearInterval(this.questionStopper);
       this.questionTimer();
     }
+  }
+
+  /**
+   * This function helps user to exit form exa room
+   */
+  endLiveExamRoom() {
+    Swal.fire({
+      title: 'Are you sure want to end Exam?',
+      width: '500px',
+      icon: 'info',
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/eminence/student/exam-room']);
+      }
+    });
   }
 
   openCalculatorPopup() {

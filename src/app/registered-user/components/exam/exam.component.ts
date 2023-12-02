@@ -58,6 +58,7 @@ export class ExamComponent implements OnInit {
   public examObject: examTutorPayload;
 
   private requestid: string;
+  type: number; // the value maybe 0, 1, 2 or 3
   constructor(
     private route: ActivatedRoute,
     private rsaService: RsaService,
@@ -90,6 +91,9 @@ export class ExamComponent implements OnInit {
       this.examArray.push(tempQuestionObj);
     });
     this.getQuestionsIndexBased(0);
+
+    this.type = +localStorage.getItem('qbt');
+    console.log('type in exam tutor mode', this.type);
   }
 
   ngAfterViewInit() {
