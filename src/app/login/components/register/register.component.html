@@ -7,27 +7,36 @@
       (click)="closeDialog()"
       >close</mat-icon
     >
+    <form #registrationForm="ngForm">
+      <div class="form_wrap">
+        <div class="form_heading">REGISTER ACCOUNT</div>
 
-    <div class="form_wrap">
-      <div class="form_heading">REGISTER ACCOUNT</div>
-
-      <div class="tier_info_section">
-        <div class="form-Group ratio_group" *ngFor="let package of b2cPackages">
-          <label for="premium" class="label_flex">
-            <input type="radio" id="premium" checked />
-            <span class="tier_info">{{ package.packageName }}</span>
-          </label>
-          <!-- <div class="description">{{ package.questionsCount }}</div> -->
-          <div class="price-options">
-            <label for="price">
-              <input type="radio" name="price" id="price" checked />
-              {{ package.amount }} / {{ package.durationType }}
+        <div class="tier_info_section">
+          <div
+            class="form-Group ratio_group"
+            *ngFor="let package of b2cPackages"
+          >
+            <label for="premium" class="label_flex">
+              <!-- <input type="radio" id="premium" checked /> -->
+              <!-- <span class="tier_info">{{ package.packageName }}</span> -->
             </label>
+            <!-- <div class="description">{{ package.questionsCount }}</div> -->
+            <div class="price-options">
+              <label for="price">
+                <input
+                  type="radio"
+                  name="price"
+                  id="price"
+                  [value]="package._id"
+                  [(ngModel)]="registerModel.pacakageId"
+                />
+                {{ package.amount }} / {{ package.durationType }}
+              </label>
+            </div>
           </div>
         </div>
-      </div>
 
-      <form #registrationForm="ngForm" (ngSubmit)="onRegistrationSubmit()">
+        <!-- <form #registrationForm="ngForm" (ngSubmit)="onRegistrationSubmit()"> -->
         <div class="form-names">
           <div class="form-group">
             <label for="firstName">First Name</label>
@@ -155,7 +164,8 @@
             Login
           </button>
         </div>
-      </form>
-    </div>
+        <!-- </form> -->
+      </div>
+    </form>
   </div>
 </div>

@@ -29,12 +29,14 @@ export class RegisterComponent {
     token: '',
     id: '',
     institutionName: '',
+    pacakageId: '',
   };
 
   dialog: any;
   b2cPackages: any[] = [];
   packageType: string = '';
   priceOption: string = '';
+  paymentHeader: any = null;
 
   constructor(
     private fb: FormBuilder,
@@ -56,25 +58,24 @@ export class RegisterComponent {
       institutionName: ['', Validators.required],
     });
     this.fetchB2CPackages();
+    this.getStripe();
   }
 
   closeDialog() {
     this.dialogRef.close();
   }
   fetchB2CPackages() {
-    this.packageService.getPackagesforRegistration().subscribe((response: any) => {
-      if (response.success) {
-        this.b2cPackages = response.result;
-        if (this.b2cPackages.length > 0) {
-          this.packageType = this.b2cPackages[0].packageName;
-          this.priceOption = `$${this.b2cPackages[0].amount}/${this.b2cPackages[0].durationType}`;
+    this.packageService
+      .getPackagesforRegistration()
+      .subscribe((response: any) => {
+        if (response.success) {
+          this.b2cPackages = response.result;
+          console.log(this.b2cPackages);
+        } else {
+          console.error(response.message);
         }
-      } else {
-        console.error(response.message);
-      }
-    });
+      });
   }
-
 
   openLoginPopUp() {
     const dialogRef = this.dialog.open(LoginComponent, {
@@ -87,24 +88,67 @@ export class RegisterComponent {
       console.log(`Dialog result: ${result}`);
     });
   }
+  getStripe() {
+    if (!window.document.getElementById('stripe-script')) {
+      const stripeScript = window.document.createElement('script');
+      stripeScript.id = 'stripe-script';
+      stripeScript.type = 'text/javascript';
+      stripeScript.src = 'https://checkout.stripe.com/checkout.js';
 
+      stripeScript.onload = () => {
+        // Configuring Stripe Checkout after the script has loaded
+        const StripeCheckout = (<any>window).StripeCheckout;
+        this.paymentHeader = StripeCheckout.configure({
+          key: 'pk_test_51NxjaWSHSMOSeQFKsEGE4q6dF1x9Z5wusXRuJgjSs6RKcbqA0PguiQd3MKeP6dzyhJA6AYnkchEJhkHnRgfEdEYS00xTm0qwc6',
+          locale: 'auto',
+          token: (stripeToken: any) => {
+            console.log(stripeToken);
+          },
+        });
+      };
+
+      window.document.body.appendChild(stripeScript);
+    }
+  }
   onRegistrationSubmit() {
-    const userData = {
-      firstName: this.registerModel.firstName,
-      lastName: this.registerModel.lastName,
-      email: this.registerModel.email,
-      password: this.registerModel.password,
-      institutionName: this.registerModel.institutionName,
-      role: 'student',
-    };
-    this.registerService.registerUser(userData).subscribe(
-      (response) => {
-        this.toastr.success('Registration successful!', 'Success');
-      },
-      (error) => {
-        console.error(error, 'Error');
-        this.toastr.error('Registration failed!', 'Error');
-      }
+    console.log(this.registerModel);
+    let data = this.b2cPackages.find(
+      (x) => x._id === this.registerModel.pacakageId
     );
+    console.log(data);
+    const amount = 0.1;
+    console.log(amount);
+    const paymentHeader = (<any>window).StripeCheckout.configure({
+      key: 'pk_test_51NxjaWSHSMOSeQFKsEGE4q6dF1x9Z5wusXRuJgjSs6RKcbqA0PguiQd3MKeP6dzyhJA6AYnkchEJhkHnRgfEdEYS00xTm0qwc6',
+      locale: 'auto',
+      token: (stripeToken: any) => {
+        console.log(stripeToken);
+        // You can handle the token here, like sending it to your server for payment processing
+      },
+    });
+
+    paymentHeader.open({
+      name: 'Payment Details',
+      description: 'Your Order total Amount is ' + amount,
+      amount: amount, // Amount in cents (e.g., $10 should be 1000)
+    });
+
+    // const userData = {
+    //   firstName: this.registerModel.firstName,
+    //   lastName: this.registerModel.lastName,
+    //   email: this.registerModel.email,
+    //   password: this.registerModel.password,
+    //   institutionName: this.registerModel.institutionName,
+    //   role: 'student',
+    // };
+    // this.registerService.registerUser(userData).subscribe(
+    //   (response) => {
+    //     this.toastr.success('Registration successful!', 'Success');
+    //   },
+    //   (error) => {
+    //     console.error(error, 'Error');
+    //     this.toastr.error('Registration failed!', 'Error');
+    //   }
+    // );
   }
 }

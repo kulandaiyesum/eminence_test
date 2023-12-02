@@ -24,6 +24,7 @@
     "@angular/router": "^16.2.0",
     "@ng-bootstrap/ng-bootstrap": "^15.1.1",
     "@popperjs/core": "^2.11.6",
+    "@stripe/stripe-js": "^2.2.0",
     "@types/swiper": "^6.0.0",
     "angular-notifier": "^14.0.0",
     "angular-ui-swiper": "^2.3.8",

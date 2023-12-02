@@ -133,7 +133,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       } else {
       }
     });
-    if (pendingCount === this.questions.length -1) {
+    if (pendingCount === this.questions.length - 1) {
       this.shouldShowButton = true;
     }
   }
@@ -178,14 +178,13 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  changeStatusOfQuestion(questionId:string, index:number) {
+  changeStatusOfQuestion(questionId: string, index: number) {
     let data = {
       questionId: this.tempQuestion.question._id,
       status: this.status,
     };
     this.questionService.updateStatusOfQuestion(data).subscribe(
       (response) => {
-        console.log(response);
         this.cdr.detectChanges();
         this.questionId = questionId;
         this.questionNo = index;
@@ -261,7 +260,6 @@ export class EditorComponent implements OnInit, OnDestroy {
     const selectedOption = this.tempQuestion.question.options.find(
       (option) => option.correctAnswer === 'true'
     );
-    console.log(selectedOption);
     if (selectedOption) {
       this.selectedAnswer = selectedOption._id;
       console.log(this.selectedAnswer);
@@ -291,6 +289,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       _id: this.tempQuestion.question.coreQuestionId,
       reqId: this.tempQuestion.question.reqId,
       reason,
+      status: this.status,
     };
     this.showDiv = false;
     Swal.fire({
@@ -304,7 +303,6 @@ export class EditorComponent implements OnInit, OnDestroy {
       if (result.isConfirmed) {
         this.questionService.daleteQuestion(payload).subscribe(
           (response: any) => {
-            console.log(response);
             this.toastr.success(response.message, '', {
               timeOut: 3000,
             });
@@ -324,7 +322,6 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   completeReview() {
-    console.log(this.tempQuestion.question._id);
     Swal.fire({
       title: 'Are you sure?',
       html: 'Do you want complete your review',
@@ -344,24 +341,21 @@ export class EditorComponent implements OnInit, OnDestroy {
       title: 'You reviewed all questions',
       icon: 'success',
     }).then((result) => {
-        let data1 = { reqId: this.reqId, status: this.status };
-        let data = { questions: this.questions };
-        this.qgenService.reviewQuestionSet(data1).subscribe((doc: any) => {
-          if (this.userRole === 'VETTER') {
-            this.router.navigate(['/eminence/vetter/history']);
-          } else {
-            this.router.navigate(['/eminence/faculty/history']);
+      let data1 = { reqId: this.reqId, status: this.status };
+      let data = { questions: this.questions };
+      this.qgenService.reviewQuestionSet(data1).subscribe((doc: any) => {
+        if (this.userRole === 'VETTER') {
+          this.router.navigate(['/eminence/vetter/history']);
+        } else {
+          this.router.navigate(['/eminence/faculty/history']);
+        }
+        this.questionService.coreUpdate(data).subscribe(
+          (response) => {},
+          (error) => {
+            console.error('HTTP PUT request failed', error);
           }
-          this.questionService.coreUpdate(data).subscribe(
-            (response) => {
-              console.log('dfffffffffffffffffff');
-            },
-            (error) => {
-              // Handle the error response
-              console.error('HTTP PUT request failed', error);
-            }
-          );
-        });
+        );
+      });
     });
     // }
   }

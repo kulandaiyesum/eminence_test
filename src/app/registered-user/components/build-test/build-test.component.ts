@@ -264,7 +264,6 @@ export class BuildTestComponent {
     if (temp.subjectId !== 'ALL') {
       Object.assign(this.qbankObject, { subjectId: this.subjectId });
     }
-
     if (this.currentRouter === 'build-test') {
       this.questionService
         .postQbankRequest(this.qbankObject)

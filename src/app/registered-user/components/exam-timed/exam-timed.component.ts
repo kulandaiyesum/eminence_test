@@ -82,65 +82,6 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
   public liveExamRoomCode: string;
   chatForm: FormGroup;
   private chartIntervalId;
-  chatMessages = [
-    {
-      userName: 'Emily',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky,Wow, This question is actually pretty tricky,Wow, This question is actually pretty tricky,Wow, This question is actually pretty tricky,Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'John',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'Joe',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'sri',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'honey',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'swathi',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'dhara',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'tamil',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'jawahar',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'veera',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    {
-      userName: 'shek',
-      timestamp: '09:20',
-      text: 'Wow, This question is actually pretty tricky',
-    },
-    // Add more messages as needed
-  ];
-
   // @ViewChild('scrollContainer') scrollContainer: ElementRef;
   @ViewChild('target') private myScrollContainer: ElementRef;
   gettingChatData;
@@ -206,7 +147,6 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
       this.examArray.push(tempQuestionObj);
     });
     this.liveExamRoomCode = localStorage.getItem('8');
-    console.log(this.liveExamRoomCode);
     this.gettingChatData = { roomCode: this.liveExamRoomCode };
     if (this.liveExamRoomCode) {
       this.examTimedObject.examType = 'GROUP';
@@ -261,6 +201,8 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     }
   }
   gotoNext(selectedQuestion: indexBasedQuestionType, selectedOptionId: string) {
+    console.log(selectedOptionId, selectedQuestion, 'eeeeeeeee');
+
     if (selectedOptionId !== undefined && selectedOptionId !== '') {
       const correctAnswer: QgenOption = selectedQuestion.options.find(
         (item: any) => item.explanation != null
@@ -270,7 +212,9 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
           payloadQuestion.isCorrectAnswer =
             correctAnswer._id === selectedOptionId ? 'YES' : 'NO';
           payloadQuestion.selectedAnswer = this.tempOption;
-          payloadQuestion.selectedAnswerId = selectedOptionId;
+          selectedOptionId
+            ? (payloadQuestion.selectedAnswerId = selectedOptionId)
+            : '';
           payloadQuestion.time = this.timer;
         }
       });
@@ -421,7 +365,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
         this.examTimedObject.questions = this.examArray;
         this.examTimedObject.time = this.timeTakenForExam();
         this.examTimedObject.questionsCount = this.questions.length;
-        // console.log(this.examTimedObject);
+        console.log(this.examTimedObject);
         this.examService.examSubmit(this.examTimedObject).subscribe(
           (response: any) => {
             console.log(response);
@@ -455,14 +399,11 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     this.privateExamService.updateChat(this.message).subscribe((doc) => {
       this.chatForm.reset();
       let data1 = { roomCode: this.liveExamRoomCode };
-      console.log(data1);
-
       this.privateExamService.getByRoomCode(data1).subscribe((doc1: any) => {
         this.chatData = doc1.result;
         this.messageList = this.chatData.messageList;
         console.log(this.messageList);
         setTimeout(() => {
-          // Your code here
           this.scrollToElement();
         }, 500);
       });
@@ -484,9 +425,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
       .subscribe((doc1: any) => {
         this.chatData = doc1.result;
         this.messageList = this.chatData.messageList;
-        // console.log(this.messageList);
         setTimeout(() => {
-          // Your code here
           this.scrollToElement();
         }, 500);
       });

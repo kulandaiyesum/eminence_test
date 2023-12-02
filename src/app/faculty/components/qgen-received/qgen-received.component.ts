@@ -13,8 +13,8 @@ import { QgenService } from '../../service/qgen.service';
   styleUrls: ['./qgen-received.component.scss'],
 })
 export class QgenReceivedComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator: MatPaginator | any;
-  @ViewChild(MatSort) sort: MatSort | any;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = ['date', 'input', 'questionsCount', 'open'];
   userId: string = '';
@@ -37,7 +37,6 @@ export class QgenReceivedComponent implements OnInit {
     this.qgenService.getQGen(this.userId).subscribe(
       (res: any) => {
         const tempHolder = res.result;
-        console.log(tempHolder);
         this.questionSet = tempHolder.filter(
           (pendingItem) => pendingItem.status === 'RECEIVED'
         );

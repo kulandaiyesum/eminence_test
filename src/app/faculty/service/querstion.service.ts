@@ -14,11 +14,11 @@ export class QuerstionService {
     return this.http.put(this.baseUrl + 'requests/' + data.reqId, data);
   }
   UpdateOption(reqId, data) {
-    return this.http.put(this.baseUrl + reqId, data);
+    return this.http.patch(this.baseUrl + reqId, data);
   }
 
   daleteQuestion(reqId) {
-    return this.http.delete(this.baseUrl + reqId._id, reqId);
+    return this.http.put(this.baseUrl + reqId._id, reqId);
   }
 
   updateStatusOfQuestion(data) {

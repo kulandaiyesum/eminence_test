@@ -13,7 +13,6 @@ import { Register } from '../../model/register.model';
 import { Login } from '../../model/login.model';
 import { ToastrService } from 'ngx-toastr';
 import { EmailComponent } from '../email/email.component';
-import { EmailPopupComponent } from '../email-popup/email-popup.component';
 import { RegisterComponent } from '../register/register.component';
 
 @Component({
@@ -38,6 +37,7 @@ export class LoginComponent {
     email: '',
     password: '',
     institutionName: '',
+    pacakageId: '',
   };
   public loginModel: Login = {
     email: '',
@@ -78,8 +78,6 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.loginService.loginAuthenticate(this.loginForm.value).subscribe(
         (response: any) => {
-          console.log(response, 'oooooooooo');
-
           if (
             response.result.user.role.role === 'ADMIN' ||
             response.result.user.role.role === 'FACULTY' ||

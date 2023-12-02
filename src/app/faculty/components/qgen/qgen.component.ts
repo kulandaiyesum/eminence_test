@@ -52,9 +52,6 @@ export class QgenComponent implements OnInit {
       localStorage.getItem('2'),
       this.secretKey
     );
-    console.log(this.user);
-
-
     this.userId = this.rsaService.decryptText(
       localStorage.getItem('5'),
       this.secretKey
@@ -115,7 +112,7 @@ export class QgenComponent implements OnInit {
     //       }
     //     );
     // } else {
-      this.getPendingQuestions();
+    this.getPendingQuestions();
     // }
   }
 
@@ -146,7 +143,6 @@ export class QgenComponent implements OnInit {
     this.gGenService.getQGen(this.userId).subscribe(
       (res: any) => {
         const tempHolder = res.result;
-        console.log(tempHolder.length);
         this.qgenObjectList = tempHolder.filter(
           (pendingItem) => pendingItem.status === 'Pending'
         );
@@ -160,7 +156,6 @@ export class QgenComponent implements OnInit {
           questionsCount: item.questionsCount,
           _id: item._id,
         }));
-        console.log(this.itemsreceivedQuestion);
         if (this.itemsreceivedQuestion?.length) {
           console.log('Array has values');
         } else {
@@ -180,7 +175,7 @@ export class QgenComponent implements OnInit {
     this.qGenObject.type = 'Qgen';
     this.qGenObject.createdBy = this.userFirstName;
     this.qGenObject.keywords = this.stringToArray(this.gGenForm.value.keywords);
-    this.qGenObject.mode="TUTOR"
+    this.qGenObject.mode = 'TUTOR';
     this.gGenService.submitQgen(this.qGenObject).subscribe(
       (response: any) => {
         const statusCode = response.statusCode;
@@ -237,9 +232,7 @@ export class QgenComponent implements OnInit {
    * render to tutor page
    *
    * ******/
-  startExam(item){
+  startExam(item) {
     console.log(item);
   }
-
-
 }
