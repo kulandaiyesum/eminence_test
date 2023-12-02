@@ -137,7 +137,8 @@
   display: flex;
   align-items: center;
   justify-content: start;
-  gap: 2rem;
+  row-gap: 2rem;
+  column-gap: 1rem;
   flex-wrap: wrap;
 }
 
@@ -205,28 +206,16 @@
 .err {
   font-size: small;
 }
-// form {
-//   display: flex;
-//   align-items: center;
-//   flex-wrap: wrap;
-//   flex-direction: row-reverse;
-//   gap: 10px;
-// }
 .row_flex_rev {
   flex-direction: row-reverse;
 }
 .qgen {
-  // width: 45%;
   height: fit-content;
   border: 2px solid grey;
   // float: right;
   padding: 10px;
   border-radius: 10px;
   overflow: auto;
-  // @media (min-width: 768px) {
-  //   // Adjust the breakpoint as needed
-  //   float: right;
-  // }
   h6 {
     font-weight: 600;
   }
@@ -241,8 +230,10 @@
   }
 }
 
-@media (max-width: 767px) {
-  // Mobile view styles
+@media (max-width: 768px) {
+  .wrap_recommed {
+    margin-bottom: 2rem;
+  }
   .questons-container {
     flex-direction: column;
   }
@@ -269,9 +260,18 @@
       width: 50% !important;
     }
   }
+  .row_formfield {
+    justify-content: center;
+    mat-form-field {
+      width: 300px !important;
+    }
+  }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
+  .wrap_recommed {
+    margin-bottom: 2rem;
+  }
   .qbank {
     #system {
       margin-left: 0 !important;
