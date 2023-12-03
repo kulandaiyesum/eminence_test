@@ -204,8 +204,6 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     }
   }
   gotoNext(selectedQuestion: indexBasedQuestionType, selectedOptionId: string) {
-    console.log(selectedOptionId, selectedQuestion, 'eeeeeeeee');
-
     if (selectedOptionId !== undefined && selectedOptionId !== '') {
       const correctAnswer: QgenOption = selectedQuestion.options.find(
         (item: any) => item.explanation != null

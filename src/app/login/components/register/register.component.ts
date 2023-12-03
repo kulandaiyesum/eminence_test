@@ -123,14 +123,13 @@ export class RegisterComponent {
       locale: 'auto',
       token: (stripeToken: any) => {
         console.log(stripeToken);
-        // You can handle the token here, like sending it to your server for payment processing
       },
     });
 
     paymentHeader.open({
       name: 'Payment Details',
       description: 'Your Order total Amount is ' + amount,
-      amount: amount, // Amount in cents (e.g., $10 should be 1000)
+      amount: amount,
     });
 
     // const userData = {
