@@ -185,23 +185,24 @@ export class InstitutePopupComponent {
       this.institutionModel.enddate
     );
 
-    if (this.instituteForm.valid) {
-      this.closeDialog();
-      this.instituteService.createInstitute(this.institutionModel).subscribe(
-        (response: any) => {
-          console.log(response);
-          this.toastr.success(response.message, '', {
-            timeOut: 3000,
-          });
-        },
-        (error) => {
-          this.toastr.error(error.error.message, '', {
-            timeOut: 3000,
-          });
-          console.error('Not data get', error);
-        }
-      );
-    }
+    // if (this.instituteForm.valid) {
+    // this.closeDialog();
+    this.instituteService.createInstitute(this.institutionModel).subscribe(
+      (response: any) => {
+        // console.log(response);
+        this.toastr.success(response.message, '', {
+          timeOut: 3000,
+        });
+        this.closeDialog();
+      },
+      (error) => {
+        this.toastr.error(error.error.message, '', {
+          timeOut: 3000,
+        });
+        console.error('Not data get', error);
+      }
+    );
+    // }
   }
 
   updateInstitute() {
@@ -259,7 +260,7 @@ export class InstitutePopupComponent {
   verifyOtp(list) {
     console.log(list);
     if (this.otp === list) {
-      this.toastr.warning('OTP  Verified Successfully');
+      this.toastr.success('OTP  Verified Successfully');
     } else {
       this.toastr.warning('Enter Vaild OTP');
     }
