@@ -27,4 +27,8 @@ export class PrivateExamService {
   getLandingPage(data) {
     return this.http.put(this.baseUrl + '/users', data);
   }
+
+  getHostExamHistory(email) {
+    return this.http.put(this.baseUrl +"/"+ email, email);
+  }
 }
