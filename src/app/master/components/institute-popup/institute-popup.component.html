@@ -168,29 +168,49 @@
             </div>
           </div>
         </div>
-        <div class="email">
-          <label for="email">Email</label>
+        <div class="email_warp">
+          <div class="email">
+            <label for="email">Email</label>
+            <input
+              type="text"
+              placeholder="Email"
+              name="email"
+              [(ngModel)]="institutionModel.email"
+              [value]="minDate"
+              required
+              email
+            />
+            <div
+              *ngIf="instituteForm.controls['email']?.errors?.['required'] && instituteForm.controls['email']?.touched"
+              class="error-message"
+            >
+              Email is required.
+            </div>
+            <div
+              *ngIf="instituteForm.controls['email']?.errors?.['email'] && instituteForm.controls['email']?.touched"
+              class="error-message"
+            >
+              Invalid email format.
+            </div>
+          </div>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="verifyEmail()"
+            [disabled]="instituteForm.controls['email']?.invalid"
+          >
+            verify
+          </button>
+        </div>
+
+        <div class="phoneNo">
+          <label for="phoneNo">Phone number (Optional)</label>
           <input
-            type="text"
-            placeholder="Email"
-            name="email"
-            [(ngModel)]="institutionModel.email"
-            [value]="minDate"
-            required
-            email
+            type="tel"
+            placeholder="999 999 9999"
+            name="phoneNo"
+            [(ngModel)]="institutionModel.phoneNo"
           />
-          <div
-            *ngIf="instituteForm.controls['email']?.errors?.['required'] && instituteForm.controls['email']?.touched"
-            class="error-message"
-          >
-            Email is required.
-          </div>
-          <div
-            *ngIf="instituteForm.controls['email']?.errors?.['email'] && instituteForm.controls['email']?.touched"
-            class="error-message"
-          >
-            Invalid email format.
-          </div>
         </div>
         <button
           type="submit"

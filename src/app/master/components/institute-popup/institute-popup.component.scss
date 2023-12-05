@@ -104,13 +104,12 @@
             color: #bcbcbc;
           }
         }
-        p{
+        p {
           margin-top: 10px;
         }
         .error-message {
           color: red;
           font-size: 14px;
-
         }
         button {
           margin-top: 25px;
@@ -146,14 +145,26 @@
       }
     }
   }
+  .email_warp {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-start;
+    .email {
+      width: 60%;
+    }
+    button {
+      max-width: 150px;
+    }
+  }
   @media (max-width: 768px) {
     /* Change the maximum width (768px) to suit your breakpoint for tablet view */
     .data {
-      .forms{
-        .part-input{
+      .forms {
+        .part-input {
           flex-direction: column;
 
-          .sub-part-input{
+          .sub-part-input {
             width: 100% !important;
 
             input {
