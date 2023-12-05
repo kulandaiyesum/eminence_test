@@ -1,17 +1,415 @@
-<mat-table [dataSource]="serumValues" class="mat-elevation-z8">
-  <ng-container matColumnDef="subject">
-    <mat-header-cell *matHeaderCellDef>Subject</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.subject }}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="referenceRange">
-    <mat-header-cell *matHeaderCellDef>Reference Range</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.referenceRange }}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="referenceInterval">
-    <mat-header-cell *matHeaderCellDef>SI Reference Intervals</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.referenceRange }}</mat-cell>
-  </ng-container>
-  <mat-header-row *matHeaderRowDef="serumColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: serumColumns"></mat-row>
-</mat-table>
+<table style="width: 100%" class="">
+  <thead>
+    <tr>
+      <td><strong>SERUM</strong></td>
+      <td><strong>Reference Range</strong></td>
+      <td><strong>SI Reference Intervals</strong></td>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- General chemistry -->
 
+    <tr>
+      <td><strong>General Chemistry:</strong></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Electrolytes</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><span class="ms-3">Sodium (Na+)</span></td>
+      <td>136–146 mEq/L</td>
+      <td>136–146 mmol/L</td>
+    </tr>
+    <tr>
+      <td><span class="ms-3">Potassium (K+)</span></td>
+      <td>3.5–5.0 mEq/L</td>
+      <td>3.5–5.0 mmol/L</td>
+    </tr>
+    <tr>
+      <td><span class="ms-3">Chloride (Cl–)</span></td>
+      <td>95–105 mEq/L</td>
+      <td>95–105 mmol/L</td>
+    </tr>
+    <tr>
+      <td>
+        <span class="ms-3">Bicarbonate (HCO<sub>3</sub><sup>–</sup>)</span>
+      </td>
+      <td>22–28 mEq/L</td>
+      <td>22–28 mmol/L</td>
+    </tr>
+    <tr>
+      <td>Urea nitrogen</td>
+      <td>7–18 mg/dL</td>
+      <td>2.5–6.4 mmol/L</td>
+    </tr>
+    <tr>
+      <td>Creatinine</td>
+      <td>0.6–1.2 mg/dL</td>
+      <td>53–106 μmol/L</td>
+    </tr>
+    <tr>
+      <td>Glucose</td>
+      <td>Fasting: 70–100 mg/dL</td>
+      <td>3.8–5.6 mmol/L</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Random, non-fasting: <140 mg/dL</td>
+      <td><7.77 mmol/L</td>
+    </tr>
+    <tr>
+      <td>Calcium</td>
+      <td>8.4–10.2 mg/dL</td>
+      <td>2.1–2.6 mmol/L</td>
+    </tr>
+    <tr>
+      <td>Magnesium (Mg<sup>2+</sup>)</td>
+      <td>1.5–2.0 mg/dL</td>
+      <td>0.75–1.0 mmol/L</td>
+    </tr>
+    <tr>
+      <td>Phosphorus (inorganic)</td>
+      <td>3.0–4.5 mg/dL</td>
+      <td>1.0–1.5 mmol/L</td>
+    </tr>
+
+    <!-- Hepatic -->
+
+    <tr>
+      <td><strong>Hepatic:</strong></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Alanine aminotransferase (ALT)</td>
+      <td>10–40 U/L</td>
+      <td>10–40 U/L</td>
+    </tr>
+    <tr>
+      <td>Aspartate aminotransferase (AST)</td>
+      <td>12–38 U/L</td>
+      <td>12–38 U/L</td>
+    </tr>
+    <tr>
+      <td>Alkaline phosphatase</td>
+      <td>25–100 U/L</td>
+      <td>25–100 U/L</td>
+    </tr>
+    <tr>
+      <td>Amylase</td>
+      <td>25–125 U/L</td>
+      <td>25–125 U/L</td>
+    </tr>
+    <tr>
+      <td>Bilirubin, total // direct</td>
+      <td>0.1–1.0 mg/dL // 0.0–0.3 mg/dL</td>
+      <td>2–17 μmol/L // 0–5 μmol/L</td>
+    </tr>
+    <tr>
+      <td>Proteins, total</td>
+      <td>6.0–7.8 g/dL</td>
+      <td>60–78 g/L</td>
+    </tr>
+    <tr>
+      <td><span class="ms-3">Albumin</span></td>
+      <td>3.5–5.5 g/dL</td>
+      <td>35–55 g/L</td>
+    </tr>
+    <tr>
+      <td><span class="ms-3">Globulin</span></td>
+      <td>2.3–3.5 g/dL</td>
+      <td>23–35 g/L</td>
+    </tr>
+
+    <!-- Lipids -->
+
+    <tr>
+      <td><strong>Lipids:</strong></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Cholesterol</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><span class="ms-3">Total</span></td>
+      <td>Normal: <200 mg/dL</td>
+      <td><5.2 mmol/L</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>High: >240 mg/dL</td>
+      <td>>6.2 mmol/L</td>
+    </tr>
+    <tr>
+      <td><span class="ms-3">HDL</span></td>
+      <td>40–60 mg/dL</td>
+      <td>1.0–1.6 mmol/L</td>
+    </tr>
+    <tr>
+      <td><span class="ms-3">LDL</span></td>
+      <td><160 mg/dL</td>
+      <td><4.2 mmol/L</td>
+    </tr>
+    <tr>
+      <td>Triglycerides</td>
+      <td>Normal: <150 mg/dL</td>
+      <td><1.70 mmol/L</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Borderline: 151–199 mg/dL</td>
+      <td>1.71–2.25 mmol/L</td>
+    </tr>
+
+    <!-- Iron Studies: -->
+
+    <tr>
+      <td><strong>Iron Studies:</strong></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Ferritin</td>
+      <td>Male: 20–250 ng/mL</td>
+      <td>20–250 μg/L</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Female: 10–120 ng/mL</td>
+      <td>10–120 μg/L</td>
+    </tr>
+    <tr>
+      <td>Iron</td>
+      <td>Male: 65–175 µg/dL</td>
+      <td>11.6–31.3 μmol/L</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Female: 50–170 μg/dL</td>
+      <td>9.0–30.4 μmol/L</td>
+    </tr>
+    <tr>
+      <td>Total iron-binding capacity</td>
+      <td>250–400 µg/dL</td>
+      <td>44.8–71.6 μmol/L</td>
+    </tr>
+    <tr>
+      <td>Transferrin</td>
+      <td>200–360 mg/dL</td>
+      <td>2.0–3.6 g/L</td>
+    </tr>
+
+    <!-- Endocrine: -->
+    <tr>
+      <td><strong>Endocrine:</strong></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Follicle-stimulating hormone</td>
+      <td>Male: 4–25 mIU/mL</td>
+      <td>4–25 IU/L</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Female: premenopause 4–30 mIU/mL</td>
+      <td>4–30 IU/L</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><span class="ms-3">midcycle peak 10–90 mIU/mL</span></td>
+      <td>10–90 IU/L</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><span class="ms-3">postmenopause 40–250 mIU/mL</span></td>
+      <td>40–250 IU/L</td>
+    </tr>
+    <tr>
+      <td>Luteinizing hormone</td>
+      <td>Male: 6–23 mIU/mL</td>
+      <td>6–23 IU/L</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Female: follicular phase 5–30 mIU/mL</td>
+      <td>5–30 IU/L</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><span class="ms-3">midcycle 75–150 mIU/mL</span></td>
+      <td>75–150 IU/L</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><span class="ms-3">postmenopause 30–200 mIU/mL</span></td>
+      <td>30–200 IU/L</td>
+    </tr>
+    <tr>
+      <td>Growth hormone - arginine stimulation</td>
+      <td>Fasting: <5 ng/mL</td>
+      <td><5 μg/L</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Provocative stimuli: >7 ng/mL</td>
+      <td>>7 μg/L</td>
+    </tr>
+    <tr>
+      <td>Prolactin (hPRL)</td>
+      <td>Male: <17 ng/mL</td>
+      <td><17 μg/L</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Female: <25 ng/mL</td>
+      <td><25 μg/L</td>
+    </tr>
+    <tr>
+      <td>Cortisol</td>
+      <td>0800 h: 5–23 μg/dL</td>
+      <td>138–635 nmol/L</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>1600 h: 3–15 μg/dL</td>
+      <td>82–413 nmol/L</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>2000 h: <50% of 0800 h</td>
+      <td>Fraction of 0800 h: <0.50</td>
+    </tr>
+    <tr>
+      <td>TSH</td>
+      <td>0.4–4.0 μU/mL</td>
+      <td>0.4–4.0 mIU/L</td>
+    </tr>
+    <tr>
+      <td>Triiodothyronine (T3) (RIA)</td>
+      <td>100–200 ng/dL</td>
+      <td>1.5–3.1 nmol/L</td>
+    </tr>
+    <tr>
+      <td>Triiodothyronine (T3) resin uptake</td>
+      <td>25%–35%</td>
+      <td>0.25–0.35</td>
+    </tr>
+    <tr>
+      <td>Thyroxine (T4)</td>
+      <td>5–12 μg/dL</td>
+      <td>64–155 nmol/L</td>
+    </tr>
+    <tr>
+      <td>Free T4</td>
+      <td>0.9–1.7 ng/dL</td>
+      <td>12.0–21.9 pmol/L</td>
+    </tr>
+    <tr>
+      <td>Thyroidal iodine (123I) uptake</td>
+      <td>8%–30% of administered dose/24 h</td>
+      <td>0.08–0.30/24 h</td>
+    </tr>
+    <tr>
+      <td>Intact PTH</td>
+      <td>10–60 pg/mL</td>
+      <td>10–60 ng/L</td>
+    </tr>
+    <tr>
+      <td>17-Hydroxycorticosteroids</td>
+      <td>Male: 3.0–10.0 mg/24 h</td>
+      <td>8.2–27.6 μmol/24 h</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Female: 2.0–8.0 mg/24 h</td>
+      <td>5.5–22.0 μmol/24 h</td>
+    </tr>
+    <tr>
+      <td>17-Ketosteroids, total</td>
+      <td>Male: 8–20 mg/24 h</td>
+      <td>28–70 μmol/24 h</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Female: 6–15 mg/24 h</td>
+      <td>21–52 μmol/24 h</td>
+    </tr>
+
+    <!-- Immunoglobulins: -->
+    <tr>
+      <td><strong>Immunoglobulins:</strong></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>IgA</td>
+      <td>76–390 mg/dL</td>
+      <td>0.76–3.90 g/L</td>
+    </tr>
+    <tr>
+      <td>IgE</td>
+      <td>0–380 IU/mL</td>
+      <td>0–380 kIU/L</td>
+    </tr>
+    <tr>
+      <td>IgG</td>
+      <td>650–1500 mg/dL</td>
+      <td>6.5–15.0 g/L</td>
+    </tr>
+    <tr>
+      <td>IgM</td>
+      <td>50–300 mg/dL</td>
+      <td>0.5–3.0 g/L</td>
+    </tr>
+
+    <!-- Other, serum: -->
+    <tr>
+      <td><strong>Other, serum:</strong></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>Creatinine clearance</td>
+      <td>Male: 97–137 mL/min</td>
+      <td>97–137 mL/min</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Female: 88–128 mL/min</td>
+      <td>88–128 mL/min</td>
+    </tr>
+    <tr>
+      <td>Creatine kinase</td>
+      <td>Male: 25–90 U/L</td>
+      <td>25–90 U/L</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>Female: 10–70 U/L</td>
+      <td>10–70 U/L</td>
+    </tr>
+    <tr>
+      <td>Lactate dehydrogenase</td>
+      <td>45–200 U/L</td>
+      <td>45–200 U/L</td>
+    </tr>
+    <tr>
+      <td>Osmolality</td>
+      <td>275–295 mOsmol/kg H2O</td>
+      <td>275–295 mOsmol/kg H2O</td>
+    </tr>
+    <tr>
+      <td>Uric acid</td>
+      <td>3.0–8.2 mg/dL</td>
+      <td>0.18–0.48 mmol/L</td>
+    </tr>
+  </tbody>
+</table>

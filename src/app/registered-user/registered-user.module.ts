@@ -53,6 +53,9 @@ import { InitialsPipe } from './pipes/initials.pipe';
 import { TimeformatPipe } from './pipes/timeformat.pipe';
 import { LandingComponent } from './components/landing/landing.component';
 import { LiveExamroomComponent } from './components/live-examroom/live-examroom.component';
+import { CerebrospinalFluidComponent } from './components/cerebrospinal-fluid/cerebrospinal-fluid.component';
+import { HematologicComponent } from './components/hematologic/hematologic.component';
+import { UrineComponent } from './components/urine/urine.component';
 
 
 @NgModule({
@@ -74,6 +77,9 @@ import { LiveExamroomComponent } from './components/live-examroom/live-examroom.
     TimeformatPipe,
     LandingComponent,
     LiveExamroomComponent,
+    CerebrospinalFluidComponent,
+    HematologicComponent,
+    UrineComponent,
   ],
   imports: [
     FormsModule,

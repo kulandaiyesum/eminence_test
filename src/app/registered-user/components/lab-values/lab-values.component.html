@@ -7,37 +7,40 @@
   <mat-tab label="Urine"><app-serum-values></app-serum-values></mat-tab>
 </mat-tab-group> -->
 <div class="custom_tab_groupall">
-<!-- <div class="devided_two_part">
+  <!-- <div class="devided_two_part">
 </div> -->
 
-<div class="custom_tab_group">
-  <div class="close-icon" (click)="closeDialog()">&#10006;</div>
-  <div class="lab_values">
-    <p>Lab Values</p>
-  </div>
-  <div class="lab_input">
+  <div class="custom_tab_group">
+    <div class="close-icon" (click)="closeDialog()">&#10006;</div>
+    <div class="lab_values">
+      <p>Lab Values</p>
+    </div>
+    <!-- <div class="lab_input">
     <input/>
     <section class="example-section">
       <mat-checkbox class="example-margin">SI Reference intervals</mat-checkbox>
     </section>
+  </div> -->
+    <div class="custom_tab_btn">
+      <button (click)="selectButton(1)">Serum</button>
+      <button (click)="selectButton(2)">Cerebrospinal</button>
+      <button (click)="selectButton(3)">Hematologic</button>
+      <button (click)="selectButton(4)">Urine</button>
+    </div>
+    <div *ngIf="selectedButton === 1" class="custom_tab_Serum table_wrap">
+      <app-serum-values></app-serum-values>
+    </div>
+    <div
+      *ngIf="selectedButton === 2"
+      class="custom_tab_Cerebrospinal table_wrap"
+    >
+    <app-cerebrospinal-fluid></app-cerebrospinal-fluid>
+    </div>
+    <div *ngIf="selectedButton === 3" class="custom_tab_Hematologic table_wrap">
+      <app-hematologic></app-hematologic>
+    </div>
+    <div *ngIf="selectedButton === 4" class="custom_tab_Urine table_wrap">
+      <app-urine></app-urine>
+    </div>
   </div>
-  <div class="custom_tab_btn">
-  <button (click)="selectButton(1)">Serum</button>
-  <button (click)="selectButton(2)">Cerebrospinal</button>
-  <button (click)="selectButton(3)">Hematologic</button>
-  <button (click)="selectButton(4)">Urine</button>
-</div>
-  <div *ngIf="selectedButton === 1" class="custom_tab_Serum">
-    <app-serum-values></app-serum-values>
-  </div>
-  <div *ngIf="selectedButton === 2" class="custom_tab_Cerebrospinal">
-    <app-serum-values></app-serum-values>
-  </div>
-  <div *ngIf="selectedButton === 3" class="custom_tab_Hematologic">
-    <app-serum-values></app-serum-values>
-  </div>
-  <div *ngIf="selectedButton === 4" class="custom_tab_Urine">
-    <app-serum-values></app-serum-values>
-  </div>
-</div>
 </div>
