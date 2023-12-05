@@ -19,48 +19,20 @@ import { PrivateExamService } from '../../service/private-exam.service';
   styleUrls: ['./saved.component.scss'],
 })
 export class SavedComponent {
-  displayedColumns: string[] = [
-    'date',
-    'mode',
-    'question',
-    'subject',
-    'system',
-    'score',
-  ];
-  public slides = [
-    {
-      title: 'Slide 1',
-      content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
-    },
-    {
-      title: 'Slide 2',
-      content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
-    },
-    {
-      title: 'Slide 3',
-      content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
-    },
-    {
-      title: 'Slide 4',
-      content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
-    },
-    {
-      title: 'Slide 5',
-      content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
-    },
-  ];
+
+
   translateValue = 0; // Initial translation value
   // slideWidth = 300; // Adjust this based on your slide width
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
+  @ViewChild('scrollContainerTable') scrollContainerTable: ElementRef;
   currentSlideIndex = 0;
   numVisibleSlides = 3;
   public userId: string;
   public userEmail: string;
   secretKey: string = environment.secretKey;
   examArray: any[] = [];
+  dataSource = new MatTableDataSource<any>();
+  displayedColumns: string[] = ['createdBy', 'roomCode', 'noOfPeople','activeEmails', 'inactiveEmails', 'review'];
   constructor(
     private animationBuilder: AnimationBuilder,
     private rsaService: RsaService,
@@ -89,6 +61,9 @@ export class SavedComponent {
     const scrollbar = Scrollbar.init(this.scrollContainer.nativeElement, {
       // Smooth Scrollbar options go here
     });
+    const scrollbars = Scrollbar.init(this.scrollContainerTable.nativeElement, {
+      // Smooth Scrollbar options go here
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -110,7 +85,7 @@ export class SavedComponent {
     this.examService.getExamDetailsByStudentId(userid).subscribe(
       (response: any) => {
         this.examArray = response.result;
-        console.log(this.examArray);
+        // console.log(this.examArray);
       },
       (err) => {
         console.log(err);
@@ -134,12 +109,20 @@ export class SavedComponent {
 
   getHostExamRoomHistory() {
     this.privateExamService.getHostExamHistory(this.userEmail).subscribe(
-      (response) => {
-        console.log(response);
+      (response:any) => {
+        console.log(response.result);
+        this.dataSource.data = response.result;
+        const transformedData = response.result.map(room => ({
+          ...room,
+          noOfPeople: room.emails.length
+        }));
+        this.dataSource.data = transformedData;
       },
       (err) => {
         console.log(err);
       }
     );
   }
+
+
 }
