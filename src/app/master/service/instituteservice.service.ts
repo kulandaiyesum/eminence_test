@@ -15,7 +15,7 @@ export class InstituteserviceService {
   }
 
   sendVerificationCode(data: { email: string }) {
-    return this.http.post(this.baseUrl + 'verifyemail', data);
+    return this.http.put(this.baseUrl + '/', data);
   }
 
   createInstitute(data: any) {

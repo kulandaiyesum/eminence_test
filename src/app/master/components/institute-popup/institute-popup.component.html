@@ -202,6 +202,26 @@
             verify
           </button>
         </div>
+        <div class="email_warp" *ngIf="isSendingOTP">
+          <div class="email">
+            <label for="email">OTP</label>
+            <input
+              type="text"
+              placeholder="OTP"
+              name="otp"
+              [(ngModel)]="institutionModel.otp"
+              required
+              email
+            />
+          </div>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="verifyOtp(institutionModel.otp)"
+          >
+            verify
+          </button>
+        </div>
 
         <div class="phoneNo">
           <label for="phoneNo">Phone number (Optional)</label>

@@ -18,6 +18,7 @@ export class InstitutePopupComponent {
   instituteForm: FormGroup;
   hidePassword: boolean = true;
   secretKeyLength = 32;
+  public otp;
   secretKey = environment.secretKey;
   visibleUpdate: boolean = false;
   public items;
@@ -43,7 +44,9 @@ export class InstitutePopupComponent {
     durationType: '',
     country: '',
     questionsCountResetDate: new Date(),
+    otp: '',
   };
+  public isSendingOTP = false;
   public minDate: string = this.calculateMinDate();
 
   constructor(
@@ -184,8 +187,6 @@ export class InstitutePopupComponent {
 
     if (this.instituteForm.valid) {
       this.closeDialog();
-      console.log(this.institutionModel);
-      return;
       this.instituteService.createInstitute(this.institutionModel).subscribe(
         (response: any) => {
           console.log(response);
@@ -245,12 +246,22 @@ export class InstitutePopupComponent {
   verifyEmail() {
     let data = { email: this.institutionModel.email };
     this.instituteService.sendVerificationCode(data).subscribe(
-      (resp) => {
+      (resp: any) => {
+        this.isSendingOTP = true;
+        this.otp = resp.result.otp;
         console.log(resp);
       },
       (err: any) => {
         console.log(err);
       }
     );
+  }
+  verifyOtp(list) {
+    console.log(list);
+    if (this.otp === list) {
+      this.toastr.warning('OTP  Verified Successfully');
+    } else {
+      this.toastr.warning('Enter Vaild OTP');
+    }
   }
 }
