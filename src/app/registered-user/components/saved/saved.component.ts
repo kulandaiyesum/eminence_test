@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { QuestionComponent } from 'src/app/faculty/components/question/question.component';
 import { QuestionsComponent } from '../questions/questions.component';
+import { PrivateExamService } from '../../service/private-exam.service';
 
 @Component({
   selector: 'app-saved',
@@ -28,24 +29,24 @@ export class SavedComponent {
   ];
   public slides = [
     {
-      title:"Slide 1",
-      content:"Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+      title: 'Slide 1',
+      content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
     },
     {
-      title:"Slide 2",
-      content:"Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+      title: 'Slide 2',
+      content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
     },
     {
-      title:"Slide 3",
-      content:"Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+      title: 'Slide 3',
+      content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
     },
     {
-      title:"Slide 4",
-      content:"Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+      title: 'Slide 4',
+      content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
     },
     {
-      title:"Slide 5",
-      content:"Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+      title: 'Slide 5',
+      content: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
     },
   ];
   translateValue = 0; // Initial translation value
@@ -57,13 +58,15 @@ export class SavedComponent {
   currentSlideIndex = 0;
   numVisibleSlides = 3;
   public userId: string;
+  public userEmail: string;
   secretKey: string = environment.secretKey;
   examArray: any[] = [];
   constructor(
     private animationBuilder: AnimationBuilder,
     private rsaService: RsaService,
     public dialog: MatDialog,
-    private examService: ExamService
+    private examService: ExamService,
+    private privateExamService:PrivateExamService
   ) {}
 
   ngOnInit(): void {
@@ -72,7 +75,14 @@ export class SavedComponent {
       localStorage.getItem('5'),
       this.secretKey
     );
+
+    this.userEmail = this.rsaService.decryptText(
+      localStorage.getItem('10'),
+      this.secretKey
+    );
+    console.log(this.userEmail);
     this.getExamDetails(this.userId);
+    this.getHostExamRoomHistory();
   }
 
   ngAfterViewInit() {
@@ -99,7 +109,7 @@ export class SavedComponent {
   getExamDetails(userid: string) {
     this.examService.getExamDetailsByStudentId(userid).subscribe(
       (response: any) => {
-        this.examArray = response.result
+        this.examArray = response.result;
         console.log(this.examArray);
       },
       (err) => {
@@ -108,19 +118,28 @@ export class SavedComponent {
     );
   }
   getQuestions(row) {
-
     this.examService.getQuestionByExamId(row).subscribe((doc: any) => {
-
       const dataToPass = {
         result: doc.result,
-        row: row
+        row: row,
       };
       this.dialog.open(QuestionsComponent, {
         width: 'auto',
-        height:'auto',
+        height: 'auto',
         data: dataToPass,
       });
       // dialogRef.afterClosed().subscribe((result) => {});
     });
+  }
+
+  getHostExamRoomHistory() {
+    this.privateExamService.getHostExamHistory(this.userEmail).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 }
