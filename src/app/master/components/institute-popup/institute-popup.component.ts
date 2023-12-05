@@ -67,6 +67,7 @@ export class InstitutePopupComponent {
       this.institutionModel.zip = data.zip;
       this.institutionModel.city = data.city;
       this.institutionModel.country = data.country;
+      this.institutionModel.phoneNo = data.phoneNo;
     }
   }
 
@@ -183,6 +184,8 @@ export class InstitutePopupComponent {
 
     if (this.instituteForm.valid) {
       this.closeDialog();
+      console.log(this.institutionModel);
+      return;
       this.instituteService.createInstitute(this.institutionModel).subscribe(
         (response: any) => {
           console.log(response);
@@ -237,5 +240,17 @@ export class InstitutePopupComponent {
         }
       );
     }
+  }
+
+  verifyEmail() {
+    let data = { email: this.institutionModel.email };
+    this.instituteService.sendVerificationCode(data).subscribe(
+      (resp) => {
+        console.log(resp);
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
   }
 }

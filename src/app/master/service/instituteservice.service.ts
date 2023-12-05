@@ -7,28 +7,31 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class InstituteserviceService {
-public baseUrl = environment.localdomain + 'institutions'
-
+  public baseUrl = environment.localdomain + 'institutions';
 
   constructor(private http: HttpClient) {}
   gettingToken() {
     return localStorage.getItem('1');
   }
 
+  sendVerificationCode(data: { email: string }) {
+    return this.http.post(this.baseUrl + 'verifyemail', data);
+  }
+
   createInstitute(data: any) {
-    return this.http.post(this.baseUrl+'/', data,);
+    return this.http.post(this.baseUrl + '/', data);
   }
 
   getAllInstitute(): Observable<any[]> {
-    return this.http.get<any[]>(this.baseUrl+'/',);
+    return this.http.get<any[]>(this.baseUrl + '/');
   }
 
   updateInstitution(data: any): Observable<any> {
-    return this.http.put(this.baseUrl+'/'+data._id, data,);
+    return this.http.put(this.baseUrl + '/' + data._id, data);
   }
 
   deleteInstitution(data: any): Observable<any> {
-    return this.http.delete(this.baseUrl+'/'+data._id, {
+    return this.http.delete(this.baseUrl + '/' + data._id, {
       body: data,
     });
   }
