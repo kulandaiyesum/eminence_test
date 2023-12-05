@@ -29,6 +29,6 @@ export class PrivateExamService {
   }
 
   getHostExamHistory(email) {
-    return this.http.put(this.baseUrl +"/"+ email, email);
+    return this.http.put(this.baseUrl + '/histroy/' + email, email);
   }
 }
