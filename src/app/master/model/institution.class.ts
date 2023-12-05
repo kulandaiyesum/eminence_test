@@ -15,4 +15,5 @@ export class Institution {
   startdate: Date;
   enddate: Date;
   institutionName?: string;
+  phoneNo?: string;
 }
