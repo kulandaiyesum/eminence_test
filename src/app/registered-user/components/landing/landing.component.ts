@@ -12,14 +12,17 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LandingComponent {
   roomCode: string;
-  hostMail:string;
-  otpCode:string;
+  hostMail: string;
+  otpCode: string;
   attendedEmailArray;
   nonattendedEmailArray;
   secretKey = environment.secretKey;
-  enableStartButton:boolean=false;
+  enableStartButton: boolean = false;
 
   private intervalId;
+
+  getUserID: string;
+  isHostJoined:boolean=false;
 
   constructor(
     private route: ActivatedRoute,
@@ -27,8 +30,6 @@ export class LandingComponent {
     private loginService: LoginService,
     private toastr: ToastrService,
     private router: Router
-
-
   ) {}
 
   ngOnInit() {
@@ -37,7 +38,7 @@ export class LandingComponent {
       this.roomCode = otp;
     });
     const mail = localStorage.getItem('10');
-    this.hostMail=this.loginService.decryptText(mail, this.secretKey);
+    this.hostMail = this.loginService.decryptText(mail, this.secretKey);
     console.log(this.hostMail);
 
     this.getLandingPageDetails();
@@ -53,15 +54,16 @@ export class LandingComponent {
       (response: any) => {
         // this.roomCode = response.getUser.roomCode;
         // console.log(response.activeUse);
-        // console.log(response.result.getUser.hostMail);
+        console.log(response.result.getUser._id);
+        this.getUserID=response.result.getUser._id
+        this.isHostJoined=response.result.getUser.hostJoined
         // console.log(response.result.activeUser);
-        this.attendedEmailArray=response.result.activeUser
-        this.nonattendedEmailArray=response.result.inactiveUser
-        if (this.hostMail===response.result.getUser.hostMail) {
+        this.attendedEmailArray = response.result.activeUser;
+        this.nonattendedEmailArray = response.result.inactiveUser;
+        if (this.hostMail === response.result.getUser.hostMail) {
           // console.log("You are host");
-          this.enableStartButton=true
+          this.enableStartButton = true;
         }
-
       },
       (error) => {
         console.error('Error fetching random code:', error);
@@ -69,12 +71,12 @@ export class LandingComponent {
     );
   }
 
-  startExam(){
-    let privateExam={
-      roomCode:this.roomCode,
-      email:this.hostMail
-    }
-     this.privateExamRoomService.joinExam(privateExam).subscribe(
+  startExam() {
+    let privateExam = {
+      roomCode: this.roomCode,
+      email: this.hostMail,
+    };
+    this.privateExamRoomService.joinExam(privateExam).subscribe(
       (resp: any) => {
         console.log(resp);
         console.log(resp.result);
@@ -92,6 +94,41 @@ export class LandingComponent {
           // this.router.navigate(['/eminence/student/exam']);
           // } else {
           this.router.navigate(['/eminence/student/exam-timed']);
+          this.HostJoined();
+          // }
+        }
+      },
+      (err: any) => {
+        this.toastr.error(err.error.message, '', {
+          timeOut: 3000,
+        });
+      }
+    );
+  }
+  takeExam() {
+    let privateExam = {
+      roomCode: this.roomCode,
+      email: this.hostMail,
+    };
+    this.privateExamRoomService.joinExam(privateExam).subscribe(
+      (resp: any) => {
+        console.log(resp);
+        console.log(resp.result);
+        const tempData = resp.result[0];
+        if (tempData.length === 0) {
+          this.toastr.warning('NO Questions Found !!!', '', {
+            timeOut: 3000,
+          });
+        } else {
+          // this.examDataService.setExamRoomData(tempData);
+          localStorage.setItem('emex-td', JSON.stringify(tempData));
+          localStorage.setItem('8', privateExam.roomCode);
+          // localStorage.setItem('emm', this.qbankObject.mode);
+          // if (this.qbankObject.mode === 'TUTOR') {
+          // this.router.navigate(['/eminence/student/exam']);
+          // } else {
+          this.router.navigate(['/eminence/student/exam-timed']);
+          // this.HostJoined();
           // }
         }
       },
@@ -106,7 +143,6 @@ export class LandingComponent {
   startInterval(): void {
     this.intervalId = setInterval(() => {
       this.getLandingPageDetails();
-
     }, 1000);
   }
 
@@ -117,5 +153,20 @@ export class LandingComponent {
 
   ngOnDestroy(): void {
     this.stopInterval();
+  }
+
+  HostJoined() {
+    this.privateExamRoomService.ChangetrueHostJoin(this.getUserID).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.getLandingPageDetails();
+      },
+
+      (err: any) => {
+        this.toastr.error(err.error.message, '', {
+          timeOut: 3000,
+        });
+      }
+    );
   }
 }

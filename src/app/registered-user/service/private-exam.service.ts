@@ -31,4 +31,8 @@ export class PrivateExamService {
   getHostExamHistory(email) {
     return this.http.put(this.baseUrl + '/histroy/' + email, email);
   }
+
+  ChangetrueHostJoin(data){
+    return this.http.put(this.baseUrl+'/'+data,data);
+  }
 }
