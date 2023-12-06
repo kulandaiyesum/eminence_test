@@ -55,56 +55,70 @@
         <mat-table [dataSource]="dataSource">
           <!-- Created By Column -->
           <ng-container matColumnDef="createdBy">
-            <mat-header-cell *matHeaderCellDef style="flex: 0.3;"> Created By </mat-header-cell>
-            <mat-cell *matCellDef="let element" [matTooltip]="element.hostMail" style="flex: 0.3;">
-              {{ element.createdBy }}
+            <mat-header-cell *matHeaderCellDef style="flex: 0.3">
+              Total Questions
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              [matTooltip]="element.hostMail"
+              style="flex: 0.3"
+            >
+              {{ element.questionIds.length }}
             </mat-cell>
           </ng-container>
 
           <!-- Room Code Column -->
           <ng-container matColumnDef="roomCode">
-            <mat-header-cell *matHeaderCellDef style="flex: 0.4;"> Room Code </mat-header-cell>
-            <mat-cell *matCellDef="let element" style="flex: 0.4;">
+            <mat-header-cell *matHeaderCellDef style="flex: 0.4">
+              Room Code
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" style="flex: 0.4">
               {{ element.roomCode }}
             </mat-cell>
           </ng-container>
 
           <!-- No. of People Column -->
           <ng-container matColumnDef="noOfPeople">
-            <mat-header-cell *matHeaderCellDef style="flex: 0.5;"> No. of People </mat-header-cell>
-            <mat-cell *matCellDef="let element" style="flex: 0.5;">
+            <mat-header-cell *matHeaderCellDef style="flex: 0.5">
+              No. of People
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" style="flex: 0.5">
               {{ element.emails.length }}
             </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="activeEmails">
-            <mat-header-cell *matHeaderCellDef style="flex: 0.6;"> Attended </mat-header-cell>
-            <mat-cell *matCellDef="let element" style="flex: 0.6;">
+            <mat-header-cell *matHeaderCellDef style="flex: 0.6">
+              Attended
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" style="flex: 0.6">
               <div *ngFor="let email of element.emails">
-                <span *ngIf="email.isActive" [matTooltip]="email.email" id="attended-emails">{{ email.email | initials }} </span>
+                <span
+                  *ngIf="email.isActive"
+                  [matTooltip]="email.email"
+                  id="attended-emails"
+                  >{{ email.email | initials }}
+                </span>
               </div>
+              &nbsp;&nbsp;&nbsp;
             </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="inactiveEmails">
-            <mat-header-cell *matHeaderCellDef style="flex: 0.6;">
+            <mat-header-cell *matHeaderCellDef style="flex: 0.6">
               Not Attended
             </mat-header-cell>
-            <mat-cell *matCellDef="let element" style="flex: 0.6;">
+            <mat-cell *matCellDef="let element" style="flex: 0.6">
               <div *ngFor="let email of element.emails">
-                <span *ngIf="!email.isActive" [matTooltip]="email.email" id="non-attended-emails">{{ email.email | initials}}&nbsp;&nbsp;&nbsp; </span>
+                <span
+                  *ngIf="!email.isActive"
+                  [matTooltip]="email.email"
+                  id="non-attended-emails"
+                  >{{ email.email | initials }} </span
+                >&nbsp;&nbsp;&nbsp;
               </div>
             </mat-cell>
           </ng-container>
-
-          <ng-container matColumnDef="review">
-            <mat-header-cell *matHeaderCellDef style="flex: 0.3;"> Review </mat-header-cell>
-            <mat-cell *matCellDef="let element" style="flex: 0.3;">
-              <!-- Assuming 'review' is a boolean property -->
-              <mat-icon>visibility</mat-icon>
-            </mat-cell>
-          </ng-container>
-
           <!-- Column definitions -->
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
