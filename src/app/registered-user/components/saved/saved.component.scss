@@ -70,6 +70,24 @@
         mat-icon{
           color: #FFC400;
         }
+        #attended-emails{
+          color: #fff;
+          font-weight: 600;
+          width: 35px;
+          height: 30px;
+          background-color: rgba(0, 0, 255, 0.555);
+          padding: 6px;
+          border-radius: 50%;
+        }
+        #non-attended-emails{
+          color: #fff;
+          font-weight: 600;
+          width: 35px;
+          height: 30px;
+          background-color: skyblue;
+          padding: 6px;
+          border-radius: 50%;
+        }
       }
     }
   }

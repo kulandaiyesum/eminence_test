@@ -32,7 +32,7 @@ export class SavedComponent {
   secretKey: string = environment.secretKey;
   examArray: any[] = [];
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['createdBy', 'roomCode', 'noOfPeople','activeEmails', 'inactiveEmails', 'review'];
+  displayedColumns: string[] = ['createdBy', 'roomCode', 'noOfPeople','activeEmails', 'inactiveEmails'];
   constructor(
     private animationBuilder: AnimationBuilder,
     private rsaService: RsaService,
