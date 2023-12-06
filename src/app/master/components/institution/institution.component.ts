@@ -244,4 +244,27 @@ export class InstitutionComponent {
       this.getAllDataOfSubscription();
     });
   }
+
+  /**
+   * function to change the status of user/institute
+   * @param elementId 
+   */
+  changeStatus(elementId: string) {
+    console.log(elementId);
+    this.instituteService.changeStatus(elementId).subscribe(
+      (response: any) => {
+        this.toastr.success(response.message, '', {
+          timeOut: 3000,
+        });
+        this.getAllInstituteData();
+      },
+      (error) => {
+        this.toastr.error(error.error.message, '', {
+          timeOut: 3000,
+        });
+        this.getAllInstituteData();
+        console.error('Delete failed', error);
+      }
+    );
+  }
 }

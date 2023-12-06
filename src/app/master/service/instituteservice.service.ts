@@ -8,10 +8,20 @@ import { Observable } from 'rxjs';
 })
 export class InstituteserviceService {
   public baseUrl = environment.localdomain + 'institutions';
+  private baseUserUrl = environment.localdomain + 'user';
 
   constructor(private http: HttpClient) {}
   gettingToken() {
     return localStorage.getItem('1');
+  }
+
+  /**
+   * function to change status of user/institution
+   * @param _id
+   */
+  changeStatus(_id: string) {
+    const body = { _id };
+    return this.http.put(this.baseUserUrl + 'changeStatus', body);
   }
 
   sendVerificationCode(data: { email: string }) {
