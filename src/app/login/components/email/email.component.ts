@@ -93,6 +93,7 @@ export class EmailComponent {
           this.toastr.error('Provide registered email', '', {
             timeOut: 3000,
           });
+
         }
       );
     }
@@ -101,16 +102,17 @@ export class EmailComponent {
   verifyOTP() {
     if (this.otpForgotPasswordForm.valid) {
       this.decrpytionOTP();
-      if (this.otpForgotPasswordForm.value.otp === this.originalOTP) {
+      if (this.otpForgotPasswordForm.value.otp == this.originalOTP) {
         this.toastr.success('otp verified successfully', '', {
           timeOut: 3000,
         });
         this.openForgotPasswordDialog();
       } else {
         this.isSendingOTP = !this.isSendingOTP;
-        this.toastr.error('Provide registered email', '', {
+        this.toastr.error('OTP is not correct', '', {
           timeOut: 1000,
         });
+        this.closeDialog();
       }
     }
   }
