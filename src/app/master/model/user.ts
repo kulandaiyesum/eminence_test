@@ -10,4 +10,5 @@ export class User {
   topicId?: any;
   createdBy?: any;
   createdOn?: Date;
+  otp?: string;
 }

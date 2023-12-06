@@ -25,12 +25,14 @@ export class UserFormComponent implements OnInit {
     lastName: '',
     email: '',
     password: '',
+    otp: '',
     role: undefined,
     institutionId: undefined,
     subscriptionId: undefined,
     topicId: undefined,
   };
-
+  public isSendingOTP = false;
+  public otp;
   initialFormValues: any;
   isFormValueChanged: boolean = false;
   roles: Role[] = [];
@@ -65,6 +67,7 @@ export class UserFormComponent implements OnInit {
           Validators.email,
         ]),
         role: new FormControl(this.data?.role?._id || '', Validators.required),
+        otp: new FormControl(this.data?.otp || '', [Validators.required]),
         institutionId: new FormControl(
           this.data?.institutionId?._id || '',
           Validators.required
@@ -205,5 +208,28 @@ export class UserFormComponent implements OnInit {
   }
   onNoClick(): void {
     this.dialogRef.close();
+  }
+  verifyEmail() {
+    let data = { email: this.userObject.email };
+    this.institutionService.sendVerificationCode(data).subscribe(
+      (resp: any) => {
+        this.isSendingOTP = true;
+        this.otp = resp.result.otp;
+        console.log(resp);
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
+  verifyOtp(list) {
+    console.log(list);
+    console.log(this.otp);
+
+    if (this.otp === list) {
+      this.toastr.success('OTP  Verified Successfully');
+    } else {
+      this.toastr.warning('Enter Vaild OTP');
+    }
   }
 }

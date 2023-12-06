@@ -94,6 +94,16 @@
               >
             </div>
           </div>
+          <div class="col_group">
+            <button
+              type="button"
+              class="btn btn-primary"
+              (click)="verifyEmail()"
+              [disabled]="userForm.controls['email']?.invalid"
+            >
+              verify
+            </button>
+          </div>
         </div>
         <div class="col_group">
           <div class="form-group custom_group">
@@ -119,6 +129,34 @@
                 "
                 >Role is required</mat-error
               >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex_group">
+        <div class="form-group custom_group">
+          <div class="col_group">
+            <div class="email_warp" *ngIf="isSendingOTP">
+              <label for="email">OTP</label>
+              <input
+                type="text"
+                placeholder="OTP"
+                name="otp"
+                [(ngModel)]="userObject.otp"
+                formControlName="otp"
+                required
+              />
+            </div>
+          </div>
+          <div class="col_group" *ngIf="isSendingOTP">
+            <div class="form-group custom_group">
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="verifyOtp(userObject.otp)"
+              >
+                verify
+              </button>
             </div>
           </div>
         </div>
