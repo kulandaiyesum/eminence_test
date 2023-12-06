@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import * as CryptoJS from 'crypto-js';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -14,14 +13,18 @@ export class LoginService {
   constructor(private http: HttpClient) {}
 
   loginAuthenticate(data) {
-    return this.http.post(this.loginURL +"/login", data );
+    return this.http.post(this.loginURL + '/login', data);
   }
   resetPassword(data) {
-    return this.http.post(this.loginURL+'/forgotPassword', data);
+    return this.http.post(this.loginURL + '/forgotPassword', data);
   }
 
-  updatePassword(data){
-    return this.http.put(this.loginURL+'/'+data._id, data);
+  updatePassword(data) {
+    return this.http.put(this.loginURL + '/' + data._id, data);
+  }
+
+  verifyText(data) {
+    return this.http.put(this.loginURL + '/', data);
   }
 
   encryptText(text: string, secretKey: string): string {
@@ -32,5 +35,4 @@ export class LoginService {
     const decrypted = CryptoJS.AES.decrypt(encryptedText, secretKey);
     return decrypted.toString(CryptoJS.enc.Utf8);
   }
-
 }
