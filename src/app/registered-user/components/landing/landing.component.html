@@ -43,10 +43,19 @@
     <button
       mat-raised-button
       color="primary"
-      *ngIf="enableStartButton"
+      *ngIf="enableStartButton && !isHostJoined"
       (click)="startExam()"
     >
       Start Exam
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+
+      (click)="takeExam()"
+      *ngIf="isHostJoined"
+    >
+      Take Exam
     </button>
   </div>
 </div>
