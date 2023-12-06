@@ -23,7 +23,7 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then((h) => h.AuthModule),
   },
   {
-    path: 'forgotpassword',
+    path: 'login',
     loadChildren: () => import('./login/login.module').then((h) => h.LoginModule),
   },
 ];
