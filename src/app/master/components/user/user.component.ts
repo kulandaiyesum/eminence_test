@@ -27,7 +27,7 @@ export class UserComponent implements OnInit {
     'role',
     'institution',
     // 'subscription',
-    'topic',
+    // 'topic',
     'actions',
   ];
   constructor(

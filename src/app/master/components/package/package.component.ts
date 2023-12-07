@@ -24,6 +24,7 @@ export class PackageComponent implements OnInit {
     'amount',
     'rate',
     'durationType',
+    'topic',
     'action',
   ];
   dataSource: MatTableDataSource<Package>;
@@ -135,7 +136,7 @@ export class PackageComponent implements OnInit {
         title: 'You cannot delete package in use',
         icon: 'warning',
         confirmButtonColor: '#3085d6',
-        confirmButtonText: 'OK'
+        confirmButtonText: 'OK',
       });
     } else {
       Swal.fire({
@@ -147,7 +148,7 @@ export class PackageComponent implements OnInit {
         cancelButtonText: 'Cancel',
       }).then((result) => {
         if (result.isConfirmed) {
-          console.log(element,"ddddddddd");
+          console.log(element, 'ddddddddd');
 
           this.packageService.deletePackage(element).subscribe(
             (response: any) => {

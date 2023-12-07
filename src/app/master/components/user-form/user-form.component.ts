@@ -25,11 +25,11 @@ export class UserFormComponent implements OnInit {
     lastName: '',
     email: '',
     password: '',
-    otp: '',
+    // otp: '',
     role: undefined,
     institutionId: undefined,
     subscriptionId: undefined,
-    topicId: undefined,
+    // topicId: undefined,
   };
   public isSendingOTP = false;
   public otp;
@@ -67,15 +67,14 @@ export class UserFormComponent implements OnInit {
           Validators.email,
         ]),
         role: new FormControl(this.data?.role?._id || '', Validators.required),
-        otp: new FormControl(this.data?.otp || '', [Validators.required]),
         institutionId: new FormControl(
           this.data?.institutionId?._id || '',
           Validators.required
         ),
-        topicId: new FormControl(
-          this.data?.topicId?._id || '',
-          Validators.required
-        ),
+        // topicId: new FormControl(
+        //   this.data?.topicId?._id || '',
+        //   Validators.required
+        // ),
         password: new FormControl('', [
           Validators.required,
           Validators.pattern('^[A-Za-z0-9@$!%*#?&]{8,16}'),
@@ -99,7 +98,7 @@ export class UserFormComponent implements OnInit {
       this.userObject.lastName = this.data.lastName;
       this.userObject.password = this.data.password;
       this.userObject.role = this.data.role._id;
-      this.userObject.topicId = this.data?.topicId?._id;
+      // this.userObject.topicId = this.data?.topicId?._id;
       this.userObject.institutionId = this.data?.institutionId?._id;
       this.passwordVisible = false;
       this.userForm.get('password').disable();
@@ -110,7 +109,7 @@ export class UserFormComponent implements OnInit {
         this.data.role.role === 'ADMIN' ||
         this.data.role.role === 'STUDENT'
       ) {
-        this.userForm.get('topicId').disable();
+        // this.userForm.get('topicId').disable();
         this.showTopic = false;
       }
     }
@@ -138,11 +137,11 @@ export class UserFormComponent implements OnInit {
           this.data.role.role === 'STUDENT')
       ) {
       } else if (roleObj?.role === 'ADMIN' || roleObj?.role === 'STUDENT') {
-        this.userForm.get('topicId').disable();
+        // this.userForm.get('topicId').disable();
         this.showTopic = false;
-        this.userObject.topicId = undefined;
+        // this.userObject.topicId = undefined;
       } else {
-        this.userForm.get('topicId').enable();
+        // this.userForm.get('topicId').enable();
         this.showTopic = true;
       }
     });

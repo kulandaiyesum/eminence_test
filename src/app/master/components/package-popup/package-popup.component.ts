@@ -4,6 +4,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Package } from '../../model/package.class';
 import { PackageService } from '../../service/package.service';
 import { ToastrService } from 'ngx-toastr';
+import { Topic } from '../../model/topic';
+import { TopicService } from '../../service/topic.service';
 
 @Component({
   selector: 'app-package-popup',
@@ -13,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 export class PackagePopupComponent {
   packageForm: FormGroup;
   visibleUpdate: boolean = false;
+  topics: Topic[];
   public package: Package;
 
   constructor(
@@ -20,7 +23,8 @@ export class PackagePopupComponent {
     private packageService: PackageService,
     private toastr: ToastrService,
     @Inject(MAT_DIALOG_DATA) private data: any,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private topicService: TopicService
   ) {}
 
   ngOnInit(): void {
@@ -33,6 +37,7 @@ export class PackagePopupComponent {
       this.package.questionsCount = this.data.questionsCount; //
       this.package.rate = this.data.rate; //
       this.package.type = this.data.type;
+      this.package.topicId = this.data?.topicId?._id;
       this.visibleUpdate = true;
     } else {
       this.package = new Package();
@@ -44,13 +49,19 @@ export class PackagePopupComponent {
         this.packageForm.get('rate').disable();
         this.package.questionsCount = '';
         this.package.rate = '-';
-        this.package.questionsCount = "UNLIMITED"
+        this.package.questionsCount = 'UNLIMITED';
       } else {
         this.packageForm.get('questionsCount').enable();
         this.packageForm.get('rate').enable();
-
       }
       this.cdr.detectChanges();
+    });
+    this.getTopic();
+  }
+
+  getTopic() {
+    this.topicService.getAllTopicMaster().subscribe((res: any) => {
+      this.topics = res.result;
     });
   }
 
@@ -62,6 +73,7 @@ export class PackagePopupComponent {
       rate: new FormControl(0, Validators.required),
       durationType: new FormControl('', Validators.required),
       type: new FormControl('', Validators.required),
+      topicId: new FormControl('', Validators.required),
     });
   }
 
