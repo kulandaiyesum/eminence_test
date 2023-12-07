@@ -19,18 +19,17 @@ export class UserService {
   }
 
   updateUserMaster(user: User) {
-    return this.http.patch(this.userUrl + '/'+user._id, user);
+    return this.http.patch(this.userUrl + '/' + user._id, user);
   }
 
   deleteUserMaster(_id: string) {
-    return this.http.delete(this.userUrl +'/'+ _id);
+    return this.http.delete(this.userUrl + '/' + _id);
   }
   getAllVetter(data) {
-    return this.http.get(this.userUrl + '/'+data.role);
+    return this.http.get(this.userUrl + '/' + data.role);
   }
 
-  checkRegisteredUser(data){
-    return this.http.put(this.userUrl+'/',data);
+  checkRegisteredUser(data) {
+    return this.http.put(this.userUrl + '/', data);
   }
-
 }

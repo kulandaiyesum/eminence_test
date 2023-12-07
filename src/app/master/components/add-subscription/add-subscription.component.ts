@@ -23,7 +23,8 @@ export class AddSubscriptionComponent implements OnInit {
   addSubscriptionForm: FormGroup;
 
   public packageList;
-
+  public leapYear;
+  public year;
   public unqiuePackage = [];
   public Packageid = [];
   isPackageSelected: boolean = true;
@@ -122,6 +123,20 @@ export class AddSubscriptionComponent implements OnInit {
       );
 
     const startDate = new Date(this.institutionModel.startdate);
+    console.log(startDate.getFullYear());
+    this.year = startDate.getFullYear();
+    function isLeapYear(year) {
+      return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+    }
+    const yearToCheck = this.year;
+    if (isLeapYear(yearToCheck)) {
+      console.log(yearToCheck + ' is a leap year.');
+      this.leapYear = true;
+    } else {
+      console.log(yearToCheck + ' is not a leap year.');
+      this.leapYear = false;
+    }
+
     let endDate: Date;
     this.selectedDurationType = this.selectedPackageOption.durationType;
 
@@ -139,8 +154,13 @@ export class AddSubscriptionComponent implements OnInit {
         endDate.setDate(startDate.getDate() + 179);
         break;
       case 'annually':
-        endDate = new Date(startDate);
-        endDate.setDate(startDate.getDate() + 364);
+        if (this.leapYear) {
+          endDate = new Date(startDate);
+          endDate.setDate(startDate.getDate() + 365);
+        } else {
+          endDate = new Date(startDate);
+          endDate.setDate(startDate.getDate() + 364);
+        }
         break;
       default:
         endDate = null;
@@ -162,7 +182,7 @@ export class AddSubscriptionComponent implements OnInit {
       const day = String(date.getDate()).padStart(2, '0');
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const year = date.getFullYear();
-      return `${month}-${day}-${year}`;
+      return `${month}/${day}/${year}`;
     }
     return '';
   }
@@ -208,8 +228,6 @@ export class AddSubscriptionComponent implements OnInit {
         this.institutionModel.durationType =
           this.selectedPackageOption.durationType;
         this.calculateEndDate();
-        console.log(this.institutionModel);
-
         this.subscriptionService
           .createSubscriptionAuto(this.institutionModel)
           .subscribe(

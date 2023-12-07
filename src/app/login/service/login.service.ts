@@ -24,7 +24,7 @@ export class LoginService {
   }
 
   verifyText(data) {
-    return this.http.put(this.loginURL + '/', data);
+    return this.http.patch(this.loginURL + '/', data);
   }
 
   encryptText(text: string, secretKey: string): string {
