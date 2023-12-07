@@ -9,11 +9,13 @@ export class Institution {
   packageName: string;
   questionsCount: string;
   packageNameId: string;
+  institutionId: string;
   durationType: string;
   questionsCountResetDate: Date;
   city: string;
   startdate: Date;
   enddate: Date;
+  userId: string;
   institutionName?: string;
   phoneNo?: string;
   otp?: string;

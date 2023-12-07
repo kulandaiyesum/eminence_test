@@ -35,6 +35,7 @@ export class AddSubscriptionComponent implements OnInit {
     name: '',
     email: '',
     _id: '',
+    institutionId: '',
     address: '',
     state: '',
     zip: '',
@@ -47,6 +48,7 @@ export class AddSubscriptionComponent implements OnInit {
     durationType: '',
     country: '',
     questionsCountResetDate: new Date(),
+    userId: '',
   };
   public maxDate = new Date();
 
@@ -64,8 +66,6 @@ export class AddSubscriptionComponent implements OnInit {
     private toastr: ToastrService
   ) {
     if (data != null) {
-      console.log(data);
-
       this.institutionModel.name = data.name;
       this.institutionModel.email = data.email;
       this.institutionModel._id = data._id;
@@ -84,7 +84,6 @@ export class AddSubscriptionComponent implements OnInit {
   ngOnInit(): void {
     this.getPackageData();
     this.institutionModel.startdate = new Date();
-    console.log(this.institutionModel.startdate);
     this.initForm();
   }
 
@@ -108,14 +107,16 @@ export class AddSubscriptionComponent implements OnInit {
   }
 
   calculateEndDate() {
-    console.log('end date');
-    console.log(this.institutionModel.startdate);
     this.subscriptionService
       .createSubscriptionAuto(this.institutionModel)
       .subscribe(
         (response: any) => {
-          this.institutionModel.questionsCountResetDate =
-            response.result.questionsCountResetDate;
+          if (this.data.from === 'institution') {
+            this.institutionModel.questionsCountResetDate =
+              response.result.questionsCountResetDate;
+          } else {
+            this.institutionModel.questionsCountResetDate = null;
+          }
         },
         (error) => {
           console.error('Not data get', error);
@@ -130,10 +131,8 @@ export class AddSubscriptionComponent implements OnInit {
     }
     const yearToCheck = this.year;
     if (isLeapYear(yearToCheck)) {
-      console.log(yearToCheck + ' is a leap year.');
       this.leapYear = true;
     } else {
-      console.log(yearToCheck + ' is not a leap year.');
       this.leapYear = false;
     }
 
@@ -227,6 +226,19 @@ export class AddSubscriptionComponent implements OnInit {
           this.selectedPackageOption.questionsCount;
         this.institutionModel.durationType =
           this.selectedPackageOption.durationType;
+        if (this.data.from === 'institution') {
+          this.institutionModel.institutionId = this.data.data._id;
+          this.institutionModel.name = this.data.data.name;
+          if (this.institutionModel.userId === '') {
+            delete this.institutionModel.userId;
+          }
+        } else {
+          this.institutionModel.userId = this.data.data._id;
+          this.institutionModel.name = this.data.data.firstName;
+          if (this.institutionModel.institutionId === '') {
+            delete this.institutionModel.institutionId;
+          }
+        }
         this.calculateEndDate();
         this.subscriptionService
           .createSubscriptionAuto(this.institutionModel)
@@ -236,8 +248,12 @@ export class AddSubscriptionComponent implements OnInit {
                 response.result.startDate
               );
               this.institutionModel.enddate = new Date(response.result.endDate);
-              this.institutionModel.questionsCountResetDate =
-                response.result.questionsCountResetDate;
+              if (this.data.from === 'institution') {
+                this.institutionModel.questionsCountResetDate =
+                  response.result.questionsCountResetDate;
+              } else {
+                this.institutionModel.questionsCountResetDate = null;
+              }
               const inputDate = this.institutionModel.enddate;
               const day = String(inputDate.getDate()).padStart(2, '0'); // Add leading zero if needed
               const month = String(inputDate.getMonth() + 1).padStart(2, '0'); // Months are 0-based
@@ -262,7 +278,6 @@ export class AddSubscriptionComponent implements OnInit {
       this.institutionModel.enddate
     );
     if (this.addSubscriptionForm.valid) {
-      console.log(this.institutionModel);
       this.subscriptionService
         .createSubscription(this.institutionModel)
         .subscribe(

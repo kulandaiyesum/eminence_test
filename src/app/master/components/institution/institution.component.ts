@@ -46,6 +46,7 @@ export class InstitutionComponent {
   public institutionModel: Institution = {
     name: '',
     email: '',
+    userId: '',
     _id: '',
     address: '',
     state: '',
@@ -54,6 +55,7 @@ export class InstitutionComponent {
     questionsCount: '',
     packageNameId: '',
     city: '',
+    institutionId: '',
     startdate: new Date(),
     enddate: new Date(),
     durationType: '',
@@ -235,7 +237,7 @@ export class InstitutionComponent {
     const dialogRef = this.dialog.open(AddSubscriptionComponent, {
       width: '600px',
       height: '80vh',
-      data: data,
+      data: { data: data, from: 'institution' },
       // Other MatDialog options
     });
     // You can handle dialog events here if needed

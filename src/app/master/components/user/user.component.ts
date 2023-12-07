@@ -123,7 +123,7 @@ export class UserComponent implements OnInit {
     const dialogOptions = {
       width: '600px',
       margin: '0 auto',
-      data: data,
+      data: { data: data, from: 'vetter' },
     };
     const dialogRef = this.dialog.open(AddSubscriptionComponent, dialogOptions);
     dialogRef.afterClosed().subscribe((result) => {
