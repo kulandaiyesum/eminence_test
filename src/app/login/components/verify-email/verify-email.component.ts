@@ -2,6 +2,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from '../../service/login.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-verify-email',
@@ -24,19 +25,27 @@ export class VerifyEmailComponent implements OnInit {
     });
     this.decodedPlainText = atob(this.verificationValue);
     this.id = JSON.parse(this.decodedPlainText);
+    console.log(this.id);
   }
   getVerify() {
-    this.loginService.verifyText(this.id).subscribe((doc: any) => {
-      console.log(doc);
-      this.toaster.success(doc.result, '', {
-        timeOut: 3000,
-      });
-      this.router.navigate(['/home']);
-    },
-    (err:any) => {
-      this.toaster.error(err.error.message, '', {
-        timeOut: 3000,
-      });
-    });
+    this.loginService.verifyText(this.id).subscribe(
+      (doc: any) => {
+        // console.log(doc);
+        Swal.fire({
+          icon: 'success',
+          title: 'Your email has been verified!',
+          showConfirmButton: false,
+          timer: 2000,
+        }).then((v) => {
+          // console.log(v);
+          this.router.navigate(['/home']);
+        });
+      },
+      (err: any) => {
+        this.toaster.error(err.error.message, '', {
+          timeOut: 3000,
+        });
+      }
+    );
   }
 }
