@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { UserFormComponent } from '../user-form/user-form.component';
 import Swal from 'sweetalert2';
+import { AddSubscriptionComponent } from '../add-subscription/add-subscription.component';
 
 @Component({
   selector: 'app-user',
@@ -115,6 +116,18 @@ export class UserComponent implements OnInit {
           }
         );
       }
+    });
+  }
+
+  addSubscription(data) {
+    const dialogOptions = {
+      width: '600px',
+      margin: '0 auto',
+      data: data,
+    };
+    const dialogRef = this.dialog.open(AddSubscriptionComponent, dialogOptions);
+    dialogRef.afterClosed().subscribe((result) => {
+      this.getAllUserMaster();
     });
   }
 }
