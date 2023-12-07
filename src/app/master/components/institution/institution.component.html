@@ -96,6 +96,7 @@
                   class="example-margin"
                   color="primary"
                   [checked]="element.status == 1"
+                  (change)="changeStatus(element._id)"
                 >
                 </mat-slide-toggle>
               </mat-cell>

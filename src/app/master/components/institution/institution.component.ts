@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 import { PackageService } from '../../service/package.service';
 import { AddSubscriptionComponent } from '../add-subscription/add-subscription.component';
 import { SubscriptionService } from '../../service/subscription.service';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-institution',
@@ -242,6 +243,40 @@ export class InstitutionComponent {
       console.log(`Dialog result: ${result}`);
       this.getAllInstituteData();
       this.getAllDataOfSubscription();
+    });
+  }
+
+  /**
+   * function to change the status of user/institute
+   * @param elementId
+   */
+  changeStatus(elementId: string) {
+    Swal.fire({
+      title: 'Do you want to chnage status of the user',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.instituteService.changeStatus(elementId).subscribe(
+          (response: any) => {
+            this.toastr.success(response.message, '', {
+              timeOut: 3000,
+            });
+            this.getAllInstituteData();
+          },
+          (error) => {
+            this.toastr.error(error.error.message, '', {
+              timeOut: 3000,
+            });
+            this.getAllInstituteData();
+            console.error('Delete failed', error);
+          }
+        );
+      } else {
+        this.getAllInstituteData();
+      }
     });
   }
 }

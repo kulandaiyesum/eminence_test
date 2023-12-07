@@ -94,16 +94,6 @@
               >
             </div>
           </div>
-          <div class="col_group">
-            <button
-              type="button"
-              class="btn btn-primary"
-              (click)="verifyEmail()"
-              [disabled]="userForm.controls['email']?.invalid"
-            >
-              verify
-            </button>
-          </div>
         </div>
         <div class="col_group">
           <div class="form-group custom_group">
@@ -133,7 +123,7 @@
           </div>
         </div>
       </div>
-      <div class="flex_group">
+      <!-- <div class="flex_group">
         <div class="form-group custom_group">
           <div class="col_group">
             <div class="email_warp" *ngIf="isSendingOTP">
@@ -160,7 +150,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
       <div class="flex_group">
         <div class="col_group" *ngIf="selectedRole === 'FACULTY'">
           <div class="form-group custom_group">
