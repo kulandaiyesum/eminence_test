@@ -80,6 +80,16 @@
               }}</mat-cell>
             </ng-container>
 
+            <!-- Topic Column -->
+            <ng-container matColumnDef="topic">
+              <mat-header-cell *matHeaderCellDef mat-sort-header
+                >Topic</mat-header-cell
+              >
+              <mat-cell *matCellDef="let element">{{
+                element?.topicId?.topic
+              }}</mat-cell>
+            </ng-container>
+
             <!-- Actions Column -->
             <ng-container matColumnDef="action" id="last-header">
               <mat-header-cell *matHeaderCellDef>ACTION</mat-header-cell>

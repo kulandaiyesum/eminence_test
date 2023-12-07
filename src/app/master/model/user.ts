@@ -7,8 +7,8 @@ export class User {
   role: any;
   institutionId?: any;
   subscriptionId?: any;
-  topicId?: any;
+  // topicId?: any;
   createdBy?: any;
   createdOn?: Date;
-  otp?: string;
+  // otp?: string;
 }

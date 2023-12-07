@@ -33,7 +33,7 @@ export class TopicFormComponent implements OnInit {
       this.topic._id = this.data._id;
       this.topic.topic = this.data.topic;
       this.topic.status = this.data.status;
-      this.topic.createdOn = this.data.createdOn;
+      this.topic.createdBy = this.data.createdBy;
     }
   }
   ngOnInit(): void {
@@ -45,7 +45,7 @@ export class TopicFormComponent implements OnInit {
   }
   saveCoreBoxMaster() {
     if (this.data === null) {
-      this.topic.createdOn = this.decryptFirstName;
+      this.topic.createdBy = this.decryptFirstName;
       this.topicMasterService.saveTopicMaster(this.topic).subscribe(
         (res: any) => {
           this.toastr.success(res.message, '', {

@@ -57,6 +57,31 @@
           </div>
         </div>
       </div>
+      <div class="form-group custom_group">
+        <label for="topic">Topic</label>
+        <select
+          id="topic"
+          class="form-select form-select-lg"
+          aria-label="Default select example"
+          name="topicId"
+          formControlName="topicId"
+          [(ngModel)]="package.topicId"
+          placehoder="select"
+        >
+          <option *ngFor="let topic of topics" [value]="topic._id">
+            {{ topic.topic }}
+          </option>
+        </select>
+        <div class="error">
+          <mat-error
+            *ngIf="
+              packageForm.controls['topicId'].hasError('required') &&
+              packageForm.controls['topicId'].touched
+            "
+            >Topic is required</mat-error
+          >
+        </div>
+      </div>
       <div class="form-group custom_group" *ngIf="package.type === 'B2B'">
         <label for="questionsCount">Questions Count (per month)</label>
         <input

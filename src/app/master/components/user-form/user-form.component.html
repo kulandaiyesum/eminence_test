@@ -152,7 +152,7 @@
         </div>
       </div> -->
       <div class="flex_group">
-        <div class="col_group" *ngIf="selectedRole === 'FACULTY'">
+        <div class="" *ngIf="selectedRole === 'FACULTY'" style="width: 100%">
           <div class="form-group custom_group">
             <label for="institution">Institution</label>
             <select
@@ -182,7 +182,7 @@
             </div>
           </div>
         </div>
-        <div
+        <!-- <div
           class="col_group"
           [style.width]="selectedRole !== 'FACULTY' ? '100%' : ''"
           *ngIf="showTopic"
@@ -198,7 +198,6 @@
               [(ngModel)]="userObject.topicId"
               placehoder="select"
             >
-              <!-- <option disabled selected value="">select topic</option> -->
               <option *ngFor="let topic of topics" [value]="topic._id">
                 {{ topic.topic }}
               </option>
@@ -213,7 +212,7 @@
               >
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="flex_group" *ngIf="passwordVisible">
         <div class="col_group">

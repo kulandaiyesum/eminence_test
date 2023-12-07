@@ -6,4 +6,5 @@ export class Package {
   durationType: string;
   type: string;
   _id: string;
+  topicId?: any;
 }
