@@ -90,6 +90,13 @@
               (click)="deleteUserMaster(row._id)"
               >delete</mat-icon
             >
+            <mat-icon
+            *ngIf="row.role.role === 'VETTER'"
+              class="set_edit_color_button ms-2"
+              (click)="addSubscription(row)"
+              matTooltip="add package"
+              >add</mat-icon
+            >
           </td>
         </ng-container>
         <!-- Header and row definitions -->
