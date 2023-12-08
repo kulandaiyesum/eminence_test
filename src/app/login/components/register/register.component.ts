@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { RegisterService } from '../../service/register.service';
 import { Register } from '../../model/register.model';
 import { LoginComponent } from '../login/login.component';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PackageService } from 'src/app/master/service/package.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -32,7 +32,6 @@ export class RegisterComponent {
     pacakageId: '',
   };
 
-  dialog: any;
   b2cPackages: any[] = [];
   packageType: string = '';
   priceOption: string = '';
@@ -45,7 +44,8 @@ export class RegisterComponent {
     private httpClient: HttpClient,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<RegisterComponent>,
-    private packageService: PackageService
+    private packageService: PackageService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -78,6 +78,7 @@ export class RegisterComponent {
   }
 
   openLoginPopUp() {
+    this.closeDialog();
     const dialogRef = this.dialog.open(LoginComponent, {
       width: '400px',
       height: 'auto',
