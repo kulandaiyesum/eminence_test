@@ -1,97 +1,105 @@
-<div class="exam-room-container">
-  <div class="invite-area">
-    <h5>Invite your friends to join Eminence</h5>
-    <div class="send-area">
-      <p>Send an email invite</p>
-      <input
-        type="text"
-        name="invite"
-        id="invite"
-        #emailInput="ngModel"
-        [(ngModel)]="inviteEmail"
-        required
-        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-      />
-      <button (click)="sendInvite()" [disabled]="emailInput.invalid">
-        Send
-      </button>
-      <div
-        *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
-      >
-        <div *ngIf="emailInput.errors?.['required']" style="color: red">
-          Email is required.
-        </div>
-        <div *ngIf="emailInput.errors?.['pattern']" style="color: red">
-          Please enter a valid email address.
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="join-area">
-    <h5>Join a Private Exam Room</h5>
-    <div class="host-area">
-      <button routerLink="/eminence/student/build-test/hostexam">
-        Host Exam Room
-      </button>
-      <h6>OR</h6>
-      <form class="code-area" #joinForm="ngForm">
-        <p>Join Exam Room :</p>
+<div class="container">
+  <div class="exam-room-container">
+    <div class="invite-area">
+      <h5>Invite your friends to join Eminence</h5>
+      <div class="send-area">
+        <p>Send an email invite</p>
 
         <input
           type="text"
-          [(ngModel)]="privateExam.roomCode"
-          name="joinLink"
-          #joinLinkInput="ngModel"
+          name="invite"
+          id="invite"
+          #emailInput="ngModel"
+          [(ngModel)]="inviteEmail"
           required
-          minlength="4"
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
         />
-        <br />
-        <div
-          *ngIf="
-            joinLinkInput.invalid &&
-            (joinLinkInput.dirty || joinLinkInput.touched)
-          "
-          style="color: red"
+        <button
+          class="ms-2"
+          (click)="sendInvite()"
+          [disabled]="emailInput.invalid"
         >
-          <div *ngIf="joinLinkInput.errors?.['required']">
-            Link is required.
+          Send
+        </button>
+        <div
+          *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
+        >
+          <div *ngIf="emailInput.errors?.['required']" style="color: red">
+            Email is required.
           </div>
-          <div *ngIf="joinLinkInput.errors?.['minlength']">
-            Link must be at least 4 characters.
+          <div *ngIf="emailInput.errors?.['pattern']" style="color: red">
+            Please enter a valid email address.
           </div>
         </div>
-
-        <button type="submit" (click)="goRoom()" [disabled]="joinForm.invalid">
-          Go
-        </button>
-      </form>
+      </div>
     </div>
-  </div>
-  <div class="live-exam-area">
-    <h5>Join a Live Exam Room</h5>
-    <div id="exam-area">
-      <div class="live-area">
-        <h6>USMLE Step 1</h6>
-        <!-- <p>234 members online now</p> -->
-        <button mat-button routerLink="/eminence/student/live-room">
-          Join
+
+    <div class="join-area mt-5">
+      <h5>Join a Private Exam Room</h5>
+      <div class="host-area p-4">
+        <button routerLink="/eminence/student/build-test/hostexam">
+          Host Exam Room
         </button>
+        <h6>OR</h6>
+        <form class="code-area" #joinForm="ngForm">
+          <div class="input_div">
+            <label for="joinLink" class="form-label">Join&nbsp;Exam&nbsp;Room</label>
+            <input
+              type="text"
+              class="form-control"
+              id="joinLink"
+              name="joinLink"
+              [(ngModel)]="privateExam.roomCode"
+              #joinLinkInput="ngModel"
+              required
+              minlength="4"
+            />
+            <div
+              class="err"
+              *ngIf="
+                joinLinkInput.invalid &&
+                (joinLinkInput.dirty || joinLinkInput.touched)
+              "
+              style="color: red"
+            >
+              <div *ngIf="joinLinkInput.errors?.['required']">
+                Link is required.
+              </div>
+              <div *ngIf="joinLinkInput.errors?.['minlength']">
+                Min 4 charcters required
+              </div>
+            </div>
+          </div>
+
+          <button
+            class="ms-2 btn btn-warning"
+            type="submit"
+            (click)="goRoom()"
+            [disabled]="joinForm.invalid"
+          >
+            Go
+          </button>
+        </form>
       </div>
-      <!-- <div class="live-area">
-        <h6>All subject</h6>
-        <p>234 members online now</p>
-        <button mat-button>Take Exam</button>
+    </div>
+
+    <div class="live-exam-area mt-5">
+      <h5>Join a Live Exam Room</h5>
+      <div id="exam-area">
+        <div class="live-area">
+          <div class="bg_div"></div>
+          <div class="p-4">
+            <h6 class="">USMLE Step 1</h6>
+            <button
+              class=""
+              mat-button
+              routerLink="/eminence/student/live-room"
+            >
+              Join
+            </button>
+          </div>
+        </div>
       </div>
-      <div class="live-area">
-        <h6>Anatomy</h6>
-        <p>234 members online now</p>
-        <button mat-button>Take Exam</button>
-      </div>
-      <div class="live-area">
-        <h6>Science</h6>
-        <p>234 members online now</p>
-        <button mat-button>Take Exam</button>
-      </div> -->
     </div>
   </div>
 </div>
