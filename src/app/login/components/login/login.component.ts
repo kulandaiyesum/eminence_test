@@ -163,16 +163,17 @@ export class LoginComponent {
 
   registerPop() {
     this.closeDialog();
-    const dialogRef = this.dialog.open(RegisterComponent, {
-      width: '40%',
+    const registerOptions = {
+      width: '600px',
+      margin: '0 auto',
       height: '600px',
       data: null,
-
-      // Other MatDialog options
-    });
+    };
+    const dialogRef = this.dialog.open(RegisterComponent, registerOptions);
     // You can handle dialog events here if needed
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: `);
+      this.router.navigate(['/home']);
     });
   }
   forgotPassword() {
