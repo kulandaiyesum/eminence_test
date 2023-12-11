@@ -88,8 +88,10 @@ export class LoginComponent {
               this.router.navigateByUrl('/eminence/admin');
             }
             if (response.result.user.role.role === 'FACULTY') {
+              console.log(response.result);
+
               const topicId = this.encryptText(
-                response.result.user?.topicId.topic,
+                response.result.package?.topicId.topic,
                 this.secretKey
               );
               const institutionId = this.encryptText(
