@@ -26,7 +26,7 @@ export class InstituteserviceService {
     } else {
       var body = { _id: _id, status: 1 };
     }
-    return this.http.put(this.baseUrl + '/changeStatus', body);
+    return this.http.patch(this.baseUrl + '/changeStatus', body);
   }
 
   sendVerificationCode(data: { email: string }) {
