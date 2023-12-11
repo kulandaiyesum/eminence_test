@@ -21,7 +21,7 @@ export class InstituteserviceService {
    */
   changeStatus(_id: string) {
     const body = { _id };
-    return this.http.put(this.baseUserUrl + 'changeStatus', body);
+    return this.http.put(this.baseUrl + '/changeStatus', body);
   }
 
   sendVerificationCode(data: { email: string }) {
