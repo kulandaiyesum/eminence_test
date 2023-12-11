@@ -19,8 +19,6 @@ import { PrivateExamService } from '../../service/private-exam.service';
   styleUrls: ['./saved.component.scss'],
 })
 export class SavedComponent {
-
-
   translateValue = 0; // Initial translation value
   // slideWidth = 300; // Adjust this based on your slide width
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
@@ -32,13 +30,19 @@ export class SavedComponent {
   secretKey: string = environment.secretKey;
   examArray: any[] = [];
   dataSource = new MatTableDataSource<any>();
-  displayedColumns: string[] = ['createdBy', 'roomCode', 'noOfPeople','activeEmails', 'inactiveEmails'];
+  displayedColumns: string[] = [
+    'roomCode',
+    'createdBy',
+    'noOfPeople',
+    'activeEmails',
+    'inactiveEmails',
+  ];
   constructor(
     private animationBuilder: AnimationBuilder,
     private rsaService: RsaService,
     public dialog: MatDialog,
     private examService: ExamService,
-    private privateExamService:PrivateExamService
+    private privateExamService: PrivateExamService
   ) {}
 
   ngOnInit(): void {
@@ -109,12 +113,12 @@ export class SavedComponent {
 
   getHostExamRoomHistory() {
     this.privateExamService.getHostExamHistory(this.userEmail).subscribe(
-      (response:any) => {
+      (response: any) => {
         console.log(response.result);
         this.dataSource.data = response.result;
-        const transformedData = response.result.map(room => ({
+        const transformedData = response.result.map((room) => ({
           ...room,
-          noOfPeople: room.emails.length
+          noOfPeople: room.emails.length,
         }));
         this.dataSource.data = transformedData;
       },
@@ -123,6 +127,4 @@ export class SavedComponent {
       }
     );
   }
-
-
 }

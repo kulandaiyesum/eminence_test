@@ -147,6 +147,7 @@
                 (change)="toggleChanged('TUTOR')"
                 formControlName="mode1"
                 [checked]="examMode === 'TUTOR'"
+                *ngIf="currentRouter != 'build-test/hostexam'"
                 >Tutor</mat-slide-toggle
               >
               <mat-slide-toggle
