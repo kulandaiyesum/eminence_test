@@ -263,13 +263,13 @@ export class InstitutionComponent {
       if (result.isConfirmed) {
         this.instituteService.changeStatus(elementId,status).subscribe(
           (response: any) => {
-            this.toastr.success(response.message, '', {
+            this.toastr.success(response.message, 'Status changed', {
               timeOut: 3000,
             });
             this.getAllInstituteData();
           },
           (error) => {
-            this.toastr.error(error.error.message, '', {
+            this.toastr.error(error.error.message, 'Status changed', {
               timeOut: 3000,
             });
             this.getAllInstituteData();
