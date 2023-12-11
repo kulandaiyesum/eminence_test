@@ -26,8 +26,20 @@
       >
         <!-- Index number column -->
         <ng-container matColumnDef="sno">
-          <th mat-header-cell *matHeaderCellDef>SNO</th>
-          <td mat-cell *matCellDef="let row; let i = index">{{ i + 1 }}</td>
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td
+            mat-cell
+            *matCellDef="let element; let i = index"
+            [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
+          >
+            <mat-slide-toggle
+              class="example-margin"
+              color="primary"
+              [checked]="element.status == 1"
+              (change)="changeStatus(element._id, element.status)"
+            >
+            </mat-slide-toggle>
+          </td>
         </ng-container>
         <!-- name column -->
         <ng-container matColumnDef="name">
@@ -91,7 +103,7 @@
               >delete</mat-icon
             >
             <mat-icon
-            *ngIf="row.role.role === 'VETTER'"
+              *ngIf="row.role.role === 'VETTER'"
               class="set_edit_color_button ms-2"
               (click)="addSubscription(row)"
               matTooltip="add package"
