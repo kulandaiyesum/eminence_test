@@ -22,13 +22,12 @@ export class UserComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   dataSource;
   displayedColumns: string[] = [
-    'sno',
+
     'name',
     'email',
     'role',
     'institution',
-    // 'subscription',
-    // 'topic',
+    'sno',
     'actions',
   ];
   constructor(
@@ -128,6 +127,40 @@ export class UserComponent implements OnInit {
     const dialogRef = this.dialog.open(AddSubscriptionComponent, dialogOptions);
     dialogRef.afterClosed().subscribe((result) => {
       this.getAllUserMaster();
+    });
+  }
+
+  /**
+   * function to change the status of user/institute
+   * @param elementId
+   */
+  changeStatus(elementId: string,status) {
+    Swal.fire({
+      title: 'Do you want to chnage status of the user',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.userService.changeStatus(elementId,status).subscribe(
+          (response: any) => {
+            this.toastr.success(response.message, 'Status changed', {
+              timeOut: 3000,
+            });
+            this.getAllUserMaster();
+          },
+          (error) => {
+            this.toastr.error(error.error.message, 'Status changed', {
+              timeOut: 3000,
+            });
+            this.getAllUserMaster();
+            console.error('Delete failed', error);
+          }
+        );
+      } else {
+        this.getAllUserMaster();
+      }
     });
   }
 }

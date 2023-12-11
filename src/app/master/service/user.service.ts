@@ -32,4 +32,18 @@ export class UserService {
   checkRegisteredUser(data) {
     return this.http.put(this.userUrl + '/', data);
   }
+
+  /**
+   * function to change status of user/institution
+   * @param _id
+   */
+  changeStatus(_id: string, status) {
+    console.log(status);
+    if (status == 1) {
+      var body = { _id: _id, status: 0 };
+    } else {
+      var body = { _id: _id, status: 1 };
+    }
+    return this.http.patch(this.userUrl + '/changeStatus', body);
+  }
 }
