@@ -97,7 +97,6 @@ export class EditorComponent implements OnInit, OnDestroy {
       this.showDiv &&
       !this.whyDeleteDiv.nativeElement.contains(event.target)
     ) {
-      console.log('2');
       this.showDiv = false;
     } 
   }
