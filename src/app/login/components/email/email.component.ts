@@ -108,11 +108,10 @@ export class EmailComponent {
         });
         this.openForgotPasswordDialog();
       } else {
-        this.isSendingOTP = !this.isSendingOTP;
+        
         this.toastr.error('OTP is not correct', '', {
           timeOut: 1000,
         });
-        this.closeDialog();
       }
     }
   }

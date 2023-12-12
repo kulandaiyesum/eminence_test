@@ -360,11 +360,14 @@ export class BuildTestComponent {
   getExamDetails(userid: string) {
     this.examService.getExamDetailsByStudentId(userid).subscribe(
       (response: any) => {
-        const filteredSubjects = response.result
+        console.log(response.result);
+        const filteredSubjects =response.result
           .filter((item: any) => item.mode === 'TIMED' && item.percentage < 30)
           .map((item: any) => item?.subjectId?.subject);
+
+
         this.examArray = [...new Set(filteredSubjects)];
-        // console.log(this.examArray);
+        console.log(this.examArray);
       },
       (err) => {
         console.log(err);
