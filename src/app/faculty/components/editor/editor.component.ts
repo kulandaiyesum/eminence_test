@@ -5,6 +5,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  HostListener,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -49,6 +50,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   pathMatch: boolean = false;
   secretKey: string = environment.secretKey;
   @ViewChild('editableDiv') editableDiv: ElementRef;
+  @ViewChild('whyDeleteDiv') whyDeleteDiv: ElementRef;
   constructor(
     private qgenService: QgenService,
     private rsaService: RsaService,
@@ -80,6 +82,24 @@ export class EditorComponent implements OnInit, OnDestroy {
         this.pathMatch = false;
       }
     });
+  }
+
+  /**
+   * Close why-delete div when clicking outside
+   * @param event
+   */
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: any): void {
+    if (event.target?.innerHTML === 'delete') {
+      return;
+    }
+    if (
+      this.showDiv &&
+      !this.whyDeleteDiv.nativeElement.contains(event.target)
+    ) {
+      console.log('2');
+      this.showDiv = false;
+    } 
   }
 
   /**
