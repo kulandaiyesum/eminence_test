@@ -37,12 +37,14 @@
       <form [formGroup]="otpForgotPasswordForm">
         <input
           matInput
-          type="number"
+          type="text"
           placeholder="Enter OTP Here"
           name="otp"
           id="otp"
           formControlName="otp"
           minlength="6"
+          maxlength="6"
+          pattern="[0-9]*"
         />
         <span
           *ngIf="
@@ -58,6 +60,18 @@
           class="error-message"
         >
           OTP must be at least 6 characters long.
+        </span>
+        <span
+          *ngIf="otpForgotPasswordForm.controls['otp']?.errors?.['maxlength'] && otpForgotPasswordForm.controls['otp']?.touched"
+          class="error-message"
+        >
+          OTP must be 6 characters long.
+        </span>
+        <span
+          *ngIf="otpForgotPasswordForm.controls['otp']?.errors?.['pattern'] && otpForgotPasswordForm.controls['otp']?.touched"
+          class="error-message"
+        >
+          Only numbers are allowed.
         </span>
         <button
           id="verifyotp"
