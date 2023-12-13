@@ -15,6 +15,15 @@ export class ExamService {
     return this.http.post(this.baseUrl + data.studentId, data);
   }
 
+  /**
+   * Function used to update if question generated from incorect or flged option
+   * @param data
+   * @returns
+   */
+  examSubmitPatch(data) {
+    return this.http.patch(this.baseUrl + data.studentId, data);
+  }
+
   examTimedSubmit(examTimedObject) {
     return this.http.post(
       this.baseUrl + examTimedObject.studentId,

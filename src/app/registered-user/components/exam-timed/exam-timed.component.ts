@@ -124,7 +124,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
       this.secretKey
     );
     this.type = +localStorage.getItem('qbt');
-    console.log('type in exam timed mode', this.type);
+    // console.log('type in exam timed mode', this.type);
     this.examTimedObject.mode = localStorage.getItem('emm'); //mode
     if (localStorage.getItem('emsm') === 'undefined') {
     } else {
@@ -369,8 +369,19 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
         console.log(this.examTimedObject);
         this.examService.examSubmit(this.examTimedObject).subscribe(
           (response: any) => {
-            console.log(response);
+            // console.log(response);
+            if (this.type === 2 || this.type === 3) {
+              this.examService.examSubmitPatch(this.examTimedObject).subscribe(
+                (response: any) => {},
+                (err: any) => {
+                  this.toastr.error(err.error.message, '', {
+                    timeOut: 3000,
+                  });
+                }
+              );
+            }
             localStorage.removeItem('8');
+            localStorage.removeItem('emex-td');
             Swal.fire('Exam finished', 'Have a look on performance board').then(
               (result) => {
                 if (result.isConfirmed) {

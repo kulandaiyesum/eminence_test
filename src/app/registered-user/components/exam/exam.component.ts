@@ -18,6 +18,7 @@ import { LabValuesComponent } from '../lab-values/lab-values.component';
 import { CalculatorComponent } from '../calculator/calculator.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NotesComponent } from '../notes/notes.component';
+import { ToastrService } from 'ngx-toastr';
 
 class examTutorPayload {
   studentId: string;
@@ -64,7 +65,8 @@ export class ExamComponent implements OnInit {
     private rsaService: RsaService,
     private examService: ExamService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private toster: ToastrService
   ) {}
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
@@ -93,7 +95,7 @@ export class ExamComponent implements OnInit {
     this.getQuestionsIndexBased(0);
 
     this.type = +localStorage.getItem('qbt');
-    console.log('type in exam tutor mode', this.type);
+    // console.log('type in exam tutor mode', this.type);
   }
 
   ngAfterViewInit() {
@@ -264,7 +266,21 @@ export class ExamComponent implements OnInit {
     this.examObject.percentage = this.calculateResultInPercentage();
     this.examService.examSubmit(this.examObject).subscribe(
       (response: any) => {
-        console.log(response);
+        // console.log(response);
+        if (this.type === 2 || this.type === 3) {
+          this.examService.examSubmitPatch(this.examObject).subscribe(
+            (response: any) => {
+              // console.log(response);
+            },
+            (err: any) => {
+              // console.log(err);
+              this.toster.error(err.error.message, '', {
+                timeOut: 3000,
+              });
+            }
+          );
+        }
+        localStorage.removeItem('emex-td');
         Swal.fire('Exam finished', 'Have a look on performance board').then(
           (result) => {
             if (result.isConfirmed) {

@@ -23,6 +23,7 @@ section {
     .question_id_link {
       display: flex;
       flex-wrap: wrap;
+      gap: 0.75rem;
       button {
         border-radius: 50%;
         color: #000;
@@ -188,7 +189,7 @@ section {
   left: 60%;
   transform: rotate(0.05turn);
   font-weight: 700;
-  color: rgb(22,175,13) !important;
+  color: rgb(22, 175, 13) !important;
 }
 .default-question {
   background-color: var(--qgen-logo-yellow) !important;
