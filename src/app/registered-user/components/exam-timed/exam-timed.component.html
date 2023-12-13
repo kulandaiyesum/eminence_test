@@ -47,12 +47,13 @@
     </div>
     <div class="question_id_link mb-lg-4 mb-md-4 mb-3">
       <button
-        class="ms-2"
         *ngFor="let question of questions; let i = index"
         (click)="navigateQuestion(question._id, i)"
       >
         {{ i + 1 }}
-        <span class="selected-question" *ngIf="isQuestionSubmited(question._id)">&#x2714;</span>
+        <span class="selected-question" *ngIf="isQuestionSubmited(question._id)"
+          >&#x2714;</span
+        >
         <span [ngClass]="{ flag_icon: isflaggedQuestion(question._id) }"></span>
       </button>
     </div>
