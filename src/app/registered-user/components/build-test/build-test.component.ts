@@ -66,6 +66,7 @@ export class BuildTestComponent {
 
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
   examArray: any[] = [];
+  public newEexamArray;
   totalSubSystem;
 
   constructor(
@@ -145,7 +146,6 @@ export class BuildTestComponent {
     // });
 
     this.currentRouter = this.route.snapshot.url.join('/');
-    console.log(this.currentRouter);
     localStorage.removeItem('8');
 
     // const dialogRef = this.dialog.open(SendInviteComponent, {
@@ -269,7 +269,6 @@ export class BuildTestComponent {
       this.questionService
         .postQbankRequest(this.qbankObject)
         .subscribe((doc: any) => {
-          console.log(doc.result);
           const tempData = doc.result;
           if (tempData.length === 0) {
             this.toastr.warning('NO Questions Found !!!', '', {
@@ -298,7 +297,6 @@ export class BuildTestComponent {
     } else {
       this.questionService.postQbankRequest(this.qbankObject).subscribe(
         (doc: any) => {
-          console.log(doc.result);
           this.toastr.success('Question created successfully !!!', '', {
             timeOut: 3000,
           });
@@ -308,7 +306,6 @@ export class BuildTestComponent {
             data: doc.result,
           });
           dialogRef.afterClosed().subscribe((result) => {
-            console.log('Dialog closed with result:');
             this.router.navigate(['/eminence/student/build-test']);
           });
         },
@@ -325,14 +322,12 @@ export class BuildTestComponent {
   getAllSystem() {
     this.systemService.getAllSystems().subscribe((doc: any) => {
       this.systemList = doc.result;
-      console.log(this.systemList);
     });
   }
   getAllSubject() {
     this.subjectService.getAllTopicMaster().subscribe(
       (res: any) => {
         this.subjectList = res.result;
-        // console.log('subject', this.subjectList);
       },
       (err: any) => {
         console.log(err);
@@ -344,8 +339,7 @@ export class BuildTestComponent {
     this.subSystemService.getAllsubSystems().subscribe(
       (res: any) => {
         this.subsystemList = res.result;
-        this.totalSubSystem=res.result;
-        // console.log('subsystem', this.subsystemList);
+        this.totalSubSystem = res.result;
       },
       (err: any) => {
         console.log(err);
@@ -354,12 +348,9 @@ export class BuildTestComponent {
   }
 
   onSystemSelectionChange(selectedSystemId: string): void {
-    console.log('Selected System ID:', selectedSystemId);
-    console.log(this.subsystemList);
     this.subsystemList = this.totalSubSystem.filter(
       (item: any) => item.systemId._id === selectedSystemId
     );
-    console.log(this.subsystemList);
   }
 
   ngAfterViewInit() {
@@ -371,18 +362,17 @@ export class BuildTestComponent {
   getExamDetails(userid: string) {
     this.examService.getExamDetailsByStudentId(userid).subscribe(
       (response: any) => {
-        console.log(response.result);
         const filteredTImedMode = response.result.filter(
           (item: any) => item.mode === 'TIMED' && item.percentage < 30
         );
-        console.log(filteredTImedMode);
-
         const filteredSubjects = response.result
           .filter((item: any) => item.mode === 'TIMED' && item.percentage < 30)
           .map((item: any) => item?.subjectId?.subject);
 
         this.examArray = [...new Set(filteredSubjects)];
-        console.log(this.examArray);
+        this.newEexamArray = this.examArray.filter(
+          (item) => item !== undefined
+        );
       },
       (err) => {
         console.log(err);
