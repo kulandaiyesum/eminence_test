@@ -4,9 +4,14 @@ import { ToastrService } from 'ngx-toastr';
 import { RegisterService } from '../../service/register.service';
 import { Register } from '../../model/register.model';
 import { LoginComponent } from '../login/login.component';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { PackageService } from 'src/app/master/service/package.service';
 import { HttpClient } from '@angular/common/http';
+import { StripeService } from '../../service/stripe.service';
 
 @Component({
   selector: 'app-register',
@@ -40,7 +45,7 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private registerService: RegisterService,
+    private stripeService: StripeService,
     private httpClient: HttpClient,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<RegisterComponent>,
@@ -124,9 +129,14 @@ export class RegisterComponent {
       locale: 'auto',
       token: (stripeToken: any) => {
         console.log(stripeToken);
+        paymentStripe(stripeToken);
       },
     });
-
+    const paymentStripe = (stripeToken) => {
+      this.stripeService.makePayment(stripeToken).subscribe((data) => {
+        console.log(data);
+      });
+    };
     paymentHeader.open({
       name: 'Payment Details',
       description: 'Your Order total Amount is ' + amount,
