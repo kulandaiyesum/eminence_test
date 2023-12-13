@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import { LoginService } from 'src/app/login/service/login.service';
 import { Router } from '@angular/router';
 import { LiveExamService } from '../../service/live-exam.service';
+import { ExamService } from '../../service/exam.service';
 
 @Component({
   selector: 'app-exam-room',
@@ -23,7 +24,8 @@ export class ExamRoomComponent implements OnInit {
     private privateExamService: PrivateExamService,
     private loginService: LoginService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private examService: ExamService
   ) {}
   ngOnInit(): void {
     this.privateExam = new PrivateExam();
@@ -51,6 +53,20 @@ export class ExamRoomComponent implements OnInit {
   sendInvite() {
     // Your logic to send the invite goes here
     console.log('Sending invite to:', this.inviteEmail);
+    this.examService.recommendedEminenceAI(this.inviteEmail).subscribe(
+      (response: any) => {
+        console.log(response);
+        this.toastr.success('Invite send successfully', '', {
+          timeOut: 3000,
+        });
+      },
+      (error) => {
+        console.error('Oops something went', error);
+        this.toastr.error(error.error.message, 'Something went wrong', {
+          timeOut: 3000,
+        });
+      }
+    );
   }
 
   goRoom() {

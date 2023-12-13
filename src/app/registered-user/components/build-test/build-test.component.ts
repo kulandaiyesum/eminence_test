@@ -66,6 +66,7 @@ export class BuildTestComponent {
 
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
   examArray: any[] = [];
+  totalSubSystem;
 
   constructor(
     private rsaService: RsaService,
@@ -324,7 +325,7 @@ export class BuildTestComponent {
   getAllSystem() {
     this.systemService.getAllSystems().subscribe((doc: any) => {
       this.systemList = doc.result;
-      // console.log('system', this.systemList);
+      console.log(this.systemList);
     });
   }
   getAllSubject() {
@@ -343,12 +344,22 @@ export class BuildTestComponent {
     this.subSystemService.getAllsubSystems().subscribe(
       (res: any) => {
         this.subsystemList = res.result;
+        this.totalSubSystem=res.result;
         // console.log('subsystem', this.subsystemList);
       },
       (err: any) => {
         console.log(err);
       }
     );
+  }
+
+  onSystemSelectionChange(selectedSystemId: string): void {
+    console.log('Selected System ID:', selectedSystemId);
+    console.log(this.subsystemList);
+    this.subsystemList = this.totalSubSystem.filter(
+      (item: any) => item.systemId._id === selectedSystemId
+    );
+    console.log(this.subsystemList);
   }
 
   ngAfterViewInit() {
@@ -361,10 +372,14 @@ export class BuildTestComponent {
     this.examService.getExamDetailsByStudentId(userid).subscribe(
       (response: any) => {
         console.log(response.result);
-        const filteredSubjects =response.result
+        const filteredTImedMode = response.result.filter(
+          (item: any) => item.mode === 'TIMED' && item.percentage < 30
+        );
+        console.log(filteredTImedMode);
+
+        const filteredSubjects = response.result
           .filter((item: any) => item.mode === 'TIMED' && item.percentage < 30)
           .map((item: any) => item?.subjectId?.subject);
-
 
         this.examArray = [...new Set(filteredSubjects)];
         console.log(this.examArray);

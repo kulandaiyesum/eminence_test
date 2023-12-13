@@ -52,4 +52,8 @@ export class ExamService {
   sendExamCode(sendCodeObject: Sendcode) {
     return this.http.post(this.baseUrl, sendCodeObject);
   }
+
+  recommendedEminenceAI(email:string){
+    return this.http.post(this.baseUrl+"invite",email);
+  }
 }

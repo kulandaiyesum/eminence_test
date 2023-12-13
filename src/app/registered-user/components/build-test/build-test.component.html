@@ -103,6 +103,7 @@
               <mat-select
                 placeholder="Choose system"
                 formControlName="systemId"
+                (selectionChange)="onSystemSelectionChange($event.value)"
               >
                 <mat-option value="ALL">All</mat-option>
                 <mat-option
