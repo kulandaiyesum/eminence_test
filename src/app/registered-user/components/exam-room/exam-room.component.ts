@@ -15,7 +15,7 @@ import { ExamService } from '../../service/exam.service';
 })
 export class ExamRoomComponent implements OnInit {
   joinLink: string = '';
-  inviteEmail: string = '';
+  public inviteEmail;
   public privateExam: PrivateExam;
   secretKey = environment.secretKey;
 
@@ -51,11 +51,9 @@ export class ExamRoomComponent implements OnInit {
   }
 
   sendInvite() {
-    // Your logic to send the invite goes here
-    console.log('Sending invite to:', this.inviteEmail);
-    this.examService.recommendedEminenceAI(this.inviteEmail).subscribe(
+    let data = { email: this.inviteEmail };
+    this.examService.recommendedEminenceAI(data).subscribe(
       (response: any) => {
-        console.log(response);
         this.toastr.success('Invite send successfully', '', {
           timeOut: 3000,
         });

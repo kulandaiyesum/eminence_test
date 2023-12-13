@@ -53,7 +53,7 @@ export class ExamService {
     return this.http.post(this.baseUrl, sendCodeObject);
   }
 
-  recommendedEminenceAI(email:string){
-    return this.http.post(this.baseUrl+"invite",email);
+  recommendedEminenceAI(email) {
+    return this.http.post(this.baseUrl + 'invite/inv', email);
   }
 }
