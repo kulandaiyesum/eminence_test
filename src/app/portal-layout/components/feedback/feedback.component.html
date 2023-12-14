@@ -1,0 +1,41 @@
+<div class="feedback-container">
+  <div class="main">
+    <div class="close-area">
+      <mat-icon (click)="onClose()">close</mat-icon>
+    </div>
+    <div class="heading">
+      <h4>Comment your feedback</h4>
+    </div>
+    <div class="comment-area">
+      <form #commentForm="ngForm" >
+        <div class="form-group">
+          <label for="comment">Comment:</label><br>
+          <textarea
+            id="comment"
+            name="comment"
+            [(ngModel)]="comment"
+            #commentInput="ngModel"
+            required
+            minlength="5"
+            placeholder="Type your comments here"
+          ></textarea>
+          <div
+            *ngIf="
+              commentInput.invalid &&
+              (commentInput.dirty || commentInput.touched)
+            "
+          >
+            <div *ngIf="commentInput.errors?.['required']" id="error-messages">
+              Comment is required.
+            </div>
+            <div *ngIf="commentInput.errors?.['minlength']" id="error-messages">
+              Comment should be at least 5 characters long.
+            </div>
+          </div>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="commentForm.invalid" (click)="submitForm()">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
