@@ -234,7 +234,7 @@ export class EditorComponent implements OnInit, OnDestroy {
             option.explanation = this.selectedOptionExplanation;
           } else {
             option.correctAnswer = 'false';
-            option.explanation = '';
+            option.explanation = null;
           }
         });
         this.tempQuestion.question.options.forEach((res) => {
