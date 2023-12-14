@@ -56,6 +56,7 @@ const customNotifierOptions: NotifierOptions = {
 import { EmailPopupComponent } from './components/email-popup/email-popup.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 
+
 @NgModule({
   declarations: [
     LoginComponent,
@@ -65,6 +66,7 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
     EmailComponent,
     EmailPopupComponent,
     VerifyEmailComponent,
+
   ],
   imports: [
     CommonModule,

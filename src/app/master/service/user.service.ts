@@ -46,4 +46,8 @@ export class UserService {
     }
     return this.http.patch(this.userUrl + '/changeStatus', body);
   }
+
+  userComment(data){
+    return this.http.post(this.userUrl+'/comment',data);
+  }
 }

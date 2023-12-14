@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+import { FeedbackComponent } from './components/feedback/feedback.component';
 
 @Component({
   selector: 'app-portal-layout',
@@ -22,6 +24,7 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private rsaService: RsaService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
+    public dialog: MatDialog
     ) {
     this.matIconRegistry.addSvgIcon(
       'custom-icon',
@@ -48,6 +51,8 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
         this.pathMatch = false;
       }
     });
+
+    // this.helpPopUp()
   }
   private breakpointObserver = inject(BreakpointObserver);
 
@@ -93,5 +98,16 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
   }
   isStudent() {
     return this.role === 'STUDENT';
+  }
+
+  helpPopUp(){
+    const dialogRef = this.dialog.open(FeedbackComponent, {
+      width: '600px',  // Set the desired width
+      height: '300px', // Set the desired height
+      data: this.role
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }

@@ -151,8 +151,8 @@
     </div>
     <div class="help-report-error" *ngIf="!isAdmin()" class="bottom-left-icon">
       <mat-icon>help</mat-icon>
-      <span *ngIf="!isVetter()">Help / Report Error</span>
-      <span *ngIf="isVetter()">Help</span>
+      <span *ngIf="!isVetter()" (click)="helpPopUp()">Help / Report Error</span>
+      <span *ngIf="isVetter()" (click)="helpPopUp()">Help</span>
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
