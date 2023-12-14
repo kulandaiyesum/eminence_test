@@ -59,7 +59,7 @@
               <p>You selected wrong answer</p>
             </div>
             <div *ngFor="let option of indexBasedQuestions?.options">
-              <p *ngIf="option.explanation !== null">
+              <p *ngIf="option.correctAnswer === 'true'">
                 <b>Correct Answer : </b> {{ option?.text }}
               </p>
             </div>
@@ -72,16 +72,13 @@
         >
           <mat-accordion>
             <mat-expansion-panel
-              *ngIf="
-                option?.explanation !== null &&
-                option?.explanation !== undefined
-              "
+              *ngIf="option?.correctAnswer === 'true'"
               id="explanation-panel"
             >
               <mat-expansion-panel-header>
                 <mat-panel-title> Explanation </mat-panel-title>
               </mat-expansion-panel-header>
-              <p *ngIf="option.explanation !== null">
+              <p *ngIf="option.correctAnswer === 'true'">
                 <b>Explanation : </b> {{ option?.explanation }}
               </p>
             </mat-expansion-panel>

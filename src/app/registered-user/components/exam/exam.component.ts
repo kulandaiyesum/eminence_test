@@ -153,7 +153,7 @@ export class ExamComponent implements OnInit {
 
   optionSelected(i: number, selectedOption: ExamTutorOption) {
     const correctOption = this.indexBasedQuestions.options.find(
-      (option) => option.explanation !== null
+      (option) => option.correctAnswer === 'true'
     );
     const selectedOptionIndex: string = this.generateAlphabetChar(i);
     if (correctOption._id === selectedOption._id) {
