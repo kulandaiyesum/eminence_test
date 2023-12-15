@@ -16,6 +16,12 @@
                 {{ row.name || "-" }}
               </td>
             </ng-container>
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+              <td mat-cell *matCellDef="let row">
+                {{ row.packageId.type }}
+              </td>
+            </ng-container>
 
             <ng-container matColumnDef="instituteId">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>PACKAGE</th>

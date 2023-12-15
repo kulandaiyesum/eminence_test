@@ -415,6 +415,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
         this.chatData = doc1.result;
         this.messageList = this.chatData.messageList;
         console.log(this.messageList);
+        this.messageList=this.messageList.filter((item:any)=> item.replymessage !==undefined);
         setTimeout(() => {
           this.scrollToElement();
         }, 500);
@@ -437,6 +438,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
       .subscribe((doc1: any) => {
         this.chatData = doc1.result;
         this.messageList = this.chatData.messageList;
+        this.messageList=this.messageList.filter((item:any)=> item.replymessage !==undefined);
         setTimeout(() => {
           this.scrollToElement();
         }, 500);
