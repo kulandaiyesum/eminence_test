@@ -118,6 +118,7 @@ export class AddElementComponent {
           // console.log(foundObject.systemId.system);
           if (foundObject.systemId._id) {
             this.attributes.system = foundObject.systemId._id;
+            this.onSystemChange();
           }
           if (foundObject._id) {
             this.attributes.subSystemId = foundObject._id;
