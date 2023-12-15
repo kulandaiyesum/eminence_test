@@ -79,6 +79,8 @@ export class AddSubscriptionComponent implements OnInit {
       // this.institutionModel.startdate = data.packageNameId.startdate;
       // this.institutionModel.enddate = data.packageNameId.enddate;
     }
+    console.log(this.data);
+    console.log(this.data.data.institutionName, 'ooooooo');
   }
 
   ngOnInit(): void {
@@ -228,7 +230,7 @@ export class AddSubscriptionComponent implements OnInit {
           this.selectedPackageOption.durationType;
         if (this.data.from === 'institution') {
           this.institutionModel.institutionId = this.data.data._id;
-          this.institutionModel.name = this.data.data.name;
+          this.institutionModel.name = this.data.data.institutionName;
           if (this.institutionModel.userId === '') {
             delete this.institutionModel.userId;
           }

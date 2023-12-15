@@ -59,14 +59,7 @@ export class SubscriptionComponent implements OnInit {
     });
   }
   applyFilter(event: Event) {
-    // const filterValue = (event.target as HTMLInputElement).value;
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    // if (this.dataSource.paginator) {
-    //   this.dataSource.paginator.firstPage();
-    // }
-    // // Reset sort to its initial state
-    // this.dataSource.sort?.sort({ id: '', start: 'asc', disableClear: false });
+    this.dataSource.sort?.sort({ id: '', start: 'asc', disableClear: false });
 
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

@@ -215,7 +215,6 @@ export class InstitutionComponent {
   }
 
   performDelete(element: any) {
-    console.log(element);
     this.instituteService.deleteInstitution(element).subscribe(
       (response: any) => {
         this.toastr.success(response.message, '', {
@@ -252,7 +251,7 @@ export class InstitutionComponent {
    * function to change the status of user/institute
    * @param elementId
    */
-  changeStatus(elementId: string,status) {
+  changeStatus(elementId: string, status) {
     Swal.fire({
       title: 'Do you want to chnage status of the user',
       icon: 'warning',
@@ -261,7 +260,7 @@ export class InstitutionComponent {
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.instituteService.changeStatus(elementId,status).subscribe(
+        this.instituteService.changeStatus(elementId, status).subscribe(
           (response: any) => {
             this.toastr.success(response.message, 'Status changed', {
               timeOut: 3000,
