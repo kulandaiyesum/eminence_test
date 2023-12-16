@@ -141,6 +141,7 @@ export class LoginComponent {
             localStorage.setItem('4', this.loginUser.lastName);
             localStorage.setItem('5', this.loginUser.id);
             localStorage.setItem('10', this.loginUser.email);
+            localStorage.setItem('11', 'true');
           } else {
           }
         },
