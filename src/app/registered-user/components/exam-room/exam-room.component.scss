@@ -7,6 +7,11 @@
     height: auto;
     .send-area {
       height: auto;
+      .flex_wrap_input {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
       input {
         min-width: 300px;
         height: 33px;
@@ -118,17 +123,8 @@
   @media screen and (max-width: 640px) {
     .invite-area {
       .send-area {
-        // border: 1px solid saddlebrown;
         width: 100%;
         height: auto;
-        input {
-          width: 50%;
-          height: 33px;
-          border: 1px solid rgba(0, 0, 0, 0.616);
-        }
-        button {
-          margin-top: 1rem;
-        }
       }
     }
     .join-area {

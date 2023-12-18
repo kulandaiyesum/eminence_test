@@ -4,23 +4,24 @@
       <h5>Invite your friends to join Eminence</h5>
       <div class="send-area">
         <p>Send an email invite</p>
-
-        <input
-          type="text"
-          name="invite"
-          id="invite"
-          #emailInput="ngModel"
-          [(ngModel)]="inviteEmail"
-          required
-          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-        />
-        <button
-          class="ms-2"
-          (click)="sendInvite()"
-          [disabled]="emailInput.invalid"
-        >
-          Send
-        </button>
+        <div class="flex_wrap_input">
+          <input
+            type="text"
+            name="invite"
+            id="invite"
+            #emailInput="ngModel"
+            [(ngModel)]="inviteEmail"
+            required
+            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+          />
+          <button
+            class=""
+            (click)="sendInvite()"
+            [disabled]="emailInput.invalid"
+          >
+            Send
+          </button>
+        </div>
         <div
           *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
         >
