@@ -21,11 +21,14 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
   // questionNumbers = [1, 2, 3, 4, 5, 6, 7];
   pathMatch: boolean = false;
   private pathSubcriber: Subscription;
-  constructor(private router: Router, private rsaService: RsaService,
+  isExamAttending;
+  constructor(
+    private router: Router,
+    private rsaService: RsaService,
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     public dialog: MatDialog
-    ) {
+  ) {
     this.matIconRegistry.addSvgIcon(
       'custom-icon',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/images/qgen.svg')
@@ -39,6 +42,9 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const encrptedRole = localStorage.getItem('2');
     this.role = this.rsaService.decryptText(encrptedRole, this.secretKey);
+
+    this.isExamAttending = localStorage.getItem('11');
+
     const storedFirstName: string = localStorage.getItem('3');
     this.firstName = this.rsaService.decryptText(
       storedFirstName,
@@ -51,8 +57,15 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
         this.pathMatch = false;
       }
     });
+    
+
 
     // this.helpPopUp()
+  }
+  ngDoCheck() {
+    // Custom change detection logic
+    // console.log('ngDoCheck called');
+    this.isExamAttending = localStorage.getItem('11');
   }
   private breakpointObserver = inject(BreakpointObserver);
 
@@ -97,16 +110,16 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
     return this.role === 'VETTER';
   }
   isStudent() {
-    return this.role === 'STUDENT';
+    return this.role === 'STUDENT' && this.isExamAttending === 'true';
   }
 
-  helpPopUp(){
+  helpPopUp() {
     const dialogRef = this.dialog.open(FeedbackComponent, {
-      width: '600px',  // Set the desired width
+      width: '600px', // Set the desired width
       height: '300px', // Set the desired height
-      data: this.role
+      data: this.role,
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed');
     });
   }

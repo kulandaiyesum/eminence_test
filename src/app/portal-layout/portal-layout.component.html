@@ -169,6 +169,7 @@
       </button>
       <div class="h3 mb-0">Welcome {{ firstName | titlecase }}</div>
       <mat-icon class="user_account" (click)="logout()" style="cursor: pointer"
+      *ngIf="isExamAttending==='true'"
         >exit_to_app</mat-icon
       >
     </mat-toolbar>

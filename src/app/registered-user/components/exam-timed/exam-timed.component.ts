@@ -104,6 +104,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     this.stopTimer();
     clearInterval(this.examStoper);
     this.stopChartInterval();
+    localStorage.setItem('11', 'true');
   }
   ngOnInit(): void {
     this.message = new Message();
@@ -157,7 +158,12 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
       this.getChatmessages();
       this.startChartInterval();
     }
+    localStorage.setItem('11', 'false');
+    console.log(localStorage.getItem('11'));
+    // window.location.reload();
   }
+
+  
 
   // ngAfterViewInit() {
   //   const scrollbar = Scrollbar.init(this.myScrollContainer.nativeElement, {

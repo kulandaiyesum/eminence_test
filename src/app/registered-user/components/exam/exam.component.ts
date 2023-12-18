@@ -67,7 +67,9 @@ export class ExamComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private toster: ToastrService
-  ) {}
+  ) {
+
+  }
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.requestid = params['id'];
@@ -96,6 +98,14 @@ export class ExamComponent implements OnInit {
 
     this.type = +localStorage.getItem('qbt');
     // console.log('type in exam tutor mode', this.type);
+    localStorage.setItem('11', 'false');
+    console.log(localStorage.getItem('11'));
+    // window.location.reload();
+  }
+
+  ngOnDestroy() {
+    localStorage.setItem('11', 'true');
+    //  window.location.reload();
   }
 
   ngAfterViewInit() {
