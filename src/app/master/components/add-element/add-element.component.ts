@@ -35,8 +35,7 @@ export class AddElementComponent {
     private subjectService: SubjectService,
     private systemservice: SystemService,
     private subSystemServeice: SubSystemService,
-    private qgenService: QgenService,
-
+    private qgenService: QgenService
   ) {
     this.input = data.keywords[0];
     this.attributes.input = this.input;
@@ -54,6 +53,7 @@ export class AddElementComponent {
     this.getAllSubject();
     this.getAllSystem();
     this.getAllsubSystems();
+    console.log(this.data);
   }
 
   closeDialog() {
@@ -113,6 +113,8 @@ export class AddElementComponent {
           const foundObject = this.subsystemList.find(
             (item) => item._id === this.updateValueMappingIDForSubsystem
           );
+          console.log(foundObject, 'pppppppppppp');
+
           // console.log(foundObject);
           // console.log(foundObject.subSystem);
           // console.log(foundObject.systemId.system);
@@ -133,13 +135,10 @@ export class AddElementComponent {
   }
 
   onSystemChange() {
-    // When the system selection changes, reset the sub-system selection.
-
     const matchingItems = this.subsystemList.filter(
       (item) => item.systemId._id === this.attributes.system
     );
     this.subsystemOptions = matchingItems;
-    // Check if matchingItems were found and log them
     if (matchingItems.length > 0) {
       console.log(matchingItems);
     } else {

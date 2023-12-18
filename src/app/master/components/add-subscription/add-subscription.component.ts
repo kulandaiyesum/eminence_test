@@ -49,6 +49,7 @@ export class AddSubscriptionComponent implements OnInit {
     country: '',
     questionsCountResetDate: new Date(),
     userId: '',
+    from: '',
   };
   public maxDate = new Date();
 
@@ -228,6 +229,7 @@ export class AddSubscriptionComponent implements OnInit {
           this.selectedPackageOption.questionsCount;
         this.institutionModel.durationType =
           this.selectedPackageOption.durationType;
+        this.institutionModel.from = this.data.from;
         if (this.data.from === 'institution') {
           this.institutionModel.institutionId = this.data.data._id;
           this.institutionModel.name = this.data.data.institutionName;

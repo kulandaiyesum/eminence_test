@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.development';
 import { User } from '../model/user';
 
 @Injectable({
@@ -38,16 +38,15 @@ export class UserService {
    * @param _id
    */
   changeStatus(_id: string, status) {
-    console.log(status);
     if (status == 1) {
       var body = { _id: _id, status: 0 };
     } else {
       var body = { _id: _id, status: 1 };
     }
-    return this.http.patch(this.userUrl + '/changeStatus', body);
+    return this.http.post(this.userUrl + '/changeStatus', body);
   }
 
-  userComment(data){
-    return this.http.post(this.userUrl+'/comment',data);
+  userComment(data) {
+    return this.http.post(this.userUrl + '/comment', data);
   }
 }

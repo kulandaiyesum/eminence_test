@@ -19,4 +19,5 @@ export class Institution {
   institutionName?: string;
   phoneNo?: string;
   otp?: string;
+  from?: string;
 }

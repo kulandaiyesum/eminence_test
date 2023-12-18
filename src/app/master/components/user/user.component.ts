@@ -22,7 +22,6 @@ export class UserComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   dataSource;
   displayedColumns: string[] = [
-
     'name',
     'email',
     'role',
@@ -134,7 +133,7 @@ export class UserComponent implements OnInit {
    * function to change the status of user/institute
    * @param elementId
    */
-  changeStatus(elementId: string,status) {
+  changeStatus(elementId: string, status) {
     Swal.fire({
       title: 'Do you want to chnage status of the user',
       icon: 'warning',
@@ -143,7 +142,9 @@ export class UserComponent implements OnInit {
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.userService.changeStatus(elementId,status).subscribe(
+        console.log(elementId, status);
+
+        this.userService.changeStatus(elementId, status).subscribe(
           (response: any) => {
             this.toastr.success(response.message, 'Status changed', {
               timeOut: 3000,
