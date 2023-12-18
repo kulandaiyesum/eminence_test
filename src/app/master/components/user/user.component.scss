@@ -95,3 +95,8 @@
     color: #ffd43b;
   }
 }
+@media (max-width:768px) {
+  .user_container {
+    width: 100%;
+  }
+}
