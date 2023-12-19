@@ -54,7 +54,7 @@ export class LandingComponent {
       (response: any) => {
         // this.roomCode = response.getUser.roomCode;
         // console.log(response.activeUse);
-        console.log(response.result.getUser._id);
+        // console.log(response.result.getUser._id);
         this.getUserID=response.result.getUser._id
         this.isHostJoined=response.result.getUser.hostJoined
         // console.log(response.result.activeUser);
