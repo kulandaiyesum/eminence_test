@@ -16,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 export class SubscriptionComponent implements OnInit {
   displayedColumns: string[] = [
     'instituteName',
+    'userType',
     'type',
     'instituteId',
     'packageType',

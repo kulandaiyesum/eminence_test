@@ -28,6 +28,7 @@ export class AskeminenceComponent implements OnInit {
     _id: '',
     keyword: '',
     answer: '',
+    reqId: '',
   };
   resultObjectForEmail = {
     _id: '',
@@ -83,6 +84,8 @@ export class AskeminenceComponent implements OnInit {
     this.askEminence.createdBy = this.userFirstName;
     this.askEmininveService.getAskeminice(this.askEminence).subscribe(
       (doc: any) => {
+        console.log(doc.result, 'ooooooooo');
+
         this.spinner.hide();
         this.loading = false;
         const tempObj = doc.result;
@@ -91,6 +94,7 @@ export class AskeminenceComponent implements OnInit {
           this.resultObject.answer = this.askEminence.result;
           this.resultObject.keyword = tempObj.saveAskEminence.keyword;
           this.resultObject._id = tempObj.saveAskEminence._id;
+          this.resultObject.reqId = tempObj.request._id;
         }
       },
       (error) => {
