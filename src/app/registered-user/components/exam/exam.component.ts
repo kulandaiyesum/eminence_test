@@ -67,9 +67,7 @@ export class ExamComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
     private toster: ToastrService
-  ) {
-
-  }
+  ) {}
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.requestid = params['id'];
@@ -108,16 +106,16 @@ export class ExamComponent implements OnInit {
     //  window.location.reload();
   }
 
-  ngAfterViewInit() {
-    const scrollbars = Scrollbar.init(
-      this.scrollExplanationContainer.nativeElement,
-      {}
-    );
-    const scrollbar = Scrollbar.init(
-      this.scrollQuestionContainer.nativeElement,
-      {}
-    );
-  }
+  // ngAfterViewInit() {
+  //   const scrollbars = Scrollbar.init(
+  //     this.scrollExplanationContainer.nativeElement,
+  //     {}
+  //   );
+  //   const scrollbar = Scrollbar.init(
+  //     this.scrollQuestionContainer.nativeElement,
+  //     {}
+  //   );
+  // }
 
   getQuestionsIndexBased(index: number) {
     this.indexBasedQuestions = this.questions[index];
@@ -170,13 +168,13 @@ export class ExamComponent implements OnInit {
       this.showExplanations = true;
       this.correctNews = true;
       this.incorrectNews = false;
-      Swal.fire({
-        title: 'Your answer is correct!',
-        width: '500px',
-        icon: 'success',
-        showConfirmButton: true,
-        confirmButtonText: 'OK',
-      });
+      // Swal.fire({
+      //   title: 'Your answer is correct!',
+      //   width: '500px',
+      //   icon: 'success',
+      //   showConfirmButton: true,
+      //   confirmButtonText: 'OK',
+      // });
       this.examArray.forEach((payloadObj) => {
         if (payloadObj.questionId === this.indexBasedQuestions._id) {
           payloadObj.isCorrectAnswer = 'YES';
@@ -185,25 +183,25 @@ export class ExamComponent implements OnInit {
         }
       });
     } else {
-      Swal.fire({
-        title: 'You selected the wrong answer',
-        width: '500px',
-        showConfirmButton: true,
-        confirmButtonText: 'OK',
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.showExplanations = true;
-          this.incorrectNews = true;
-          this.correctNews = false;
+      // Swal.fire({
+      //   title: 'You selected the wrong answer',
+      //   width: '500px',
+      //   showConfirmButton: true,
+      //   confirmButtonText: 'OK',
+      // }).then((result) => {
+      //   if (result.isConfirmed) {
+      //   }
+      this.showExplanations = true;
+      this.incorrectNews = true;
+      this.correctNews = false;
+      this.examArray.forEach((payloadObj) => {
+        if (payloadObj.questionId === this.indexBasedQuestions._id) {
+          payloadObj.isCorrectAnswer = 'NO';
+          payloadObj.selectedAnswer = selectedOptionIndex;
+          payloadObj.selectedAnswerId = selectedOption._id;
         }
-        this.examArray.forEach((payloadObj) => {
-          if (payloadObj.questionId === this.indexBasedQuestions._id) {
-            payloadObj.isCorrectAnswer = 'NO';
-            payloadObj.selectedAnswer = selectedOptionIndex;
-            payloadObj.selectedAnswerId = selectedOption._id;
-          }
-        });
       });
+      // });
     }
   }
 
@@ -367,5 +365,23 @@ export class ExamComponent implements OnInit {
     this.examObject.correctQuestions = correctAnswers;
     percentage = (correctAnswers / qLength) * 100;
     return parseFloat(percentage.toFixed(2));
+  }
+
+  isAnswerCorrect(option: ExamTutorOption): string {
+    let result = '';
+    const tempQuestion = this.examArray.find(
+      (q) => q.selectedAnswerId === option._id
+    );
+    if (tempQuestion) {
+      if (
+        tempQuestion.selectedAnswerId === option._id &&
+        option.correctAnswer === 'true'
+      ) {
+        result = 'green';
+      } else {
+        result = 'red';
+      }
+    }
+    return result;
   }
 }
