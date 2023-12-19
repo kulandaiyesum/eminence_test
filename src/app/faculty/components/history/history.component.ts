@@ -53,7 +53,7 @@ export class HistoryComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
   getPdf(row) {
-    this.qgenService.getPdf(row._id).subscribe(
+    this.qgenService.getPdf(row).subscribe(
       (doc: any) => {
         this.toastr.success(doc.message, '', {
           timeOut: 3000,

@@ -27,7 +27,7 @@ export class QgenService {
     return this.http.get(this.baseUrl + userId + '/status');
   }
   getPdf(data) {
-    return this.http.post(this.baseUrl + data, data);
+    return this.http.post(this.baseUrl + data._id, data);
   }
 
   reviewQuestionSet(data) {
