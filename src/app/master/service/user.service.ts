@@ -49,4 +49,8 @@ export class UserService {
   userComment(data) {
     return this.http.post(this.userUrl + '/comment', data);
   }
+
+  updateUserDetails(data){
+    return this.http.patch(this.userUrl+'/'+data._id,data);
+  }
 }

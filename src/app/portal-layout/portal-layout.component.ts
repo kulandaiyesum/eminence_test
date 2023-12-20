@@ -9,6 +9,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { FeedbackComponent } from './components/feedback/feedback.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @Component({
   selector: 'app-portal-layout',
@@ -57,15 +58,18 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
         this.pathMatch = false;
       }
     });
-    
 
-
-    // this.helpPopUp()
+    // this.openProfile();
   }
   ngDoCheck() {
     // Custom change detection logic
     // console.log('ngDoCheck called');
     this.isExamAttending = localStorage.getItem('11');
+    const storedFirstName: string = localStorage.getItem('3');
+    this.firstName = this.rsaService.decryptText(
+      storedFirstName,
+      this.secretKey
+    );
   }
   private breakpointObserver = inject(BreakpointObserver);
 
@@ -117,6 +121,17 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(FeedbackComponent, {
       width: '600px', // Set the desired width
       height: '300px', // Set the desired height
+      data: this.role,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  openProfile() {
+    const dialogRef = this.dialog.open(ProfileComponent, {
+      width: 'auto', // Set the desired width
+      height: 'auto', // Set the desired height
       data: this.role,
     });
     dialogRef.afterClosed().subscribe((result) => {

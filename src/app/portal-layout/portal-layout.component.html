@@ -174,7 +174,7 @@
         >account_circle</mat-icon
       >
       <mat-menu #menu="matMenu">
-        <button mat-menu-item>User profile <mat-icon>account_box</mat-icon></button>
+        <button mat-menu-item (click)="openProfile()">User profile <mat-icon>account_box</mat-icon></button>
         <button mat-menu-item (click)="logout()">Logout <mat-icon>exit_to_app</mat-icon></button>
       </mat-menu>
     </mat-toolbar>
