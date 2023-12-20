@@ -10,6 +10,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatMenuModule} from '@angular/material/menu';
 
 @NgModule({
   declarations: [PortalLayoutComponent, FeedbackComponent],
@@ -20,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule,FormsModule,ReactiveFormsModule
+    MatListModule,FormsModule,ReactiveFormsModule,MatMenuModule
   ],
 })
 export class PortalLayoutModule {}
