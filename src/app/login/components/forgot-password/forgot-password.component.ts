@@ -79,7 +79,7 @@ export class ForgotPasswordComponent {
       this.loginService.updatePassword(this.forgotPasswordModel).subscribe(
         (response) => {
           console.log(response);
-          this.toastr.success('Passward Reset Successfully ', '', {
+          this.toastr.success('Password Reset Successfully ', '', {
             timeOut: 3000,
           });
           this.router.navigate(['']);
