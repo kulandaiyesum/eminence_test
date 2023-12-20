@@ -68,6 +68,8 @@ export class SendInviteComponent {
     const role = localStorage.getItem('2');
     // this.sendCode.email = this.loginService.decryptText(mail, this.secretKey);
     this.userEmail = this.loginService.decryptText(mail, this.secretKey);
+    console.log(this.userEmail);
+
     this.role = this.loginService.decryptText(role, this.secretKey);
     const emailAddresses = [
       'shekm@datapattern.ai',
@@ -161,49 +163,58 @@ export class SendInviteComponent {
   }
 
   checkAvailability(form: NgForm) {
+    console.log('Triggered first tu da');
+
     const emailArray = this.sendCode.email
       .split(',')
       .map((email) => email.trim());
-    const newEmailArray = emailArray.filter(
-      (email) => email !== this.userEmail
-    );
-    const emailArrays = { email: newEmailArray, role: this.role };
-    console.log(emailArrays);
+    console.log(emailArray);
+    if (emailArray.includes(this.userEmail)) {
+      this.toastr.error('Remove your mail id', '', {
+        timeOut: 3000,
+      });
+    } else {
+      const newEmailArray = emailArray.filter(
+        (email) => email !== this.userEmail
+      );
+      const emailArrays = { email: newEmailArray, role: this.role };
+      console.log(emailArrays);
 
-    this.userService.checkRegisteredUser(emailArrays).subscribe(
-      (response: any) => {
-        console.log(response);
-        this.checkAvailabilityResponse = response.result.users;
-        const responseEmails = this.checkAvailabilityResponse.map(
-          (item) => item?.email
-        );
-        // Find emails not present in the database
-        const notInDatabaseEmails = newEmailArray.filter(
-          (email) => !responseEmails.includes(email)
-        );
-        console.log(notInDatabaseEmails);
-        this.noActiveMembers = notInDatabaseEmails;
-        if (notInDatabaseEmails.length > 0) {
-          this.toastr.error('User not available', '', {
+      this.userService.checkRegisteredUser(emailArrays).subscribe(
+        (response: any) => {
+          console.log(response);
+          this.checkAvailabilityResponse = response.result.users;
+          const responseEmails = this.checkAvailabilityResponse.map(
+            (item) => item?.email
+          );
+          // Find emails not present in the database
+          const notInDatabaseEmails = newEmailArray.filter(
+            (email) => !responseEmails.includes(email)
+          );
+          console.log(notInDatabaseEmails);
+          this.noActiveMembers = notInDatabaseEmails;
+          if (notInDatabaseEmails.length > 0) {
+            this.toastr.error('User not available', '', {
+              timeOut: 3000,
+            });
+            this.showReEnter = true;
+          } else {
+            this.toastr.success('User available', '', {
+              timeOut: 3000,
+            });
+            this.showSendEmail = true;
+            this.showAvailability = false;
+            this.sendInvite(form);
+          }
+        },
+        (error) => {
+          console.error('Something went wrong : ', error);
+          this.toastr.error(error.error.message, '', {
             timeOut: 3000,
           });
-          this.showReEnter = true;
-        } else {
-          this.toastr.success('User available', '', {
-            timeOut: 3000,
-          });
-          this.showSendEmail = true;
-          this.showAvailability = false;
-          this.sendInvite(form);
         }
-      },
-      (error) => {
-        console.error('Something went wrong : ', error);
-        this.toastr.error(error.error.message, '', {
-          timeOut: 3000,
-        });
-      }
-    );
+      );
+    }
   }
 
   sendInvite(form: NgForm): void {
@@ -245,7 +256,6 @@ export class SendInviteComponent {
           this.sendCode.email = '';
           this.showTextArea = false;
           this.generateQusetion();
-
         },
         (error) => {
           console.error('Error sending code :', error);
@@ -320,14 +330,12 @@ export class SendInviteComponent {
   goToLanding() {
     this.closeDialog();
     this.sendCode.email === this.userEmail;
-    let privateExam={
-      roomCode:this.sendCode.otp,
-      email:this.userEmail
-    }
+    let privateExam = {
+      roomCode: this.sendCode.otp,
+      email: this.userEmail,
+    };
     console.log(privateExam);
-    this.privateExamService
-      .joinExam(privateExam)
-      .subscribe((resp: any) => {});
+    this.privateExamService.joinExam(privateExam).subscribe((resp: any) => {});
 
     setTimeout(() => {
       this.router.navigate(['/eminence/student/landing', this.sendCode.otp]);
@@ -423,7 +431,5 @@ export class SendInviteComponent {
         });
       }
     );
-
-
   }
 }
