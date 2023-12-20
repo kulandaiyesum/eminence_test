@@ -19,6 +19,7 @@ import { CalculatorComponent } from '../calculator/calculator.component';
 import { MatDialog } from '@angular/material/dialog';
 import { NotesComponent } from '../notes/notes.component';
 import { ToastrService } from 'ngx-toastr';
+import { MatSidenav } from '@angular/material/sidenav';
 
 class examTutorPayload {
   studentId: string;
@@ -57,7 +58,7 @@ export class ExamComponent implements OnInit {
   setHeight: boolean = false; // this for option(lab, calculator and notes)
   isQuestionsFromQgen: boolean = false;
   public examObject: examTutorPayload;
-
+  @ViewChild('sidenav') sidenav: MatSidenav;
   private requestid: string;
   type: number; // the value maybe 0, 1, 2 or 3
   constructor(
@@ -152,11 +153,12 @@ export class ExamComponent implements OnInit {
     this.currentQuestionIndex = i;
     this.getQuestionsIndexBased(i);
   }
-  openDialog() {
-    const dialogRef = this.dialog.open(LabValuesComponent, {
-      width: '80%',
-    });
-    dialogRef.afterClosed().subscribe((result) => {});
+  openLabValue() {
+    if (this.sidenav._animationState === 'open') {
+      this.sidenav.close();
+    } else {
+      this.sidenav.open();
+    }
   }
 
   optionSelected(i: number, selectedOption: ExamTutorOption) {
@@ -383,5 +385,9 @@ export class ExamComponent implements OnInit {
       }
     }
     return result;
+  }
+
+  closeLabValue(event: any) {
+    this.sidenav.close();
   }
 }

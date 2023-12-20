@@ -1,6 +1,6 @@
 import { RsaService } from './../shared/service/rsa.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationEnd, Scroll } from '@angular/router';
 import { Observable, Subscription, map, shareReplay } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -9,6 +9,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { FeedbackComponent } from './components/feedback/feedback.component';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-portal-layout',
@@ -22,6 +23,7 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
   pathMatch: boolean = false;
   private pathSubcriber: Subscription;
   isExamAttending;
+  @ViewChild('drawer') drawer: MatSidenav;
   constructor(
     private router: Router,
     private rsaService: RsaService,
@@ -56,9 +58,14 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
       } else {
         this.pathMatch = false;
       }
+      if (
+        event?.routerEvent?.url.match(
+          /\/eminence\/student\/(exam|exam-timed)\/?/
+        )
+      ) {
+        this.drawer.close();
+      }
     });
-    
-
 
     // this.helpPopUp()
   }

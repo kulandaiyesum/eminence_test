@@ -23,6 +23,7 @@ import { Message } from '../../model/message';
 import { PrivateExamService } from '../../service/private-exam.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { indexBasedQuestionType } from '../../model/exam.class';
+import { MatSidenav } from '@angular/material/sidenav';
 
 class payloadQuestion {
   questionId: string = '';
@@ -86,6 +87,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
   @ViewChild('target') private myScrollContainer: ElementRef;
   gettingChatData;
   type: number; // the value maybe 0, 1, 2 or 3
+  @ViewChild('sidenav') sidenav: MatSidenav;
 
   constructor(
     private rsaService: RsaService,
@@ -162,8 +164,6 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     console.log(localStorage.getItem('11'));
     // window.location.reload();
   }
-
-  
 
   // ngAfterViewInit() {
   //   const scrollbar = Scrollbar.init(this.myScrollContainer.nativeElement, {
@@ -334,11 +334,11 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
   }
 
   openLabValues() {
-    const dialogOption = {
-      width: '80%',
-      margin: '0 auto',
-    };
-    const dialogRef = this.dialog.open(LabValuesComponent, dialogOption);
+    if (this.sidenav._animationState === 'open') {
+      this.sidenav.close();
+    } else {
+      this.sidenav.open();
+    }
   }
 
   timeTakenForExam(): number {
@@ -421,7 +421,9 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
         this.chatData = doc1.result;
         this.messageList = this.chatData.messageList;
         console.log(this.messageList);
-        this.messageList=this.messageList.filter((item:any)=> item.replymessage !==undefined);
+        this.messageList = this.messageList.filter(
+          (item: any) => item.replymessage !== undefined
+        );
         setTimeout(() => {
           this.scrollToElement();
         }, 500);
@@ -444,7 +446,9 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
       .subscribe((doc1: any) => {
         this.chatData = doc1.result;
         this.messageList = this.chatData.messageList;
-        this.messageList=this.messageList.filter((item:any)=> item.replymessage !==undefined);
+        this.messageList = this.messageList.filter(
+          (item: any) => item.replymessage !== undefined
+        );
         setTimeout(() => {
           this.scrollToElement();
         }, 500);
@@ -488,5 +492,9 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     } else {
       return false;
     }
+  }
+
+  closeLabValue(event: any) {
+    this.sidenav.close();
   }
 }
