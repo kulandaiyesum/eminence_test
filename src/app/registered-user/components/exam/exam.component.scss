@@ -9,22 +9,17 @@
     background-color: #000;
   }
 }
-
-.exam-container {
-  width: 100%;
-  height: 85vh;
-  // border: 1px solid red;
-  #exam-code {
-    width: auto;
-    // border: 1px solid black;
-    text-align: center;
-  }
+.nav_flag {
+  display: flex;
+  position: relative;
+  margin-bottom: 0.5rem;
+  padding: 0 0.7rem;
   .controls {
-    width: 100%;
+    width: 85%;
     display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.7rem;
     .button {
       width: 30px;
       height: 30px;
@@ -36,17 +31,54 @@
       position: relative;
     }
   }
+
+  .flag_section {
+    position: absolute;
+    top: 0;
+    right: 6px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0.5rem;
+    height: auto;
+    label {
+      font-weight: 500;
+    }
+    .exapnsion_div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      background-color: #ddd;
+      gap: 1rem;
+      border-radius: 1rem;
+      padding: 0.5rem;
+      transition: all 0.3s ease-in-out;
+      img {
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+      }
+    }
+  }
+}
+.exam-container {
+  width: 100%;
+  min-height: 85vh;
+  #exam-code {
+    width: auto;
+    text-align: center;
+  }
+
   .main {
     width: 100%;
-    height: 65vh;
-    // border: 1px solid red;
     display: flex;
     justify-content: space-around;
     .questions {
-      width: 45%;
-      height: 65vh;
-      // border: 1px solid black;
-      overflow: auto;
+      width: 46%;
+      // overflow: auto;
       .questions-main {
         height: auto;
         width: 100%;
@@ -58,9 +90,9 @@
       }
     }
     .explanations {
-      width: 45%;
-      height: 65vh;
-      overflow: auto;
+      width: 46%;
+      // height: 65vh;
+      // overflow: auto;
       padding: 15px;
 
       .explanations-main {
@@ -111,36 +143,6 @@
         // border: 1px solid red;
       }
     }
-    .flag_section {
-      position: absolute;
-      top: 1.25rem;
-      right: 5px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-top: 10%;
-      label {
-        font-weight: 500;
-      }
-      .exapnsion_div {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        background-color: #ddd;
-        gap: 1rem;
-        border-radius: 1rem;
-        padding: 0.5rem;
-        transition: all 0.3s ease-in-out;
-        img {
-          width: 24px;
-          height: 24px;
-          cursor: pointer;
-        }
-      }
-    }
   }
   @media (max-width: 767px) {
     .main {
@@ -164,11 +166,11 @@
   }
   .bottom-controls {
     width: 100%;
-    height: 12vh;
+    // height: 12vh;
     // border: 1px solid pink;
     .bottom-main {
       width: 100%;
-      height: 12vh;
+      // height: 12vh;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -179,14 +181,6 @@
       }
     }
   }
-  // @media (max-width: 767px){
-  //   .bottom-controls{
-  //     .bottom-main{
-  //       flex-direction: column !important;
-  //       justify-content: center !important;
-  //     }
-  //   }
-  // }
 }
 
 .flag_icon {
@@ -206,41 +200,15 @@
   left: 60%;
   transform: rotate(0.05turn);
   font-weight: 700;
-  color: rgb(22,175,13) !important;
+  color: rgb(22, 175, 13) !important;
 }
 
-// ::ng-deep
-//   .mat-mdc-checkbox.mat-accent
-//   .mdc-checkbox--selected
-//   ~ .mdc-checkbox__ripple {
-//   background-color: transparent !important;
-// }
-
-// ::ng-deep
-//   .mat-mdc-checkbox.mat-accent
-//   .mdc-checkbox
-//   .mdc-checkbox__native-control:enabled
-//   ~ .mdc-checkbox__background
-//   .mdc-checkbox__checkmark {
-//   color: #000000 !important;
-//   width: 15px;
-//   height: 15px;
-//   margin: auto auto;
-// }
-
-// ::ng-deep
-//   .mat-mdc-checkbox.mat-accent
-//   .mdc-checkbox
-//   .mdc-checkbox__native-control:enabled:checked
-//   ~ .mdc-checkbox__background,
-// .mat-mdc-checkbox
-//   .mdc-checkbox
-//   .mdc-checkbox__native-control:enabled:indeterminate
-//   ~ .mdc-checkbox__background,
-// .mat-mdc-checkbox
-//   .mdc-checkbox
-//   .mdc-checkbox__native-control[data-indeterminate="true"]:enabled
-//   ~ .mdc-checkbox__background {
-//   border-color: transparent !important;
-//   background-color: #000 !important;
-// }
+.color_red {
+  color: red;
+}
+.color_green {
+  color: green;
+}
+.color_black {
+  color: #000;
+}

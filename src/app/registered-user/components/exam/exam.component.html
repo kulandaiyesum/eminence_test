@@ -1,24 +1,61 @@
 <div class="exam-container">
-  <!-- <div id="exam-code">
-    <h5 *ngIf="liveExamRoomCode">Private exam room</h5>
-    <p *ngIf="liveExamRoomCode">Room code : {{ liveExamRoomCode }}</p>
-  </div> -->
-  <div class="controls ps-lg-3">
-    <button
-      class="button ms-2"
-      *ngFor="let item of questions; let i = index"
-      (click)="changeQuestions(i)"
-    >
-      <!-- [ngClass]="{ selected: i === currentQuestionIndex }" -->
-      {{ i + 1 }}
-      <span class="selected-question" *ngIf="isQuestionSubmited(item?._id)"
-        >&#x2714;</span
+  <section class="nav_flag">
+    <div class="controls ps-lg-3">
+      <button
+        class="button"
+        *ngFor="let item of questions; let i = index"
+        (click)="changeQuestions(i)"
       >
-      <span [ngClass]="{ flag_icon: isflaggedQuestion(item?._id) }"></span>
-    </button>
-  </div>
+        {{ i + 1 }}
+        <span class="selected-question" *ngIf="isQuestionSubmited(item?._id)"
+          >&#x2714;</span
+        >
+        <span [ngClass]="{ flag_icon: isflaggedQuestion(item?._id) }"></span>
+      </button>
+    </div>
+
+    <div class="flag_section">
+      <label for="{{ indexBasedQuestions._id }}">
+        <input
+          id="{{ indexBasedQuestions._id }}"
+          class="form-check-input"
+          type="checkbox"
+          [(ngModel)]="flagChecked"
+          (change)="flagChanges($event)"
+        />
+        <span class="ms-1">Flag</span>
+      </label>
+      <div class="exapnsion_div">
+        <img
+          src="../../../../assets/images/triangle_blue.png"
+          alt="triangle_blue"
+          (click)="setHeight = !setHeight"
+        />
+        <img
+          [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
+          src="../../../../assets/images/lab.png"
+          alt="lab"
+          (click)="openDialog()"
+        />
+        <img
+          [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
+          style="transform: translateX(2px)"
+          src="../../../../assets/images/notes.png"
+          alt="notes"
+          (click)="openNotepadEditor()"
+        />
+        <img
+          [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
+          src="../../../../assets/images/calculator.png"
+          alt="calculator"
+          (click)="openCalculatorPopup()"
+        />
+      </div>
+    </div>
+  </section>
+
   <div class="main">
-    <div class="questions" #scrollQuestionContainer>
+    <div class="questions">
       <div class="questions-main">
         <h6>Item {{ currentQuestionIndex + 1 }} of {{ questions.length }}</h6>
         <p>
@@ -28,8 +65,16 @@
           <li
             *ngFor="let option of indexBasedQuestions?.options; let i = index"
           >
-            <label class="pointer_cl" for="{{ option._id }}">
-              <!-- (click)="selectOptionIndex(i)" -->
+            <!-- color_red, color_green -->
+            <label
+              [ngClass]="{
+                color_green: isAnswerCorrect(option) === 'green',
+                color_black: isAnswerCorrect(option) === '',
+                color_red: isAnswerCorrect(option) === 'red',
+              }"
+              class="pointer_cl"
+              for="{{ option._id }}"
+            >
               <input
                 id="{{ option._id }}"
                 [(ngModel)]="selectOption"
@@ -43,7 +88,7 @@
         </ul>
       </div>
     </div>
-    <div class="explanations" #scrollExplanationContainer>
+    <div class="explanations">
       <div class="explanations-main" *ngIf="showExplanations">
         <mat-accordion>
           <mat-expansion-panel>
@@ -84,43 +129,6 @@
             </mat-expansion-panel>
           </mat-accordion>
         </div>
-      </div>
-    </div>
-    <div class="flag_section">
-      <label for="{{ indexBasedQuestions._id }}">
-        <input
-          id="{{ indexBasedQuestions._id }}"
-          class="form-check-input"
-          type="checkbox"
-          [(ngModel)]="flagChecked"
-          (change)="flagChanges($event)"
-        />Flag
-      </label>
-      <div class="exapnsion_div">
-        <img
-          src="../../../../assets/images/triangle_blue.png"
-          alt="triangle_blue"
-          (click)="setHeight = !setHeight"
-        />
-        <img
-          [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
-          src="../../../../assets/images/lab.png"
-          alt="lab"
-          (click)="openDialog()"
-        />
-        <img
-          [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
-          style="transform: translateX(2px)"
-          src="../../../../assets/images/notes.png"
-          alt="notes"
-          (click)="openNotepadEditor()"
-        />
-        <img
-          [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
-          src="../../../../assets/images/calculator.png"
-          alt="calculator"
-          (click)="openCalculatorPopup()"
-        />
       </div>
     </div>
   </div>

@@ -51,6 +51,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   secretKey: string = environment.secretKey;
   @ViewChild('editableDiv') editableDiv: ElementRef;
   @ViewChild('whyDeleteDiv') whyDeleteDiv: ElementRef;
+  LastQuestionNotReviewed: Question;
   constructor(
     private qgenService: QgenService,
     private rsaService: RsaService,
@@ -98,7 +99,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       !this.whyDeleteDiv.nativeElement.contains(event.target)
     ) {
       this.showDiv = false;
-    } 
+    }
   }
 
   /**
@@ -154,6 +155,9 @@ export class EditorComponent implements OnInit, OnDestroy {
     });
     if (pendingCount === this.questions.length - 1) {
       this.shouldShowButton = true;
+      this.LastQuestionNotReviewed = this.questions.find(
+        (q) => q.status === 'RECEIVED'
+      );
     }
   }
 
@@ -197,16 +201,28 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  changeStatusOfQuestion(questionId: string, index: number) {
-    let data = {
-      questionId: this.tempQuestion.question._id,
+  changeStatusOfQuestion(questionId?: string, index?: number) {
+    let tempId = '';
+    if (questionId === undefined && index === undefined) {
+      tempId = this.LastQuestionNotReviewed._id;
+    } else {
+      tempId = this.tempQuestion.question._id;
+    }
+    const data = {
+      questionId: tempId,
       status: this.status,
     };
     this.questionService.updateStatusOfQuestion(data).subscribe(
       (response) => {
         this.cdr.detectChanges();
-        this.questionId = questionId;
-        this.questionNo = index;
+        if (questionId === undefined && index === undefined) {
+          this.questionId = this.tempQuestion.question._id;
+          this.questionNo = this.tempQuestion.index;
+        } else {
+          this.questionId = questionId;
+          this.questionNo = index;
+        }
+
         this.getAllQuestions(this.reqId);
       },
       (error) => {
@@ -350,6 +366,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
+        this.changeStatusOfQuestion();
         this.reviewAll();
       }
     });
