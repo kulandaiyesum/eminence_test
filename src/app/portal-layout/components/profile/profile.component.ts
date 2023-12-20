@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { UserService } from 'src/app/master/service/user.service';
 import { ToastrService } from 'ngx-toastr';
 import * as CryptoJS from 'crypto-js';
+import { User } from 'src/app/master/model/user';
 
 @Component({
   selector: 'app-profile',
@@ -16,11 +17,13 @@ import * as CryptoJS from 'crypto-js';
 export class ProfileComponent {
   @ViewChild('profileForm') profileForm: NgForm;
 
-  public profileObject: Profile = {
+  public profileObject: User = {
     firstName: '',
     lastName: '',
     email: '',
     _id: '',
+    password: '',
+    role: undefined
   };
 
   secretKey = environment.secretKey;
@@ -59,7 +62,7 @@ export class ProfileComponent {
 
   submitForm(): void {
     console.log(this.profileObject);
-    this.userService.updateUserDetails(this.profileObject).subscribe(
+    this.userService.updateUserMaster(this.profileObject).subscribe(
       (response: any) => {
         // console.log(response);
         this.toastr.success('Details updated successfully', '', {
