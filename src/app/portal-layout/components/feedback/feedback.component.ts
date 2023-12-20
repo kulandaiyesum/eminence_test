@@ -24,13 +24,13 @@ export class FeedbackComponent {
     private userService: UserService,
     private loginService: LoginService,
     private toastr: ToastrService
-  ) {
-    console.log(data);
-  }
+  ) {}
 
   ngOnInit(): void {
     const mail = localStorage.getItem('10');
+    const role = localStorage.getItem('2');
     this.userMail = this.loginService.decryptText(mail, this.secretKey);
+    this.userRole = this.loginService.decryptText(role, this.secretKey);
   }
 
   onClose(): void {
@@ -38,13 +38,11 @@ export class FeedbackComponent {
   }
 
   submitForm(): void {
-    console.log('Form submitted:', this.comment);
     const data = {
       email: this.userMail,
       role: this.userRole,
       comment: this.comment,
     };
-
     this.userService.userComment(data).subscribe(
       (response: any) => {
         console.log(response);

@@ -56,7 +56,6 @@ export class SavedComponent {
       localStorage.getItem('10'),
       this.secretKey
     );
-    console.log(this.userEmail);
     this.getExamDetails(this.userId);
     this.getHostExamRoomHistory();
   }
@@ -89,7 +88,6 @@ export class SavedComponent {
     this.examService.getExamDetailsByStudentId(userid).subscribe(
       (response: any) => {
         this.examArray = response.result;
-        // console.log(this.examArray);
       },
       (err) => {
         console.log(err);
@@ -114,7 +112,6 @@ export class SavedComponent {
   getHostExamRoomHistory() {
     this.privateExamService.getHostExamHistory(this.userEmail).subscribe(
       (response: any) => {
-        console.log(response.result);
         this.dataSource.data = response.result;
         const transformedData = response.result.map((room) => ({
           ...room,
