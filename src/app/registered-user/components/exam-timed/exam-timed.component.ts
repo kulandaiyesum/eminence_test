@@ -79,6 +79,8 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
   private savedTimer: number = 0;
   private savedCalculatedTime: number = 0;
   private timePerQuestion = environment.timePerQuestion;
+  showCalculator: boolean = false;
+  showNotepad: boolean = false;
 
   public liveExamRoomCode: string;
   chatForm: FormGroup;
@@ -496,5 +498,15 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
 
   closeLabValue(event: any) {
     this.sidenav.close();
+  }
+  closeCalculator(event: any) {
+    if (this.showCalculator) {
+      this.showCalculator = false;
+    }
+  }
+  closeNotepad(event: any) {
+    if (this.showNotepad) {
+      this.showNotepad = false;
+    }
   }
 }

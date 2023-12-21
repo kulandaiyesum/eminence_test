@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ExamDataService } from '../../service/exam-data.service';
 
 @Component({
@@ -8,11 +7,9 @@ import { ExamDataService } from '../../service/exam-data.service';
   styleUrls: ['./notes.component.scss'],
 })
 export class NotesComponent {
+  @Output() closeNotepad = new EventEmitter<any>();
   textareaContent: string = '';
-  constructor(
-    public dialogRef: MatDialogRef<NotesComponent>,
-    private examdataService: ExamDataService
-  ) {}
+  constructor(private examdataService: ExamDataService) {}
 
   ngOnInit(): void {
     // Retrieve the text content when the component initializes
@@ -20,7 +17,7 @@ export class NotesComponent {
   }
 
   closeDialog() {
-    this.dialogRef.close();
+    this.closeNotepad.emit('close notepad');
   }
 
   restoreTextContent(): void {

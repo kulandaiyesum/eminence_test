@@ -20,6 +20,7 @@ section {
   min-height: 85vh;
   position: relative;
   .exam_timed_wrap {
+    min-height: 85vh;
     .question_id_link {
       display: flex;
       flex-wrap: wrap;
@@ -178,10 +179,24 @@ section {
     border-radius: 1rem;
     padding: 0.5rem;
     transition: all 0.3s ease-in-out;
+    position: relative;
     img {
       width: 24px;
       height: 24px;
       cursor: pointer;
+    }
+    .calculator,
+    .notepad {
+      position: absolute;
+      right: 100px;
+      z-index: 99;
+      cursor: all-scroll;
+    }
+    .calculator {
+      top: 10px;
+    }
+    .notepad {
+      top: 20px;
     }
   }
 }

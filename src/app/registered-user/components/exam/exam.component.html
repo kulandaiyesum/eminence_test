@@ -43,14 +43,22 @@
             style="transform: translateX(2px)"
             src="../../../../assets/images/notes.png"
             alt="notes"
-            (click)="openNotepadEditor()"
+            (click)="showNotepad = !showNotepad"
           />
           <img
             [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
             src="../../../../assets/images/calculator.png"
             alt="calculator"
-            (click)="openCalculatorPopup()"
+            (click)="showCalculator = !showCalculator"
           />
+          <div *ngIf="showNotepad" class="notepad" cdkDrag>
+            <app-notes (closeNotepad)="closeNotepad($event)"></app-notes>
+          </div>
+          <div *ngIf="showCalculator" class="calculator" cdkDrag>
+            <app-calculator
+              (closeCalc)="closeCalculator($event)"
+            ></app-calculator>
+          </div>
         </div>
       </div>
     </section>
