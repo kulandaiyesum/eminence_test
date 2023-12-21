@@ -56,7 +56,7 @@ import { LiveExamroomComponent } from './components/live-examroom/live-examroom.
 import { CerebrospinalFluidComponent } from './components/cerebrospinal-fluid/cerebrospinal-fluid.component';
 import { HematologicComponent } from './components/hematologic/hematologic.component';
 import { UrineComponent } from './components/urine/urine.component';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -120,6 +120,7 @@ import { UrineComponent } from './components/urine/urine.component';
     FormsModule,
     ReactiveFormsModule,
     CarouselModule,
+    DragDropModule,
   ],
 })
 export class RegisteredUserModule {}

@@ -61,7 +61,7 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
       }
       if (
         event?.routerEvent?.url.match(
-          /\/eminence\/student\/(?!exam-room)(exam|exam-timed)\/?/
+          /^\/eminence\/student\/(?!exam-room)(exam\/?.*|exam-timed)$/
         )
       ) {
         this.drawer.close();

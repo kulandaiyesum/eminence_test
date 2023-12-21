@@ -1,5 +1,4 @@
-import { Component, HostListener } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, EventEmitter, HostListener, Output } from '@angular/core';
 
 @Component({
   selector: 'app-calculator',
@@ -7,7 +6,8 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./calculator.component.scss'],
 })
 export class CalculatorComponent {
-  constructor(public dialogRef: MatDialogRef<CalculatorComponent>) {}
+  @Output() closeCalc = new EventEmitter<any>();
+  constructor() {}
   display: string = '';
   calculatorVisible: boolean = true;
   memoryValue: number = 0;
@@ -126,6 +126,6 @@ export class CalculatorComponent {
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.closeCalc.emit('close calculator');
   }
 }

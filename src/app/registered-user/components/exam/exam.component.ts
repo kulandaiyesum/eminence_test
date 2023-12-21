@@ -61,6 +61,8 @@ export class ExamComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
   private requestid: string;
   type: number; // the value maybe 0, 1, 2 or 3
+  showCalculator: boolean = false;
+  showNotepad: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private rsaService: RsaService,
@@ -364,25 +366,35 @@ export class ExamComponent implements OnInit {
       }
     );
   }
-  openCalculatorPopup() {
-    const dialogRef = this.dialog.open(CalculatorComponent, {
-      width: '300px',
-    });
+  closeCalculator(event: any) {
+    if (this.showCalculator) {
+      this.showCalculator = false;
+    }
+  }
+  closeNotepad(event: any) {
+    if (this.showNotepad) {
+      this.showNotepad = false;
+    }
+  }
+  // openCalculatorPopup() {
+  //   const dialogRef = this.dialog.open(CalculatorComponent, {
+  //     width: '300px',
+  //   });
 
-    dialogRef.afterClosed().subscribe((result) => {});
-  }
-  closeCalculatorPopup() {
-    this.calculatorPopupVisible = false;
-  }
-  openNotepadEditor() {
-    const dialogRef = this.dialog.open(NotesComponent, {
-      width: '500px',
-    });
+  //   dialogRef.afterClosed().subscribe((result) => {});
+  // }
+  // closeCalculatorPopup() {
+  //   this.calculatorPopupVisible = false;
+  // }
+  // openNotepadEditor() {
+  //   const dialogRef = this.dialog.open(NotesComponent, {
+  //     width: '500px',
+  //   });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The notepad dialog was closed');
-    });
-  }
+  //   dialogRef.afterClosed().subscribe((result) => {
+  //     console.log('The notepad dialog was closed');
+  //   });
+  // }
 
   isQuestionSubmited(questionId: string): boolean {
     let result = false;
