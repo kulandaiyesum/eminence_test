@@ -317,7 +317,7 @@ export class ExamComponent implements OnInit {
     // from?: string; // checking where there the questions generated form qgen or qbank. if its qbank dont send field to server. if its from qgen send form = 'qgen'
     // requestid: string;
 
-    if (this.isQuestionsFromQgen) {
+    if (this.requestid) {
       const tempObjQgen = {
         from: 'qgen',
         requestid: this.requestid,
