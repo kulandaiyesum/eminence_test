@@ -53,7 +53,7 @@ export class ExamComponent implements OnInit {
   toDisplayEnd: number;
   flagChecked: boolean = false;
   calculatorPopupVisible = false;
-  questions: indexBasedQuestionType[]=[];
+  questions: indexBasedQuestionType[] = [];
   selectOption = ''; // this for chosing options
   setHeight: boolean = false; // this for option(lab, calculator and notes)
   isQuestionsFromQgen: boolean = false;
@@ -76,17 +76,11 @@ export class ExamComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.requestid = params['id'];
     });
-    console.log(this.requestid);
     if (this.requestid) {
-      console.log('ithu qgen pa');
       this.getAllQuestions(this.requestid);
     } else {
-      console.log('ithu tutor pa');
-
       this.examObject = new examTutorPayload();
       this.questions = JSON.parse(localStorage.getItem('emex-td'));
-      console.log(this.questions);
-
       this.questLength = this.questions.length;
       this.userId = this.rsaService.decryptText(
         localStorage.getItem('5'),
@@ -136,8 +130,6 @@ export class ExamComponent implements OnInit {
     this.questionService.getAllQuestions(data).subscribe((doc: any) => {
       this.questLength = doc.result.questions.length;
       this.questions = doc.result.questions;
-      console.log(this.questions);
-      console.log(this.questions.length);
       this.questLength = this.questions.length;
       // this.totalQuestions = this.questions.length;
       // this.maximumQuestionLength = this.questions.length - 1;
