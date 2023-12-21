@@ -1,156 +1,165 @@
-<div class="exam-container">
-  <section class="nav_flag">
-    <div class="controls ps-lg-3">
-      <button
-        class="button"
-        *ngFor="let item of questions; let i = index"
-        (click)="changeQuestions(i)"
-      >
-        {{ i + 1 }}
-        <span class="selected-question" *ngIf="isQuestionSubmited(item?._id)"
-          >&#x2714;</span
+<mat-sidenav-container style="background-color: #fff" class="exam-container">
+  <div class="wrapper">
+    <section class="nav_flag">
+      <div class="controls ps-lg-3">
+        <button
+          class="button"
+          *ngFor="let item of questions; let i = index"
+          (click)="changeQuestions(i)"
         >
-        <span [ngClass]="{ flag_icon: isflaggedQuestion(item?._id) }"></span>
-      </button>
-    </div>
-
-    <div class="flag_section">
-      <label for="{{ indexBasedQuestions._id }}">
-        <input
-          id="{{ indexBasedQuestions._id }}"
-          class="form-check-input"
-          type="checkbox"
-          [(ngModel)]="flagChecked"
-          (change)="flagChanges($event)"
-        />
-        <span class="ms-1">Flag</span>
-      </label>
-      <div class="exapnsion_div">
-        <img
-          src="../../../../assets/images/triangle_blue.png"
-          alt="triangle_blue"
-          (click)="setHeight = !setHeight"
-        />
-        <img
-          [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
-          src="../../../../assets/images/lab.png"
-          alt="lab"
-          (click)="openDialog()"
-        />
-        <img
-          [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
-          style="transform: translateX(2px)"
-          src="../../../../assets/images/notes.png"
-          alt="notes"
-          (click)="openNotepadEditor()"
-        />
-        <img
-          [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
-          src="../../../../assets/images/calculator.png"
-          alt="calculator"
-          (click)="openCalculatorPopup()"
-        />
-      </div>
-    </div>
-  </section>
-
-  <div class="main">
-    <div class="questions">
-      <div class="questions-main">
-        <h6>Item {{ currentQuestionIndex + 1 }} of {{ questions.length }}</h6>
-        <p>
-          {{ indexBasedQuestions?.title }}
-        </p>
-        <ul class="options">
-          <li
-            *ngFor="let option of indexBasedQuestions?.options; let i = index"
+          {{ i + 1 }}
+          <span class="selected-question" *ngIf="isQuestionSubmited(item?._id)"
+            >&#x2714;</span
           >
-            <!-- color_red, color_green -->
-            <label
-              [ngClass]="{
-                color_green: isAnswerCorrect(option) === 'green',
-                color_black: isAnswerCorrect(option) === '',
-                color_red: isAnswerCorrect(option) === 'red',
-              }"
-              class="pointer_cl"
-              for="{{ option._id }}"
-            >
-              <input
-                id="{{ option._id }}"
-                [(ngModel)]="selectOption"
-                type="radio"
-                class="square_radio"
-                [value]="option?._id"
-                (click)="optionSelected(i, option)"
-              />{{ generateAlphabetChar(i) }}. {{ option?.text }}</label
-            >
-          </li>
-        </ul>
+          <span [ngClass]="{ flag_icon: isflaggedQuestion(item?._id) }"></span>
+        </button>
       </div>
-    </div>
-    <div class="explanations">
-      <div class="explanations-main" *ngIf="showExplanations">
-        <mat-accordion>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title> View answer </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div id="correct-news" *ngIf="correctNews">
-              <b><mat-icon>check_circle_outline</mat-icon></b>
-              <p>You selected right answer</p>
-            </div>
-            <div id="incorrect-news" *ngIf="incorrectNews">
-              <b><mat-icon>cancel</mat-icon></b>
-              <p>You selected wrong answer</p>
-            </div>
-            <div *ngFor="let option of indexBasedQuestions?.options">
-              <p *ngIf="option.correctAnswer === 'true'">
-                <b>Correct Answer : </b> {{ option?.text }}
-              </p>
-            </div>
-          </mat-expansion-panel>
-        </mat-accordion>
 
-        <div
-          class="explanation-paragraph"
-          *ngFor="let option of indexBasedQuestions?.options"
-        >
-          <mat-accordion>
-            <mat-expansion-panel
-              *ngIf="option?.correctAnswer === 'true'"
-              id="explanation-panel"
+      <div class="flag_section">
+        <label for="{{ indexBasedQuestions._id }}">
+          <input
+            id="{{ indexBasedQuestions._id }}"
+            class="form-check-input"
+            type="checkbox"
+            [(ngModel)]="flagChecked"
+            (change)="flagChanges($event)"
+          />
+          <span class="ms-1">Flag</span>
+        </label>
+        <div class="exapnsion_div">
+          <img
+            src="../../../../assets/images/triangle_blue.png"
+            alt="triangle_blue"
+            (click)="setHeight = !setHeight"
+          />
+          <img
+            [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
+            src="../../../../assets/images/lab.png"
+            alt="lab"
+            (click)="openLabValue()"
+          />
+          <img
+            [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
+            style="transform: translateX(2px)"
+            src="../../../../assets/images/notes.png"
+            alt="notes"
+            (click)="openNotepadEditor()"
+          />
+          <img
+            [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
+            src="../../../../assets/images/calculator.png"
+            alt="calculator"
+            (click)="openCalculatorPopup()"
+          />
+        </div>
+      </div>
+    </section>
+
+    <div class="main">
+      <div class="questions ms-md-3">
+        <div class="questions-main">
+          <h6>Item {{ currentQuestionIndex + 1 }} of {{ questions.length }}</h6>
+          <p>
+            {{ indexBasedQuestions?.title }}
+          </p>
+          <ul class="options">
+            <li
+              *ngFor="let option of indexBasedQuestions?.options; let i = index"
             >
+              <!-- color_red, color_green -->
+              <label
+                [ngClass]="{
+                  color_green: isAnswerCorrect(option) === 'green',
+                  color_black: isAnswerCorrect(option) === '',
+                  color_red: isAnswerCorrect(option) === 'red',
+                }"
+                class="pointer_cl"
+                for="{{ option._id }}"
+              >
+                <input
+                  id="{{ option._id }}"
+                  [(ngModel)]="selectOption"
+                  type="radio"
+                  class="square_radio"
+                  [value]="option?._id"
+                  (click)="optionSelected(i, option)"
+                />{{ generateAlphabetChar(i) }}. {{ option?.text }}</label
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="explanations">
+        <div class="explanations-main" *ngIf="showExplanations">
+          <mat-accordion>
+            <mat-expansion-panel>
               <mat-expansion-panel-header>
-                <mat-panel-title> Explanation </mat-panel-title>
+                <mat-panel-title> View answer </mat-panel-title>
               </mat-expansion-panel-header>
-              <p *ngIf="option.correctAnswer === 'true'">
-                <b>Explanation : </b> {{ option?.explanation }}
-              </p>
+              <div id="correct-news" *ngIf="correctNews">
+                <b><mat-icon>check_circle_outline</mat-icon></b>
+                <p>You selected right answer</p>
+              </div>
+              <div id="incorrect-news" *ngIf="incorrectNews">
+                <b><mat-icon>cancel</mat-icon></b>
+                <p>You selected wrong answer</p>
+              </div>
+              <div *ngFor="let option of indexBasedQuestions?.options">
+                <p *ngIf="option.correctAnswer === 'true'">
+                  <b>Correct Answer : </b> {{ option?.text }}
+                </p>
+              </div>
             </mat-expansion-panel>
           </mat-accordion>
+
+          <div
+            class="explanation-paragraph"
+            *ngFor="let option of indexBasedQuestions?.options"
+          >
+            <mat-accordion>
+              <mat-expansion-panel
+                *ngIf="option?.correctAnswer === 'true'"
+                id="explanation-panel"
+              >
+                <mat-expansion-panel-header>
+                  <mat-panel-title> Explanation </mat-panel-title>
+                </mat-expansion-panel-header>
+                <p *ngIf="option.correctAnswer === 'true'">
+                  <b>Explanation : </b> {{ option?.explanation }}
+                </p>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="bottom-controls">
-    <div class="bottom-main">
-      <button mat-button (click)="previous()" *ngIf="currentQuestionIndex > 0">
-        Prev
-      </button>
-      <button
-        mat-button
-        (click)="next()"
-        *ngIf="!(questLength === currentQuestionIndex + 1)"
-      >
-        Next
-      </button>
-      <button
-        mat-button
-        *ngIf="questLength === currentQuestionIndex + 1"
-        (click)="showEndExamConfirmation()"
-      >
-        End
-      </button>
+    <div class="bottom-controls">
+      <div class="bottom-main">
+        <button
+          mat-button
+          (click)="previous()"
+          *ngIf="currentQuestionIndex > 0"
+        >
+          Prev
+        </button>
+        <button
+          mat-button
+          (click)="next()"
+          *ngIf="!(questLength === currentQuestionIndex + 1)"
+        >
+          Next
+        </button>
+        <button
+          mat-button
+          *ngIf="questLength === currentQuestionIndex + 1"
+          (click)="showEndExamConfirmation()"
+        >
+          End
+        </button>
+      </div>
     </div>
   </div>
-</div>
+  <mat-sidenav #sidenav mode="side" position="end"
+    ><app-lab-values (closeLabValue)="closeLabValue($event)"></app-lab-values
+  ></mat-sidenav>
+</mat-sidenav-container>

@@ -37,6 +37,9 @@ section {
     }
     .question_ans {
       max-width: 950px;
+      .question {
+        width: calc(100% - 40px);
+      }
       .options {
         list-style: none;
         padding-left: 0;
