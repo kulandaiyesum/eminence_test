@@ -11,7 +11,13 @@
       <div class="form_wrap">
         <div class="form_heading">REGISTER ACCOUNT</div>
         <div class="tier_info_section">
-          <span>Premium</span>
+          <input type="radio" id="Premium" name="Premium" value="Premium" checked/>
+          <label for="Premium" style="margin-left: 10px;">Premium</label><br>
+          <span
+          style="font-size: 14px; color: #A9AEB2;"
+            >Enjoy unlimited question generation with the premium
+            membership!</span
+          >
           <div class="ratio_group">
             <div class="mt-2 radio_div" *ngFor="let package of b2cPackages">
               <input
@@ -23,7 +29,7 @@
                 [(ngModel)]="registerModel.pacakageId"
               />
               <label [for]="package._id" class="">
-                {{ package.amount }} / {{ package.durationType }}
+                $ {{ package.amount }} / {{ package.durationType }}
               </label>
             </div>
           </div>
@@ -73,7 +79,7 @@
         </div>
 
         <div class="form-group mt-3">
-          <label for="institutionName">Institution Name</label>
+          <label for="institutionName">College / School Name</label>
           <br />
           <input
             type="text"

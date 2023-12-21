@@ -1,0 +1,119 @@
+<div class="profile-container">
+  <div class="close-area">
+    <mat-icon (click)="onClose()">close</mat-icon>
+  </div>
+  <div class="main">
+    <div class="heading">
+      <h5>User details</h5>
+    </div>
+    <div class="form-area">
+      <button mat-button *ngIf="isInputDisabled" (click)="enableEdit()">
+        Edit
+      </button>
+      <button mat-button *ngIf="!isInputDisabled" (click)="enableEdit()">
+        Close Edit
+      </button>
+      <pre></pre>
+      <form #profileForm="ngForm">
+        <label for="firstName">First name:</label><br />
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          placeholder="Enter your first name"
+          [(ngModel)]="profileObject.firstName"
+          #firstNameInput="ngModel"
+          minlength="3"
+          pattern="^[a-zA-Z]+$"
+          required
+          [disabled]="isInputDisabled"
+        />
+        <pre></pre>
+        <div
+          *ngIf="
+            firstNameInput.invalid &&
+            (firstNameInput.dirty || firstNameInput.touched)
+          "
+        >
+          <div *ngIf="firstNameInput.errors?.['required']" id="error-messages">
+            First Name is required.
+          </div>
+          <div *ngIf="firstNameInput.errors?.['minlength']" id="error-messages">
+            First Name should be at least 3 characters long.
+          </div>
+          <div *ngIf="firstNameInput.errors?.['pattern']" id="error-messages">
+            Don't use numbers and special characters and space
+          </div>
+        </div>
+
+        <label for="lastName">Last name:</label><br />
+        <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          placeholder="Enter your last name"
+          [(ngModel)]="profileObject.lastName"
+          #lastNameInput="ngModel"
+          minlength="3"
+          pattern="^[a-zA-Z]+$"
+          required
+          [disabled]="isInputDisabled"
+        />
+        <pre></pre>
+        <div
+          *ngIf="
+            lastNameInput.invalid &&
+            (lastNameInput.dirty || lastNameInput.touched)
+          "
+        >
+          <div *ngIf="lastNameInput.errors?.['required']" id="error-messages">
+            Last Name is required.
+          </div>
+          <div *ngIf="lastNameInput.errors?.['minlength']" id="error-messages">
+            Last Name should be at least 3 characters long.
+          </div>
+          <div *ngIf="lastNameInput.errors?.['pattern']" id="error-messages">
+            Don't use numbers and special characters and space
+          </div>
+        </div>
+        <label for="email">Email:</label><br />
+        <input
+          type="text"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+          [(ngModel)]="profileObject.email"
+          #emailInput="ngModel"
+          minlength="3"
+          required
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+          [disabled]="isInputDisabled"
+        />
+        <pre></pre>
+        <div
+          *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
+        >
+          <div *ngIf="emailInput.errors?.['required']" id="error-messages">
+            Email is required.
+          </div>
+          <div *ngIf="emailInput.errors?.['minlength']" id="error-messages">
+            Email should be at least 3 characters long.
+          </div>
+          <div *ngIf="emailInput.errors?.['pattern']" id="error-messages">
+            Enter a valid email address.
+          </div>
+        </div>
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="profileForm.invalid"
+          (click)="submitForm()"
+          *ngIf="!isInputDisabled"
+        >
+          Update
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
