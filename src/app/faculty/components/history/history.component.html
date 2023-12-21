@@ -58,7 +58,7 @@
           *matCellDef="let row; let i = index"
           [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
           id="from-table"
-          >{{ row.questionsCount }}</mat-cell
+          >{{ row.questionsCount || "1" }}</mat-cell
         >
       </ng-container>
 
