@@ -16,7 +16,7 @@
       </div>
 
       <div class="flag_section">
-        <label for="{{ indexBasedQuestions._id }}">
+        <label *ngIf="indexBasedQuestions" for="{{ indexBasedQuestions._id }}">
           <input
             id="{{ indexBasedQuestions._id }}"
             class="form-check-input"
