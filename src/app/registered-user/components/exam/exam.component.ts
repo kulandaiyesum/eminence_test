@@ -53,7 +53,7 @@ export class ExamComponent implements OnInit {
   toDisplayEnd: number;
   flagChecked: boolean = false;
   calculatorPopupVisible = false;
-  questions: indexBasedQuestionType[];
+  questions: indexBasedQuestionType[]=[];
   selectOption = ''; // this for chosing options
   setHeight: boolean = false; // this for option(lab, calculator and notes)
   isQuestionsFromQgen: boolean = false;
@@ -67,39 +67,50 @@ export class ExamComponent implements OnInit {
     private examService: ExamService,
     private router: Router,
     private dialog: MatDialog,
-    private toster: ToastrService
+    private toster: ToastrService,
+    private questionService: QuerstionService
   ) {}
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.requestid = params['id'];
     });
-    this.examObject = new examTutorPayload();
-    this.questions = JSON.parse(localStorage.getItem('emex-td'));
-    this.questLength = this.questions.length;
-    this.userId = this.rsaService.decryptText(
-      localStorage.getItem('5'),
-      this.secretKey
-    );
-    this.userFirstName = this.rsaService.decryptText(
-      localStorage.getItem('3'),
-      this.secretKey
-    );
-    this.examObject.studentId = this.userId;
-    this.examObject.createdBy = this.userFirstName;
-    this.questions.forEach((question: indexBasedQuestionType) => {
-      let tempQuestionObj: Exam = new Exam();
-      tempQuestionObj.questionId = question._id;
-      tempQuestionObj.studentId = this.userId;
-      tempQuestionObj.createdBy = this.userFirstName;
-      this.examArray.push(tempQuestionObj);
-    });
-    this.getQuestionsIndexBased(0);
+    console.log(this.requestid);
+    if (this.requestid) {
+      console.log('ithu qgen pa');
+      this.getAllQuestions(this.requestid);
+    } else {
+      console.log('ithu tutor pa');
 
-    this.type = +localStorage.getItem('qbt');
-    // console.log('type in exam tutor mode', this.type);
-    localStorage.setItem('11', 'false');
-    console.log(localStorage.getItem('11'));
-    // window.location.reload();
+      this.examObject = new examTutorPayload();
+      this.questions = JSON.parse(localStorage.getItem('emex-td'));
+      console.log(this.questions);
+
+      this.questLength = this.questions.length;
+      this.userId = this.rsaService.decryptText(
+        localStorage.getItem('5'),
+        this.secretKey
+      );
+      this.userFirstName = this.rsaService.decryptText(
+        localStorage.getItem('3'),
+        this.secretKey
+      );
+      this.examObject.studentId = this.userId;
+      this.examObject.createdBy = this.userFirstName;
+      this.questions.forEach((question: indexBasedQuestionType) => {
+        let tempQuestionObj: Exam = new Exam();
+        tempQuestionObj.questionId = question._id;
+        tempQuestionObj.studentId = this.userId;
+        tempQuestionObj.createdBy = this.userFirstName;
+        this.examArray.push(tempQuestionObj);
+      });
+      this.getQuestionsIndexBased(0);
+
+      this.type = +localStorage.getItem('qbt');
+      // console.log('type in exam tutor mode', this.type);
+      localStorage.setItem('11', 'false');
+      console.log(localStorage.getItem('11'));
+      // window.location.reload();
+    }
   }
 
   ngOnDestroy() {
@@ -118,6 +129,52 @@ export class ExamComponent implements OnInit {
   //   );
   // }
 
+  getAllQuestions(reqId?: string) {
+    let data = { reqId };
+    this.questionService.getAllQuestions(data).subscribe((doc: any) => {
+      this.questLength = doc.result.questions.length;
+      this.questions = doc.result.questions;
+      console.log(this.questions);
+      console.log(this.questions.length);
+      this.questLength = this.questions.length;
+      // this.totalQuestions = this.questions.length;
+      // this.maximumQuestionLength = this.questions.length - 1;
+      console.log(this.currentQuestionIndex);
+      this.getQuestionsIndexBased(this.currentQuestionIndex);
+      // this.checkboxStates = new Array(this.questions.length + 1).fill(false);
+
+      this.examObject = new examTutorPayload();
+      // this.questions = JSON.parse(localStorage.getItem('emex-td'));
+      // console.log(this.questions);
+
+      this.questLength = this.questions.length;
+      this.userId = this.rsaService.decryptText(
+        localStorage.getItem('5'),
+        this.secretKey
+      );
+      this.userFirstName = this.rsaService.decryptText(
+        localStorage.getItem('3'),
+        this.secretKey
+      );
+      this.examObject.studentId = this.userId;
+      this.examObject.createdBy = this.userFirstName;
+      this.questions.forEach((question: indexBasedQuestionType) => {
+        let tempQuestionObj: Exam = new Exam();
+        tempQuestionObj.questionId = question._id;
+        tempQuestionObj.studentId = this.userId;
+        tempQuestionObj.createdBy = this.userFirstName;
+        this.examArray.push(tempQuestionObj);
+      });
+      this.getQuestionsIndexBased(0);
+
+      this.type = +localStorage.getItem('qbt');
+      // console.log('type in exam tutor mode', this.type);
+      localStorage.setItem('11', 'false');
+      console.log(localStorage.getItem('11'));
+      // window.location.reload();
+    });
+  }
+
   getQuestionsIndexBased(index: number) {
     this.indexBasedQuestions = this.questions[index];
     if (this.indexBasedQuestions.status === 'Pending') {
@@ -127,6 +184,8 @@ export class ExamComponent implements OnInit {
     this.incorrectNews = false;
     this.correctNews = false;
     this.flagChecked = false;
+    console.log(this.indexBasedQuestions._id);
+
     this.isFlaggedByDefault(this.indexBasedQuestions._id);
   }
 
