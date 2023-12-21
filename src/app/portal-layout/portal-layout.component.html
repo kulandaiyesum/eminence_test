@@ -169,15 +169,19 @@
       </button>
 
       <div class="h3 ms-lg-3 mb-0">Welcome {{ firstName | titlecase }}</div>
-      <mat-icon class="user_account" (click)="logout()" style="cursor: pointer"
-
-      *ngIf="isExamAttending==='true'"
-      [matMenuTriggerFor]="menu"
+      <mat-icon
+        class="user_account"
+        *ngIf="isExamAttending === 'true'"
+        [matMenuTriggerFor]="menu"
         >account_circle</mat-icon
       >
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="openProfile()">User profile <mat-icon>account_box</mat-icon></button>
-        <button mat-menu-item (click)="logout()">Logout <mat-icon>exit_to_app</mat-icon></button>
+        <button mat-menu-item (click)="openProfile()">
+          User profile <mat-icon>account_box</mat-icon>
+        </button>
+        <button mat-menu-item (click)="logout()">
+          Logout <mat-icon>exit_to_app</mat-icon>
+        </button>
       </mat-menu>
     </mat-toolbar>
     <!-- Child routes for admin, faculty, vetter and Registered User -->
