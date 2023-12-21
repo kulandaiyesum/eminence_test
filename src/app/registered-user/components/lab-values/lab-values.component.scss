@@ -1,10 +1,5 @@
 .custom_tab_groupall {
   width: 100%;
-  // display: flex;
-  // .devided_two_part {
-  //   width: 60%;
-  //   height: 80vh;
-  // }
   .close-icon {
     position: absolute;
     top: 5px;
@@ -17,7 +12,7 @@
   .custom_tab_group {
     width: 100%;
     margin-right: 20px;
-    box-shadow: 0px 2px 2px 2px black;
+    // box-shadow: 0px 2px 2px 2px black;
     position: relative;
     .lab_values {
       background-color: #46b3eb;

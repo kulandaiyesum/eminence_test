@@ -1,4 +1,7 @@
-<section class="container-fluid exam_timed">
+<mat-sidenav-container
+  style="background-color: #fff"
+  class="container-fluid exam_timed"
+>
   <div class="container exam_timed_wrap">
     <div class="flag_section">
       <label for="{{ selectedQuestion._id }}">
@@ -131,4 +134,7 @@
       </div>
     </div>
   </div>
-</section>
+  <mat-sidenav #sidenav mode="side" position="end"
+    ><app-lab-values (closeLabValue)="closeLabValue($event)"></app-lab-values
+  ></mat-sidenav>
+</mat-sidenav-container>

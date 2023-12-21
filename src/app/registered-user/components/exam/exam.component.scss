@@ -75,7 +75,8 @@
   .main {
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
+    column-gap: 1rem;
     .questions {
       width: 46%;
       // overflow: auto;
