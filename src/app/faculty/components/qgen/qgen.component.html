@@ -68,6 +68,15 @@
           [disabled]="gGenForm.invalid"
           type="button"
           (click)="submitQgen()"
+          *ngIf="user !== 'STUDENT'"
+        >
+          Build
+        </button>
+        <button
+          [disabled]="gGenForm.invalid"
+          type="button"
+          (click)="submitQgen()"
+          *ngIf="user === 'STUDENT' && receivedQuestion.length === 0"
         >
           Build
         </button>

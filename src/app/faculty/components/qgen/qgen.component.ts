@@ -25,7 +25,7 @@ export class QgenComponent implements OnInit {
   secretKey: string = environment.secretKey;
   @ViewChild('qgenResponse') qgenResponse: ElementRef;
   public checkValidity;
-  public receivedQuestion;
+  public receivedQuestion: any[]=[];
   itemsreceivedQuestion: any[];
   constructor(
     private rsaService: RsaService,
@@ -149,6 +149,10 @@ export class QgenComponent implements OnInit {
         this.receivedQuestion = tempHolder.filter(
           (item) => item.status === 'RECEIVED'
         );
+        console.log(this.receivedQuestion);
+        this.receivedQuestion=this.receivedQuestion.slice(0, 1);
+        console.log(this.receivedQuestion.length);
+
 
         this.itemsreceivedQuestion = this.receivedQuestion.map((item) => ({
           keywords: item.keywords.join(', '),
