@@ -62,7 +62,7 @@ export class ProfileComponent {
   }
 
   submitForm(): void {
-    console.log(this.profileObject);
+    // console.log(this.profileObject);
     this.userService.updateUserMaster(this.profileObject).subscribe(
       (response: any) => {
         // console.log(response);
