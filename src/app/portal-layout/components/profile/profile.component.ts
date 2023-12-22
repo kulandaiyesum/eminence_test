@@ -28,6 +28,7 @@ export class ProfileComponent {
 
   secretKey = environment.secretKey;
   isInputDisabled = true;
+  isEmailDisabled = true;
 
   constructor(
     public dialogRef: MatDialogRef<ProfileComponent>,
