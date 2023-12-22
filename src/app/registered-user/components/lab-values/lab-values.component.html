@@ -10,13 +10,37 @@
   <div class="custom_tab_group">
     <div class="close-icon" (click)="closeDialog()">&#10006;</div>
     <div class="lab_values">
-      <p>Lab Values</p>
+      <span>Lab Values</span>
     </div>
     <div class="custom_tab_btn">
-      <button (click)="selectButton(1)">Serum</button>
-      <button (click)="selectButton(2)">Cerebrospinal</button>
-      <button (click)="selectButton(3)">Hematologic</button>
-      <button (click)="selectButton(4)">Urine</button>
+      <button
+        class="btn"
+        [ngClass]="{ active_tab: selectedButton === 1 }"
+        (click)="selectButton(1)"
+      >
+        Serum
+      </button>
+      <button
+        class="btn"
+        [ngClass]="{ active_tab: selectedButton === 2 }"
+        (click)="selectButton(2)"
+      >
+        Cerebrospinal Fluid
+      </button>
+      <button
+        class="btn"
+        [ngClass]="{ active_tab: selectedButton === 3 }"
+        (click)="selectButton(3)"
+      >
+        Hematologic
+      </button>
+      <button
+        class="btn"
+        [ngClass]="{ active_tab: selectedButton === 4 }"
+        (click)="selectButton(4)"
+      >
+        Urine
+      </button>
     </div>
     <div *ngIf="selectedButton === 1" class="custom_tab_Serum table_wrap">
       <app-serum-values></app-serum-values>
@@ -25,7 +49,7 @@
       *ngIf="selectedButton === 2"
       class="custom_tab_Cerebrospinal table_wrap"
     >
-    <app-cerebrospinal-fluid></app-cerebrospinal-fluid>
+      <app-cerebrospinal-fluid></app-cerebrospinal-fluid>
     </div>
     <div *ngIf="selectedButton === 3" class="custom_tab_Hematologic table_wrap">
       <app-hematologic></app-hematologic>

@@ -1,10 +1,23 @@
 table {
-  font-size: 14px;
+  width: 550px;
+  font-weight: 500;
   tr {
     padding: 0 0.5rem;
+    th {
+      font-size: 14px;
+      &:first-child {
+        padding-left: 0.5rem;
+      }
+      &:last-child {
+        padding-right: 0.5rem;
+      }
+    }
     td {
+      font-size: 12px;
       padding-right: 0.5rem;
       padding-left: 0.5rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
     }
   }
 }

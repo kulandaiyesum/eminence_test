@@ -1,25 +1,22 @@
 .custom_tab_groupall {
-  width: 100%;
+  max-width: 550px;
+  height: 100%;
   .close-icon {
     position: absolute;
-    top: 5px;
-    right: 10px;
-    font-size: 24px;
+    top: 0.4rem;
+    right: 1rem;
+    font-size: 1.5rem;
     cursor: pointer;
     color: #bb0707;
   }
 
   .custom_tab_group {
     width: 100%;
-    margin-right: 20px;
-    // box-shadow: 0px 2px 2px 2px black;
-    position: relative;
+    // position: relative;
     .lab_values {
       background-color: #46b3eb;
-      p {
-        padding: 10px 10px;
-        font-weight: bold;
-      }
+      padding: 10px 10px;
+      font-weight: bold;
     }
     .lab_input {
       display: flex;
@@ -35,16 +32,20 @@
     .custom_tab_btn {
       display: flex;
       justify-content: space-around;
-
+      background-color: #eee;
+      padding: 0.5rem 0;
       button {
         box-shadow: 0px 1px 1px 1px gray;
-        border-radius: 5px;
+        // border-radius: 5px;
         background-color: #ffffff;
-        margin-bottom: 10px;
+        font-weight: 600;
+        // cursor: pointer;
       }
-      button:hover {
-        background-color: rgb(105, 102, 102);
-        color: white;
+      button:hover,
+      .active_tab {
+        // background-color: rgb(105, 102, 102);
+        background-color: rgba(148, 221, 253, 0.5);
+        // color: white;
       }
     }
     .lab-values {
@@ -59,5 +60,5 @@
 
 .table_wrap {
   overflow-y: auto;
-  max-height: 70vh;
+  height: 70dvh;
 }
