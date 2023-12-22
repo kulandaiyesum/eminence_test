@@ -28,6 +28,7 @@ export class ProfileComponent {
 
   secretKey = environment.secretKey;
   isInputDisabled = true;
+  isEmailDisabled = true;
 
   constructor(
     public dialogRef: MatDialogRef<ProfileComponent>,
@@ -61,7 +62,7 @@ export class ProfileComponent {
   }
 
   submitForm(): void {
-    console.log(this.profileObject);
+    // console.log(this.profileObject);
     this.userService.updateUserMaster(this.profileObject).subscribe(
       (response: any) => {
         // console.log(response);
