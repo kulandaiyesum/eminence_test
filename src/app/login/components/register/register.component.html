@@ -11,10 +11,15 @@
       <div class="form_wrap">
         <div class="form_heading">REGISTER ACCOUNT</div>
         <div class="tier_info_section">
-          <input type="radio" id="Premium" name="Premium" value="Premium" checked/>
-          <label for="Premium" style="margin-left: 10px;">Premium</label><br>
-          <span
-          style="font-size: 14px; color: #A9AEB2;"
+          <input
+            type="radio"
+            id="Premium"
+            name="Premium"
+            value="Premium"
+            checked
+          />
+          <label for="Premium" style="margin-left: 10px">Premium</label><br />
+          <span style="font-size: 14px; color: #a9aeb2"
             >Enjoy unlimited question generation with the premium
             membership!</span
           >
@@ -165,4 +170,10 @@
       </div>
     </form>
   </div>
+</div>
+<div *ngIf="success">
+  <h1>Your Payment is successfull</h1>
+</div>
+<div *ngIf="failure">
+  <h1>Your Payment is Failure</h1>
 </div>

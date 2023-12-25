@@ -12,6 +12,7 @@ import {
 import { PackageService } from 'src/app/master/service/package.service';
 import { HttpClient } from '@angular/common/http';
 import { StripeService } from '../../service/stripe.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -36,6 +37,8 @@ export class RegisterComponent {
     institutionName: '',
     pacakageId: '',
   };
+  public failure = false;
+  public success = false;
 
   b2cPackages: any[] = [];
   packageType: string = '';
@@ -44,13 +47,15 @@ export class RegisterComponent {
 
   constructor(
     private fb: FormBuilder,
+    private router: Router,
     private toastr: ToastrService,
     private stripeService: StripeService,
     private httpClient: HttpClient,
     @Inject(MAT_DIALOG_DATA) private data: any,
     private dialogRef: MatDialogRef<RegisterComponent>,
     private packageService: PackageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private registrationService: RegisterService
   ) {}
 
   ngOnInit() {
@@ -121,7 +126,6 @@ export class RegisterComponent {
     let data = this.b2cPackages.find(
       (x) => x._id === this.registerModel.pacakageId
     );
-    console.log(data);
     const amount = 0.1;
     console.log(amount);
     const paymentHeader = (<any>window).StripeCheckout.configure({
@@ -135,6 +139,26 @@ export class RegisterComponent {
     const paymentStripe = (stripeToken) => {
       this.stripeService.makePayment(stripeToken).subscribe((data) => {
         console.log(data);
+        // if (data === 'Success') {
+        console.log(':ffffffffff');
+
+        // this.success = true;
+        this.registrationService.registerUser(this.registerModel).subscribe(
+          (response) => {
+            this.toastr.success('Registration successful!', 'Success');
+            this.router.navigate(['/home']);
+          },
+          (error) => {
+            console.error(error, 'Error');
+            this.toastr.error('Registration failed!', 'Error');
+          }
+        );
+        // } else {
+        //   console.log('ppppppppppppp', data === 'Success');
+
+        //   this.failure = true;
+        //   this.toastr.error('Registration failed!', 'Error');
+        // }
       });
     };
     paymentHeader.open({
