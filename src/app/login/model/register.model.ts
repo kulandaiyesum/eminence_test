@@ -7,5 +7,5 @@ export interface Register {
   email: string;
   password: string;
   institutionName: string;
-  pacakageId: string;
+  packageNameId: string;
 }

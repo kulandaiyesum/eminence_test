@@ -35,7 +35,7 @@ export class RegisterComponent {
     token: '',
     id: '',
     institutionName: '',
-    pacakageId: '',
+    packageNameId: '',
   };
   public failure = false;
   public success = false;
@@ -107,7 +107,6 @@ export class RegisterComponent {
       stripeScript.src = 'https://checkout.stripe.com/checkout.js';
 
       stripeScript.onload = () => {
-        // Configuring Stripe Checkout after the script has loaded
         const StripeCheckout = (<any>window).StripeCheckout;
         this.paymentHeader = StripeCheckout.configure({
           key: 'pk_test_51NxjaWSHSMOSeQFKsEGE4q6dF1x9Z5wusXRuJgjSs6RKcbqA0PguiQd3MKeP6dzyhJA6AYnkchEJhkHnRgfEdEYS00xTm0qwc6',
@@ -122,12 +121,10 @@ export class RegisterComponent {
     }
   }
   onRegistrationSubmit() {
-    console.log(this.registerModel);
     let data = this.b2cPackages.find(
-      (x) => x._id === this.registerModel.pacakageId
+      (x) => x._id === this.registerModel.packageNameId
     );
-    const amount = 0.1;
-    console.log(amount);
+    const amount = data.amount;
     const paymentHeader = (<any>window).StripeCheckout.configure({
       key: 'pk_test_51NxjaWSHSMOSeQFKsEGE4q6dF1x9Z5wusXRuJgjSs6RKcbqA0PguiQd3MKeP6dzyhJA6AYnkchEJhkHnRgfEdEYS00xTm0qwc6',
       locale: 'auto',
@@ -137,10 +134,9 @@ export class RegisterComponent {
       },
     });
     const paymentStripe = (stripeToken) => {
-      this.stripeService.makePayment(stripeToken).subscribe((data:any) => {
+      this.stripeService.makePayment(stripeToken).subscribe((data: any) => {
         console.log(data);
         if (data.data === 'Success') {
-          console.log(':ffffffffff');
           // this.success = true;
           console.log(this.registerModel);
           this.registrationService.registerUser(this.registerModel).subscribe(
@@ -163,7 +159,7 @@ export class RegisterComponent {
     };
     paymentHeader.open({
       name: 'Payment Details',
-      description: 'Your Order total Amount is ' + amount,
+      description: 'Your Order total Amount is $' + amount,
       amount: amount,
     });
 

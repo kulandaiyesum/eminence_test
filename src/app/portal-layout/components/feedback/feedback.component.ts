@@ -49,6 +49,7 @@ export class FeedbackComponent {
         this.toastr.success('Thanks for your feedback', '', {
           timeOut: 3000,
         });
+        this.onClose();
       },
       (error) => {
         console.error('Oops something went', error);
