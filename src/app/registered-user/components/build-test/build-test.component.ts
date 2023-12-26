@@ -362,13 +362,9 @@ export class BuildTestComponent {
   getExamDetails(userid: string) {
     this.examService.getExamDetailsByStudentId(userid).subscribe(
       (response: any) => {
-        const filteredTImedMode = response.result.filter(
-          (item: any) => item.mode === 'TIMED' && item.percentage < 30
-        );
         const filteredSubjects = response.result
-          .filter((item: any) => item.mode === 'TIMED' && item.percentage < 30)
+          .filter((item: any) => item.percentage < 30)
           .map((item: any) => item?.subjectId?.subject);
-
         this.examArray = [...new Set(filteredSubjects)];
         this.newEexamArray = this.examArray.filter(
           (item) => item !== undefined
