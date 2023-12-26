@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ExamService } from '../../service/exam.service';
 import { ToastrService } from 'ngx-toastr';
 import {
@@ -13,6 +13,7 @@ import { CalculatorComponent } from '../calculator/calculator.component';
 import { LabValuesComponent } from '../lab-values/lab-values.component';
 import { NotesComponent } from '../notes/notes.component';
 import { LiveExamService } from '../../service/live-exam.service';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-live-examroom',
@@ -40,6 +41,9 @@ export class LiveExamroomComponent implements OnInit, OnDestroy {
 
   displayTimer: string = '00:00';
   displayTimerStopper: any;
+  showCalculator: boolean = false;
+  showNotepad: boolean = false;
+  @ViewChild('sidenav') sidenav: MatSidenav;
 
   constructor(
     private liveExamService: LiveExamService,
@@ -179,26 +183,25 @@ export class LiveExamroomComponent implements OnInit, OnDestroy {
     });
   }
 
-  openCalculatorPopup() {
-    const dialogRef = this.dialog.open(CalculatorComponent, {
-      width: '300px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {});
-  }
-  openNotesPopup() {
-    const dialogRef = this.dialog.open(NotesComponent, {
-      width: '500px',
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {});
-  }
 
   openLabValues() {
-    const dialogOption = {
-      width: '80%',
-      margin: '0 auto',
-    };
-    const dialogRef = this.dialog.open(LabValuesComponent, dialogOption);
+    if (this.sidenav._animationState === 'open') {
+      this.sidenav.close();
+    } else {
+      this.sidenav.open();
+    }
+  }
+  closeLabValue(event: any) {
+    this.sidenav.close();
+  }
+  closeCalculator(event: any) {
+    if (this.showCalculator) {
+      this.showCalculator = false;
+    }
+  }
+  closeNotepad(event: any) {
+    if (this.showNotepad) {
+      this.showNotepad = false;
+    }
   }
 }
