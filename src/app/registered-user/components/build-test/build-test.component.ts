@@ -35,6 +35,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ExamService } from '../../service/exam.service';
 import { SendInviteComponent } from '../send-invite/send-invite.component';
 import { MatDialog } from '@angular/material/dialog';
+import { QgenService } from 'src/app/faculty/service/qgen.service';
 
 @Component({
   selector: 'app-build-test',
@@ -63,6 +64,7 @@ export class BuildTestComponent {
   private systemId: string = '';
   private subsystemId: string = '';
   private subjectId: string = '';
+  public topicsArray: any[]=[];
 
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
   examArray: any[] = [];
@@ -83,7 +85,8 @@ export class BuildTestComponent {
     private router: Router,
     private examService: ExamService,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private qgenService: QgenService
   ) {
     this.userId = this.rsaService.decryptText(
       localStorage.getItem('5'),
@@ -156,6 +159,7 @@ export class BuildTestComponent {
     // dialogRef.afterClosed().subscribe((result) => {
 
     // });
+    this.getTopicsKeyWords();
   }
 
   checkBoxChanges(value: string) {
@@ -369,6 +373,18 @@ export class BuildTestComponent {
         this.newEexamArray = this.examArray.filter(
           (item) => item !== undefined
         );
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  getTopicsKeyWords() {
+    this.qgenService.getTopics().subscribe(
+      (response: any) => {
+        this.topicsArray=response.result
+        console.log(this.topicsArray);
       },
       (err) => {
         console.log(err);

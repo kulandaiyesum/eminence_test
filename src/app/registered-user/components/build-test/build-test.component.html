@@ -17,11 +17,18 @@
               }}</mat-chip-option>
             </mat-chip-listbox>
             <p>Haven't seen in a while</p>
-            <mat-chip-listbox aria-label="Fish selection">
-              <mat-chip-option>Anatomy</mat-chip-option>
-              <mat-chip-option>Embryology</mat-chip-option>
-              <mat-chip-option>Genetics</mat-chip-option>
-              <mat-chip-option>Histology</mat-chip-option>
+            <mat-chip-listbox
+              aria-label="Fish selection"
+              *ngFor="let item of topicsArray"
+            >
+              <mat-chip-option
+                *ngFor="let keyword of item.keywords"
+                matHorizontal
+                ><span matTooltip="{{ item.keywords.join(', ') }}"
+                  >{{ item.keywords.join(", ").slice(0, 55)
+                  }}{{ item.keywords.length > 55 ? "..." : "" }}</span
+                ></mat-chip-option
+              >
             </mat-chip-listbox>
           </div>
         </div>

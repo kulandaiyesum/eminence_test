@@ -47,4 +47,8 @@ export class QgenService {
   getVettedQuestionSet(vetterId) {
     return this.http.put(this.baseUrl + vetterId._id + '/status', vetterId);
   }
+
+  getTopics(){
+    return this.http.get(this.baseUrl+'/')
+  }
 }
