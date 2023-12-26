@@ -137,28 +137,28 @@ export class RegisterComponent {
       },
     });
     const paymentStripe = (stripeToken) => {
-      this.stripeService.makePayment(stripeToken).subscribe((data) => {
+      this.stripeService.makePayment(stripeToken).subscribe((data:any) => {
         console.log(data);
-        // if (data === 'Success') {
-        console.log(':ffffffffff');
-
-        // this.success = true;
-        this.registrationService.registerUser(this.registerModel).subscribe(
-          (response) => {
-            this.toastr.success('Registration successful!', 'Success');
-            this.router.navigate(['/home']);
-          },
-          (error) => {
-            console.error(error, 'Error');
-            this.toastr.error('Registration failed!', 'Error');
-          }
-        );
-        // } else {
-        //   console.log('ppppppppppppp', data === 'Success');
-
-        //   this.failure = true;
-        //   this.toastr.error('Registration failed!', 'Error');
-        // }
+        if (data.data === 'Success') {
+          console.log(':ffffffffff');
+          // this.success = true;
+          console.log(this.registerModel);
+          this.registrationService.registerUser(this.registerModel).subscribe(
+            (response) => {
+              this.toastr.success('Registration successful!', 'Success');
+              this.closeDialog();
+              this.router.navigate(['/home']);
+            },
+            (error) => {
+              console.error(error, 'Error');
+              this.toastr.error('Registration failed!', 'Error');
+            }
+          );
+        } else {
+          console.log('ppppppppppppp', data === 'Success');
+          this.failure = true;
+          this.toastr.error('Registration failed!', 'Error');
+        }
       });
     };
     paymentHeader.open({

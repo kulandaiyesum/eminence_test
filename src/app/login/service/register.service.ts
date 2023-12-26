@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class RegisterService {
-  private userUrl = environment.localdomain + 'user/register';
+  private userUrl = environment.localdomain + 'users/signUp';
 
   constructor(private http: HttpClient) {}
 
