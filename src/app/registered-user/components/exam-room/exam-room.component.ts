@@ -7,6 +7,7 @@ import { LoginService } from 'src/app/login/service/login.service';
 import { Router } from '@angular/router';
 import { LiveExamService } from '../../service/live-exam.service';
 import { ExamService } from '../../service/exam.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-exam-room',
@@ -76,7 +77,11 @@ export class ExamRoomComponent implements OnInit {
         ]);
       },
       (err: any) => {
-        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Invaild Room Code!',
+        });
       }
     );
     // this.privateExamService.joinExam(this.privateExam).subscribe(

@@ -180,6 +180,7 @@
               name="questionsCount"
               placeholder="Max 40"
               formControlName="questionsCount"
+              (keydown)="restrictInput($event)"
             />
             <div class="err">
               <mat-error
