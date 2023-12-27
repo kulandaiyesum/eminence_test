@@ -151,7 +151,7 @@ export class LoginComponent {
           }
         },
         (error) => {
-          this.toastr.error('You are not a registered member', '', {
+          this.toastr.error(error.error.message, '', {
             positionClass: 'toast-top-center',
             timeOut: 3000,
           });

@@ -9,7 +9,7 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { FeedbackComponent } from './components/feedback/feedback.component';
-import { ProfileComponent } from './components/profile/profile.component'
+import { ProfileComponent } from './components/profile/profile.component';
 import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
@@ -69,8 +69,6 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
         this.drawer.open();
       }
     });
-
-
   }
   ngDoCheck() {
     // Custom change detection logic
@@ -102,7 +100,7 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
   logout() {
     Swal.fire({
       title: 'Logout',
-      text: 'Are you sure you want to logout?',
+      text: 'Are you sure, you want to logout?',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, logout',
