@@ -18,6 +18,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { MasterModule } from './master/master.module';
 import { MatIconModule } from '@angular/material/icon';
+import { DatePipe } from '@angular/common';
 
 
 
@@ -37,14 +38,14 @@ import { MatIconModule } from '@angular/material/icon';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
-    MatCheckboxModule,NgbCarouselModule,MatIconModule,MatPaginatorModule,MasterModule
+    MatCheckboxModule,NgbCarouselModule,MatIconModule,MatPaginatorModule,MasterModule,
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthHttpInterceptorService,
       multi: true,
-    },
+    },DatePipe
   ],
   bootstrap: [AppComponent],
 })

@@ -24,10 +24,11 @@
               <mat-chip-option
                 *ngFor="let keyword of item.keywords"
                 matHorizontal
-                ><span matTooltip="{{ item.keywords.join(', ') }}"
-                  >{{ item.keywords.join(", ").slice(0, 55)
-                  }}{{ item.keywords.length > 55 ? "..." : "" }}</span
-                ></mat-chip-option
+                ><span matTooltip="{{ keyword }}">
+                  {{
+                    keyword.length > 55 ? keyword.slice(0, 55) + "..." : keyword
+                  }}
+                </span></mat-chip-option
               >
             </mat-chip-listbox>
           </div>

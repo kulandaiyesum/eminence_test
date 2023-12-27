@@ -11,7 +11,7 @@
         name="email"
         [(ngModel)]="loginModel.email"
         required
-        email
+        pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
       />
       <div
         *ngIf="loginForm.controls['email']?.errors?.['required'] && loginForm.controls['email']?.touched"
@@ -20,7 +20,10 @@
         Email is required.
       </div>
       <div
-        *ngIf="loginForm.controls['email']?.errors?.['email'] && loginForm.controls['email']?.touched"
+        *ngIf="
+          loginForm.controls['email']?.hasError('pattern') &&
+          loginForm.controls['email']?.touched
+        "
         class="error-message"
       >
         Invalid email format.
@@ -48,7 +51,9 @@
 
       <button id="login" type="submit" (click)="onLoginSubmit()">LOG IN</button>
       <br />
-      <button id="register" type="button" (click)="registerPop()">REGISTER</button>
+      <button id="register" type="button" (click)="registerPop()">
+        REGISTER
+      </button>
       <p (click)="forgotPassword()">Forgot / change password</p>
     </form>
   </div>

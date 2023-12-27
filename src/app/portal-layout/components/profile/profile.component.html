@@ -76,7 +76,7 @@
             Don't use numbers and special characters and space
           </div>
         </div>
-        <label for="email">Email:</label><br />
+        <!-- <label for="email">Email:</label><br />
         <input
           type="text"
           id="email"
@@ -88,9 +88,9 @@
           required
           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
           [disabled]="isEmailDisabled"
-        />
-        <pre></pre>
-        <div
+        /> -->
+        <!-- <pre></pre> -->
+        <!-- <div
           *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)"
         >
           <div *ngIf="emailInput.errors?.['required']" id="error-messages">
@@ -102,7 +102,7 @@
           <div *ngIf="emailInput.errors?.['pattern']" id="error-messages">
             Enter a valid email address.
           </div>
-        </div>
+        </div> -->
         <button
           mat-raised-button
           color="primary"
@@ -114,6 +114,10 @@
           Update
         </button>
       </form>
+      <div class="details">
+        <p><b>Email : </b>{{profileObject.email}}</p>
+        <p><b>Subscription EndDate : </b>{{endDate}}</p>
+      </div>
     </div>
   </div>
 </div>
