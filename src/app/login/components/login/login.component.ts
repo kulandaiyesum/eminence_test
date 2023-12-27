@@ -78,6 +78,8 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.loginService.loginAuthenticate(this.loginForm.value).subscribe(
         (response: any) => {
+          console.log(response, 'ooooooooo');
+
           if (
             response.result.user.role.role === 'ADMIN' ||
             response.result.user.role.role === 'FACULTY' ||
@@ -111,6 +113,11 @@ export class LoginComponent {
             }
             if (response.result.user.role.role === 'STUDENT') {
               this.router.navigateByUrl('/eminence/student');
+              const endDate = this.encryptText(
+                response.result.user.subscriptionId.endDate,
+                this.secretKey
+              );
+              localStorage.setItem('12', endDate);
             }
             const role = response.result.user.role.role.toLowerCase();
             // this.router.navigateByUrl(`/eminenceai/${role}`);
@@ -135,10 +142,6 @@ export class LoginComponent {
               response.result.user.email,
               this.secretKey
             );
-            const endDate = this.encryptText(
-              response.result.user.subscriptionId.endDate,
-              this.secretKey
-            );
             localStorage.setItem('1', response.result.token);
             localStorage.setItem('2', this.loginUser.role);
             localStorage.setItem('3', this.loginUser.firstName);
@@ -146,7 +149,6 @@ export class LoginComponent {
             localStorage.setItem('5', this.loginUser.id);
             localStorage.setItem('10', this.loginUser.email);
             localStorage.setItem('11', 'true');
-            localStorage.setItem('12', endDate);
           } else {
           }
         },
