@@ -61,7 +61,7 @@ export class ProfileComponent {
     );
     this.profileObject._id = this.loginService.decryptText(id, this.secretKey);
     this.endDate = this.loginService.decryptText(enddate, this.secretKey);
-    this.endDate  = this.datapipe.transform(this.endDate, 'dd-MM-yyyy');
+    this.endDate  = this.datapipe.transform(this.endDate, 'MM-dd-yyyy');
   }
   onClose(): void {
     this.dialogRef.close();
