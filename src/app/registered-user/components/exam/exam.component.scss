@@ -214,11 +214,16 @@
 
 .selected-question {
   position: absolute;
-  top: -0.5rem;
   left: 60%;
-  transform: rotate(0.05turn);
   font-weight: 700;
+}
+.correct_ans {
+  top: -0.5rem;
+  transform: rotate(0.05turn) !important;
   color: rgb(22, 175, 13) !important;
+}
+.wrong_ans {
+  top: -0.6rem;
 }
 
 .color_red {

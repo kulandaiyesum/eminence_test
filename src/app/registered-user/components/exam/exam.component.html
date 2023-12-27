@@ -1,15 +1,22 @@
 <mat-sidenav-container style="background-color: #fff" class="exam-container">
   <div class="wrapper">
     <section class="nav_flag">
-      <div class="controls ps-lg-3">
+      <div class="controls ps-lg-3 mt-1">
         <button
           class="button"
           *ngFor="let item of questions; let i = index"
           (click)="changeQuestions(i)"
         >
           {{ i + 1 }}
-          <span class="selected-question" *ngIf="isQuestionSubmited(item?._id)"
+          <span
+            class="selected-question correct_ans"
+            *ngIf="isQuestionSubmited(item?._id) === 'correct'"
             >&#x2714;</span
+          >
+          <span
+            class="selected-question color_red wrong_ans"
+            *ngIf="isQuestionSubmited(item?._id) === 'incorrect'"
+            >&#x2717;</span
           >
           <span [ngClass]="{ flag_icon: isflaggedQuestion(item?._id) }"></span>
         </button>

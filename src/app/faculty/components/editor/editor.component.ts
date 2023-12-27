@@ -381,7 +381,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       let data = { questions: this.questions };
       this.qgenService.reviewQuestionSet(data1).subscribe((doc: any) => {
         if (this.userRole === 'VETTER') {
-          this.router.navigate(['/eminence/vetter/history']);
+          this.router.navigate(['/eminence/vetter/open-items']);
         } else {
           this.router.navigate(['/eminence/faculty/history']);
         }
