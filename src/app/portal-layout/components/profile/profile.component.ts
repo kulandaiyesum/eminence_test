@@ -8,6 +8,7 @@ import { UserService } from 'src/app/master/service/user.service';
 import { ToastrService } from 'ngx-toastr';
 import * as CryptoJS from 'crypto-js';
 import { User } from 'src/app/master/model/user';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -25,6 +26,7 @@ export class ProfileComponent {
     password: '',
     role: undefined
   };
+  public endDate:string;
 
   secretKey = environment.secretKey;
   isInputDisabled = true;
@@ -35,7 +37,8 @@ export class ProfileComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private loginService: LoginService,
     private userService: UserService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private datapipe:DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +46,7 @@ export class ProfileComponent {
     const fname = localStorage.getItem('3');
     const lname = localStorage.getItem('4');
     const id = localStorage.getItem('5');
+    const enddate = localStorage.getItem('12');
     this.profileObject.email = this.loginService.decryptText(
       mail,
       this.secretKey
@@ -56,6 +60,8 @@ export class ProfileComponent {
       this.secretKey
     );
     this.profileObject._id = this.loginService.decryptText(id, this.secretKey);
+    this.endDate = this.loginService.decryptText(enddate, this.secretKey);
+    this.endDate  = this.datapipe.transform(this.endDate, 'dd-MM-yyyy');
   }
   onClose(): void {
     this.dialogRef.close();

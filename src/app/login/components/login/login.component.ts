@@ -135,6 +135,10 @@ export class LoginComponent {
               response.result.user.email,
               this.secretKey
             );
+            const endDate = this.encryptText(
+              response.result.user.subscriptionId.endDate,
+              this.secretKey
+            );
             localStorage.setItem('1', response.result.token);
             localStorage.setItem('2', this.loginUser.role);
             localStorage.setItem('3', this.loginUser.firstName);
@@ -142,6 +146,7 @@ export class LoginComponent {
             localStorage.setItem('5', this.loginUser.id);
             localStorage.setItem('10', this.loginUser.email);
             localStorage.setItem('11', 'true');
+            localStorage.setItem('12', endDate);
           } else {
           }
         },

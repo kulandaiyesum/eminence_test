@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { PortalLayoutRoutingModule } from './portal-layout-routing.module';
 import { PortalLayoutComponent } from './portal-layout.component';
@@ -22,7 +22,7 @@ import { ProfileComponent } from './components/profile/profile.component';
     MatButtonModule,
     MatSidenavModule,
     MatIconModule,
-    MatListModule,FormsModule,ReactiveFormsModule,MatMenuModule
+    MatListModule,FormsModule,ReactiveFormsModule,MatMenuModule,DatePipe
   ],
 })
 export class PortalLayoutModule {}
