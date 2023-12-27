@@ -388,15 +388,15 @@ export class ExamComponent implements OnInit {
   //   });
   // }
 
-  isQuestionSubmited(questionId: string): boolean {
-    let result = false;
+  isQuestionSubmited(questionId: string): string | null {
     const tempObj = this.examArray.find(
       (payloadObj) => payloadObj.questionId === questionId
     );
     if (tempObj && tempObj.selectedAnswerId !== '') {
-      result = true;
+      return tempObj.isCorrectAnswer === 'YES' ? 'correct' : 'incorrect';
+    } else {
+      return null;
     }
-    return result;
   }
 
   /**
