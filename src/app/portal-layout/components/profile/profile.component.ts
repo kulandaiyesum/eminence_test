@@ -29,6 +29,7 @@ export class ProfileComponent {
   public endDate: string;
   public packageName: string;
   public topic: string;
+  public role: string;
 
   secretKey = environment.secretKey;
   isInputDisabled = true;
@@ -51,6 +52,8 @@ export class ProfileComponent {
     const enddate = localStorage.getItem('12');
     const packagename = localStorage.getItem('13');
     const topics = localStorage.getItem('14');
+    const roles = localStorage.getItem('2');
+    this.role = this.loginService.decryptText(roles, this.secretKey);
     this.profileObject.email = this.loginService.decryptText(
       mail,
       this.secretKey
@@ -64,13 +67,18 @@ export class ProfileComponent {
       this.secretKey
     );
     this.profileObject._id = this.loginService.decryptText(id, this.secretKey);
-    this.endDate = this.loginService.decryptText(enddate, this.secretKey);
-    this.endDate = this.datapipe.transform(this.endDate, 'MM-dd-yyyy');
-    this.packageName = this.loginService.decryptText(
-      packagename,
-      this.secretKey
-    );
-    this.topic = this.loginService.decryptText(topics, this.secretKey);
+    if (this.role === 'STUDENT') {
+      const enddate = localStorage.getItem('12');
+      const packagename = localStorage.getItem('13');
+      const topics = localStorage.getItem('14');
+      this.endDate = this.loginService.decryptText(enddate, this.secretKey);
+      this.endDate = this.datapipe.transform(this.endDate, 'MM-dd-yyyy');
+      this.packageName = this.loginService.decryptText(
+        packagename,
+        this.secretKey
+      );
+      this.topic = this.loginService.decryptText(topics, this.secretKey);
+    }
   }
   onClose(): void {
     this.dialogRef.close();
