@@ -74,7 +74,7 @@
       <div class="questions ms-md-3">
         <div class="questions-main">
           <h6>Item {{ currentQuestionIndex + 1 }} of {{ questions.length }}</h6>
-          <p>
+          <p (mouseup)="onMouseUp($event)">
             {{ indexBasedQuestions?.title }}
           </p>
           <ul class="options">
