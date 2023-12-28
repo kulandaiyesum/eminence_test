@@ -118,8 +118,6 @@ export class LoginComponent {
                 this.secretKey
               );
               localStorage.setItem('12', endDate);
-              console.log(response.result.package.packageName);
-              console.log(response.result.package.topicId.topic);
               const packageName = this.encryptText(
                 response.result.package.packageName,
                 this.secretKey
