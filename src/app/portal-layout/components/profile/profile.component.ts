@@ -24,9 +24,11 @@ export class ProfileComponent {
     email: '',
     _id: '',
     password: '',
-    role: undefined
+    role: undefined,
   };
-  public endDate:string;
+  public endDate: string;
+  public packageName: string;
+  public topic: string;
 
   secretKey = environment.secretKey;
   isInputDisabled = true;
@@ -38,7 +40,7 @@ export class ProfileComponent {
     private loginService: LoginService,
     private userService: UserService,
     private toastr: ToastrService,
-    private datapipe:DatePipe
+    private datapipe: DatePipe
   ) {}
 
   ngOnInit(): void {
@@ -47,6 +49,8 @@ export class ProfileComponent {
     const lname = localStorage.getItem('4');
     const id = localStorage.getItem('5');
     const enddate = localStorage.getItem('12');
+    const packagename = localStorage.getItem('13');
+    const topics = localStorage.getItem('14');
     this.profileObject.email = this.loginService.decryptText(
       mail,
       this.secretKey
@@ -61,7 +65,12 @@ export class ProfileComponent {
     );
     this.profileObject._id = this.loginService.decryptText(id, this.secretKey);
     this.endDate = this.loginService.decryptText(enddate, this.secretKey);
-    this.endDate  = this.datapipe.transform(this.endDate, 'dd-MM-yyyy');
+    this.endDate = this.datapipe.transform(this.endDate, 'MM-dd-yyyy');
+    this.packageName = this.loginService.decryptText(
+      packagename,
+      this.secretKey
+    );
+    this.topic = this.loginService.decryptText(topics, this.secretKey);
   }
   onClose(): void {
     this.dialogRef.close();

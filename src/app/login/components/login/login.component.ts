@@ -118,6 +118,18 @@ export class LoginComponent {
                 this.secretKey
               );
               localStorage.setItem('12', endDate);
+              console.log(response.result.package.packageName);
+              console.log(response.result.package.topicId.topic);
+              const packageName = this.encryptText(
+                response.result.package.packageName,
+                this.secretKey
+              );
+              localStorage.setItem('13', packageName);
+              const topic = this.encryptText(
+                response.result.package.topicId.topic,
+                this.secretKey
+              );
+              localStorage.setItem('14', topic);
             }
             const role = response.result.user.role.role.toLowerCase();
             // this.router.navigateByUrl(`/eminenceai/${role}`);
