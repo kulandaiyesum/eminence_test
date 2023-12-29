@@ -57,7 +57,7 @@
           class="left_section"
         >
           <div class="question_ans mb-lg-5 mb-md-5 mb-3">
-            <div class="question mb-4">
+            <div (mouseup)="onMouseUp($event)" class="question mb-4">
               {{ currentQuestion?.title }}
             </div>
             <ul class="options ms-1" style="max-width: fit-content">

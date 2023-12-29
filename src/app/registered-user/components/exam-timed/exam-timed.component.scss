@@ -238,3 +238,6 @@ section {
     top: 5px;
   }
 }
+::ng-deep .highlighted-text {
+  background-color: yellow;
+}

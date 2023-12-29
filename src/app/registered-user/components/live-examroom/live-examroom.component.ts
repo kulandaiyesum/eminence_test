@@ -115,6 +115,11 @@ export class LiveExamroomComponent implements OnInit, OnDestroy {
       this.revealAnswer = false;
       this.correctOption = undefined;
       this.correctOptionAlphaLetter = '';
+      const highlightedElements =
+        document.querySelectorAll('.highlighted-text');
+      highlightedElements.forEach((element) => {
+        element.outerHTML = element.innerHTML;
+      });
       this.currentQuestion = this.questions[this.currentIndex];
       clearInterval(this.questionStopper);
       this.questionTimer();
@@ -183,7 +188,6 @@ export class LiveExamroomComponent implements OnInit, OnDestroy {
     });
   }
 
-
   openLabValues() {
     if (this.sidenav._animationState === 'open') {
       this.sidenav.close();
@@ -202,6 +206,16 @@ export class LiveExamroomComponent implements OnInit, OnDestroy {
   closeNotepad(event: any) {
     if (this.showNotepad) {
       this.showNotepad = false;
+    }
+  }
+
+  onMouseUp(event: MouseEvent) {
+    const selectedText = window.getSelection()?.toString().trim();
+    if (selectedText?.length) {
+      const range = window.getSelection()?.getRangeAt(0);
+      const newNode = document.createElement('span');
+      newNode.classList.add('highlighted-text');
+      range.surroundContents(newNode);
     }
   }
 }

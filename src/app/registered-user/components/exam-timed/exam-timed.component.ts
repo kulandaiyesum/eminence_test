@@ -174,12 +174,20 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
   // }
 
   navigateQuestion(questionId: string, index: number) {
+    const highlightedElements = document.querySelectorAll('.highlighted-text');
+    highlightedElements.forEach((element) => {
+      element.outerHTML = element.innerHTML;
+    });
     this.selectedQuestion = this.questions.find((q) => q._id === questionId);
     this.tempQuestionIndex = index;
     this.isFlaggedByDefault(questionId);
     this.startTimer();
   }
   navigateQuestionByIndex(index: number) {
+    const highlightedElements = document.querySelectorAll('.highlighted-text');
+    highlightedElements.forEach((element) => {
+      element.outerHTML = element.innerHTML;
+    });
     this.selectedQuestion = this.questions[index];
     this.tempQuestionIndex = index;
     this.isFlaggedByDefault(this.selectedQuestion._id);
@@ -507,6 +515,16 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
   closeNotepad(event: any) {
     if (this.showNotepad) {
       this.showNotepad = false;
+    }
+  }
+
+  onMouseUp(event: MouseEvent) {
+    const selectedText = window.getSelection()?.toString().trim();
+    if (selectedText?.length) {
+      const range = window.getSelection()?.getRangeAt(0);
+      const newNode = document.createElement('span');
+      newNode.classList.add('highlighted-text');
+      range.surroundContents(newNode);
     }
   }
 }

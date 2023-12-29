@@ -136,3 +136,6 @@ mat-sidenav-container {
 .incorrect_answer {
   border: 2px solid red;
 }
+::ng-deep .highlighted-text {
+  background-color: yellow;
+}
