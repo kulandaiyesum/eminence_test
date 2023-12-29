@@ -235,3 +235,7 @@
 .color_black {
   color: #000;
 }
+
+::ng-deep .highlighted-text {
+  background-color: yellow;
+}

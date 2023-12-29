@@ -170,6 +170,10 @@ export class ExamComponent implements OnInit {
   }
 
   getQuestionsIndexBased(index: number) {
+    const highlightedElements = document.querySelectorAll('.highlighted-text');
+    highlightedElements.forEach((element) => {
+      element.outerHTML = element.innerHTML;
+    });
     this.indexBasedQuestions = this.questions[index];
     if (this.indexBasedQuestions.status === 'Pending') {
       this.isQuestionsFromQgen = true;
@@ -203,6 +207,7 @@ export class ExamComponent implements OnInit {
    * @param i (index)
    */
   changeQuestions(i: number) {
+    if (this.currentQuestionIndex === i) return;
     this.currentQuestionIndex = i;
     this.getQuestionsIndexBased(i);
   }
@@ -452,5 +457,15 @@ export class ExamComponent implements OnInit {
 
   closeLabValue(event: any) {
     this.sidenav.close();
+  }
+
+  onMouseUp(event: MouseEvent) {
+    const selectedText = window.getSelection()?.toString().trim();
+    if (selectedText?.length) {
+      const range = window.getSelection()?.getRangeAt(0);
+      const newNode = document.createElement('span');
+      newNode.classList.add('highlighted-text');
+      range.surroundContents(newNode);
+    }
   }
 }
