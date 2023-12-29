@@ -7,10 +7,20 @@
       <h5>User details</h5>
     </div>
     <div class="form-area">
-      <button mat-button *ngIf="isInputDisabled" (click)="enableEdit()">
+      <button
+        mat-raised-button
+        color="primary"
+        *ngIf="isInputDisabled"
+        (click)="enableEdit()"
+      >
         Edit
       </button>
-      <button mat-button *ngIf="!isInputDisabled" (click)="enableEdit()">
+      <button
+        mat-raised-button
+        color="accent"
+        *ngIf="!isInputDisabled"
+        (click)="enableEdit()"
+      >
         Close Edit
       </button>
       <pre></pre>

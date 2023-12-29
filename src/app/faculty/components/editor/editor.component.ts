@@ -156,7 +156,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     if (pendingCount === this.questions.length - 1) {
       this.shouldShowButton = true;
       this.LastQuestionNotReviewed = this.questions.find(
-        (q) => q.status === 'RECEIVED'
+        (q) => q.status === 'RECEIVED' || 'Pending'
       );
     }
   }

@@ -11,7 +11,7 @@
       aria-label="Complaints Table"
     >
       <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Assigned Date</th>
         <td mat-cell *matCellDef="let row">
           <div class="description-cell">
             {{ row?.modifiedAt | date : "MM-dd-yyyy" }}

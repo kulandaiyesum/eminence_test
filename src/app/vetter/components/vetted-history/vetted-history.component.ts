@@ -19,6 +19,7 @@ export class VettedHistoryComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = [
     'date',
+    'reviewDate',
     'input',
     'subject',
     'system',

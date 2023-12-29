@@ -64,7 +64,7 @@ export class BuildTestComponent {
   private systemId: string = '';
   private subsystemId: string = '';
   private subjectId: string = '';
-  public topicsArray: any[]=[];
+  public topicsArray: any[] = [];
 
   @ViewChild('scrollContainer') scrollContainer: ElementRef;
   examArray: any[] = [];
@@ -367,7 +367,7 @@ export class BuildTestComponent {
     this.examService.getExamDetailsByStudentId(userid).subscribe(
       (response: any) => {
         const filteredSubjects = response.result
-          .filter((item: any) => item.percentage < 30)
+          .filter((item: any) => item.mode === 'TIMED' && item.percentage < 30)
           .map((item: any) => item?.subjectId?.subject);
         this.examArray = [...new Set(filteredSubjects)];
         this.newEexamArray = this.examArray.filter(
@@ -383,7 +383,7 @@ export class BuildTestComponent {
   getTopicsKeyWords() {
     this.qgenService.getTopics().subscribe(
       (response: any) => {
-        this.topicsArray=response.result
+        this.topicsArray = response.result;
         console.log(this.topicsArray);
       },
       (err) => {
