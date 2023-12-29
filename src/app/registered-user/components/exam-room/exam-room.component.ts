@@ -80,7 +80,7 @@ export class ExamRoomComponent implements OnInit {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Invaild Room Code!',
+          text: 'Invalid Room Code!',
         });
       }
     );
