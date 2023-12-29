@@ -69,7 +69,7 @@
       </button>
     </div>
     <div class="question_ans mb-lg-5 mb-md-5 mb-3">
-      <div class="question mb-4">
+      <div (mouseup)="onMouseUp($event)" class="question mb-4">
         {{ tempQuestionIndex + 1 }}. {{ selectedQuestion?.title }}
       </div>
       <ul class="options">
