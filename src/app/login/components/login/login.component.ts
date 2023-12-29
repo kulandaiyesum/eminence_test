@@ -119,7 +119,7 @@ export class LoginComponent {
               );
               localStorage.setItem('12', endDate);
               const packageName = this.encryptText(
-                response.result.package.packageName,
+                response.result.package.amount,
                 this.secretKey
               );
               localStorage.setItem('13', packageName);
