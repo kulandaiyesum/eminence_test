@@ -30,6 +30,7 @@ export class ProfileComponent {
   public packageName: string;
   public topic: string;
   public role: string;
+  public durationType: string;
 
   secretKey = environment.secretKey;
   isInputDisabled = true;
@@ -71,6 +72,7 @@ export class ProfileComponent {
       const enddate = localStorage.getItem('12');
       const packagename = localStorage.getItem('13');
       const topics = localStorage.getItem('14');
+      const duration = localStorage.getItem('15');
       this.endDate = this.loginService.decryptText(enddate, this.secretKey);
       this.endDate = this.datapipe.transform(this.endDate, 'MM-dd-yyyy');
       this.packageName = this.loginService.decryptText(
@@ -78,6 +80,8 @@ export class ProfileComponent {
         this.secretKey
       );
       this.topic = this.loginService.decryptText(topics, this.secretKey);
+      this.durationType = this.loginService.decryptText(duration, this.secretKey);
+      console.log(this.durationType);
     }
   }
   onClose(): void {

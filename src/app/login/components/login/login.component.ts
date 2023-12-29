@@ -128,6 +128,11 @@ export class LoginComponent {
                 this.secretKey
               );
               localStorage.setItem('14', topic);
+              const duration = this.encryptText(
+                response.result.package.durationType,
+                this.secretKey
+              );
+              localStorage.setItem('15', duration);
             }
             const role = response.result.user.role.role.toLowerCase();
             // this.router.navigateByUrl(`/eminenceai/${role}`);

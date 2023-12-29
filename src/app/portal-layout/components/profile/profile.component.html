@@ -130,7 +130,7 @@
           <b>Subscription EndDate : </b>{{ endDate }}
         </p>
         <p *ngIf="role === 'STUDENT'">
-          <b>Package  : </b>$ {{ packageName }}
+          <b>Package : </b>$ {{ packageName }} - {{ durationType }}
         </p>
         <p *ngIf="role === 'STUDENT'"><b>Topic : </b>{{ topic }}</p>
       </div>
