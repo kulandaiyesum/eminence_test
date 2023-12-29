@@ -8,4 +8,6 @@ export interface Register {
   password: string;
   institutionName: string;
   packageNameId: string;
+  topic: string;
+
 }

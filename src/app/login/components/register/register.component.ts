@@ -13,6 +13,8 @@ import { PackageService } from 'src/app/master/service/package.service';
 import { HttpClient } from '@angular/common/http';
 import { StripeService } from '../../service/stripe.service';
 import { Router } from '@angular/router';
+import { Topic } from 'src/app/master/model/topic';
+import { TopicService } from 'src/app/master/service/topic.service';
 
 @Component({
   selector: 'app-register',
@@ -36,14 +38,17 @@ export class RegisterComponent {
     id: '',
     institutionName: '',
     packageNameId: '',
+    topic: '',
   };
   public failure = false;
   public success = false;
 
   b2cPackages: any[] = [];
+  b2cPackagesFiltered: any[] = [];
   packageType: string = '';
   priceOption: string = '';
   paymentHeader: any = null;
+  topics: Topic[];
 
   constructor(
     private fb: FormBuilder,
@@ -55,7 +60,8 @@ export class RegisterComponent {
     private dialogRef: MatDialogRef<RegisterComponent>,
     private packageService: PackageService,
     private dialog: MatDialog,
-    private registrationService: RegisterService
+    private registrationService: RegisterService,
+    private topicService: TopicService
   ) {}
 
   ngOnInit() {
@@ -69,6 +75,7 @@ export class RegisterComponent {
     });
     this.fetchB2CPackages();
     this.getStripe();
+    this.getTopic();
   }
 
   closeDialog() {
@@ -180,5 +187,29 @@ export class RegisterComponent {
     //     this.toastr.error('Registration failed!', 'Error');
     //   }
     // );
+  }
+
+  getTopic() {
+    this.topicService.getAllTopicMaster().subscribe(
+      (res: any) => {
+        this.topics = res.result;
+        console.log(this.topics);
+      },
+      (err: any) => {
+        console.log(err);
+        this.toastr.error(err.error.message, '', { timeOut: 3000 });
+      }
+    );
+  }
+
+  onTopicSelected(selectedTopicId: string) {
+    // Implement your logic here using the selectedTopicId
+    // console.log('Selected Topic Id:', selectedTopicId);
+    // You can perform any other actions with the selectedTopicId
+    this.b2cPackagesFiltered = this.b2cPackages.filter(
+      (item: any) => item.topicId === selectedTopicId
+    );
+    console.log(this.b2cPackagesFiltered);
+
   }
 }
