@@ -38,6 +38,7 @@ export class LoginComponent {
     password: '',
     institutionName: '',
     packageNameId: '',
+    topic: ''
   };
   public loginModel: Login = {
     email: '',
@@ -119,7 +120,7 @@ export class LoginComponent {
               );
               localStorage.setItem('12', endDate);
               const packageName = this.encryptText(
-                response.result.package.packageName,
+                response.result.package.amount,
                 this.secretKey
               );
               localStorage.setItem('13', packageName);
@@ -128,6 +129,11 @@ export class LoginComponent {
                 this.secretKey
               );
               localStorage.setItem('14', topic);
+              const duration = this.encryptText(
+                response.result.package.durationType,
+                this.secretKey
+              );
+              localStorage.setItem('15', duration);
             }
             const role = response.result.user.role.role.toLowerCase();
             // this.router.navigateByUrl(`/eminenceai/${role}`);
