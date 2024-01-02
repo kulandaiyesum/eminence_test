@@ -9,7 +9,7 @@
     >
     <form #registrationForm="ngForm">
       <div class="form_wrap">
-        <div class="form_heading">REGISTER ACCOUNT</div>
+        <div class="form_heading" style="text-align: center;">REGISTER ACCOUNT</div>
         <div class="tier_info_section">
           <label for="topic">Choose a topic:</label><br />
           <select
@@ -19,18 +19,25 @@
             [(ngModel)]="registerModel.topic"
             #topicModel="ngModel"
             (change)="onTopicSelected(registerModel.topic)"
+            required
           >
-            <option value="" disabled selected>Select a topic</option>
+            <option value="" disabled selected>Select a Topic</option>
 
             <option *ngFor="let topic of topics" [value]="topic._id">
               {{ topic.topic }}
             </option></select
-          ><br /><br />
-          <div *ngIf="topicModel.invalid && (topicModel.dirty || topicModel.touched)">
+          ><br />
+          <div
+            *ngIf="
+              topicModel.invalid && (topicModel.dirty || topicModel.touched)
+            "
+          >
             <div *ngIf="topicModel.errors?.['required']" id="error-message">
               Topic is required
             </div>
           </div>
+          <pre></pre>
+
           <input
             type="radio"
             id="Premium"
@@ -44,7 +51,10 @@
             membership!</span
           >
           <div class="ratio_group">
-            <div class="mt-2 radio_div" *ngFor="let package of b2cPackagesFiltered">
+            <div
+              class="mt-2 radio_div"
+              *ngFor="let package of b2cPackagesFiltered"
+            >
               <input
                 type="radio"
                 name="price"
