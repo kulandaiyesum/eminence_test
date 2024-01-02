@@ -1,4 +1,4 @@
-<mat-sidenav-container style="background-color: #fff" class="exam-container">
+<div style="background-color: #fff" class="exam-container">
   <div class="wrapper">
     <section class="nav_flag">
       <div class="controls ps-lg-3 mt-1">
@@ -65,6 +65,11 @@
             <app-calculator
               (closeCalc)="closeCalculator($event)"
             ></app-calculator>
+          </div>
+          <div *ngIf="showLabValues" class="labValues" cdkDrag>
+            <app-lab-values
+              (closeLabValue)="closeLabValue($event)"
+            ></app-lab-values>
           </div>
         </div>
       </div>
@@ -174,7 +179,7 @@
       </div>
     </div>
   </div>
-  <mat-sidenav #sidenav mode="side" position="end"
+  <!-- <mat-sidenav #sidenav mode="side" position="end"
     ><app-lab-values (closeLabValue)="closeLabValue($event)"></app-lab-values
-  ></mat-sidenav>
-</mat-sidenav-container>
+  ></mat-sidenav> -->
+</div>
