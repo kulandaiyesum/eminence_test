@@ -1,8 +1,5 @@
-<mat-sidenav-container
-  style="background-color: #fff"
-  class="container-fluid flag_wrap"
->
-  <mat-sidenav-content>
+<div class="container-fluid flag_wrap">
+  <div class="px-md-3 px-sm-0">
     <div class="flag_section">
       <div class="exapnsion_div">
         <img
@@ -14,7 +11,7 @@
           [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
           src="../../../../assets/images/lab.png"
           alt="lab"
-          (click)="openLabValues()"
+          (click)="showLabValues = !showLabValues"
         />
         <img
           [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
@@ -37,6 +34,11 @@
             (closeCalc)="closeCalculator($event)"
           ></app-calculator>
         </div>
+        <div *ngIf="showLabValues" class="labValues" cdkDrag>
+          <app-lab-values
+            (closeLabValue)="closeLabValue($event)"
+          ></app-lab-values>
+        </div>
       </div>
     </div>
     <div class="parent_warp">
@@ -49,13 +51,11 @@
           <h5 class="p-2">{{ questionTimerUI }}</h5>
         </div>
       </div>
-      <div class="row_flex">
-        <div
-          [ngStyle]="{
+      <div class="row">
+        <div class="left_section col-lg-6">
+          <!-- [ngStyle]="{
             width: sidenav._animationState === 'open' ? '100%' : '49%'
-          }"
-          class="left_section"
-        >
+          }" -->
           <div class="question_ans mb-lg-5 mb-md-5 mb-3">
             <div (mouseup)="onMouseUp($event)" class="question mb-4">
               {{ currentQuestion?.title }}
@@ -88,12 +88,10 @@
             </div>
           </div>
         </div>
-        <div
-          [ngStyle]="{
+        <div class="right_section col-lg-6">
+          <!-- [ngStyle]="{
             width: sidenav._animationState === 'open' ? '100%' : '49%'
-          }"
-          class="right_section"
-        >
+          }" -->
           <div *ngIf="revealAnswer">
             <p>
               <strong>Correct Answer:</strong> {{ correctOptionAlphaLetter }}.
@@ -126,8 +124,8 @@
         <div class="timer_stop">Time Elapsed {{ displayTimer }}</div>
       </div>
     </div>
-  </mat-sidenav-content>
-  <mat-sidenav #sidenav mode="side" position="end"
+  </div>
+  <!-- <mat-sidenav #sidenav mode="side" position="end"
     ><app-lab-values (closeLabValue)="closeLabValue($event)"></app-lab-values
-  ></mat-sidenav>
-</mat-sidenav-container>
+  ></mat-sidenav> -->
+</div>

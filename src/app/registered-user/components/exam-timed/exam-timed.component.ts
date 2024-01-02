@@ -81,6 +81,7 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
   private timePerQuestion = environment.timePerQuestion;
   showCalculator: boolean = false;
   showNotepad: boolean = false;
+  showLabValues: boolean = false;
 
   public liveExamRoomCode: string;
   chatForm: FormGroup;
@@ -343,13 +344,13 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
     dialogRef.afterClosed().subscribe((result) => {});
   }
 
-  openLabValues() {
-    if (this.sidenav._animationState === 'open') {
-      this.sidenav.close();
-    } else {
-      this.sidenav.open();
-    }
-  }
+  // openLabValues() {
+  //   if (this.sidenav._animationState === 'open') {
+  //     this.sidenav.close();
+  //   } else {
+  //     this.sidenav.open();
+  //   }
+  // }
 
   timeTakenForExam(): number {
     const TotalExamTime = this.timePerQuestion * this.questions.length;
@@ -505,7 +506,8 @@ export class ExamTimedComponent implements OnInit, OnDestroy {
   }
 
   closeLabValue(event: any) {
-    this.sidenav.close();
+    // this.sidenav.close();
+    this.showLabValues = false;
   }
   closeCalculator(event: any) {
     if (this.showCalculator) {
