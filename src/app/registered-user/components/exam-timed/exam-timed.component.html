@@ -1,7 +1,4 @@
-<mat-sidenav-container
-  style="background-color: #fff"
-  class="container-fluid exam_timed"
->
+<div class="container-fluid exam_timed">
   <div class="container exam_timed_wrap">
     <div class="flag_section">
       <label for="{{ selectedQuestion._id }}">
@@ -24,7 +21,7 @@
           [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
           src="../../../../assets/images/lab.png"
           alt="lab"
-          (click)="openLabValues()"
+          (click)="showLabValues = !showLabValues"
         />
         <img
           [ngStyle]="setHeight ? { display: 'inline' } : { display: 'none' }"
@@ -46,6 +43,11 @@
           <app-calculator
             (closeCalc)="closeCalculator($event)"
           ></app-calculator>
+        </div>
+        <div *ngIf="showLabValues" class="labValues" cdkDrag>
+          <app-lab-values
+            (closeLabValue)="closeLabValue($event)"
+          ></app-lab-values>
         </div>
       </div>
     </div>
@@ -142,7 +144,7 @@
       </div>
     </div>
   </div>
-  <mat-sidenav #sidenav mode="side" position="end"
+  <!-- <mat-sidenav #sidenav mode="side" position="end"
     ><app-lab-values (closeLabValue)="closeLabValue($event)"></app-lab-values
-  ></mat-sidenav>
-</mat-sidenav-container>
+  ></mat-sidenav> -->
+</div>

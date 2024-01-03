@@ -43,6 +43,7 @@ export class LiveExamroomComponent implements OnInit, OnDestroy {
   displayTimerStopper: any;
   showCalculator: boolean = false;
   showNotepad: boolean = false;
+  showLabValues: boolean = false;
   @ViewChild('sidenav') sidenav: MatSidenav;
 
   constructor(

@@ -1,5 +1,5 @@
 .custom_tab_groupall {
-  max-width: 550px;
+  width: 550px;
   height: 100%;
   .close-icon {
     position: absolute;
@@ -15,7 +15,7 @@
     // position: relative;
     .lab_values {
       background-color: #46b3eb;
-      padding: 10px 10px;
+      padding: 0.5rem;
       font-weight: bold;
     }
     .lab_input {
@@ -60,5 +60,6 @@
 
 .table_wrap {
   overflow-y: auto;
-  height: 70dvh;
+  max-height: 50vh;
+  background-color: #fcfcfc;
 }

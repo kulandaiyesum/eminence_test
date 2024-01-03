@@ -63,6 +63,7 @@ export class ExamComponent implements OnInit {
   type: number; // the value maybe 0, 1, 2 or 3
   showCalculator: boolean = false;
   showNotepad: boolean = false;
+  showLabValues: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private rsaService: RsaService,
@@ -212,11 +213,13 @@ export class ExamComponent implements OnInit {
     this.getQuestionsIndexBased(i);
   }
   openLabValue() {
-    if (this.sidenav._animationState === 'open') {
-      this.sidenav.close();
-    } else {
-      this.sidenav.open();
-    }
+    // if (this.sidenav._animationState === 'open') {
+    //   this.sidenav.close();
+    // } else {
+    //   this.sidenav.open();
+    // }
+    if (this.showLabValues) return;
+    else this.showLabValues = true;
   }
 
   optionSelected(i: number, selectedOption: ExamTutorOption) {
@@ -456,7 +459,8 @@ export class ExamComponent implements OnInit {
   }
 
   closeLabValue(event: any) {
-    this.sidenav.close();
+    // this.sidenav.close();
+    this.showLabValues = false;
   }
 
   onMouseUp(event: MouseEvent) {

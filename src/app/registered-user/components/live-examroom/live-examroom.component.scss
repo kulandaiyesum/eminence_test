@@ -89,6 +89,7 @@ mat-sidenav-container {
         cursor: pointer;
       }
       .calculator,
+      .labValues,
       .notepad {
         position: absolute;
         right: 100px;
@@ -97,6 +98,9 @@ mat-sidenav-container {
       }
       .calculator {
         top: 10px;
+      }
+      .labValues {
+        top: 30px;
       }
       .notepad {
         top: 20px;
