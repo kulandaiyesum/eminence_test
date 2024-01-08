@@ -38,33 +38,39 @@
         width: auto;
         input {
           padding: 5px 5px;
-          width: 65%;
+          // width: 65%;
+          width: 100%;
           border: 2px solid rgb(173, 216, 230);
           font-family: "open_sans", "Open Sans", sans-serif;
           border-radius: 5px;
         }
-        span{
+        .error_message {
           color: red;
-          font-weight: 500;
+          font-weight: 400;
+          font-size: small;
         }
         #otp {
           margin-top: 15px;
           width: 100%;
         }
         #sendotp {
-          padding: 5px 5px;
+          padding: 0.5rem 1rem;
           border-radius: 5px;
           background-color: #fff;
           color: #46b3eb;
           cursor: pointer;
           border-color: #46b3eb;
-          float: right;
         }
         #sendotp:hover {
           background-color: #46b3eb;
           color: #fff;
           font-weight: bold;
         }
+        #sendotp:disabled {
+          cursor: default;
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        }
+
         #verifyotp {
           margin-top: 15px;
           width: 100%;
@@ -73,6 +79,11 @@
           background-color: #46b3eb;
           color: #fff;
           border: none;
+        }
+        .timer_s {
+          color: #46b3eb;
+          font-weight: 500;
+          font-size: 1.125rem;
         }
       }
     }
@@ -88,7 +99,7 @@
   @media screen and (max-width: 480px) {
     .main {
       width: 100%;
-      #emailfield{
+      #emailfield {
         width: 60%;
       }
     }

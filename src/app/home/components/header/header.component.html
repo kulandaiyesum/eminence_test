@@ -21,7 +21,7 @@
         <!-- for big screen -->
 
         <!-- for small screen -->
-        <ul [ngStyle]="{ display: isMenuDisply ? 'block' : 'none' }" class="small_screen">
+        <ul *ngIf="isScreenMath" [ngStyle]="{ display: isMenuDisply ? 'block' : 'none' }" class="small_screen">
           <li><a (click)="isMenuDisply = !isMenuDisply" routerLink="home" routerLinkActive="activelink">Home</a></li>
           <li><a (click)="isMenuDisply = !isMenuDisply" routerLink="enterprise"
               routerLinkActive="activelink">Enterprise</a>

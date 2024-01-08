@@ -34,6 +34,8 @@ export class EmailComponent {
   public userId: string;
   public originalOTP: string;
   public originalFirstName: string;
+  otpValidityDuration = 60;
+  timeRemaining = 0;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -79,6 +81,7 @@ export class EmailComponent {
       this.loginService.resetPassword(data).subscribe(
         (data: any) => {
           this.isSendingOTP = true;
+          this.startTimer();
           this.encryptionOTP(
             data.result.otp,
             data.result.user.firstName,
@@ -97,6 +100,17 @@ export class EmailComponent {
         }
       );
     }
+  }
+
+  startTimer() {
+    this.timeRemaining = this.otpValidityDuration;
+    const timer = setInterval(() => {
+      this.timeRemaining--;
+      if (this.timeRemaining <= 0) {
+        this.timeRemaining = 0;
+        clearInterval(timer);
+      }
+    }, 1000);
   }
 
   verifyOTP() {

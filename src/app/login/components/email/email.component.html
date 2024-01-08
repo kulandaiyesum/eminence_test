@@ -6,35 +6,44 @@
         <p>Enter your email to reset your password.</p>
       </div>
       <form [formGroup]="emailForgotPasswordForm">
-        <input
-          type="text"
-          placeholder="Email address"
-          name="email"
-          [(ngModel)]="email"
-          formControlName="email"
-          [attr.disabled]="isSendingOTP"
-          id="emailfield"
-        />
-        <button
-          id="sendotp"
-          type="submit"
-          (click)="sendOTP()"
-          mat-raised-button
-        >
-          Send Otp
-        </button>
-        <br />
-        <span
-          *ngIf="
-            emailForgotPasswordForm.get('email')!.invalid &&
-            (emailForgotPasswordForm.get('email')!.dirty ||
-              emailForgotPasswordForm.get('email')!.touched)
-          "
-        >
-          Email required, valid format.
-        </span>
+        <div>
+          <input
+            type="text"
+            placeholder="Email address"
+            name="email"
+            [(ngModel)]="email"
+            formControlName="email"
+            [attr.disabled]="isSendingOTP"
+            id="emailfield"
+          />
+          <span
+            class="error_message"
+            *ngIf="
+              emailForgotPasswordForm.get('email')!.invalid &&
+              (emailForgotPasswordForm.get('email')!.dirty ||
+                emailForgotPasswordForm.get('email')!.touched)
+            "
+          >
+            Email required, valid format.
+          </span>
+        </div>
+        <div style="text-align: center" class="mt-3">
+          <button
+            *ngIf="!isSendingOTP"
+            [disabled]="emailForgotPasswordForm.invalid"
+            id="sendotp"
+            type="submit"
+            (click)="sendOTP()"
+            mat-raised-button
+          >
+            Send Otp
+          </button>
+          <span class="timer_s" *ngIf="isSendingOTP"
+            >{{ timeRemaining }} seconds</span
+          >
+        </div>
       </form>
-      <form [formGroup]="otpForgotPasswordForm">
+      <form *ngIf="isSendingOTP" [formGroup]="otpForgotPasswordForm">
         <input
           matInput
           type="text"
@@ -47,6 +56,7 @@
           pattern="[0-9]*"
         />
         <span
+          class="error_message"
           *ngIf="
             otpForgotPasswordForm.get('otp')!.invalid &&
             (otpForgotPasswordForm.get('otp')!.dirty ||
@@ -56,20 +66,20 @@
           OTP required,valid format.
         </span>
         <span
+          class="error_message"
           *ngIf="otpForgotPasswordForm.controls['otp']?.errors?.['minlength'] && otpForgotPasswordForm.controls['otp']?.touched"
-          class="error-message"
         >
           OTP must be at least 6 characters long.
         </span>
         <span
+          class="error_message"
           *ngIf="otpForgotPasswordForm.controls['otp']?.errors?.['maxlength'] && otpForgotPasswordForm.controls['otp']?.touched"
-          class="error-message"
         >
           OTP must be 6 characters long.
         </span>
         <span
+          class="error_message"
           *ngIf="otpForgotPasswordForm.controls['otp']?.errors?.['pattern'] && otpForgotPasswordForm.controls['otp']?.touched"
-          class="error-message"
         >
           Only numbers are allowed.
         </span>
@@ -81,6 +91,16 @@
           [disabled]="!isSendingOTP"
         >
           Verify Otp
+        </button>
+        <button
+          class="mt-3"
+          style="width: 100%"
+          id="sendotp"
+          type="submit"
+          (click)="sendOTP()"
+          mat-raised-button
+        >
+          Resend OTP
         </button>
       </form>
     </div>
