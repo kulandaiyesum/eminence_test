@@ -191,7 +191,13 @@ export class AddSubscriptionComponent implements OnInit {
 
   getPackageData() {
     this.packageService.getAllPackages().subscribe((doc: any) => {
-      this.packageList = doc.result.filter((item) => item.type === 'B2B');
+      this.packageList = doc.result.filter((item) => {
+        if (this.data && this.data.from === 'STUDENT') {
+          return item.type === 'B2C';
+        } else {
+          return item.type === 'B2B';
+        }
+      });
 
       this.unqiuePackage = this.logicalService.filteredArrayWithJsonValue(
         this.packageList,

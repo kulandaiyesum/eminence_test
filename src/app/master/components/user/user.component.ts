@@ -121,7 +121,7 @@ export class UserComponent implements OnInit {
     const dialogOptions = {
       width: '600px',
       margin: '0 auto',
-      data: { data: data, from: 'vetter' },
+      data: { data: data, from: data.role.role },
     };
     const dialogRef = this.dialog.open(AddSubscriptionComponent, dialogOptions);
     dialogRef.afterClosed().subscribe((result) => {
