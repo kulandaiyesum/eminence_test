@@ -43,7 +43,7 @@ export class UserService {
     } else {
       var body = { _id: _id, status: 1 };
     }
-    return this.http.post(this.userUrl + '/changeStatus', body);
+    return this.http.put(this.userUrl + '/'+ _id +'/status',body);
   }
 
   userComment(data) {
