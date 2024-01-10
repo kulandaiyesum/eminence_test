@@ -103,7 +103,7 @@
               >delete</mat-icon
             >
             <mat-icon
-              *ngIf="row.role.role === 'VETTER'"
+              *ngIf="row.role.role === 'VETTER' || row.role.role === 'STUDENT'"
               class="set_edit_color_button ms-2"
               (click)="addSubscription(row)"
               matTooltip="add package"
