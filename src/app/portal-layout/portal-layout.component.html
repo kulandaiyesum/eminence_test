@@ -25,129 +25,17 @@
       </div>
     </mat-toolbar>
     <div class="navigation_links">
-      <ng-container *ngIf="isAdmin()">
-        <a routerLink="/eminence/admin/package" routerLinkActive="activelink"
-          >Package</a
-        >
-        <a
-          routerLink="/eminence/admin/institution"
-          routerLinkActive="activelink"
-          >Institution</a
-        >
-        <a routerLink="/eminence/admin/subscriber" routerLinkActive="activelink"
-          >Subscription</a
-        >
-        <a routerLink="/eminence/admin/topic" routerLinkActive="activelink"
-          >Topic</a
-        >
-        <a routerLink="/eminence/admin/role" routerLinkActive="activelink"
-          >Role</a
-        >
-        <a routerLink="/eminence/admin/user" routerLinkActive="activelink"
-          >User</a
-        >
-        <a routerLink="/eminence/admin/subject" routerLinkActive="activelink"
-          >Subject</a
-        >
-        <a routerLink="/eminence/admin/system" routerLinkActive="activelink"
-          >System</a
-        >
-        <a routerLink="/eminence/admin/sub-system" routerLinkActive="activelink"
-          >Subsystem</a
-        >
-        <a
-          routerLink="/eminence/admin/addattributes"
-          routerLinkActive="activelink"
-          >Assign Attr / Vetter</a
-        >
-        <a routerLink="/eminence/faculty/qgen" routerLinkActive="activelink"
-          >QGen</a
-        >
-      </ng-container>
-
-      <ng-container *ngIf="isFaculty()">
-        <a routerLink="/eminence/faculty/qgen" routerLinkActive="activelink"
-          >QGen</a
-        >
-        <a routerLink="/eminence/faculty/reviewQ" routerLinkActive="activelink"
-          >ReviewQ</a
-        >
-        <!-- <a routerLink="/eminence/faculty/editor" routerLinkActive="activelink"
-          >Editor</a
-        > -->
-        <a
-          routerLink="/eminence/faculty/askeminence"
-          routerLinkActive="activelink"
-          >Ask Eminence</a
-        >
-        <a routerLink="/eminence/faculty/history" routerLinkActive="activelink"
-          >History</a
-        >
-      </ng-container>
-
-      <ng-container *ngIf="isVetter()">
-        <a
-          routerLink="/eminence/vetter/open-items"
-          routerLinkActive="activelink"
-          >Review Q</a
-        >
-        <!-- <a
-          routerLink="/eminence/vetter/questions"
-          class="inactiveLink"
-          routerLinkActive="activelink"
-          >Questions</a
-        > -->
-        <a routerLink="/eminence/vetter/history" routerLinkActive="activelink"
-          >History</a
-        >
-        <!-- <div class="questions-numbers">
-          <p *ngFor="let number of questionNumbers" class="circle-background">
-            {{ number }}
-          </p>
-        </div> -->
-      </ng-container>
-
-      <ng-container *ngIf="isStudent()">
-        <a
-          routerLink="/eminence/student/build-test"
-          routerLinkActive="activelink"
-        >
-          <div class="icon_route">
-            <span>Build Test</span>
-            <mat-icon>build</mat-icon>
-          </div>
-        </a>
-        <a routerLink="/eminence/faculty/qgen" routerLinkActive="activelink"
-          ><div class="icon_route">
-            <span>QGen</span>
-            <mat-icon>question_answer</mat-icon>
-          </div>
-        </a>
-        <!-- <a
-          routerLink="/eminence/student/performance"
-          routerLinkActive="activelink"
-        >
-          <div class="icon_route">
-            <span>Performance</span>
-            <mat-icon> bar_chart</mat-icon>
-          </div>
-        </a> -->
-        <a routerLink="/eminence/student/saved" routerLinkActive="activelink">
-          <div class="icon_route">
-            <span>History</span>
-            <mat-icon>insert_drive_file</mat-icon>
-          </div>
-        </a>
-        <a
-          routerLink="/eminence/student/exam-room"
-          routerLinkActive="activelink"
-        >
-          <div class="icon_route">
-            <span>Exam Room</span>
-            <mat-icon>people</mat-icon>
-          </div>
-        </a>
-      </ng-container>
+      <a
+        *ngFor="let link of links"
+        [routerLink]="link.routerLink"
+        routerLinkActive="activelink"
+      >
+        <div *ngIf="link.icon" class="icon_route">
+          <span>{{ link.label }}</span>
+          <mat-icon>{{ link.icon }}</mat-icon>
+        </div>
+        <div *ngIf="!link.icon">{{ link.label }}</div>
+      </a>
     </div>
     <div class="help-report-error" *ngIf="!isAdmin()" class="bottom-left-icon">
       <mat-icon>help</mat-icon>

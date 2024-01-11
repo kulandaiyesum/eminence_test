@@ -11,7 +11,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { MatSidenav } from '@angular/material/sidenav';
-
+import { Navigationlink } from './model/navigationlink';
+import { navigationLinks } from './navigationLinks';
 @Component({
   selector: 'app-portal-layout',
   templateUrl: './portal-layout.component.html',
@@ -25,6 +26,7 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
   private pathSubcriber: Subscription;
   isExamAttending;
   @ViewChild('drawer') drawer: MatSidenav;
+  links: Navigationlink[] = [];
   constructor(
     private router: Router,
     private rsaService: RsaService,
@@ -45,7 +47,7 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const encrptedRole = localStorage.getItem('2');
     this.role = this.rsaService.decryptText(encrptedRole, this.secretKey);
-
+    this.loadLinks();
     this.isExamAttending = localStorage.getItem('11');
 
     const storedFirstName: string = localStorage.getItem('3');
@@ -111,6 +113,10 @@ export class PortalLayoutComponent implements OnInit, OnDestroy {
         this.router.navigate(['']);
       }
     });
+  }
+
+  loadLinks() {
+    this.links = navigationLinks[this.role];
   }
   isAdmin() {
     return this.role === 'ADMIN';
