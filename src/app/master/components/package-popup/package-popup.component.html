@@ -92,6 +92,7 @@
           class="form-control"
           [(ngModel)]="package.questionsCount"
           (keydown)="restrictInput($event)"
+          maxlength="5"
         />
         <div class="error">
           <mat-error
@@ -100,6 +101,13 @@
               packageForm.controls['questionsCount'].touched
             "
             >Questions count is required</mat-error
+          >
+          <mat-error
+            *ngIf="
+              packageForm.controls['questionsCount'].hasError('maxlength') &&
+              packageForm.controls['questionsCount'].touched
+            "
+            >Question count length is 5</mat-error
           >
         </div>
       </div>
@@ -115,6 +123,7 @@
           formControlName="amount"
           class="form-control"
           [(ngModel)]="package.amount"
+          maxlength="6"
         />
         <div class="error">
           <mat-error
@@ -123,6 +132,13 @@
               packageForm.controls['amount'].touched
             "
             >Amount is required</mat-error
+          >
+          <mat-error
+            *ngIf="
+              packageForm.controls['amount'].hasError('maxlength') &&
+              packageForm.controls['amount'].touched
+            "
+            >Amount length is 5</mat-error
           >
         </div>
       </div>
@@ -135,6 +151,7 @@
           formControlName="rate"
           class="form-control"
           [(ngModel)]="package.rate"
+          maxlength="5"
         />
         <div class="error">
           <mat-error
@@ -143,6 +160,13 @@
               packageForm.controls['rate'].touched
             "
             >Rate per question is required</mat-error
+          >
+          <mat-error
+            *ngIf="
+              packageForm.controls['rate'].hasError('maxlength') &&
+              packageForm.controls['rate'].touched
+            "
+            >rate length is 5</mat-error
           >
         </div>
       </div>
