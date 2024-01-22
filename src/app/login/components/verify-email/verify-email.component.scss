@@ -1,0 +1,35 @@
+.vf_c {
+  background-color: var(--qgen-bg-color);
+  height: 100dvh;
+  padding: 0;
+  .logo_section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    h1 {
+      margin-bottom: 0;
+      font-size: 30px;
+      font-weight: 600;
+    }
+  }
+  .card {
+    margin-top: 50px;
+    max-width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .bt-c {
+    color: #fff;
+    background-color: var(--login-btn-color);
+    &:hover {
+      background-color: var(--login-btn-hover);
+    }
+  }
+  .img-c {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
