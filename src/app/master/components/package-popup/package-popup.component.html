@@ -18,6 +18,7 @@
               class="form-control"
               formControlName="packageName"
               [(ngModel)]="package.packageName"
+              
             />
             <div class="error">
               <mat-error
@@ -40,6 +41,7 @@
               formControlName="type"
               aria-label="select package type"
               [(ngModel)]="package.type"
+
             >
               <option disabled selected value="">select type</option>
               <option value="B2B">B2B</option>
@@ -67,6 +69,7 @@
           formControlName="topicId"
           [(ngModel)]="package.topicId"
           placehoder="select"
+
         >
           <option *ngFor="let topic of topics" [value]="topic._id">
             {{ topic.topic }}
@@ -207,6 +210,7 @@
             'valid-form': packageForm.valid,
             'invalid-form': !packageForm.valid
           }"
+          [disabled]="packageForm.invalid"
         >
           Add
         </button>
