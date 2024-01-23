@@ -60,6 +60,7 @@ import { SubjectComponent } from './components/subject/subject.component';
 import { AddSubjectComponent } from './components/add-subject/add-subject.component';
 import { SubSystemComponent } from './components/sub-system/sub-system.component';
 import { SubSystemCrudComponent } from './components/sub-system-crud/sub-system-crud.component';
+import { ViewInformationComponent } from './components/view-information/view-information.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { SubSystemCrudComponent } from './components/sub-system-crud/sub-system-
     AddSubjectComponent,
     SubSystemComponent,
     SubSystemCrudComponent,
+    ViewInformationComponent,
   ],
   imports: [
     CommonModule,

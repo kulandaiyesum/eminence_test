@@ -111,6 +111,9 @@
                 *matCellDef="let element; let i = index"
                 [ngClass]="i % 2 === 0 ? 'even-row' : 'odd-row'"
               >
+                <mat-icon (click)="viewInformation(element)" matTooltip="view"
+                  >remove_red_eye</mat-icon
+                >
                 <mat-icon (click)="updateInstitute(element)" matTooltip="edit"
                   >edit</mat-icon
                 >
