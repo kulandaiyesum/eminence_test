@@ -148,12 +148,14 @@ export class RegisterComponent {
           console.log(this.registerModel);
           this.registrationService.registerUser(this.registerModel).subscribe(
             (response) => {
+              this.toastr.success('Paid successfully!', 'Success');
               this.toastr.success('Registration successful!', 'Success');
               this.closeDialog();
               this.router.navigate(['/home']);
             },
             (error) => {
               console.error(error, 'Error');
+              this.toastr.error('Payment failed!', 'Error');
               this.toastr.error('Registration failed!', 'Error');
             }
           );
@@ -210,6 +212,5 @@ export class RegisterComponent {
       (item: any) => item.topicId === selectedTopicId
     );
     console.log(this.b2cPackagesFiltered);
-
   }
 }
