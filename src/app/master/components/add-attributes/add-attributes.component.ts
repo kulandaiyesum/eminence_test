@@ -41,7 +41,7 @@ export class AddAttributesComponent {
     private qGenService: QgenService,
     private rsaService: RsaService,
     private datePipe: DatePipe,
-    private toastr: ToastrService,
+    private toastr: ToastrService
   ) {}
   ngOnInit() {
     this.userId = this.rsaService.decryptText(
@@ -107,11 +107,11 @@ export class AddAttributesComponent {
     });
   }
   openAddDialog1(row) {
-     const dialogOptions = {
-       width: '500px',
-       margin: '0 auto',
-       data: row,
-     };
+    const dialogOptions = {
+      width: '500px',
+      margin: '0 auto',
+      data: row,
+    };
     const dialogRef = this.dialog.open(AddVetterComponent, dialogOptions);
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -138,11 +138,12 @@ export class AddAttributesComponent {
   }
 
   updateAttributes(row) {
-    const dialogRef = this.dialog.open(AddElementComponent, {
-      width: 'auto', // Customize the width
-      height: 'auto', // Customize the height
-      data: row, // Pass row details as a parameter
-    });
+    const dialogOptions = {
+      width: '500px',
+      margin: '0 auto',
+      data: row,
+    };
+    const dialogRef = this.dialog.open(AddElementComponent, dialogOptions);
     dialogRef.afterClosed().subscribe((result) => {
       this.getQuestionsList();
       if (result) {
