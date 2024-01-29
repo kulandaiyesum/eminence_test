@@ -1,0 +1,36 @@
+<div class="view_info">
+  <mat-icon class="close_btn" mat-icon-button (click)="onNoClick()"
+    >close</mat-icon
+  >
+  <div class="view_card">
+    <div class="view_card_header">View User</div>
+    <div class="veiw_card_body">
+      <div class="flex_group">
+        <div class="col_group">
+          <div class="info-label">First name</div>
+          <div class="info-text">{{ data.firstName }}</div>
+        </div>
+        <div class="col_group">
+          <div class="info-label">Last name</div>
+          <div class="info-text">{{ data.lastName }}</div>
+        </div>
+      </div>
+      <div class="flex_group">
+        <div class="col_group">
+          <div class="info-label">Email</div>
+          <div class="info-text">{{ data.email }}</div>
+        </div>
+        <div class="col_group">
+          <div class="info-label">Role</div>
+          <div class="info-text">{{ data.role?.role }}</div>
+        </div>
+      </div>
+      <div class="flex_group" *ngIf="data.institutionId">
+        <div class="col_group" style="width: 100%">
+          <div class="info-label">Institution name</div>
+          <div class="info-text">{{ data.institutionId?.institutionName }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

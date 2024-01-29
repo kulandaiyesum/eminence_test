@@ -88,27 +88,37 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>ACTION</th>
           <td mat-cell *matCellDef="let row">
-            <mat-icon
-              *ngIf="row.role.role !== 'ADMIN'"
-              class="set_edit_color_button"
-              matTooltip="edit"
-              (click)="updateUserMaster(row)"
-              >edit</mat-icon
-            >
-            <mat-icon
-              *ngIf="row.role.role !== 'ADMIN'"
-              class="set_edit_color_button ms-2"
-              matTooltip="delete"
-              (click)="deleteUserMaster(row._id)"
-              >delete</mat-icon
-            >
-            <mat-icon
-              *ngIf="row.role.role === 'VETTER' || row.role.role === 'STUDENT'"
-              class="set_edit_color_button ms-2"
-              (click)="addSubscription(row)"
-              matTooltip="add package"
-              >add</mat-icon
-            >
+            <div class="edit_c_T">
+              <mat-icon
+                class="set_edit_color_button"
+                (click)="viewInformation(row)"
+                matTooltip="view"
+                >remove_red_eye</mat-icon
+              >
+              <mat-icon
+                *ngIf="row.role.role !== 'ADMIN'"
+                class="set_edit_color_button"
+                matTooltip="edit"
+                (click)="updateUserMaster(row)"
+                >edit</mat-icon
+              >
+              <mat-icon
+                *ngIf="row.role.role !== 'ADMIN'"
+                class="set_edit_color_button"
+                matTooltip="delete"
+                (click)="deleteUserMaster(row._id)"
+                >delete</mat-icon
+              >
+              <mat-icon
+                *ngIf="
+                  row.role.role === 'VETTER' || row.role.role === 'STUDENT'
+                "
+                class="set_edit_color_button"
+                (click)="addSubscription(row)"
+                matTooltip="add package"
+                >add</mat-icon
+              >
+            </div>
           </td>
         </ng-container>
         <!-- Header and row definitions -->
