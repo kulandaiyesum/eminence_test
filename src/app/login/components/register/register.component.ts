@@ -15,6 +15,7 @@ import { StripeService } from '../../service/stripe.service';
 import { Router } from '@angular/router';
 import { Topic } from 'src/app/master/model/topic';
 import { TopicService } from 'src/app/master/service/topic.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -148,7 +149,7 @@ export class RegisterComponent {
           console.log(this.registerModel);
           this.registrationService.registerUser(this.registerModel).subscribe(
             (response) => {
-              this.toastr.success('Paid successfully!', 'Success');
+              Swal.fire('Payment Successful', 'Thank you for your payment!', 'success');
               this.toastr.success('Registration successful!', 'Success');
               this.closeDialog();
               this.router.navigate(['/home']);
