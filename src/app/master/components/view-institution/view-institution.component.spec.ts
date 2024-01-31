@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ViewInformationComponent } from './view-information.component';
+import { ViewInformationComponent } from './view-institution.component';
 
 describe('ViewInformationComponent', () => {
   let component: ViewInformationComponent;
@@ -8,7 +8,7 @@ describe('ViewInformationComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ViewInformationComponent]
+      declarations: [ViewInformationComponent],
     });
     fixture = TestBed.createComponent(ViewInformationComponent);
     component = fixture.componentInstance;

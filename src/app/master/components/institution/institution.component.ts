@@ -15,7 +15,7 @@ import { PackageService } from '../../service/package.service';
 import { AddSubscriptionComponent } from '../add-subscription/add-subscription.component';
 import { SubscriptionService } from '../../service/subscription.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import { ViewInformationComponent } from '../view-information/view-information.component';
+import { ViewInstitutionComponent } from '../view-institution/view-institution.component';
 
 @Component({
   selector: 'app-institution',
@@ -287,6 +287,6 @@ export class InstitutionComponent {
       width: '600px',
       data: institution,
     };
-    const dialogRef = this.dialog.open(ViewInformationComponent, dialogOptions);
+    const dialogRef = this.dialog.open(ViewInstitutionComponent, dialogOptions);
   }
 }

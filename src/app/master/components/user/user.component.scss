@@ -88,6 +88,12 @@
   }
 }
 
+.edit_c_T {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.5rem;
+}
 .set_edit_color_button {
   color: var(--qgen-logo-yellow);
   cursor: pointer;

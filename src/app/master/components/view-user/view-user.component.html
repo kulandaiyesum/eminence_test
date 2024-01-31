@@ -1,0 +1,75 @@
+<div class="view_info">
+  <mat-icon class="close_btn" mat-icon-button (click)="onNoClick()"
+    >close</mat-icon
+  >
+  <div class="view_card">
+    <div class="view_card_header">View User</div>
+    <div class="veiw_card_body">
+      <div class="flex_group">
+        <div class="col_group">
+          <div class="info-label">First name</div>
+          <div class="info-text">{{ data.firstName }}</div>
+        </div>
+        <div class="col_group">
+          <div class="info-label">Last name</div>
+          <div class="info-text">{{ data.lastName }}</div>
+        </div>
+      </div>
+      <div class="flex_group">
+        <div class="col_group">
+          <div class="info-label">Email</div>
+          <div class="info-text">{{ data.email }}</div>
+        </div>
+        <div class="col_group">
+          <div class="info-label">Role</div>
+          <div class="info-text">{{ data.role?.role }}</div>
+        </div>
+      </div>
+      <!-- faculty details -->
+      <ng-container *ngIf="data.role?.role === 'FACULTY'">
+        <div class="flex_group" *ngIf="data.institutionId">
+          <div class="col_group" style="width: 100%">
+            <div class="info-label">Institution name</div>
+            <div class="info-text">
+              {{ data.institutionId?.institutionName }}
+            </div>
+          </div>
+        </div>
+        <div class="flex_group" *ngIf="data.institutionId?.packageNameId">
+          <div class="col_group">
+            <div class="info-label">Package name</div>
+            <div class="info-text">
+              {{ data.institutionId?.packageNameId?.packageName }}
+            </div>
+          </div>
+          <div class="col_group">
+            <div class="info-label">Topic</div>
+            <div class="info-text">
+              {{ data.institutionId?.packageNameId?.topicId?.topic }}
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- vetter or student details -->
+      <ng-container
+        *ngIf="data.role?.role === 'VETTER' || data.role?.role === 'STUDENT'"
+      >
+        <div class="flex_group" *ngIf="data?.subscriptionId">
+          <div class="col_group">
+            <div class="info-label">Package name</div>
+            <div class="info-text">
+              {{ data.subscriptionId?.packageId?.packageName }}
+            </div>
+          </div>
+          <div class="col_group">
+            <div class="info-label">Topic</div>
+            <div class="info-text">
+              {{ data.subscriptionId?.packageId?.topicId?.topic }}
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
